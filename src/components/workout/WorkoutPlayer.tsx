@@ -26,6 +26,15 @@ export default function WorkoutPlayer({ exercises, onComplete, onCancel }: Worko
   const [phase, setPhase] = useState<Phase>('ready');
   const [timeLeft, setTimeLeft] = useState<number | null>(3);
   const [isPaused, setIsPaused] = useState(false);
+  const [animFrame, setAnimFrame] = useState(0);
+
+  useEffect(() => {
+    // Animation frame toggle
+    const interval = setInterval(() => {
+      setAnimFrame(prev => prev === 0 ? 1 : 0);
+    }, 600); // 0.6s per frame looks natural for jumping jacks
+    return () => clearInterval(interval);
+  }, []);
 
   const currentEx = exercises[currentIndex];
   const isTimeBased = currentEx && parseDuration(currentEx.duration) !== null;
@@ -171,7 +180,15 @@ export default function WorkoutPlayer({ exercises, onComplete, onCancel }: Worko
 
         {phase === 'work' && currentEx && (
           <div style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-            {getExerciseDetails(currentEx.exercise).image ? (
+            {getExerciseDetails(currentEx.exercise).images && getExerciseDetails(currentEx.exercise).images!.length > 0 ? (
+              <div style={{ width: '100%', maxWidth: '300px', height: '220px', borderRadius: '16px', overflow: 'hidden', marginBottom: '20px', boxShadow: '0 8px 24px rgba(0,0,0,0.1)', background: '#fff', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                <img 
+                  src={getExerciseDetails(currentEx.exercise).images![animFrame % getExerciseDetails(currentEx.exercise).images!.length]} 
+                  alt={currentEx.exercise} 
+                  style={{ width: '100%', height: '100%', objectFit: 'contain', animation: 'fadeIn 0.1s ease-in-out' }} 
+                />
+              </div>
+            ) : getExerciseDetails(currentEx.exercise).image ? (
               <div style={{ width: '100%', maxWidth: '300px', height: '200px', borderRadius: '16px', overflow: 'hidden', marginBottom: '20px', boxShadow: '0 8px 24px rgba(0,0,0,0.1)' }}>
                 <img src={getExerciseDetails(currentEx.exercise).image} alt={currentEx.exercise} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
               </div>

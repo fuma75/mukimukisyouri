@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAppContext } from '../AppContext';
 import { calculateGoals } from '@/lib/storage';
+import HeightSelectModal from '../ui/HeightSelectModal';
 
 export default function Profile() {
   const { userProfile, setUserProfile, setActiveTab } = useAppContext();
@@ -21,6 +22,8 @@ export default function Profile() {
     targetF: userProfile?.targetF || 0,
     targetC: userProfile?.targetC || 0,
   });
+
+  const [isHeightModalOpen, setIsHeightModalOpen] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -91,7 +94,23 @@ export default function Profile() {
               </div>
               <div className="form-group">
                 <label>身長 (cm)</label>
-                <input type="number" name="height" value={formData.height} onChange={handleChange} min="100" max="250" />
+                <div 
+                  onClick={() => setIsHeightModalOpen(true)}
+                  style={{
+                    padding: '12px 16px',
+                    border: '1px solid rgba(0,0,0,0.08)',
+                    borderRadius: '8px',
+                    backgroundColor: '#f8f9fa',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    color: '#212529'
+                  }}
+                >
+                  <span>{formData.height === 130 ? '130cm以下' : `${formData.height}cm`}</span>
+                  <i className="fa-solid fa-chevron-down" style={{color: '#888'}}></i>
+                </div>
               </div>
               <div className="form-group">
                 <label>体重 (kg)</label>
@@ -122,6 +141,13 @@ export default function Profile() {
               <i className="fa-solid fa-floppy-disk"></i> 保存して目標を計算する
             </button>
           </form>
+
+          <HeightSelectModal 
+            isOpen={isHeightModalOpen}
+            onClose={() => setIsHeightModalOpen(false)}
+            initialHeight={formData.height}
+            onConfirm={(height) => setFormData(prev => ({ ...prev, height }))}
+          />
         </div>
       </div>
     </section>
