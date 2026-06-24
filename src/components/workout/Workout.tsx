@@ -246,21 +246,21 @@ export default function Workout() {
     const handleChallengeClick = () => {
         let warmup = [
             { exercise: 'ジャンピングジャック', duration: '00:30' },
-            { exercise: 'ヒップキック', duration: '00:30' },
+            { exercise: 'ハイニーズ', duration: '00:30' },
         ];
         let training = [
-            { exercise: 'スクワットリーチアップ', duration: '00:30' },
+            { exercise: 'スクワット', duration: '00:30' },
             { exercise: 'プッシュアップ', duration: '00:30' },
             { exercise: 'シザーズ', duration: '00:35' },
-            { exercise: 'ヒップブリッジ＆レッグリフト（左）', duration: '00:30' },
-            { exercise: 'ヒップブリッジ＆レッグリフト（右）', duration: '00:30' },
-            { exercise: 'スローマウンテンクライマー', duration: '00:30' },
-            { exercise: 'スパイダーマンプランク', duration: '00:30' },
+            { exercise: 'ヒップブリッジ', duration: '00:30' },
+            { exercise: 'ランジ', duration: '00:30' },
+            { exercise: 'マウンテンクライマー', duration: '00:30' },
+            { exercise: 'プランク', duration: '00:30' },
         ];
         let cooldown = [
-            { exercise: 'コブラストレッチ', duration: '00:30' },
-            { exercise: '鳩のポーズ（左）', duration: '00:30' },
-            { exercise: '鳩のポーズ（右）', duration: '00:30' },
+            { exercise: 'ストレッチ', duration: '00:30' },
+            { exercise: 'ストレッチ', duration: '00:30' },
+            { exercise: 'ストレッチ', duration: '00:30' },
         ];
 
         // Jump and injury adjustments
@@ -268,17 +268,17 @@ export default function Workout() {
         const upperInjury = prof.physicalIssues?.some((i: string) => i.includes('肩') || i.includes('手首') || i.includes('腕'));
         
         if (noJumps) {
-            warmup[0] = { exercise: 'ステップジャック', duration: '00:30' }; 
+            warmup[0] = { exercise: 'スクワット', duration: '00:30' }; 
             training = training.map(t => {
-                if (t.exercise === 'スクワットリーチアップ') return { exercise: '浅めのスクワット', duration: '00:30' };
+                if (t.exercise === 'ジャンピングジャック') return { exercise: 'スクワット', duration: '00:30' };
                 return t;
             });
         }
         
         if (upperInjury) {
             training = training.map(t => {
-                if (t.exercise === 'プッシュアップ') return { exercise: '壁押し上げ', duration: '00:30' };
-                if (t.exercise === 'スパイダーマンプランク') return { exercise: 'デッドバグ', duration: '00:30' };
+                if (t.exercise === 'プッシュアップ') return { exercise: 'プランク', duration: '00:30' };
+                if (t.exercise === 'マウンテンクライマー') return { exercise: 'クランチ', duration: '00:30' };
                 return t;
             });
         }

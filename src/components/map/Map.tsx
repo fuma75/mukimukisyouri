@@ -16,7 +16,7 @@ export default function Map() {
                     setLoading(false);
                 },
                 (error) => {
-                    console.error("Error getting location", error);
+                    console.warn("Location access denied or timeout");
                     // 取得できない場合はデフォルトの検索
                     setSearchQuery('フィットネスジム');
                     setLoading(false);
