@@ -5,7 +5,8 @@ import { getExerciseDetails } from '@/lib/exerciseDictionary';
 interface WorkoutPlayerProps {
   exercises: AiExercise[];
   onComplete: () => void;
-  onCancel: () => void;
+  onCancel: (currentIndex: number) => void;
+  initialIndex?: number;
 }
 
 type Phase = 'ready' | 'work' | 'rest' | 'done';
@@ -16,13 +17,17 @@ const parseDuration = (dur?: string): number | null => {
   if (parts.length === 2) {
     return parseInt(parts[0]) * 60 + parseInt(parts[1]);
   }
-  return null;
+  if (dur.startsWith('x')) {
+    const reps = parseInt(dur.replace('x', ''));
+    return reps * 3; // 1 rep = 3 seconds
+  }
+  return parseInt(dur) || null;
 };
 
 
 
-export default function WorkoutPlayer({ exercises, onComplete, onCancel }: WorkoutPlayerProps) {
-  const [currentIndex, setCurrentIndex] = useState(0);
+export default function WorkoutPlayer({ exercises, onComplete, onCancel, initialIndex = 0 }: WorkoutPlayerProps) {
+  const [currentIndex, setCurrentIndex] = useState(initialIndex);
   const [phase, setPhase] = useState<Phase>('ready');
   const [timeLeft, setTimeLeft] = useState<number | null>(3);
   const [isPaused, setIsPaused] = useState(false);
@@ -142,7 +147,7 @@ export default function WorkoutPlayer({ exercises, onComplete, onCancel }: Worko
       {/* Header / Progress */}
       {phase !== 'rest' && (
         <div style={{ padding: '20px', display: 'flex', alignItems: 'center', gap: '15px', background: '#fff', borderBottom: '1px solid #f1f3f5' }}>
-          <button onClick={onCancel} style={{ background: 'none', border: 'none', fontSize: '1.5rem', color: '#495057', cursor: 'pointer' }}>
+          <button onClick={() => onCancel(currentIndex)} style={{ background: 'none', border: 'none', fontSize: '1.5rem', color: '#495057', cursor: 'pointer' }}>
             <i className="fa-solid fa-xmark"></i>
           </button>
           <div style={{ flex: 1, height: '8px', background: '#e9ecef', borderRadius: '4px', overflow: 'hidden' }}>
@@ -157,17 +162,30 @@ export default function WorkoutPlayer({ exercises, onComplete, onCancel }: Worko
       {/* Main Content Area */}
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: phase === 'rest' ? 'flex-start' : 'center', padding: phase === 'rest' ? '0' : '20px', textAlign: 'center', position: 'relative' }}>
         
-        {phase === 'ready' && (
-          <div style={{ animation: 'pulse 1s infinite' }}>
-            <h2 style={{ fontSize: '2rem', color: '#adb5bd', marginBottom: '20px' }}>準備してください</h2>
-            <div style={{ fontSize: '6rem', fontWeight: 'bold', color: '#1a73e8' }}>{timeLeft}</div>
+        {phase === 'ready' && currentEx && (
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%', height: '100%', position: 'absolute', top: 0, left: 0 }}>
+            <div style={{ flex: 1, width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'flex-end', paddingBottom: '20px' }}>
+              <img 
+                 src={getExerciseDetails(currentEx.exercise).gifUrl || getExerciseDetails(currentEx.exercise).image || 'https://v2.exercisedb.io/image/1'} 
+                 alt={currentEx.exercise} 
+                 style={{ width: '100%', maxHeight: '40vh', objectFit: 'contain' }} 
+               />
+            </div>
+            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'flex-start', animation: 'pulse 1s infinite', zIndex: 2 }}>
+              <h2 style={{ fontSize: '2rem', color: '#adb5bd', marginBottom: '10px', marginTop: '20px' }}>準備してください</h2>
+              <h3 style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#212529', marginBottom: '10px' }}>{currentEx.exercise}</h3>
+              <div style={{ fontSize: '6rem', fontWeight: 'bold', color: '#1a73e8', lineHeight: 1 }}>{timeLeft}</div>
+            </div>
           </div>
         )}
 
         {phase === 'rest' && (
           <div style={{ display: 'flex', flexDirection: 'column', height: '100%', width: '100%', position: 'absolute', top: 0, left: 0 }}>
-            <div style={{ flex: 1, background: '#fff', display: 'flex', justifyContent: 'center', alignItems: 'center', position: 'relative', padding: '20px' }}>
-              <div style={{ width: '100%', height: '100%', maxHeight: '40vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+            <div style={{ flex: 1, background: '#fff', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', position: 'relative', padding: '20px' }}>
+              <div style={{ position: 'absolute', top: '20px', left: '0', right: '0', textAlign: 'center' }}>
+                <h2 style={{ fontSize: '1.5rem', fontWeight: '900', color: '#1a73e8', margin: 0 }}>次の種目</h2>
+              </div>
+              <div style={{ width: '100%', height: '100%', maxHeight: '40vh', display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '40px' }}>
                 <img 
                   src={getExerciseDetails(exercises[currentIndex + 1]?.exercise || '').gifUrl || getExerciseDetails(exercises[currentIndex + 1]?.exercise || '').image || 'https://v2.exercisedb.io/image/1'} 
                   alt="Next Exercise" 

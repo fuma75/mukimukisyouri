@@ -29,7 +29,7 @@ export interface AiMenuData {
 interface AiMenuModalProps {
   data: AiMenuData;
   onClose: () => void;
-  onApply: (exercises: AiExercise[]) => void;
+  onApply: (exercises: AiExercise[], percentage: number, title: string, isPartial?: boolean) => void;
 }
 
 const ExerciseItem = ({ item, onClick }: { item: AiExercise, onClick: () => void }) => {
@@ -62,6 +62,16 @@ const ExerciseItem = ({ item, onClick }: { item: AiExercise, onClick: () => void
 export default function AiMenuModal({ data, onClose, onApply }: AiMenuModalProps) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+  const [resumeIndex, setResumeIndex] = useState(0);
+
+  React.useEffect(() => {
+    if (data.title) {
+      const saved = localStorage.getItem(`workout_progress_${data.title}`);
+      if (saved) {
+        setResumeIndex(parseInt(saved, 10) || 0);
+      }
+    }
+  }, [data.title]);
   
   // Clone the data to allow duration/reps updates
   const [currentData, setCurrentData] = useState<AiMenuData>(data);
@@ -94,8 +104,27 @@ export default function AiMenuModal({ data, onClose, onApply }: AiMenuModalProps
   const totalTime = currentData.estimatedMinutes || calculateTotalTime();
   const totalExercises = currentData.exerciseCount || allExercises.length;
 
-  const handleStart = () => {
+  const handleStart = (startIdx: number = 0) => {
+    setResumeIndex(startIdx);
     setIsPlaying(true);
+  };
+
+  const handleCancelWorkout = (idx: number) => {
+    setIsPlaying(false);
+    if (idx > 0 && idx < allExercises.length) {
+      localStorage.setItem(`workout_progress_${currentData.title}`, idx.toString());
+      setResumeIndex(idx);
+      const percentage = Math.round((idx / totalExercises) * 100);
+      onApply(allExercises, percentage, currentData.title || 'トレーニング', true);
+    } else {
+      localStorage.removeItem(`workout_progress_${currentData.title}`);
+      setResumeIndex(0);
+    }
+  };
+
+  const handleCompleteWorkout = () => {
+    localStorage.removeItem(`workout_progress_${currentData.title}`);
+    onApply(allExercises, 100, currentData.title || 'トレーニング');
   };
 
   const handleUpdateDuration = (index: number, newDuration: string) => {
@@ -133,8 +162,9 @@ export default function AiMenuModal({ data, onClose, onApply }: AiMenuModalProps
     return (
       <WorkoutPlayer 
         exercises={allExercises} 
-        onComplete={() => onApply(allExercises)} 
-        onCancel={() => setIsPlaying(false)} 
+        onComplete={handleCompleteWorkout} 
+        onCancel={handleCancelWorkout} 
+        initialIndex={resumeIndex}
       />
     );
   }
@@ -186,12 +216,30 @@ export default function AiMenuModal({ data, onClose, onApply }: AiMenuModalProps
           <span><i className="fa-solid fa-fire" style={{ color: '#adb5bd', marginRight: '4px' }}></i> {totalExercises} エクササイズ</span>
         </div>
 
-        <button 
-          onClick={handleStart}
-          style={{ width: '100%', padding: '18px', background: '#0066ff', color: '#fff', borderRadius: '30px', fontSize: '1.2rem', fontWeight: 'bold', border: 'none', cursor: 'pointer', marginBottom: '30px', boxShadow: '0 4px 14px rgba(0, 102, 255, 0.3)' }}
-        >
-          スタート
-        </button>
+        {resumeIndex > 0 ? (
+          <div style={{ display: 'flex', gap: '15px', marginBottom: '30px' }}>
+            <button 
+              onClick={() => handleStart(0)}
+              style={{ flex: 1, padding: '18px 0', background: '#343a40', color: '#fff', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer', boxShadow: '0 4px 14px rgba(0,0,0,0.15)' }}
+            >
+              もう一度最初から
+            </button>
+            <button 
+              onClick={() => handleStart(resumeIndex)}
+              style={{ flex: 1, padding: '12px 0', background: '#0066ff', color: '#fff', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer', boxShadow: '0 4px 14px rgba(0, 102, 255, 0.3)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}
+            >
+              <span style={{ fontSize: '1.1rem', marginBottom: '2px' }}>続行</span>
+              <span style={{ fontSize: '0.85rem', fontWeight: 'normal' }}>{Math.round((resumeIndex / totalExercises) * 100)}% 完了</span>
+            </button>
+          </div>
+        ) : (
+          <button 
+            onClick={() => handleStart(0)}
+            style={{ width: '100%', padding: '18px', background: '#0066ff', color: '#fff', borderRadius: '30px', fontSize: '1.2rem', fontWeight: 'bold', border: 'none', cursor: 'pointer', marginBottom: '30px', boxShadow: '0 4px 14px rgba(0, 102, 255, 0.3)' }}
+          >
+            スタート
+          </button>
+        )}
 
         {/* Exercises List */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '15px' }}>

@@ -182,7 +182,14 @@ export function saveWorkout(workoutItem: WorkoutItem): WorkoutItem {
     if (workoutItem.calories !== undefined && workoutItem.calories !== null) {
         workoutItem.calories = Number(workoutItem.calories) || 0;
     }
-    list.push(workoutItem);
+    
+    const existingIndex = list.findIndex(w => w.id === workoutItem.id);
+    if (existingIndex >= 0) {
+        list[existingIndex] = workoutItem;
+    } else {
+        list.push(workoutItem);
+    }
+    
     if (typeof window !== 'undefined') {
         localStorage.setItem(STORAGE_KEYS.WORKOUTS, JSON.stringify(list));
     }

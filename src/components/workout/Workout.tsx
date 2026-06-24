@@ -154,30 +154,59 @@ export default function Workout() {
     }
   };
 
-  const handleApplyAiMenu = (exercises: AiExercise[]) => {
+  const handleApplyAiMenu = (exercises: AiExercise[], percentage: number = 100, title?: string, isPartial: boolean = false) => {
     const profile = getProfile();
     const defaultWeight = profile?.weight || 60;
 
-    exercises.forEach(item => {
-      let cals = Number(item.calories);
-      if (!cals || isNaN(cals)) {
-         cals = calculateCalories(item.exercise, item.duration, item.reps, defaultWeight);
-      }
+    if (title) {
+      const currentWorkouts = getWorkouts(date);
+      const existing = currentWorkouts.find(w => w.exercise.startsWith(title + ' '));
+
+      let totalCals = 0;
+      const completedCount = Math.round(exercises.length * (percentage / 100));
+      exercises.slice(0, completedCount).forEach(item => {
+        let cals = Number(item.calories);
+        if (!cals || isNaN(cals)) {
+           cals = calculateCalories(item.exercise, item.duration, item.reps, defaultWeight);
+        }
+        totalCals += cals;
+      });
 
       saveWorkout({
+        id: existing?.id,
         date,
         category: aiCategory === '全身' ? 'その他' : aiCategory,
-        exercise: item.exercise,
-        weight: Number(item.weight) || 0,
-        reps: Number(item.reps) || 0,
-        sets: Number(item.sets) || 0,
-        calories: cals
+        exercise: `${title} ${percentage}%`,
+        weight: 0,
+        reps: 0,
+        sets: 1,
+        calories: Math.round(totalCals)
       });
-    });
+    } else {
+      exercises.forEach(item => {
+        let cals = Number(item.calories);
+        if (!cals || isNaN(cals)) {
+           cals = calculateCalories(item.exercise, item.duration, item.reps, defaultWeight);
+        }
+
+        saveWorkout({
+          date,
+          category: aiCategory === '全身' ? 'その他' : aiCategory,
+          exercise: item.exercise,
+          weight: Number(item.weight) || 0,
+          reps: Number(item.reps) || 0,
+          sets: Number(item.sets) || 0,
+          calories: cals
+        });
+      });
+    }
+
     setWorkouts(getWorkouts(date));
-    setAiMenuData(null);
-    setShowAiMenuPanel(false);
-    alert('今日の記録に追加しました！💪');
+    if (!isPartial) {
+      setAiMenuData(null);
+      setShowAiMenuPanel(false);
+      alert('今日の記録に追加しました！💪');
+    }
   };
 
   const totalVolume = workouts.reduce((sum, w) => sum + (w.volume || 0), 0);
