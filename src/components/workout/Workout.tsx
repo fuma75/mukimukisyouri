@@ -225,9 +225,25 @@ export default function Workout() {
         });
     };
 
+    const prof = getProfile() || {} as any;
+    let challengeLevel = 2; 
+    let challengeTitle = '全身脂肪燃焼';
+    let challengeLevelText = '中級';
+    let challengeTime = '12〜25分';
+
+    if (prof.workoutLevel === '初級' || prof.frequency?.includes('1') || prof.frequency?.includes('たまに')) {
+        challengeLevel = 1;
+        challengeTitle = '全身脂肪燃焼 (初級向け)';
+        challengeLevelText = '初級';
+        challengeTime = '8〜15分';
+    } else if (prof.workoutLevel === '上級' || prof.frequency?.includes('毎日') || prof.frequency?.includes('5')) {
+        challengeLevel = 3;
+        challengeTitle = '全身脂肪燃焼 (上級向け)';
+        challengeLevelText = '上級';
+        challengeTime = '25〜40分';
+    }
+
     const handleChallengeClick = () => {
-        const prof = getProfile() || {} as any;
-        
         let warmup = [
             { exercise: 'ジャンピングジャック', duration: '00:30' },
             { exercise: 'ヒップキック', duration: '00:30' },
@@ -268,17 +284,11 @@ export default function Workout() {
         }
 
         // Frequency & Level adjustments
-        let level = 2; 
-        let title = '全身脂肪燃焼';
-        if (prof.workoutLevel === '初級' || prof.frequency?.includes('1') || prof.frequency?.includes('たまに')) {
-            level = 1;
-            title = '全身脂肪燃焼 (初級向け)';
+        if (challengeLevel === 1) {
             training = training.map(t => ({...t, duration: t.duration.replace('00:35', '00:20').replace('00:30', '00:20')}));
             warmup = warmup.map(t => ({...t, duration: t.duration.replace('00:30', '00:20')}));
             training = training.filter(t => t.exercise !== 'スパイダーマンプランク'); 
-        } else if (prof.workoutLevel === '上級' || prof.frequency?.includes('毎日') || prof.frequency?.includes('5')) {
-            level = 3;
-            title = '全身脂肪燃焼 (上級向け)';
+        } else if (challengeLevel === 3) {
             training = training.map(t => ({...t, duration: t.duration.replace('00:30', '00:45').replace('00:35', '00:45')}));
             training.push({ exercise: 'バーピージャンプ', duration: '00:45' });
         }
@@ -288,10 +298,10 @@ export default function Workout() {
         }
 
         const totalEx = warmup.length + training.length + cooldown.length;
-        const totalMinutes = Math.ceil((totalEx * (level === 3 ? 45 : level === 1 ? 20 : 30)) / 60) + 2; 
+        const totalMinutes = Math.ceil((totalEx * (challengeLevel === 3 ? 45 : challengeLevel === 1 ? 20 : 30)) / 60) + 2; 
 
         setAiMenuData({
-            title: title,
+            title: challengeTitle,
             goal: '全身の脂肪燃焼',
             environment: prof.environment || '家トレ',
             category: '全身',
@@ -301,7 +311,7 @@ export default function Workout() {
             warmup,
             training,
             cooldown,
-            message: `あなたに合わせた${title}プログラムです！無理せず頑張りましょう。`
+            message: `あなたに合わせた${challengeTitle}プログラムです！無理せず頑張りましょう。`
         });
     };
 
@@ -341,19 +351,19 @@ export default function Workout() {
             <h3 className="challenge-section-title">チャレンジ</h3>
             <div className="challenge-card-banner">
                 <div className="challenge-badge">あなたに合わせて</div>
-                <h2 className="challenge-title">全身脂肪燃焼</h2>
+                <h2 className="challenge-title">{challengeTitle}</h2>
                 <div className="challenge-grid">
                     <div className="challenge-stat">
                         <div className="challenge-stat-icon"><i className="fa-regular fa-calendar-days"></i></div>
                         <div className="challenge-stat-text">
-                            <span className="challenge-stat-val">8〜23分</span>
+                            <span className="challenge-stat-val">{challengeTime}</span>
                             <span className="challenge-stat-label">毎日の時間</span>
                         </div>
                     </div>
                     <div className="challenge-stat">
                         <div className="challenge-stat-icon"><i className="fa-solid fa-chart-simple"></i></div>
                         <div className="challenge-stat-text">
-                            <span className="challenge-stat-val">中級</span>
+                            <span className="challenge-stat-val">{challengeLevelText}</span>
                             <span className="challenge-stat-label">難易度</span>
                         </div>
                     </div>

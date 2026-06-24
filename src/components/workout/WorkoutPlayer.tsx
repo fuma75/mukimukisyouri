@@ -140,20 +140,22 @@ export default function WorkoutPlayer({ exercises, onComplete, onCancel }: Worko
     <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, zIndex: 10000, background: '#fff', display: 'flex', flexDirection: 'column' }}>
       
       {/* Header / Progress */}
-      <div style={{ padding: '20px', display: 'flex', alignItems: 'center', gap: '15px', background: '#fff', borderBottom: '1px solid #f1f3f5' }}>
-        <button onClick={onCancel} style={{ background: 'none', border: 'none', fontSize: '1.5rem', color: '#495057', cursor: 'pointer' }}>
-          <i className="fa-solid fa-xmark"></i>
-        </button>
-        <div style={{ flex: 1, height: '8px', background: '#e9ecef', borderRadius: '4px', overflow: 'hidden' }}>
-          <div style={{ width: `${progressPercent}%`, height: '100%', background: '#1a73e8', transition: 'width 0.3s ease' }}></div>
+      {phase !== 'rest' && (
+        <div style={{ padding: '20px', display: 'flex', alignItems: 'center', gap: '15px', background: '#fff', borderBottom: '1px solid #f1f3f5' }}>
+          <button onClick={onCancel} style={{ background: 'none', border: 'none', fontSize: '1.5rem', color: '#495057', cursor: 'pointer' }}>
+            <i className="fa-solid fa-xmark"></i>
+          </button>
+          <div style={{ flex: 1, height: '8px', background: '#e9ecef', borderRadius: '4px', overflow: 'hidden' }}>
+            <div style={{ width: `${progressPercent}%`, height: '100%', background: '#1a73e8', transition: 'width 0.3s ease' }}></div>
+          </div>
+          <div style={{ fontSize: '0.9rem', fontWeight: 'bold', color: '#868e96' }}>
+            {currentIndex + 1} / {exercises.length}
+          </div>
         </div>
-        <div style={{ fontSize: '0.9rem', fontWeight: 'bold', color: '#868e96' }}>
-          {currentIndex + 1} / {exercises.length}
-        </div>
-      </div>
+      )}
 
       {/* Main Content Area */}
-      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '20px', textAlign: 'center' }}>
+      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: phase === 'rest' ? 'flex-start' : 'center', padding: phase === 'rest' ? '0' : '20px', textAlign: 'center', position: 'relative' }}>
         
         {phase === 'ready' && (
           <div style={{ animation: 'pulse 1s infinite' }}>
@@ -163,24 +165,67 @@ export default function WorkoutPlayer({ exercises, onComplete, onCancel }: Worko
         )}
 
         {phase === 'rest' && (
-          <div>
-            <h2 style={{ fontSize: '1.5rem', color: '#20c997', marginBottom: '10px' }}>休憩 (インターバル)</h2>
-            <div style={{ fontSize: '5rem', fontWeight: 'bold', color: '#20c997', marginBottom: '30px' }}>{formatTime(timeLeft || 0)}</div>
-            
-            <div style={{ background: '#f8f9fa', padding: '15px 30px', borderRadius: '16px', marginBottom: '30px' }}>
-              <p style={{ margin: '0 0 5px 0', fontSize: '0.9rem', color: '#868e96' }}>次は...</p>
-              <h3 style={{ margin: 0, fontSize: '1.5rem', color: '#212529' }}>{exercises[currentIndex + 1]?.exercise}</h3>
+          <div style={{ display: 'flex', flexDirection: 'column', height: '100%', width: '100%', position: 'absolute', top: 0, left: 0 }}>
+            <div style={{ flex: 1, background: '#fff', display: 'flex', justifyContent: 'center', alignItems: 'center', position: 'relative', padding: '20px' }}>
+              <div style={{ width: '100%', height: '100%', maxHeight: '40vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                <img 
+                  src={getExerciseDetails(exercises[currentIndex + 1]?.exercise || '').gifUrl || getExerciseDetails(exercises[currentIndex + 1]?.exercise || '').image || 'https://v2.exercisedb.io/image/1'} 
+                  alt="Next Exercise" 
+                  style={{ width: '100%', height: '100%', objectFit: 'contain' }} 
+                />
+              </div>
             </div>
-
-            <button onClick={handleSkipRest} style={{ padding: '12px 30px', background: '#e9ecef', color: '#495057', border: 'none', borderRadius: '24px', fontSize: '1rem', fontWeight: 'bold', cursor: 'pointer' }}>
-              休憩をスキップ <i className="fa-solid fa-forward-step"></i>
-            </button>
+            
+            <div style={{ flex: 1.2, background: '#0d6efd', color: '#fff', padding: '30px 20px', borderTopLeftRadius: '24px', borderTopRightRadius: '24px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+              <div style={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '10px' }}>
+                 <div style={{ textAlign: 'left' }}>
+                   <div style={{ fontSize: '1rem', fontWeight: 'bold', marginBottom: '5px', opacity: 0.9 }}>次へ {currentIndex + 2}/{exercises.length}</div>
+                   <div style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>{exercises[currentIndex + 1]?.exercise}</div>
+                 </div>
+                 <div style={{ fontSize: '1.3rem', fontWeight: 'bold', display: 'flex', alignItems: 'center', gap: '5px' }}>
+                   {exercises[currentIndex + 1]?.reps ? `x ${exercises[currentIndex + 1].reps}` : exercises[currentIndex + 1]?.duration ? `${exercises[currentIndex + 1].duration}` : ''}
+                 </div>
+              </div>
+              
+              <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
+                <div style={{ fontSize: '1.2rem', opacity: 0.9 }}>休憩</div>
+                <div style={{ fontSize: '4.5rem', fontWeight: 'bold', lineHeight: 1, margin: '10px 0' }}>
+                  {formatTime(timeLeft || 0)}
+                </div>
+                <button style={{ background: 'rgba(255,255,255,0.2)', color: '#fff', border: 'none', padding: '8px 20px', borderRadius: '20px', fontSize: '0.9rem', cursor: 'pointer' }}>
+                  休憩時間を編集
+                </button>
+              </div>
+              
+              <div style={{ display: 'flex', gap: '15px', width: '100%', marginTop: '20px' }}>
+                <button 
+                  onClick={() => setTimeLeft((prev) => (prev !== null ? prev + 20 : null))}
+                  style={{ flex: 1, padding: '16px', background: 'rgba(255,255,255,0.2)', color: '#fff', border: 'none', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', cursor: 'pointer' }}
+                >
+                  +20s
+                </button>
+                <button 
+                  onClick={handleSkipRest}
+                  style={{ flex: 1, padding: '16px', background: '#fff', color: '#0d6efd', border: 'none', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', cursor: 'pointer' }}
+                >
+                  スキップ
+                </button>
+              </div>
+            </div>
           </div>
         )}
 
         {phase === 'work' && currentEx && (
           <div style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-            {getExerciseDetails(currentEx.exercise).images && getExerciseDetails(currentEx.exercise).images!.length > 0 ? (
+            {getExerciseDetails(currentEx.exercise).gifUrl ? (
+              <div style={{ width: '100%', maxWidth: '350px', height: '250px', borderRadius: '24px', overflow: 'hidden', marginBottom: '20px', background: '#fff', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                <img 
+                  src={getExerciseDetails(currentEx.exercise).gifUrl} 
+                  alt={currentEx.exercise} 
+                  style={{ width: '100%', height: '100%', objectFit: 'contain' }} 
+                />
+              </div>
+            ) : getExerciseDetails(currentEx.exercise).images && getExerciseDetails(currentEx.exercise).images!.length > 0 ? (
               <div style={{ width: '100%', maxWidth: '300px', height: '220px', borderRadius: '16px', overflow: 'hidden', marginBottom: '20px', boxShadow: '0 8px 24px rgba(0,0,0,0.1)', background: '#fff', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                 <img 
                   src={getExerciseDetails(currentEx.exercise).images![animFrame % getExerciseDetails(currentEx.exercise).images!.length]} 
@@ -213,8 +258,28 @@ export default function WorkoutPlayer({ exercises, onComplete, onCancel }: Worko
             </div>
 
             {isTimeBased ? (
-              <div style={{ fontSize: '4.5rem', fontWeight: 'bold', color: isPaused ? '#adb5bd' : '#1a73e8', fontFamily: 'monospace' }}>
-                {formatTime(timeLeft || 0)}
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '30px', marginTop: '20px' }}>
+                <div style={{ position: 'relative', width: '160px', height: '160px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                  <svg width="160" height="160" viewBox="0 0 160 160" style={{ position: 'absolute', top: 0, left: 0, transform: 'rotate(-90deg)' }}>
+                    <circle cx="80" cy="80" r="72" fill="none" stroke="#f1f3f5" strokeWidth="12" />
+                    <circle 
+                      cx="80" cy="80" r="72" fill="none" stroke="#0d6efd" strokeWidth="12" 
+                      strokeLinecap="round"
+                      strokeDasharray="452.39" 
+                      strokeDashoffset={452.39 * (1 - (timeLeft || 0) / (parseDuration(currentEx.duration) || 1))}
+                      style={{ transition: 'stroke-dashoffset 1s linear' }}
+                    />
+                  </svg>
+                  <div style={{ fontSize: '4rem', fontWeight: '900', color: '#212529', zIndex: 1 }}>
+                    {timeLeft}
+                  </div>
+                </div>
+                <button 
+                  onClick={handleNext} 
+                  style={{ width: '60px', height: '60px', background: '#fff', border: 'none', color: '#212529', fontSize: '2rem', cursor: 'pointer', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+                >
+                  <i className="fa-solid fa-chevron-right"></i>
+                </button>
               </div>
             ) : (
               <div style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#1a73e8', marginBottom: '20px' }}>
@@ -226,31 +291,14 @@ export default function WorkoutPlayer({ exercises, onComplete, onCancel }: Worko
       </div>
 
       {/* Controls */}
-      {phase === 'work' && (
+      {phase === 'work' && !isTimeBased && (
         <div style={{ padding: '30px', display: 'flex', justifyContent: 'center', gap: '20px', background: '#fff' }}>
-          {isTimeBased ? (
-            <>
-              <button 
-                onClick={() => setIsPaused(!isPaused)} 
-                style={{ width: '80px', height: '80px', borderRadius: '50%', background: isPaused ? '#20c997' : '#ffc107', color: '#fff', fontSize: '1.5rem', border: 'none', cursor: 'pointer', boxShadow: '0 4px 10px rgba(0,0,0,0.1)' }}
-              >
-                <i className={`fa-solid ${isPaused ? 'fa-play' : 'fa-pause'}`}></i>
-              </button>
-              <button 
-                onClick={handleNext} 
-                style={{ width: '80px', height: '80px', borderRadius: '50%', background: '#e9ecef', color: '#495057', fontSize: '1.5rem', border: 'none', cursor: 'pointer' }}
-              >
-                <i className="fa-solid fa-forward-step"></i>
-              </button>
-            </>
-          ) : (
-            <button 
-              onClick={handleNext} 
-              style={{ width: '100%', maxWidth: '300px', padding: '20px', background: '#1a73e8', color: '#fff', borderRadius: '40px', fontSize: '1.5rem', fontWeight: 'bold', border: 'none', cursor: 'pointer', boxShadow: '0 4px 14px rgba(26, 115, 232, 0.3)' }}
-            >
-              <i className="fa-solid fa-check"></i> 完了して次へ
-            </button>
-          )}
+          <button 
+            onClick={handleNext} 
+            style={{ width: '100%', maxWidth: '300px', padding: '20px', background: '#1a73e8', color: '#fff', borderRadius: '40px', fontSize: '1.5rem', fontWeight: 'bold', border: 'none', cursor: 'pointer', boxShadow: '0 4px 14px rgba(26, 115, 232, 0.3)' }}
+          >
+            <i className="fa-solid fa-check"></i> 完了して次へ
+          </button>
         </div>
       )}
     </div>
