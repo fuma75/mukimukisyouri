@@ -25,7 +25,7 @@ export default function Login() {
   const [targetAreas, setTargetAreas] = useState<string[]>([]);
   
   const [dob, setDob] = useState('2000-01-01');
-  const [height, setHeight] = useState('160');
+  const [height, setHeight] = useState('150');
   const [weight, setWeight] = useState('50');
   const [targetWeight, setTargetWeight] = useState('50');
   
@@ -47,6 +47,14 @@ export default function Login() {
 
   useEffect(() => {
     const timeout = setTimeout(() => {
+      if (step === 6) {
+        const selectedHeight = document.getElementById('selected-height-option');
+        if (selectedHeight) {
+          selectedHeight.scrollIntoView({ block: 'center' });
+          return;
+        }
+      }
+
       const selectedCard = document.querySelector('.option-card[style*="rgba(26, 115, 232, 0.05)"]');
       if (selectedCard instanceof HTMLElement) {
         selectedCard.focus();
@@ -350,7 +358,6 @@ export default function Login() {
         border: `2px solid ${selected ? '#1a73e8' : '#f4f6fb'}`,
         borderRadius: '16px',
         cursor: 'pointer',
-        marginBottom: '15px',
         boxShadow: selected ? '0 4px 12px rgba(26, 115, 232, 0.1)' : '0 4px 12px rgba(0,0,0,0.03)',
         transition: 'all 0.2s ease',
         boxSizing: 'border-box'
@@ -492,46 +499,13 @@ export default function Login() {
         <div style={{ maxWidth: '600px', margin: '0 auto', padding: '20px', width: '100%', display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
           {renderWizardHeader("01 目標とターゲット部位", 3)}
           
-          <div style={{ flex: 1 }}>
+          <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
             <h2 style={{ textAlign: 'center', fontSize: '1.8rem', fontWeight: 'bold', marginBottom: '30px' }}>主な目標は何ですか？</h2>
             
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
-              {[
-                { id: '減量', label: '体重を減らす' },
-                { id: '増量', label: '筋肉増強' },
-                { id: '現状維持', label: '健康維持' }
-              ].map((g) => {
-                const isSelected = goal === g.id;
-                return (
-                  <div key={g.id} 
-                    className="option-card"
-                    tabIndex={0}
-                    onClick={() => setGoal(g.id)}
-                    onKeyDown={(e) => handleCardKeyDown(e, () => setGoal(g.id))}
-                    style={{ 
-                      height: '110px', 
-                      borderRadius: '24px', 
-                      background: '#fff', 
-                      border: `2px solid ${isSelected ? '#1a73e8' : '#e9ecef'}`, 
-                      cursor: 'pointer',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'space-between',
-                      padding: '0 30px',
-                      overflow: 'hidden',
-                      boxShadow: isSelected ? '0 8px 20px rgba(26, 115, 232, 0.15)' : '0 4px 10px rgba(0,0,0,0.03)'
-                    }}>
-                    
-                    <div style={{ fontSize: '1.3rem', fontWeight: 'bold', color: isSelected ? '#1a73e8' : '#212529', zIndex: 2 }}>
-                      {g.label}
-                    </div>
-                    
-                    <div style={{ width: '120px', height: '100%', background: '#f8f9fa', borderTopLeftRadius: '100px', borderBottomLeftRadius: '100px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#dee2e6' }}>
-                      <i className="fa-solid fa-image" style={{ fontSize: '2rem' }}></i>
-                    </div>
-                  </div>
-                );
-              })}
+            <div style={{ display: 'flex', flexDirection: 'column', flex: 1, justifyContent: 'center', gap: '15px', paddingBottom: '20px' }}>
+              {renderOptionCard('体重を減らす', 'fa-solid fa-weight-scale', goal === '減量', () => setGoal('減量'))}
+              {renderOptionCard('筋肉増強', 'fa-solid fa-dumbbell', goal === '増量', () => setGoal('増量'))}
+              {renderOptionCard('健康維持', 'fa-solid fa-heart-pulse', goal === '現状維持', () => setGoal('現状維持'))}
             </div>
           </div>
 
@@ -551,44 +525,12 @@ export default function Login() {
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
             <h2 style={{ textAlign: 'center', fontSize: '1.8rem', fontWeight: 'bold', marginBottom: '30px' }}>ターゲットの部位はどこですか？</h2>
             
-            <div style={{ display: 'flex', flex: 1, position: 'relative' }}>
-              <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '20px', justifyContent: 'center', zIndex: 2 }}>
-                {['全身', '腕', '胸部', '腹筋', '脚'].map((area) => {
-                  const isSelected = targetAreas.includes(area);
-                  return (
-                    <div key={area} 
-                      className="option-card"
-                      tabIndex={0}
-                      onClick={() => handleAreaToggle(area)}
-                      onKeyDown={(e) => handleCardKeyDown(e, () => handleAreaToggle(area))}
-                      style={{ 
-                        width: '140px',
-                        padding: '18px 20px',
-                        borderRadius: '20px', 
-                        background: '#fff', 
-                        border: `2px solid ${isSelected ? '#1a73e8' : '#e9ecef'}`, 
-                        cursor: 'pointer',
-                        fontSize: '1.1rem',
-                        fontWeight: 'bold',
-                        color: isSelected ? '#1a73e8' : '#212529',
-                        boxShadow: '0 4px 10px rgba(0,0,0,0.03)',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'space-between'
-                      }}>
-                      {area}
-                      {isSelected && <div style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#1a73e8' }}></div>}
-                    </div>
-                  );
-                })}
-              </div>
-
-              <div style={{ flex: 1.5, background: '#f8f9fa', borderRadius: '24px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#dee2e6' }}>
-                 <div style={{ textAlign: 'center' }}>
-                   <i className="fa-solid fa-user" style={{ fontSize: '8rem', marginBottom: '20px' }}></i>
-                   <p style={{ fontWeight: 'bold', color: '#adb5bd' }}>Character Placeholder</p>
-                 </div>
-              </div>
+            <div style={{ display: 'flex', flexDirection: 'column', flex: 1, justifyContent: 'center', gap: '15px', paddingBottom: '20px' }}>
+              {renderOptionCard('全身', 'fa-solid fa-child', targetAreas.includes('全身'), () => handleAreaToggle('全身'))}
+              {renderOptionCard('腕', 'fa-solid fa-hand-fist', targetAreas.includes('腕'), () => handleAreaToggle('腕'))}
+              {renderOptionCard('胸部', 'fa-solid fa-child-reaching', targetAreas.includes('胸部'), () => handleAreaToggle('胸部'))}
+              {renderOptionCard('腹筋', 'fa-solid fa-cubes', targetAreas.includes('腹筋'), () => handleAreaToggle('腹筋'))}
+              {renderOptionCard('脚', 'fa-solid fa-shoe-prints', targetAreas.includes('脚'), () => handleAreaToggle('脚'))}
             </div>
           </div>
 
@@ -627,49 +569,34 @@ export default function Login() {
 
       {/* STEP 6: Height */}
       {step === 6 && (
-        <div style={{ maxWidth: '600px', margin: '0 auto', padding: '20px', width: '100%', display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
-          {renderWizardHeader("02 身体情報の設定", 6)}
+        <div style={{ maxWidth: '600px', margin: '0 auto', padding: '0', width: '100%', display: 'flex', flexDirection: 'column', height: '100vh', background: '#fcfcfd' }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '20px', position: 'relative', borderBottom: '1px solid #e9ecef', flexShrink: 0 }}>
+            <button onClick={handleBack} style={{ position: 'absolute', left: '20px', background: 'none', border: 'none', fontSize: '1.2rem', color: '#adb5bd', cursor: 'pointer' }}>
+              <i className="fa-solid fa-chevron-left"></i>
+            </button>
+            <h2 style={{ fontSize: '1.1rem', fontWeight: 'bold', margin: 0, color: '#495057' }}>身長を選択してください</h2>
+          </div>
           
-          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-            <h2 style={{ textAlign: 'center', fontSize: '1.8rem', fontWeight: 'bold', marginBottom: '30px' }}>あなたの身長は？</h2>
-            
-            <div style={{ display: 'flex', border: '1px solid #1a73e8', borderRadius: '30px', overflow: 'hidden', marginBottom: '50px' }}>
-              <div 
-                onClick={() => setHeightUnit('cm')}
-                style={{ padding: '10px 30px', fontWeight: 'bold', cursor: 'pointer', background: heightUnit === 'cm' ? '#1a73e8' : '#fff', color: heightUnit === 'cm' ? '#fff' : '#1e1e24' }}>
-                cm
-              </div>
-              <div 
-                onClick={() => setHeightUnit('ft')}
-                style={{ padding: '10px 30px', fontWeight: 'bold', cursor: 'pointer', background: heightUnit === 'ft' ? '#1a73e8' : '#fff', color: heightUnit === 'ft' ? '#fff' : '#1e1e24' }}>
-                ft
-              </div>
-            </div>
-
-            <div style={{ display: 'flex', alignItems: 'center', width: '100%' }}>
-              <div style={{ flex: 1, textAlign: 'center' }}>
-                <span style={{ fontSize: '4.5rem', fontWeight: 'bold', color: '#1e1e24' }}>{height}</span>
-                <span style={{ fontSize: '1.2rem', color: '#495057', marginLeft: '5px' }}>{heightUnit}</span>
-                <div style={{ height: '2px', background: '#1a73e8', width: '120px', margin: '10px auto 0' }}></div>
-              </div>
-              
-              <div style={{ padding: '0 20px' }}>
-                <RulerPicker 
-                  min={heightUnit === 'cm' ? 100 : 3.0} 
-                  max={heightUnit === 'cm' ? 250 : 8.0} 
-                  step={heightUnit === 'cm' ? 1 : 0.1}
-                  value={Number(height)} 
-                  onChange={val => setHeight(String(val))} 
-                  orientation="vertical"
-                />
-              </div>
-            </div>
+          <div style={{ flex: 1, overflowY: 'auto', padding: '0 20px' }}>
+            {['130cm以下', ...Array.from({length: 69}, (_, i) => `${131 + i}cm`), '200cm以上'].map(h => {
+              const numVal = h.replace(/[^0-9]/g, '');
+              const isSelected = height === numVal;
+              return (
+                <div 
+                  key={h}
+                  id={isSelected ? "selected-height-option" : undefined}
+                  onClick={() => { setHeight(numVal); setHeightUnit('cm'); }}
+                  style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '18px 0', borderBottom: '1px solid #f1f3f5', cursor: 'pointer' }}
+                >
+                  <span style={{ fontSize: '1.1rem', color: '#495057' }}>{h}</span>
+                  <div style={{ width: '22px', height: '22px', borderRadius: '50%', border: isSelected ? '6px solid #1a73e8' : '2px solid #dee2e6', background: '#fff', transition: 'all 0.2s' }}></div>
+                </div>
+              );
+            })}
           </div>
 
-          <div style={{ padding: '20px 0' }}>
-            <button onClick={handleNext} style={{ width: '100%', padding: '18px', background: '#1a73e8', color: '#fff', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer' }}>
-              次へ
-            </button>
+          <div style={{ padding: '20px', background: '#fff', borderTop: '1px solid #e9ecef', flexShrink: 0 }}>
+            <button onClick={handleNext} disabled={!height} style={{ width: '100%', padding: '16px', background: height ? '#1a73e8' : '#dee2e6', color: height ? '#fff' : '#adb5bd', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer' }}>決定</button>
           </div>
         </div>
       )}
@@ -771,10 +698,10 @@ export default function Login() {
         <div style={{ maxWidth: '600px', margin: '0 auto', padding: '20px', width: '100%', display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
           {renderWizardHeader("03 トレーニング環境", 9)}
           
-          <div style={{ flex: 1 }}>
+          <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
             <h2 style={{ textAlign: 'center', fontSize: '1.6rem', fontWeight: 'bold', marginBottom: '30px' }}>どこでトレーニングしますか？</h2>
             
-            <div style={{ display: 'flex', flexDirection: 'column' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', flex: 1, justifyContent: 'center', gap: '15px', paddingBottom: '20px' }}>
               {renderOptionCard('家', 'fa-solid fa-house', environment === '家', () => setEnvironment('家'))}
               {renderOptionCard('ジム', 'fa-solid fa-dumbbell', environment === 'ジム', () => setEnvironment('ジム'))}
               {renderOptionCard('どの場所でもOK', 'fa-solid fa-earth-americas', environment === 'どの場所でもOK', () => setEnvironment('どの場所でもOK'))}
@@ -794,10 +721,10 @@ export default function Login() {
         <div style={{ maxWidth: '600px', margin: '0 auto', padding: '20px', width: '100%', display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
           {renderWizardHeader("03 トレーニング環境", 10)}
           
-          <div style={{ flex: 1 }}>
+          <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
             <h2 style={{ textAlign: 'center', fontSize: '1.6rem', fontWeight: 'bold', marginBottom: '30px' }}>運動の種類の制限はありますか？</h2>
             
-            <div style={{ display: 'flex', flexDirection: 'column' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', flex: 1, justifyContent: 'center', gap: '15px', paddingBottom: '20px' }}>
               {renderOptionCard('なし（何でもできる）', 'fa-solid fa-check-double', exerciseTypes.includes('なし'), () => handleExerciseTypeToggle('なし'))}
               {renderOptionCard('器具無し（自重のみ）', 'fa-solid fa-hand-fist', exerciseTypes.includes('器具無し'), () => handleExerciseTypeToggle('器具無し'))}
               {renderOptionCard('ジャンプ無し（騒音配慮）', 'fa-solid fa-shoe-prints', exerciseTypes.includes('ジャンプ無し'), () => handleExerciseTypeToggle('ジャンプ無し'))}
@@ -818,10 +745,10 @@ export default function Login() {
         <div style={{ maxWidth: '600px', margin: '0 auto', padding: '20px', width: '100%', display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
           {renderWizardHeader("03 フィットネスレベル評価", 11)}
           
-          <div style={{ flex: 1 }}>
+          <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
             <h2 style={{ textAlign: 'center', fontSize: '1.6rem', fontWeight: 'bold', marginBottom: '30px' }}>ご希望のワークアウトレベルを選択してください</h2>
             
-            <div style={{ display: 'flex', flexDirection: 'column' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', flex: 1, justifyContent: 'center', gap: '15px', paddingBottom: '20px' }}>
               {renderOptionCard('簡単に始められる', 'fa-solid fa-hand-peace', workoutLevel === '簡単に始められる', () => setWorkoutLevel('簡単に始められる'))}
               {renderOptionCard('軽い汗をかく', 'fa-solid fa-droplet', workoutLevel === '軽い汗をかく', () => setWorkoutLevel('軽い汗をかく'))}
               {renderOptionCard('少しやりごたえがある', 'fa-solid fa-fire', workoutLevel === '少しやりごたえがある', () => setWorkoutLevel('少しやりごたえがある'))}
@@ -841,14 +768,14 @@ export default function Login() {
         <div style={{ maxWidth: '600px', margin: '0 auto', padding: '20px', width: '100%', display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
           {renderWizardHeader("04 ライフスタイル", 12)}
           
-          <div style={{ flex: 1 }}>
+          <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
             <h2 style={{ textAlign: 'center', fontSize: '1.6rem', fontWeight: 'bold', marginBottom: '30px' }}>体に不快感や懸念はありますか？</h2>
-            <div style={{ background: '#f4f6fb', padding: '15px 20px', borderRadius: '12px', display: 'flex', alignItems: 'center', gap: '15px', marginBottom: '30px', width: '100%' }}>
+            <div style={{ background: '#f4f6fb', padding: '15px 20px', borderRadius: '12px', display: 'flex', alignItems: 'center', gap: '15px', marginBottom: '10px', width: '100%' }}>
               <span style={{ fontSize: '1.5rem' }}>🧰</span>
               <p style={{ margin: 0, color: '#495057', fontSize: '0.95rem', lineHeight: 1.5 }}>これにより、特別な注意が必要な部位に焦点を当て、あなたのフィットネスの旅をカスタマイズします。</p>
             </div>
             
-            <div style={{ display: 'flex', flexDirection: 'column' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', flex: 1, justifyContent: 'center', gap: '15px', paddingBottom: '20px' }}>
               {['なし', '膝', '腰', '手首', '首', '肩'].map(issue => (
                 <div 
                   key={issue}
@@ -864,7 +791,6 @@ export default function Login() {
                     border: `2px solid ${physicalIssues.includes(issue) ? (issue === 'なし' ? '#1a73e8' : '#e04420') : '#f4f6fb'}`,
                     borderRadius: '16px',
                     cursor: 'pointer',
-                    marginBottom: '15px',
                     boxShadow: physicalIssues.includes(issue) ? (issue === 'なし' ? '0 4px 12px rgba(26, 115, 232, 0.2)' : '0 4px 12px rgba(224, 68, 32, 0.1)') : '0 4px 12px rgba(0,0,0,0.03)',
                     transition: 'all 0.2s ease'
                   }}
@@ -917,10 +843,10 @@ export default function Login() {
         <div style={{ maxWidth: '600px', margin: '0 auto', padding: '20px', width: '100%', display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
           {renderWizardHeader("04 ライフスタイル", 14)}
           
-          <div style={{ flex: 1 }}>
+          <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
             <h2 style={{ textAlign: 'center', fontSize: '1.6rem', fontWeight: 'bold', marginBottom: '30px' }}>目標とする運動頻度（1週間）</h2>
             
-            <div style={{ display: 'flex', flexDirection: 'column' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', flex: 1, justifyContent: 'center', gap: '15px', paddingBottom: '20px' }}>
               {renderOptionCard('週1回 (無理なく)', 'fa-solid fa-calendar-day', frequency === '週1回', () => setFrequency('週1回'))}
               {renderOptionCard('週2〜3回 (おすすめ！)', 'fa-solid fa-calendar-days', frequency === '週3回', () => setFrequency('週3回'))}
               {renderOptionCard('週4〜5回', 'fa-solid fa-calendar-week', frequency === '週5回', () => setFrequency('週5回'))}

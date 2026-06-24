@@ -4,6 +4,7 @@ import { getWorkouts, saveWorkout, deleteWorkout, getProfile, WorkoutItem, calcu
 import AiMenuModal, { AiMenuData, AiExercise } from './AiMenuModal';
 import { WORKOUT_PROGRAMS, WorkoutProgram } from './programs';
 import WorkoutHistory from './WorkoutHistory';
+import { calculateCalories } from '@/lib/exerciseDictionary';
 
 export default function Workout() {
   const [showManualForm, setShowManualForm] = useState(false);
@@ -154,7 +155,15 @@ export default function Workout() {
   };
 
   const handleApplyAiMenu = (exercises: AiExercise[]) => {
+    const profile = getProfile();
+    const defaultWeight = profile?.weight || 60;
+
     exercises.forEach(item => {
+      let cals = Number(item.calories);
+      if (!cals || isNaN(cals)) {
+         cals = calculateCalories(item.exercise, item.duration, item.reps, defaultWeight);
+      }
+
       saveWorkout({
         date,
         category: aiCategory === '全身' ? 'その他' : aiCategory,
@@ -162,7 +171,7 @@ export default function Workout() {
         weight: Number(item.weight) || 0,
         reps: Number(item.reps) || 0,
         sets: Number(item.sets) || 0,
-        calories: Number(item.calories) || undefined
+        calories: cals
       });
     });
     setWorkouts(getWorkouts(date));
