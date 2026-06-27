@@ -23,10 +23,6 @@ export default function MobileNav() {
         <i className="fa-solid fa-comment-dots"></i>
         <span>トレーナー</span>
       </button>
-      <button className={`mobile-nav-item ${activeTab === 'muscle-map' ? 'active' : ''}`} onClick={() => setActiveTab('muscle-map')}>
-        <i className="fa-solid fa-child-reaching"></i>
-        <span>マップ</span>
-      </button>
       <button className={`mobile-nav-item ${activeTab === 'map' ? 'active' : ''}`} onClick={() => setActiveTab('map')}>
         <i className="fa-solid fa-map-location-dot"></i>
         <span>ジム</span>

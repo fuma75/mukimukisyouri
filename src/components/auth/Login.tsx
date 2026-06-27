@@ -230,9 +230,17 @@ export default function Login() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 
+          gender,
+          dob,
+          height: Number(height),
           weight: Number(weight), 
           targetWeight: Number(targetWeight), 
           goal: goal || '減量', 
+          targetAreas,
+          environment,
+          exerciseTypes,
+          workoutLevel,
+          physicalIssues,
           frequency: frequency || '週3回', 
           activityLevel: activityLevel || '座学メイン'
         })
@@ -242,7 +250,7 @@ export default function Login() {
         setEstimatedResult(data.result);
         setStep(15);
       } else {
-        alert("計算に失敗しました。もう一度お試しください。");
+        alert("計算に失敗しました。" + (data.error || "") + "\n" + (data.raw || "") + "\n" + (data.detail || ""));
         setStep(15);
       }
     } catch (e) {
@@ -502,7 +510,7 @@ export default function Login() {
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
             <h2 style={{ textAlign: 'center', fontSize: '1.8rem', fontWeight: 'bold', marginBottom: '30px' }}>主な目標は何ですか？</h2>
             
-            <div style={{ display: 'flex', flexDirection: 'column', flex: 1, justifyContent: 'center', gap: '15px', paddingBottom: '20px' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', flex: 1, justifyContent: 'flex-start', gap: '15px', paddingTop: '10px', paddingBottom: '20px' }}>
               {renderOptionCard('体重を減らす', 'fa-solid fa-weight-scale', goal === '減量', () => setGoal('減量'))}
               {renderOptionCard('筋肉増強', 'fa-solid fa-dumbbell', goal === '増量', () => setGoal('増量'))}
               {renderOptionCard('健康維持', 'fa-solid fa-heart-pulse', goal === '現状維持', () => setGoal('現状維持'))}
@@ -525,7 +533,7 @@ export default function Login() {
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
             <h2 style={{ textAlign: 'center', fontSize: '1.8rem', fontWeight: 'bold', marginBottom: '30px' }}>ターゲットの部位はどこですか？</h2>
             
-            <div style={{ display: 'flex', flexDirection: 'column', flex: 1, justifyContent: 'center', gap: '15px', paddingBottom: '20px' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', flex: 1, justifyContent: 'flex-start', gap: '15px', paddingTop: '10px', paddingBottom: '20px' }}>
               {renderOptionCard('全身', 'fa-solid fa-child', targetAreas.includes('全身'), () => handleAreaToggle('全身'))}
               {renderOptionCard('腕', 'fa-solid fa-hand-fist', targetAreas.includes('腕'), () => handleAreaToggle('腕'))}
               {renderOptionCard('胸部', 'fa-solid fa-child-reaching', targetAreas.includes('胸部'), () => handleAreaToggle('胸部'))}
@@ -637,6 +645,36 @@ export default function Login() {
                 orientation="horizontal"
               />
             </div>
+
+            {/* BMI Display */}
+            {height && (() => {
+              const weightKg = weightUnit === 'lbs' ? Number(weight) * 0.453592 : Number(weight);
+              const heightM = Number(height) / 100;
+              const bmi = heightM > 0 ? (weightKg / (heightM * heightM)) : 0;
+              const bmiFixed = bmi.toFixed(1);
+              const bmiLabel = bmi < 18.5 ? '低体重' : bmi < 25 ? '標準' : bmi < 30 ? '過体重' : '肥満';
+              const bmiColor = bmi < 18.5 ? '#3b82f6' : bmi < 25 ? '#22c55e' : bmi < 30 ? '#f59e0b' : '#ef4444';
+              const bmiPercent = Math.min(Math.max(((bmi - 10) / (40 - 10)) * 100, 0), 100);
+              return (
+                <div style={{ width: '100%', marginTop: '28px', padding: '16px 20px', background: '#f8f9fa', borderRadius: '16px', border: '1px solid #e9ecef' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
+                    <span style={{ fontSize: '0.9rem', fontWeight: 'bold', color: '#8b8d9a' }}>あなたのBMI</span>
+                    <div style={{ display: 'flex', alignItems: 'baseline', gap: '6px' }}>
+                      <span style={{ fontSize: '1.8rem', fontWeight: 'bold', color: bmiColor }}>{bmiFixed}</span>
+                      <span style={{ fontSize: '1rem', fontWeight: 'bold', color: bmiColor, background: bmiColor + '20', padding: '2px 10px', borderRadius: '20px' }}>{bmiLabel}</span>
+                    </div>
+                  </div>
+                  <div style={{ width: '100%', height: '8px', borderRadius: '4px', background: 'linear-gradient(to right, #3b82f6 0%, #22c55e 40%, #f59e0b 65%, #ef4444 100%)', position: 'relative' }}>
+                    <div style={{ position: 'absolute', top: '-4px', left: `calc(${bmiPercent}% - 8px)`, width: '16px', height: '16px', borderRadius: '50%', background: '#fff', border: `3px solid ${bmiColor}`, boxShadow: '0 2px 6px rgba(0,0,0,0.2)', transition: 'left 0.3s' }} />
+                  </div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '6px', fontSize: '0.75rem', color: '#adb5bd' }}>
+                    <span>低体重 〜18.5</span>
+                    <span>標準 18.5〜24.9</span>
+                    <span>肥満 25〜</span>
+                  </div>
+                </div>
+              );
+            })()}
           </div>
 
           <div style={{ padding: '20px 0' }}>
@@ -701,7 +739,7 @@ export default function Login() {
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
             <h2 style={{ textAlign: 'center', fontSize: '1.6rem', fontWeight: 'bold', marginBottom: '30px' }}>どこでトレーニングしますか？</h2>
             
-            <div style={{ display: 'flex', flexDirection: 'column', flex: 1, justifyContent: 'center', gap: '15px', paddingBottom: '20px' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', flex: 1, justifyContent: 'flex-start', gap: '15px', paddingTop: '10px', paddingBottom: '20px' }}>
               {renderOptionCard('家', 'fa-solid fa-house', environment === '家', () => setEnvironment('家'))}
               {renderOptionCard('ジム', 'fa-solid fa-dumbbell', environment === 'ジム', () => setEnvironment('ジム'))}
               {renderOptionCard('どの場所でもOK', 'fa-solid fa-earth-americas', environment === 'どの場所でもOK', () => setEnvironment('どの場所でもOK'))}
@@ -724,7 +762,7 @@ export default function Login() {
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
             <h2 style={{ textAlign: 'center', fontSize: '1.6rem', fontWeight: 'bold', marginBottom: '30px' }}>運動の種類の制限はありますか？</h2>
             
-            <div style={{ display: 'flex', flexDirection: 'column', flex: 1, justifyContent: 'center', gap: '15px', paddingBottom: '20px' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', flex: 1, justifyContent: 'flex-start', gap: '15px', paddingTop: '10px', paddingBottom: '20px' }}>
               {renderOptionCard('なし（何でもできる）', 'fa-solid fa-check-double', exerciseTypes.includes('なし'), () => handleExerciseTypeToggle('なし'))}
               {renderOptionCard('器具無し（自重のみ）', 'fa-solid fa-hand-fist', exerciseTypes.includes('器具無し'), () => handleExerciseTypeToggle('器具無し'))}
               {renderOptionCard('ジャンプ無し（騒音配慮）', 'fa-solid fa-shoe-prints', exerciseTypes.includes('ジャンプ無し'), () => handleExerciseTypeToggle('ジャンプ無し'))}
@@ -748,7 +786,7 @@ export default function Login() {
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
             <h2 style={{ textAlign: 'center', fontSize: '1.6rem', fontWeight: 'bold', marginBottom: '30px' }}>ご希望のワークアウトレベルを選択してください</h2>
             
-            <div style={{ display: 'flex', flexDirection: 'column', flex: 1, justifyContent: 'center', gap: '15px', paddingBottom: '20px' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', flex: 1, justifyContent: 'flex-start', gap: '15px', paddingTop: '10px', paddingBottom: '20px' }}>
               {renderOptionCard('簡単に始められる', 'fa-solid fa-hand-peace', workoutLevel === '簡単に始められる', () => setWorkoutLevel('簡単に始められる'))}
               {renderOptionCard('軽い汗をかく', 'fa-solid fa-droplet', workoutLevel === '軽い汗をかく', () => setWorkoutLevel('軽い汗をかく'))}
               {renderOptionCard('少しやりごたえがある', 'fa-solid fa-fire', workoutLevel === '少しやりごたえがある', () => setWorkoutLevel('少しやりごたえがある'))}
@@ -775,7 +813,7 @@ export default function Login() {
               <p style={{ margin: 0, color: '#495057', fontSize: '0.95rem', lineHeight: 1.5 }}>これにより、特別な注意が必要な部位に焦点を当て、あなたのフィットネスの旅をカスタマイズします。</p>
             </div>
             
-            <div style={{ display: 'flex', flexDirection: 'column', flex: 1, justifyContent: 'center', gap: '15px', paddingBottom: '20px' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', flex: 1, justifyContent: 'flex-start', gap: '15px', paddingTop: '10px', paddingBottom: '20px' }}>
               {['なし', '膝', '腰', '手首', '首', '肩'].map(issue => (
                 <div 
                   key={issue}
@@ -846,7 +884,7 @@ export default function Login() {
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
             <h2 style={{ textAlign: 'center', fontSize: '1.6rem', fontWeight: 'bold', marginBottom: '30px' }}>目標とする運動頻度（1週間）</h2>
             
-            <div style={{ display: 'flex', flexDirection: 'column', flex: 1, justifyContent: 'center', gap: '15px', paddingBottom: '20px' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', flex: 1, justifyContent: 'flex-start', gap: '15px', paddingTop: '10px', paddingBottom: '20px' }}>
               {renderOptionCard('週1回 (無理なく)', 'fa-solid fa-calendar-day', frequency === '週1回', () => setFrequency('週1回'))}
               {renderOptionCard('週2〜3回 (おすすめ！)', 'fa-solid fa-calendar-days', frequency === '週3回', () => setFrequency('週3回'))}
               {renderOptionCard('週4〜5回', 'fa-solid fa-calendar-week', frequency === '週5回', () => setFrequency('週5回'))}

@@ -251,22 +251,24 @@ export default function Dashboard() {
             )}
           </div>
 
-          <div style={{ display: 'flex', gap: '30px', flexWrap: 'wrap', flex: '1 1 auto', justifyContent: 'center', alignItems: 'center' }}>
-            <div style={{ textAlign: 'left' }}>
-               <p style={{ margin: 0, fontSize: '0.85rem', color: 'var(--text-muted)' }}>目標カロリー</p>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', flex: '1 1 auto', alignItems: 'center' }}>
+            <div style={{ textAlign: 'center' }}>
+               <p style={{ margin: 0, fontSize: '0.8rem', color: 'var(--text-muted)' }}>目標カロリー</p>
                <p style={{ margin: '2px 0 0 0', fontSize: '1.4rem', fontWeight: 'bold', color: 'var(--text-main)' }}>{profile.targetCalories ? profile.targetCalories.toLocaleString() : '-'} <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)', fontWeight: 'normal' }}>kcal</span></p>
             </div>
-            <div style={{ textAlign: 'left' }}>
-               <p style={{ margin: 0, fontSize: '0.85rem', color: '#ff5224' }}>P (タンパク質)</p>
-               <p style={{ margin: '2px 0 0 0', fontSize: '1.4rem', fontWeight: 'bold', color: 'var(--text-main)' }}>{profile.targetProtein || '-'} <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)', fontWeight: 'normal' }}>g</span></p>
-            </div>
-            <div style={{ textAlign: 'left' }}>
-               <p style={{ margin: 0, fontSize: '0.85rem', color: '#ffac1c' }}>F (脂質)</p>
-               <p style={{ margin: '2px 0 0 0', fontSize: '1.4rem', fontWeight: 'bold', color: 'var(--text-main)' }}>{profile.targetFat || '-'} <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)', fontWeight: 'normal' }}>g</span></p>
-            </div>
-            <div style={{ textAlign: 'left' }}>
-               <p style={{ margin: 0, fontSize: '0.85rem', color: '#00e676' }}>C (炭水化物)</p>
-               <p style={{ margin: '2px 0 0 0', fontSize: '1.4rem', fontWeight: 'bold', color: 'var(--text-main)' }}>{profile.targetCarb || '-'} <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)', fontWeight: 'normal' }}>g</span></p>
+            <div style={{ display: 'flex', gap: '20px', flexWrap: 'nowrap', justifyContent: 'center' }}>
+              <div style={{ textAlign: 'center', flexShrink: 0 }}>
+                 <p style={{ margin: 0, fontSize: '0.8rem', color: '#ff5224', whiteSpace: 'nowrap' }}>P (タンパク質)</p>
+                 <p style={{ margin: '2px 0 0 0', fontSize: '1.3rem', fontWeight: 'bold', color: 'var(--text-main)', whiteSpace: 'nowrap' }}>{profile.targetProtein || '-'} <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 'normal' }}>g</span></p>
+              </div>
+              <div style={{ textAlign: 'center', flexShrink: 0 }}>
+                 <p style={{ margin: 0, fontSize: '0.8rem', color: '#ffac1c', whiteSpace: 'nowrap' }}>F (脂質)</p>
+                 <p style={{ margin: '2px 0 0 0', fontSize: '1.3rem', fontWeight: 'bold', color: 'var(--text-main)', whiteSpace: 'nowrap' }}>{profile.targetFat || '-'} <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 'normal' }}>g</span></p>
+              </div>
+              <div style={{ textAlign: 'center', flexShrink: 0 }}>
+                 <p style={{ margin: 0, fontSize: '0.8rem', color: '#00e676', whiteSpace: 'nowrap' }}>C (炭水化物)</p>
+                 <p style={{ margin: '2px 0 0 0', fontSize: '1.3rem', fontWeight: 'bold', color: 'var(--text-main)', whiteSpace: 'nowrap' }}>{profile.targetCarb || '-'} <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 'normal' }}>g</span></p>
+              </div>
             </div>
           </div>
         </div>
@@ -297,6 +299,21 @@ export default function Dashboard() {
               <div className="cal-detail-item">
                 <span className="detail-label">消費（運動）</span>
                 <span className="detail-val text-accent">{burnedCalories.toLocaleString()} kcal</span>
+              </div>
+              <div style={{ borderTop: '1px solid var(--border-color)', marginTop: '10px', paddingTop: '10px' }}>
+                <p style={{ margin: '0 0 8px 0', fontSize: '0.78rem', color: 'var(--text-muted)', fontWeight: 'bold', letterSpacing: '0.05em' }}>本日のPFC摂取</p>
+                <div className="cal-detail-item">
+                  <span className="detail-label" style={{ color: '#ff5224' }}>P (タンパク質)</span>
+                  <span className="detail-val" style={{ color: '#ff5224' }}>{Math.round(totalP)} g</span>
+                </div>
+                <div className="cal-detail-item">
+                  <span className="detail-label" style={{ color: '#ffac1c' }}>F (脂質)</span>
+                  <span className="detail-val" style={{ color: '#ffac1c' }}>{Math.round(totalF)} g</span>
+                </div>
+                <div className="cal-detail-item">
+                  <span className="detail-label" style={{ color: '#00e676' }}>C (炭水化物)</span>
+                  <span className="detail-val" style={{ color: '#00e676' }}>{Math.round(totalC)} g</span>
+                </div>
               </div>
             </div>
           </div>

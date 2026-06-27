@@ -4,19 +4,32 @@ import { callGemini } from '@/lib/gemini';
 export async function POST(request: Request) {
     try {
         const body = await request.json();
-        const { weight, targetWeight, goal, frequency, activityLevel } = body || {};
+        const { weight, targetWeight, goal, frequency, activityLevel, gender, targetAreas, dob, height, environment, exerciseTypes, workoutLevel, physicalIssues } = body || {};
 
         if (!weight || !targetWeight) {
             return NextResponse.json({ error: 'weight and targetWeight required' }, { status: 400 });
         }
 
         const prompt = `あなたは優秀なパーソナルトレーナー「筋にくん」です。
-ユーザーの現在の体重は${weight}kg、目標体重は${targetWeight}kgです。
-フィットネス目標は「${goal}」です。
-運動頻度は「${frequency || '不明'}」、普段の活動レベルは「${activityLevel || '不明'}」です。
+ユーザーの詳細なプロフィール情報をもとに、個別のプランを計算・作成してください。
 
-この目標を健康的に達成するのにかかる「おおよその予測日数（整数）」と、「1日の目標摂取カロリー（kcal）」「目標タンパク質（g）」「目標脂質（g）」「目標炭水化物（g）」、および「目標達成に向けた筋トレプランの具体例」を提案してください。
-健康的な減量ペースは月に体重の約5%まで、健康的な増量ペースは月に1~2kg程度とします。
+【ユーザーのプロフィール】
+・性別：${gender || '不明'}
+・生年月日：${dob || '不明'}
+・身長：${height || '不明'} cm
+・現在の体重：${weight} kg
+・目標体重：${targetWeight} kg
+・メインの目標：${goal}
+・ターゲット部位：${targetAreas ? targetAreas.join(', ') : '指定なし'}
+・トレーニング環境：${environment || '不明'}
+・運動の種類の制限：${exerciseTypes ? exerciseTypes.join(', ') : 'なし'}
+・希望する運動レベル：${workoutLevel || '不明'}
+・身体の懸念事項（痛みなど）：${physicalIssues ? physicalIssues.join(', ') : 'なし'}
+・運動頻度：${frequency || '不明'}
+・普段の活動レベル：${activityLevel || '不明'}
+
+この情報を総合的に分析し、健康的に「現在の体重から目標体重を達成するのにかかるおおよその予測日数（整数）」を算出してください。（例：活動レベルが低く頻度が少ない場合は期間を長めに、頻度が多い場合は短めに、ただし健康的なペース（減量なら月-5%体重以内、増量なら月+1~2kg程度）を厳守すること）。
+また、「1日の目標摂取カロリー（kcal）」「目標タンパク質（g）」「目標脂質（g）」「目標炭水化物（g）」、および「このユーザーのプロフィール（制限や環境、目的）に完全に合わせた筋トレプランの具体例」を提案してください。
 
 必ず以下のキーを持つ有効なJSONオブジェクト1件のみを返してください。余計なコードブロックマークアップ（\`\`\`json等）や余分なテキストは一切含めないでください。
 JSON形式：

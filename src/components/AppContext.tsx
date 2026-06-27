@@ -1,6 +1,8 @@
 'use client';
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
+const todayStr = () => new Date().toLocaleDateString('ja-JP', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\//g, '-');
+
 type AppState = {
   activeTab: string;
   setActiveTab: (tab: string) => void;
@@ -8,6 +10,8 @@ type AppState = {
   setUserProfile: (profile: any) => void;
   streak: number;
   setStreak: (streak: number) => void;
+  selectedDate: string;
+  setSelectedDate: (date: string) => void;
 };
 
 const AppContext = createContext<AppState | undefined>(undefined);
@@ -16,9 +20,9 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   const [activeTab, setActiveTab] = useState('dashboard');
   const [userProfile, setUserProfile] = useState<any>(null);
   const [streak, setStreak] = useState(0);
+  const [selectedDate, setSelectedDate] = useState(todayStr);
 
   useEffect(() => {
-    // Load data from localStorage on mount
     const storedProfile = localStorage.getItem('kinnikun_profile');
     if (storedProfile) {
       setUserProfile(JSON.parse(storedProfile));
@@ -30,7 +34,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   return (
-    <AppContext.Provider value={{ activeTab, setActiveTab, userProfile, setUserProfile, streak, setStreak }}>
+    <AppContext.Provider value={{ activeTab, setActiveTab, userProfile, setUserProfile, streak, setStreak, selectedDate, setSelectedDate }}>
       {children}
     </AppContext.Provider>
   );

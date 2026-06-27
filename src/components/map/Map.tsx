@@ -86,7 +86,7 @@ export default function Map() {
                                     height="100%" 
                                     frameBorder="0" 
                                     style={{ border: 0 }} 
-                                    src={`https://maps.google.co.jp/maps?q=${encodeURIComponent(searchQuery)}&hl=ja&z=15&output=embed`} 
+                                    src={`https://maps.google.co.jp/maps?q=${encodeURIComponent(searchQuery)}&hl=ja&z=13&output=embed`} 
                                     allowFullScreen
                                     loading="lazy">
                                 </iframe>

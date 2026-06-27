@@ -1,18 +1,12 @@
 'use client';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { getMeals, saveMeal, deleteMeal, MealItem } from '@/lib/storage';
-
-const MEAL_PRESETS: Record<string, Omit<MealItem, 'id' | 'date' | 'timing'>> = {
-  'salad-chicken': { name: 'サラダチキン', calories: 120, protein: 25.0, fat: 1.5, carb: 0.0 },
-  'protein': { name: 'プロテインシェイク', calories: 120, protein: 24.0, fat: 1.5, carb: 3.0 },
-  'rice-egg': { name: '卵かけご飯 (ご飯150g+卵1個)', calories: 330, protein: 10.5, fat: 6.5, carb: 56.0 },
-  'beef-don': { name: '牛丼 (並盛)', calories: 730, protein: 20.0, fat: 25.0, carb: 95.0 },
-  'salmon-teishoku': { name: '鮭の塩焼き定食 (ご飯普通盛り)', calories: 620, protein: 34.0, fat: 12.0, carb: 82.0 }
-};
+import { useAppContext } from '../AppContext';
 
 export default function Meal() {
-  const [date, setDate] = useState(() => new Date().toLocaleDateString('ja-JP', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\//g, '-'));
+  const { selectedDate: date, setSelectedDate: setDate } = useAppContext();
   const [meals, setMeals] = useState<MealItem[]>([]);
+  const [showForm, setShowForm] = useState(false);
 
   const [timing, setTiming] = useState('朝食');
   const [name, setName] = useState('');
@@ -24,7 +18,7 @@ export default function Meal() {
 
   const [loadingEstimate, setLoadingEstimate] = useState(false);
   const [loadingImageEstimate, setLoadingImageEstimate] = useState(false);
-  const fileInputRef = React.useRef<HTMLInputElement>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     setMeals(getMeals(date));
@@ -37,15 +31,9 @@ export default function Meal() {
     setDate(d.toLocaleDateString('ja-JP', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\//g, '-'));
   };
 
-  const handleApplyPreset = (presetKey: string) => {
-    const data = MEAL_PRESETS[presetKey];
-    if (data) {
-      setName(data.name);
-      setCalories(data.calories.toString());
-      setProtein(data.protein.toString());
-      setFat(data.fat.toString());
-      setCarb(data.carb.toString());
-    }
+  const resetForm = () => {
+    setName(''); setAmount(''); setCalories(''); setProtein(''); setFat(''); setCarb('');
+    setTiming('朝食');
   };
 
   const handleAddMeal = (e?: React.FormEvent) => {
@@ -64,7 +52,8 @@ export default function Meal() {
     };
     saveMeal(item);
     setMeals(getMeals(date));
-    setName(''); setAmount(''); setCalories(''); setProtein(''); setFat(''); setCarb('');
+    resetForm();
+    setShowForm(false);
   };
 
   const handleDelete = (id: string) => {
@@ -72,39 +61,12 @@ export default function Meal() {
     setMeals(getMeals(date));
   };
 
-  const handleEstimateMeal = async () => {
-    if (!name) return alert('食事内容を入力してください。');
-    setLoadingEstimate(true);
-    try {
-      const res = await fetch('/api/estimate-meal', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ description: name, amount: Number(amount) || undefined })
-      });
-      const data = await res.json();
-      if (data.ok && data.result) {
-        if (data.result.calories !== undefined) setCalories(Math.round(data.result.calories).toString());
-        if (data.result.protein !== undefined) setProtein((Math.round(data.result.protein * 10) / 10).toString());
-        if (data.result.fat !== undefined) setFat((Math.round(data.result.fat * 10) / 10).toString());
-        if (data.result.carb !== undefined) setCarb((Math.round(data.result.carb * 10) / 10).toString());
-        if (!amount && data.result.amountGrams !== undefined) setAmount(Math.round(data.result.amountGrams).toString());
-        // Do not alert, it's disruptive. Just finish smoothly.
-      } else {
-        alert('AI推定失敗: ' + JSON.stringify(data));
-      }
-    } catch (e) {
-      console.error(e);
-      alert('エラーが発生しました');
-    } finally {
-      setLoadingEstimate(false);
-    }
-  };
-
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
     setLoadingImageEstimate(true);
+    setShowForm(true);
     try {
       const reader = new FileReader();
       reader.onloadend = async () => {
@@ -115,7 +77,7 @@ export default function Meal() {
           body: JSON.stringify({ imageBase64: base64Data, mimeType: file.type })
         });
         const data = await res.json();
-        
+
         if (data.ok && data.result) {
           if (data.result.name) setName(data.result.name);
           if (data.result.calories !== undefined) setCalories(Math.round(data.result.calories).toString());
@@ -127,7 +89,6 @@ export default function Meal() {
           alert('写真からのAI推定失敗: ' + JSON.stringify(data));
         }
         setLoadingImageEstimate(false);
-        // Reset file input
         if (fileInputRef.current) fileInputRef.current.value = '';
       };
       reader.readAsDataURL(file);
@@ -140,137 +101,277 @@ export default function Meal() {
 
   const timingOrder: Record<string, number> = { '朝食': 1, '昼食': 2, '夕食': 3, '間食/プロテイン': 4 };
   const sortedMeals = [...meals].sort((a, b) => (timingOrder[a.timing] || 9) - (timingOrder[b.timing] || 9));
-
   const totalCalories = meals.reduce((sum, m) => sum + m.calories, 0);
 
+  const todayStr = new Date().toLocaleDateString('ja-JP', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\//g, '-');
+  const displayDate = date === todayStr
+    ? `今日 (${date})`
+    : date;
+
+  const timingColors: Record<string, string> = {
+    '朝食': '#f59e0b',
+    '昼食': '#10b981',
+    '夕食': '#6366f1',
+    '間食/プロテイン': '#ef4444',
+  };
+
   return (
-    <section id="meal" className="content-section active">
-      <div className="section-layout">
-        <div className="form-container glass-panel">
-          <div className="panel-header">
-            <h2><i className="fa-solid fa-plus-circle icon-blue"></i> 食事を記録する</h2>
-            <div className="date-picker-wrapper" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <button type="button" className="btn btn-icon btn-sm" onClick={() => shiftDate(-1)}><i className="fa-solid fa-chevron-left"></i></button>
-              <label><i className="fa-regular fa-calendar"></i></label>
-              <input type="date" className="date-input" value={date} onChange={e => setDate(e.target.value)} />
-              <button type="button" className="btn btn-icon btn-sm" onClick={() => shiftDate(1)}><i className="fa-solid fa-chevron-right"></i></button>
-            </div>
-          </div>
-          
-          <div className="preset-section">
-            <label className="section-sub-label">クイック登録（よくあるメニュー）</label>
-            <div className="preset-buttons">
-              <button type="button" className="btn btn-preset" onClick={() => handleApplyPreset('salad-chicken')}>サラダチキン</button>
-              <button type="button" className="btn btn-preset" onClick={() => handleApplyPreset('protein')}>プロテイン</button>
-              <button type="button" className="btn btn-preset" onClick={() => handleApplyPreset('rice-egg')}>卵かけご飯</button>
-              <button type="button" className="btn btn-preset" onClick={() => handleApplyPreset('beef-don')}>牛丼</button>
-              <button type="button" className="btn btn-preset" onClick={() => handleApplyPreset('salmon-teishoku')}>鮭の塩焼き定食</button>
-            </div>
-          </div>
+    <section id="meal" className="content-section active" style={{ paddingBottom: '100px' }}>
+      <div style={{ maxWidth: '560px', margin: '0 auto', padding: '0 16px' }}>
 
-          <form className="app-form" onSubmit={handleAddMeal}>
-            <div className="form-group">
-              <label>食事のタイミング</label>
-              <select value={timing} onChange={e => setTiming(e.target.value)}>
-                <option value="朝食">朝食</option>
-                <option value="昼食">昼食</option>
-                <option value="夕食">夕食</option>
-                <option value="間食/プロテイン">間食/プロテイン</option>
-              </select>
-            </div>
-            <div className="form-group">
-              <label>食事内容・メニュー名</label>
-              <input type="text" placeholder="例: 鳥胸肉とブロッコリーのソテー" value={name} onChange={e => setName(e.target.value)} />
-            </div>
-            <div className="form-group">
-              <label>量 (g)</label>
-              <input type="number" placeholder="例: 200" min="0" value={amount} onChange={e => setAmount(e.target.value)} />
-            </div>
-            <div className="form-row">
-              <div className="form-group">
-                <label>エネルギー (kcal)</label>
-                <input type="number" min="0" placeholder="0" value={calories} onChange={e => setCalories(e.target.value)} />
-              </div>
-              <div className="form-group">
-                <label>タンパク質 (g)</label>
-                <input type="number" min="0" step="0.1" placeholder="P" value={protein} onChange={e => setProtein(e.target.value)} />
-              </div>
-            </div>
-            <div className="form-row">
-              <div className="form-group">
-                <label>脂質 (g)</label>
-                <input type="number" min="0" step="0.1" placeholder="F" value={fat} onChange={e => setFat(e.target.value)} />
-              </div>
-              <div className="form-group">
-                <label>炭水化物 (g)</label>
-                <input type="number" min="0" step="0.1" placeholder="C" value={carb} onChange={e => setCarb(e.target.value)} />
-              </div>
-            </div>
-            <div style={{ display: 'flex', gap: '8px', alignItems: 'center', marginTop: '8px', flexWrap: 'wrap' }}>
-              <button type="button" className="btn btn-outline" onClick={handleEstimateMeal} disabled={loadingEstimate || loadingImageEstimate}>
-                {loadingEstimate ? '推定中...' : 'テキストからAI栄養推定'}
-              </button>
-              
-              <input 
-                type="file" 
-                accept="image/*" 
-                capture="environment" 
-                ref={fileInputRef} 
-                style={{ display: 'none' }} 
-                onChange={handleImageUpload} 
-              />
-              <button 
-                type="button" 
-                className="btn btn-outline" 
-                onClick={() => fileInputRef.current?.click()} 
-                disabled={loadingEstimate || loadingImageEstimate}
-                style={{ borderColor: 'var(--primary)', color: 'var(--primary)' }}
-              >
-                <i className="fa-solid fa-camera"></i> {loadingImageEstimate ? '写真分析中...' : '写真からAI栄養推定'}
-              </button>
-
-              <button type="submit" className="btn btn-primary btn-block" style={{ flex: '1 1 100%' }}>
-                <i className="fa-solid fa-utensils"></i> 食事を追加
-              </button>
-            </div>
-          </form>
+        {/* ── 日付 ── */}
+        <div style={{
+          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+          padding: '14px 18px', background: 'var(--card-bg)', borderRadius: '16px',
+          marginBottom: '16px', boxShadow: '0 2px 8px rgba(0,0,0,0.06)'
+        }}>
+          <button type="button" onClick={() => shiftDate(-1)}
+            style={{ background: 'none', border: 'none', fontSize: '1.2rem', color: 'var(--text-muted)', cursor: 'pointer', padding: '4px 10px' }}>
+            <i className="fa-solid fa-chevron-left" />
+          </button>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <i className="fa-regular fa-calendar" style={{ color: 'var(--primary)' }} />
+            <input
+              type="date"
+              value={date}
+              onChange={e => setDate(e.target.value)}
+              style={{
+                border: 'none', background: 'transparent', fontSize: '1rem',
+                fontWeight: 'bold', color: 'var(--text-main)', cursor: 'pointer', outline: 'none'
+              }}
+            />
+          </div>
+          <button type="button" onClick={() => shiftDate(1)}
+            style={{ background: 'none', border: 'none', fontSize: '1.2rem', color: 'var(--text-muted)', cursor: 'pointer', padding: '4px 10px' }}>
+            <i className="fa-solid fa-chevron-right" />
+          </button>
         </div>
 
-        <div className="list-container glass-panel">
-          <div className="panel-header">
-            <h2><i className="fa-solid fa-history icon-blue"></i> 食事履歴 (<span id="selected-meal-date-str">{date === new Date().toLocaleDateString('ja-JP', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\//g, '-') ? '今日' : date}</span>)</h2>
-            <span className="total-volume-badge">合計カロリー: <span>{totalCalories.toLocaleString()}</span> kcal</span>
-          </div>
-          <div className="scroll-list">
-            {sortedMeals.length === 0 ? (
-              <div style={{ padding: '20px', textAlign: 'center', color: 'var(--text-muted)' }}>この日の食事記録はありません。</div>
-            ) : (
-              sortedMeals.map(m => {
-                let timingClass = 'other';
-                if (m.timing === '朝食') timingClass = 'chest';
-                else if (m.timing === '昼食') timingClass = 'legs';
-                else if (m.timing === '夕食') timingClass = 'back';
-                else if (m.timing === '間食/プロテイン') timingClass = 'arms';
+        {/* ── 写真からAI推定 ── */}
+        <input
+          type="file" accept="image/*" capture="environment"
+          ref={fileInputRef} style={{ display: 'none' }} onChange={handleImageUpload}
+        />
+        <button
+          type="button"
+          onClick={() => fileInputRef.current?.click()}
+          disabled={loadingImageEstimate}
+          style={{
+            width: '100%', padding: '22px 20px', marginBottom: '20px',
+            background: loadingImageEstimate
+              ? 'var(--card-bg)'
+              : 'linear-gradient(135deg, #1a73e8 0%, #0052cc 100%)',
+            color: loadingImageEstimate ? 'var(--text-muted)' : '#fff',
+            border: loadingImageEstimate ? '2px dashed var(--border-color)' : 'none',
+            borderRadius: '18px',
+            fontSize: '1.15rem', fontWeight: 'bold', cursor: 'pointer',
+            display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '12px',
+            boxShadow: loadingImageEstimate ? 'none' : '0 6px 20px rgba(26,115,232,0.35)',
+            transition: 'all 0.2s'
+          }}
+        >
+          {loadingImageEstimate
+            ? <><i className="fa-solid fa-spinner fa-spin" /> 写真を分析中...</>
+            : <><i className="fa-solid fa-camera" style={{ fontSize: '1.4rem' }} /> 写真からAI栄養推定</>
+          }
+        </button>
 
-                return (
-                  <div key={m.id} className="history-item animate-fade-in">
-                      <div className="history-details">
-                          <span className={`history-category-badge ${timingClass}`}>{m.timing}</span>
-                          <span className="history-title">{m.name}{m.amount ? ` (${m.amount}g)` : ''}</span>
-                          <span className="history-sub">P: {m.protein}g / F: {m.fat}g / C: {m.carb}g</span>
-                      </div>
-                      <div className="history-actions">
-                          <span className="detail-val text-primary">{m.calories} kcal</span>
-                          <button className="btn-danger btn-delete-meal" onClick={() => handleDelete(m.id as string)} title="削除">
-                              <i className="fa-solid fa-trash-can"></i>
-                          </button>
-                      </div>
+        {/* ── 区切り ── */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '20px' }}>
+          <div style={{ flex: 1, height: '1px', background: 'var(--border-color)' }} />
+          <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)', fontWeight: 'bold' }}>または</span>
+          <div style={{ flex: 1, height: '1px', background: 'var(--border-color)' }} />
+        </div>
+
+        {/* ── 手動入力ボタン ── */}
+        {!showForm ? (
+          <button
+            type="button"
+            onClick={() => setShowForm(true)}
+            style={{
+              width: '100%', padding: '14px 20px', marginBottom: '24px',
+              background: 'var(--card-bg)', border: '2px dashed var(--border-color)',
+              borderRadius: '14px', fontSize: '1rem', fontWeight: 'bold',
+              color: 'var(--text-main)', cursor: 'pointer',
+              display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
+              transition: 'all 0.2s'
+            }}
+          >
+            <i className="fa-solid fa-plus" style={{ color: 'var(--primary)' }} /> 手動入力
+          </button>
+        ) : (
+          /* ── 手動入力フォーム（展開） ── */
+          <div style={{
+            background: 'var(--card-bg)', borderRadius: '18px', padding: '20px',
+            marginBottom: '24px', boxShadow: '0 4px 16px rgba(0,0,0,0.07)',
+            border: '1px solid var(--border-color)'
+          }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '18px' }}>
+              <span style={{ fontWeight: 'bold', fontSize: '1rem' }}>
+                <i className="fa-solid fa-pen" style={{ color: 'var(--primary)', marginRight: '6px' }} />手動入力
+              </span>
+              <button type="button" onClick={() => { setShowForm(false); resetForm(); }}
+                style={{ background: 'none', border: 'none', fontSize: '1.1rem', color: 'var(--text-muted)', cursor: 'pointer' }}>
+                <i className="fa-solid fa-xmark" />
+              </button>
+            </div>
+
+            <form onSubmit={handleAddMeal}>
+              {/* 食事タイミング */}
+              <div style={{ marginBottom: '14px' }}>
+                <label style={{ fontSize: '0.8rem', fontWeight: 'bold', color: 'var(--text-muted)', display: 'block', marginBottom: '6px' }}>食事タイミング</label>
+                <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                  {['朝食', '昼食', '夕食', '間食/プロテイン'].map(t => (
+                    <button key={t} type="button" onClick={() => setTiming(t)} style={{
+                      padding: '7px 14px', borderRadius: '20px', fontSize: '0.85rem', fontWeight: 'bold',
+                      border: `2px solid ${timing === t ? timingColors[t] : 'var(--border-color)'}`,
+                      background: timing === t ? timingColors[t] + '22' : 'transparent',
+                      color: timing === t ? timingColors[t] : 'var(--text-muted)',
+                      cursor: 'pointer', transition: 'all 0.15s'
+                    }}>{t}</button>
+                  ))}
+                </div>
+              </div>
+
+              {/* メニュー */}
+              <div style={{ marginBottom: '14px' }}>
+                <label style={{ fontSize: '0.8rem', fontWeight: 'bold', color: 'var(--text-muted)', display: 'block', marginBottom: '6px' }}>メニュー名</label>
+                <input
+                  type="text" placeholder="例: 鳥胸肉とブロッコリー" value={name}
+                  onChange={e => setName(e.target.value)}
+                  style={{
+                    width: '100%', padding: '11px 14px', borderRadius: '10px',
+                    border: '1.5px solid var(--border-color)', background: 'var(--bg-secondary)',
+                    color: 'var(--text-main)', fontSize: '0.95rem', boxSizing: 'border-box'
+                  }}
+                />
+              </div>
+
+              {/* 重量 */}
+              <div style={{ marginBottom: '14px' }}>
+                <label style={{ fontSize: '0.8rem', fontWeight: 'bold', color: 'var(--text-muted)', display: 'block', marginBottom: '6px' }}>重量 (g)</label>
+                <input
+                  type="number" placeholder="200" min="0" value={amount}
+                  onChange={e => setAmount(e.target.value)}
+                  style={{
+                    width: '100%', padding: '11px 14px', borderRadius: '10px',
+                    border: '1.5px solid var(--border-color)', background: 'var(--bg-secondary)',
+                    color: 'var(--text-main)', fontSize: '0.95rem', boxSizing: 'border-box'
+                  }}
+                />
+              </div>
+
+              {/* PFC */}
+              <div style={{ marginBottom: '18px' }}>
+                <label style={{ fontSize: '0.8rem', fontWeight: 'bold', color: 'var(--text-muted)', display: 'block', marginBottom: '8px' }}>PFC（栄養素）</label>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
+                  <div>
+                    <label style={{ fontSize: '0.75rem', color: 'var(--text-muted)', display: 'block', marginBottom: '4px' }}>カロリー (kcal)</label>
+                    <input type="number" min="0" placeholder="0" value={calories}
+                      onChange={e => setCalories(e.target.value)}
+                      style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: '1.5px solid var(--border-color)', background: 'var(--bg-secondary)', color: 'var(--text-main)', fontSize: '0.9rem', boxSizing: 'border-box' }} />
                   </div>
-                );
-              })
-            )}
+                  <div>
+                    <label style={{ fontSize: '0.75rem', color: '#ff5224', display: 'block', marginBottom: '4px', fontWeight: 'bold' }}>P タンパク質 (g)</label>
+                    <input type="number" min="0" step="0.1" placeholder="0" value={protein}
+                      onChange={e => setProtein(e.target.value)}
+                      style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: '1.5px solid #ff5224', background: 'var(--bg-secondary)', color: 'var(--text-main)', fontSize: '0.9rem', boxSizing: 'border-box' }} />
+                  </div>
+                  <div>
+                    <label style={{ fontSize: '0.75rem', color: '#ffac1c', display: 'block', marginBottom: '4px', fontWeight: 'bold' }}>F 脂質 (g)</label>
+                    <input type="number" min="0" step="0.1" placeholder="0" value={fat}
+                      onChange={e => setFat(e.target.value)}
+                      style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: '1.5px solid #ffac1c', background: 'var(--bg-secondary)', color: 'var(--text-main)', fontSize: '0.9rem', boxSizing: 'border-box' }} />
+                  </div>
+                  <div>
+                    <label style={{ fontSize: '0.75rem', color: '#00c853', display: 'block', marginBottom: '4px', fontWeight: 'bold' }}>C 炭水化物 (g)</label>
+                    <input type="number" min="0" step="0.1" placeholder="0" value={carb}
+                      onChange={e => setCarb(e.target.value)}
+                      style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: '1.5px solid #00c853', background: 'var(--bg-secondary)', color: 'var(--text-main)', fontSize: '0.9rem', boxSizing: 'border-box' }} />
+                  </div>
+                </div>
+              </div>
+
+              <button type="submit" style={{
+                width: '100%', padding: '14px', borderRadius: '12px',
+                background: 'linear-gradient(135deg, #1a73e8 0%, #0052cc 100%)',
+                color: '#fff', fontWeight: 'bold', fontSize: '1rem', border: 'none',
+                cursor: 'pointer', boxShadow: '0 4px 12px rgba(26,115,232,0.3)'
+              }}>
+                <i className="fa-solid fa-check" style={{ marginRight: '8px' }} />食事を追加
+              </button>
+            </form>
           </div>
+        )}
+
+        {/* ── 区切り ── */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
+          <div style={{ flex: 1, height: '1px', background: 'var(--border-color)' }} />
+          <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)', fontWeight: 'bold' }}>今日の食事一覧</span>
+          <div style={{ flex: 1, height: '1px', background: 'var(--border-color)' }} />
         </div>
+
+        {/* ── 合計カロリー ── */}
+        {meals.length > 0 && (
+          <div style={{
+            background: 'linear-gradient(135deg, #1a73e8 0%, #0052cc 100%)',
+            borderRadius: '14px', padding: '12px 20px', marginBottom: '14px',
+            display: 'flex', justifyContent: 'space-between', alignItems: 'center'
+          }}>
+            <span style={{ color: 'rgba(255,255,255,0.8)', fontSize: '0.9rem' }}>合計カロリー</span>
+            <span style={{ color: '#fff', fontWeight: 'bold', fontSize: '1.3rem' }}>
+              {totalCalories.toLocaleString()} <span style={{ fontSize: '0.8rem', fontWeight: 'normal' }}>kcal</span>
+            </span>
+          </div>
+        )}
+
+        {/* ── 食事一覧 ── */}
+        {sortedMeals.length === 0 ? (
+          <div style={{ textAlign: 'center', padding: '40px 20px', color: 'var(--text-muted)' }}>
+            <i className="fa-solid fa-utensils" style={{ fontSize: '2rem', marginBottom: '10px', display: 'block', opacity: 0.3 }} />
+            <p style={{ margin: 0 }}>まだ食事が記録されていません</p>
+          </div>
+        ) : (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+            {sortedMeals.map(m => (
+              <div key={m.id} style={{
+                background: 'var(--card-bg)', borderRadius: '14px', padding: '14px 16px',
+                boxShadow: '0 2px 8px rgba(0,0,0,0.06)', border: '1px solid var(--border-color)',
+                display: 'flex', alignItems: 'center', gap: '12px'
+              }}>
+                <div style={{
+                  width: '6px', alignSelf: 'stretch', borderRadius: '3px', flexShrink: 0,
+                  background: timingColors[m.timing] || '#8b8d9a'
+                }} />
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px', flexWrap: 'wrap' }}>
+                    <span style={{
+                      fontSize: '0.72rem', fontWeight: 'bold', padding: '2px 8px', borderRadius: '20px',
+                      background: (timingColors[m.timing] || '#8b8d9a') + '22',
+                      color: timingColors[m.timing] || '#8b8d9a'
+                    }}>{m.timing}</span>
+                    <span style={{ fontWeight: 'bold', fontSize: '0.95rem', color: 'var(--text-main)' }}>
+                      {m.name}{m.amount ? ` (${m.amount}g)` : ''}
+                    </span>
+                  </div>
+                  <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', display: 'flex', gap: '10px' }}>
+                    <span style={{ color: '#ff5224' }}>P {m.protein}g</span>
+                    <span style={{ color: '#ffac1c' }}>F {m.fat}g</span>
+                    <span style={{ color: '#00c853' }}>C {m.carb}g</span>
+                  </div>
+                </div>
+                <div style={{ textAlign: 'right', flexShrink: 0 }}>
+                  <div style={{ fontWeight: 'bold', color: 'var(--primary)', fontSize: '1rem' }}>{m.calories}</div>
+                  <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>kcal</div>
+                </div>
+                <button onClick={() => handleDelete(m.id as string)}
+                  style={{ background: 'none', border: 'none', color: 'var(--text-muted)', cursor: 'pointer', padding: '4px 6px', fontSize: '0.9rem' }}>
+                  <i className="fa-solid fa-trash-can" />
+                </button>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );

@@ -141,6 +141,11 @@ export default function ActivityLevelSlider({ value, onChange }: { value: string
     return idx >= 0 ? idx : 0;
   });
 
+  // Mouse Drag logic for PC
+  const [isDragging, setIsDragging] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [initialScrollLeft, setInitialScrollLeft] = useState(0);
+
   useEffect(() => {
     if (!value) {
       onChange(activities[0].id);
@@ -175,6 +180,34 @@ export default function ActivityLevelSlider({ value, onChange }: { value: string
     }, smooth ? 500 : 100);
   };
 
+  const handleMouseDown = (e: React.MouseEvent) => {
+    if (!containerRef.current) return;
+    setIsDragging(true);
+    setStartX(e.pageX - containerRef.current.offsetLeft);
+    setInitialScrollLeft(containerRef.current.scrollLeft);
+  };
+
+  const handleMouseLeave = () => {
+    setIsDragging(false);
+  };
+
+  const handleMouseUp = () => {
+    if (!isDragging) return;
+    setIsDragging(false);
+    if (!containerRef.current) return;
+    const width = containerRef.current.clientWidth;
+    const index = Math.round(containerRef.current.scrollLeft / width);
+    scrollTo(index, true);
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isDragging || !containerRef.current) return;
+    e.preventDefault();
+    const x = e.pageX - containerRef.current.offsetLeft;
+    const walk = (x - startX) * 1.5;
+    containerRef.current.scrollLeft = initialScrollLeft - walk;
+  };
+
   return (
     <div style={{ width: '100%', maxWidth: '600px', margin: '0 auto', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
       
@@ -182,14 +215,19 @@ export default function ActivityLevelSlider({ value, onChange }: { value: string
       <div 
         ref={containerRef}
         onScroll={handleScroll}
+        onMouseDown={handleMouseDown}
+        onMouseLeave={handleMouseLeave}
+        onMouseUp={handleMouseUp}
+        onMouseMove={handleMouseMove}
         style={{
           width: '100%',
           display: 'flex',
           overflowX: 'auto',
-          scrollSnapType: 'x mandatory',
+          scrollSnapType: isDragging ? 'none' : 'x mandatory',
           scrollbarWidth: 'none',
           msOverflowStyle: 'none',
-          WebkitOverflowScrolling: 'touch'
+          WebkitOverflowScrolling: 'touch',
+          cursor: isDragging ? 'grabbing' : 'grab'
         }}
         className="no-scrollbar"
       >

@@ -5,15 +5,17 @@ import AiMenuModal, { AiMenuData, AiExercise } from './AiMenuModal';
 import { WORKOUT_PROGRAMS, WorkoutProgram } from './programs';
 import WorkoutHistory from './WorkoutHistory';
 import { calculateCalories } from '@/lib/exerciseDictionary';
+import { useAppContext } from '../AppContext';
 
 export default function Workout() {
+  const { selectedDate: date, setSelectedDate: setDate } = useAppContext();
   const [showManualForm, setShowManualForm] = useState(false);
   const [showHistoryModal, setShowHistoryModal] = useState(false);
   const [activeTargetArea, setActiveTargetArea] = useState('腹筋');
   const [streak, setStreak] = useState(0);
   const dateInputRef = useRef<HTMLInputElement>(null);
+  const challengeScrollRef = useRef<HTMLDivElement>(null);
 
-  const [date, setDate] = useState(() => new Date().toLocaleDateString('ja-JP', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\//g, '-'));
   const [workouts, setWorkouts] = useState<WorkoutItem[]>([]);
   
   const [category, setCategory] = useState('');
@@ -34,6 +36,18 @@ export default function Workout() {
   const [aiGoal, setAiGoal] = useState('ダイエット・減量');
   const [aiEnvironment, setAiEnvironment] = useState('家トレ');
   const [aiCategory, setAiCategory] = useState('全身');
+  const [loginDates, setLoginDates] = useState<Set<string>>(new Set());
+
+  useEffect(() => {
+    const todayStr = new Date().toISOString().split('T')[0];
+    const saved = localStorage.getItem('kinnikun_logins');
+    const dates = saved ? JSON.parse(saved) : [];
+    if (!dates.includes(todayStr)) {
+      dates.push(todayStr);
+      localStorage.setItem('kinnikun_logins', JSON.stringify(dates));
+    }
+    setLoginDates(new Set(dates));
+  }, []);
 
   useEffect(() => {
     setWorkouts(getWorkouts(date));
@@ -214,12 +228,20 @@ export default function Workout() {
   if (!showManualForm) {
     const selectedDate = new Date(date);
     const calendarDays = [];
+    let checkedCount = 0;
+
     for (let i = -3; i <= 3; i++) {
         const d = new Date(selectedDate);
         d.setDate(d.getDate() + i);
+        
+        const dStr = d.toISOString().split('T')[0];
+        const isChecked = loginDates.has(dStr);
+        if (isChecked) checkedCount++;
+
         calendarDays.push({
             date: d,
             isToday: i === 0,
+            isChecked,
             dayStr: d.getDate(),
             dayName: ['日', '月', '火', '水', '木', '金', '土'][d.getDay()]
         });
@@ -264,24 +286,32 @@ export default function Workout() {
     };
 
     const prof = getProfile() || {} as any;
-    let challengeLevel = 2; 
-    let challengeTitle = '全身脂肪燃焼';
-    let challengeLevelText = '中級';
-    let challengeTime = '12〜25分';
+    let recommendedLevel = 2; 
 
     if (prof.workoutLevel === '初級' || prof.frequency?.includes('1') || prof.frequency?.includes('たまに')) {
-        challengeLevel = 1;
-        challengeTitle = '全身脂肪燃焼 (初級向け)';
-        challengeLevelText = '初級';
-        challengeTime = '8〜15分';
+        recommendedLevel = 1;
     } else if (prof.workoutLevel === '上級' || prof.frequency?.includes('毎日') || prof.frequency?.includes('5')) {
-        challengeLevel = 3;
-        challengeTitle = '全身脂肪燃焼 (上級向け)';
-        challengeLevelText = '上級';
-        challengeTime = '25〜40分';
+        recommendedLevel = 3;
     }
 
-    const handleChallengeClick = () => {
+    const challenges = [
+        { level: 1, title: '全身脂肪燃焼 (初級)', time: '約6分', levelText: '初級', bg: 'linear-gradient(135deg, #1a73e8 0%, #0052cc 100%)' },
+        { level: 2, title: '全身脂肪燃焼 (中級)', time: '約8分', levelText: '中級', bg: 'linear-gradient(135deg, #8d6e63 0%, #5d4037 100%)' },
+        { level: 3, title: '全身脂肪燃焼 (上級)', time: '約12分', levelText: '上級', bg: 'linear-gradient(135deg, #9c27b0 0%, #6a1b9a 100%)' }
+    ];
+
+    // Auto-scroll to recommended card on render
+    useEffect(() => {
+        if (!challengeScrollRef.current) return;
+        const container = challengeScrollRef.current;
+        const recIdx = challenges.findIndex(c => c.level === recommendedLevel);
+        if (recIdx <= 0) return;
+        // Each card is 85vw wide + 15px gap
+        const cardWidth = container.clientWidth * 0.85 + 15;
+        container.scrollLeft = recIdx * cardWidth;
+    }, [recommendedLevel]);
+
+    const handleChallengeClick = (challengeLevel: number, challengeTitle: string) => {
         let warmup = [
             { exercise: 'ジャンピングジャック', duration: '00:30' },
             { exercise: 'ハイニーズ', duration: '00:30' },
@@ -336,7 +366,7 @@ export default function Workout() {
         }
 
         const totalEx = warmup.length + training.length + cooldown.length;
-        const totalMinutes = Math.ceil((totalEx * (challengeLevel === 3 ? 45 : challengeLevel === 1 ? 20 : 30)) / 60) + 2; 
+        const totalMinutes = challengeLevel === 1 ? 6 : challengeLevel === 2 ? 8 : 12;
 
         setAiMenuData({
             title: challengeTitle,
@@ -368,61 +398,63 @@ export default function Workout() {
             <div className="workout-goal-calendar">
                 <div className="workout-goal-header">
                     <h3 className="workout-goal-title">一週間の目標</h3>
-                    <div className="workout-goal-progress">{streak > 0 ? `${Math.min(streak, 7)}/7` : '0/7'} <i className="fa-solid fa-pen" style={{marginLeft: '4px', opacity: 0.5}}></i></div>
+                    <div className="workout-goal-progress">{checkedCount}/7 <i className="fa-solid fa-pen" style={{marginLeft: '4px', opacity: 0.5}}></i></div>
                 </div>
                 <div style={{ position: 'relative' }} onClick={handleCalendarClick}>
                     <div className="calendar-days-row" style={{ cursor: 'pointer' }}>
                         {calendarDays.map((d, idx) => (
                             <div key={idx} className="calendar-day-col">
                                 <span className="calendar-day-name">{d.dayName}</span>
-                                <span className={`calendar-day-num ${d.isToday ? 'active' : ''}`}>{d.dayStr}</span>
+                                <span className={`calendar-day-num ${d.isToday ? 'active' : ''}`} style={d.isChecked && !d.isToday ? { color: '#1a73e8', background: '#e8f0fe', width: '32px', height: '32px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' } : {}}>
+                                    {d.isChecked ? <i className="fa-solid fa-check"></i> : d.dayStr}
+                                </span>
                             </div>
                         ))}
                     </div>
                 </div>
-                <div className="workout-motivational-msg">
-                    <img src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" alt="Trainer" />
-                    <p>今日は本当に頑張りましたね！大きな進歩が見られますよ。</p>
-                </div>
             </div>
 
             <h3 className="challenge-section-title">チャレンジ</h3>
-            <div className="challenge-card-banner">
-                <div className="challenge-badge">あなたに合わせて</div>
-                <h2 className="challenge-title">{challengeTitle}</h2>
-                <div className="challenge-grid">
-                    <div className="challenge-stat">
-                        <div className="challenge-stat-icon"><i className="fa-regular fa-calendar-days"></i></div>
-                        <div className="challenge-stat-text">
-                            <span className="challenge-stat-val">{challengeTime}</span>
-                            <span className="challenge-stat-label">毎日の時間</span>
+            <div ref={challengeScrollRef} className="challenges-scroll-container" style={{ display: 'flex', overflowX: 'auto', gap: '15px', padding: '5px 20px 20px', margin: '0 -20px', scrollSnapType: 'x mandatory', paddingBottom: '15px' }}>
+                {challenges.map(c => (
+                    <div key={c.level} className="challenge-card-banner" style={{ minWidth: '85vw', scrollSnapAlign: 'center', flexShrink: 0, background: c.bg, position: 'relative' }}>
+                        <div className="challenge-badge" style={{ visibility: recommendedLevel === c.level ? 'visible' : 'hidden' }}>あなたにおすすめ</div>
+                        <h2 className="challenge-title">{c.title}</h2>
+                        <div className="challenge-grid">
+                            <div className="challenge-stat">
+                                <div className="challenge-stat-icon"><i className="fa-regular fa-calendar-days"></i></div>
+                                <div className="challenge-stat-text">
+                                    <span className="challenge-stat-val">{c.time}</span>
+                                    <span className="challenge-stat-label">毎日の時間</span>
+                                </div>
+                            </div>
+                            <div className="challenge-stat">
+                                <div className="challenge-stat-icon"><i className="fa-solid fa-chart-simple"></i></div>
+                                <div className="challenge-stat-text">
+                                    <span className="challenge-stat-val">{c.levelText}</span>
+                                    <span className="challenge-stat-label">難易度</span>
+                                </div>
+                            </div>
+                            <div className="challenge-stat">
+                                <div className="challenge-stat-icon"><i className="fa-solid fa-bullseye"></i></div>
+                                <div className="challenge-stat-text">
+                                    <span className="challenge-stat-val">全身</span>
+                                    <span className="challenge-stat-label">ターゲット部位</span>
+                                </div>
+                            </div>
+                            <div className="challenge-stat">
+                                <div className="challenge-stat-icon"><i className="fa-solid fa-check"></i></div>
+                                <div className="challenge-stat-text">
+                                    <span className="challenge-stat-val">器具なし</span>
+                                    <span className="challenge-stat-label">器具</span>
+                                </div>
+                            </div>
                         </div>
+                        <button className="challenge-btn" onClick={() => handleChallengeClick(c.level, c.title)}>
+                            トレーニングを開始する <i className="fa-solid fa-arrow-right"></i>
+                        </button>
                     </div>
-                    <div className="challenge-stat">
-                        <div className="challenge-stat-icon"><i className="fa-solid fa-chart-simple"></i></div>
-                        <div className="challenge-stat-text">
-                            <span className="challenge-stat-val">{challengeLevelText}</span>
-                            <span className="challenge-stat-label">難易度</span>
-                        </div>
-                    </div>
-                    <div className="challenge-stat">
-                        <div className="challenge-stat-icon"><i className="fa-solid fa-bullseye"></i></div>
-                        <div className="challenge-stat-text">
-                            <span className="challenge-stat-val">全身</span>
-                            <span className="challenge-stat-label">ターゲット部位</span>
-                        </div>
-                    </div>
-                    <div className="challenge-stat">
-                        <div className="challenge-stat-icon"><i className="fa-solid fa-check"></i></div>
-                        <div className="challenge-stat-text">
-                            <span className="challenge-stat-val">器具なし</span>
-                            <span className="challenge-stat-label">器具</span>
-                        </div>
-                    </div>
-                </div>
-                <button className="challenge-btn" onClick={handleChallengeClick}>
-                    トレーニングを開始する <i className="fa-solid fa-arrow-right"></i>
-                </button>
+                ))}
             </div>
 
             <h3 className="challenge-section-title">ターゲット部位</h3>
@@ -473,9 +505,7 @@ export default function Workout() {
                 </div>
             </div>
 
-            <button className="fab-manual-record" onClick={() => setShowManualForm(true)} title="手動で記録する">
-                <i className="fa-solid fa-plus"></i>
-            </button>
+
 
             {aiMenuData && (
                 <AiMenuModal 
