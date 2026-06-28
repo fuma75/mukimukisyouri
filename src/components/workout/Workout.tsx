@@ -224,6 +224,12 @@ export default function Workout() {
   };
 
   const totalVolume = workouts.reduce((sum, w) => sum + (w.volume || 0), 0);
+  const totalSets = workouts.reduce((sum, w) => sum + (w.sets || 0), 0);
+  const summaryMap: Record<string, WorkoutItem[]> = {};
+  workouts.forEach(w => {
+    if (!summaryMap[w.category]) summaryMap[w.category] = [];
+    summaryMap[w.category].push(w);
+  });
 
   if (!showManualForm) {
     const selectedDate = new Date(date);
@@ -389,12 +395,6 @@ export default function Workout() {
 
     return (
         <section id="workout" className="content-section active" style={{ paddingBottom: '100px' }}>
-            <div className="workout-dashboard-header">
-                <h1 className="workout-dashboard-title">自宅トレーニング</h1>
-                <div className="workout-header-badges">
-                </div>
-            </div>
-
             <div className="workout-goal-calendar">
                 <div className="workout-goal-header">
                     <h3 className="workout-goal-title">一週間の目標</h3>
@@ -505,7 +505,61 @@ export default function Workout() {
                 </div>
             </div>
 
-
+            <h3 className="challenge-section-title">本日のトレーニング</h3>
+            <div className="summary-card glass-panel workout-summary-card" style={{ margin: '0 0 20px' }}>
+              <div className="card-header">
+                <h3><i className="fa-solid fa-dumbbell icon-blue"></i> 本日のトレーニング</h3>
+                <button className="btn btn-icon btn-sm" title="トレーニングを追加" onClick={() => setShowManualForm(true)}>
+                  <i className="fa-solid fa-plus"></i>
+                </button>
+              </div>
+              <div className="workout-summary-content">
+                {workouts.length === 0 ? (
+                  <div className="empty-state">
+                    <i className="fa-solid fa-circle-info"></i>
+                    <p>今日の筋トレはまだ記録されていません。</p>
+                    <button className="btn btn-secondary btn-sm" onClick={() => setShowManualForm(true)}>筋トレを記録する</button>
+                  </div>
+                ) : (
+                  <div className="workout-summary-dashboard-view">
+                    <div className="dashboard-workout-stats">
+                      <div className="stat-box">
+                        <span className="stat-label">総ボリューム</span>
+                        <span className="stat-val text-accent">{totalVolume.toLocaleString()} <span className="unit">kg</span></span>
+                      </div>
+                      <div className="stat-box">
+                        <span className="stat-label">実施部位数</span>
+                        <span className="stat-val">{Object.keys(summaryMap).length}</span>
+                      </div>
+                      <div className="stat-box">
+                        <span className="stat-label">総セット数</span>
+                        <span className="stat-val">{totalSets} <span className="unit">sets</span></span>
+                      </div>
+                    </div>
+                    <div className="dashboard-workout-details-list">
+                      {Object.entries(summaryMap).map(([cat, ws]) => {
+                        let categoryClass = 'other';
+                        switch (cat) {
+                          case '胸': categoryClass = 'chest'; break;
+                          case '背中': categoryClass = 'back'; break;
+                          case '脚': categoryClass = 'legs'; break;
+                          case '肩': categoryClass = 'shoulders'; break;
+                          case '腕': categoryClass = 'arms'; break;
+                          case '腹筋': categoryClass = 'abs'; break;
+                        }
+                        const exercisesStr = ws.map(w => `${w.exercise}(${w.sets}set)`).join(', ');
+                        return (
+                          <div key={cat} className="dashboard-workout-detail-row">
+                            <span className={`history-category-badge ${categoryClass}`}>{cat}</span>
+                            <span className="ex-detail-text">{exercisesStr}</span>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
 
             {aiMenuData && (
                 <AiMenuModal 

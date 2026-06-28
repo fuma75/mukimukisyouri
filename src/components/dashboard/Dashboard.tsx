@@ -1,9 +1,10 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import { useAppContext } from '../AppContext';
-import { getProfile, getWorkouts, getMeals, getWeightLogs, saveWeightLog, Profile, WorkoutItem, MealItem, WeightLog } from '@/lib/storage';
+import { getProfile, getWorkouts, getMeals, getWeightLogs, saveWeightLog, saveProfile, Profile, WorkoutItem, MealItem, WeightLog } from '@/lib/storage';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement, Title, PointElement, LineElement, Filler } from 'chart.js';
 import { Doughnut, Bar, Line } from 'react-chartjs-2';
+import RulerPicker from '@/components/ui/RulerPicker';
 
 ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement, Title, PointElement, LineElement, Filler);
 
@@ -14,6 +15,9 @@ export default function Dashboard() {
   const [meals, setMeals] = useState<MealItem[]>([]);
   const [weightLogs, setWeightLogs] = useState<WeightLog[]>([]);
   const [mounted, setMounted] = useState(false);
+  const [showBmiEdit, setShowBmiEdit] = useState(false);
+  const [editHeight, setEditHeight] = useState(167);
+  const [editWeight, setEditWeight] = useState(60);
 
   useEffect(() => {
     if (activeTab === 'dashboard' || !mounted) {
@@ -444,6 +448,142 @@ export default function Dashboard() {
             <Line data={weightChartData} options={weightChartOptions as any} />
           </div>
         </div>
+
+        {/* BMI カード */}
+        {(() => {
+          const h = profile.height / 100;
+          const bmi = h > 0 ? currentWeight / (h * h) : null;
+          if (!bmi) return null;
+          const bmiVal = Math.round(bmi * 10) / 10;
+          let bmiLabel = '標準';
+          let bmiColor = '#4ade80';
+          if (bmi < 18.5) { bmiLabel = '低体重'; bmiColor = '#60a5fa'; }
+          else if (bmi < 25) { bmiLabel = '標準'; bmiColor = '#4ade80'; }
+          else if (bmi < 30) { bmiLabel = '過体重'; bmiColor = '#fb923c'; }
+          else { bmiLabel = '肥満'; bmiColor = '#f87171'; }
+          const MIN = 15, MAX = 40;
+          const pointerPct = Math.min(98, Math.max(2, ((bmi - MIN) / (MAX - MIN)) * 100));
+          const totalRange = MAX - MIN;
+          const segments = [
+            { from: 15,   to: 18.5, color: '#60a5fa' },
+            { from: 18.5, to: 22,   color: '#34d399' },
+            { from: 22,   to: 25,   color: '#a3e635' },
+            { from: 25,   to: 30,   color: '#fbbf24' },
+            { from: 30,   to: 35,   color: '#fb923c' },
+            { from: 35,   to: 40,   color: '#f87171' },
+          ];
+          const labels = [15, 18.5, 25, 30, 35, 40];
+          return (
+            <div className="summary-card glass-panel chart-card" style={{ gridColumn: '1 / -1' }}>
+              <div className="card-header">
+                <h3><i className="fa-solid fa-person icon-blue"></i> BMI</h3>
+                <button
+                  onClick={() => { setEditHeight(profile.height); setEditWeight(currentWeight); setShowBmiEdit(true); }}
+                  style={{ background: '#1a73e8', color: '#fff', border: 'none', borderRadius: '20px', padding: '8px 16px', fontSize: '0.9rem', fontWeight: 'bold', cursor: 'pointer', boxShadow: '0 4px 10px rgba(26,115,232,0.2)' }}
+                >編集</button>
+              </div>
+              {/* 身長・体重編集モーダル */}
+              {showBmiEdit && (
+                <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.5)', zIndex: 9999, display: 'flex', alignItems: 'flex-end', justifyContent: 'center' }} onClick={() => setShowBmiEdit(false)}>
+                  <div style={{ background: '#fff', borderRadius: '24px 24px 0 0', padding: '16px 0 40px', width: '100%', maxWidth: '480px', boxShadow: '0 -8px 40px rgba(0,0,0,0.2)', maxHeight: '92vh', overflowY: 'auto' }} onClick={e => e.stopPropagation()}>
+                    <div style={{ width: '36px', height: '4px', background: '#dee2e6', borderRadius: '2px', margin: '0 auto 16px' }} />
+                    <div style={{ padding: '0 24px' }}>
+                      <h3 style={{ margin: '0 0 24px', fontSize: '1.1rem', fontWeight: 700 }}>BMI</h3>
+
+                      {/* 体重 */}
+                      <p style={{ margin: '0 0 12px', fontSize: '1rem', fontWeight: 700, color: '#212529' }}>体重</p>
+                      <div style={{ textAlign: 'center', marginBottom: '8px' }}>
+                        <span style={{ fontSize: '3rem', fontWeight: 800, color: '#1a73e8', lineHeight: 1 }}>{editWeight}</span>
+                        <span style={{ fontSize: '1.1rem', color: '#6c757d', marginLeft: '6px' }}>kg</span>
+                      </div>
+                    </div>
+                    {/* 体重ルーラー */}
+                    <div style={{ position: 'relative', width: '100%', marginBottom: '28px' }}>
+                      <RulerPicker min={20} max={200} step={0.5} value={editWeight} onChange={setEditWeight} orientation="horizontal" tickColor="#ced4da" labelColor="#6c757d" />
+                    </div>
+
+                    <div style={{ padding: '0 24px' }}>
+                      {/* 身長 */}
+                      <p style={{ margin: '0 0 12px', fontSize: '1rem', fontWeight: 700, color: '#212529' }}>身長</p>
+                      <div style={{ textAlign: 'center', marginBottom: '8px' }}>
+                        <span style={{ fontSize: '3rem', fontWeight: 800, color: '#1a73e8', lineHeight: 1 }}>{editHeight}</span>
+                        <span style={{ fontSize: '1.1rem', color: '#6c757d', marginLeft: '6px' }}>cm</span>
+                      </div>
+                    </div>
+                    {/* 身長ルーラー */}
+                    <div style={{ position: 'relative', width: '100%', marginBottom: '32px' }}>
+                      <RulerPicker min={100} max={250} step={1} value={editHeight} onChange={setEditHeight} orientation="horizontal" tickColor="#ced4da" labelColor="#6c757d" />
+                    </div>
+
+                    <div style={{ display: 'flex', gap: '12px', padding: '0 24px' }}>
+                      <button onClick={() => setShowBmiEdit(false)} style={{ flex: 1, padding: '16px', borderRadius: '50px', border: '1.5px solid #dee2e6', background: '#fff', fontSize: '1rem', fontWeight: 600, cursor: 'pointer', color: '#495057' }}>キャンセル</button>
+                      <button
+                        onClick={() => {
+                          if (editHeight < 100 || editWeight < 20) return;
+                          const updated = saveProfile({ ...profile, height: editHeight, weight: editWeight });
+                          setProfile(updated);
+                          setShowBmiEdit(false);
+                        }}
+                        style={{ flex: 2, padding: '16px', borderRadius: '50px', border: 'none', background: '#1a73e8', color: '#fff', fontSize: '1rem', fontWeight: 700, cursor: 'pointer' }}
+                      >保存</button>
+                    </div>
+                  </div>
+                </div>
+              )}
+              <div style={{ padding: '4px 10px 16px' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
+                  <span style={{ fontSize: '2.4rem', fontWeight: 'bold', color: 'var(--text-main)', lineHeight: 1 }}>{bmiVal}</span>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    <span style={{ width: '10px', height: '10px', borderRadius: '50%', background: bmiColor, display: 'inline-block', flexShrink: 0 }} />
+                    <span style={{ fontSize: '0.95rem', fontWeight: 600, color: 'var(--text-main)' }}>{bmiLabel}</span>
+                  </div>
+                </div>
+                <div style={{ position: 'relative', paddingBottom: '24px' }}>
+                  <div style={{ position: 'relative', marginBottom: '4px' }}>
+                    <div style={{ display: 'flex', height: '10px', borderRadius: '6px', overflow: 'hidden', gap: '2px' }}>
+                      {segments.map((seg, i) => (
+                        <div key={i} style={{
+                          flex: (seg.to - seg.from) / totalRange,
+                          background: seg.color,
+                          borderRadius: i === 0 ? '6px 0 0 6px' : i === segments.length - 1 ? '0 6px 6px 0' : '0',
+                        }} />
+                      ))}
+                    </div>
+                    <div style={{
+                      position: 'absolute',
+                      top: '10px',
+                      left: `${pointerPct}%`,
+                      transform: 'translateX(-50%)',
+                      width: 0, height: 0,
+                      borderLeft: '5px solid transparent',
+                      borderRight: '5px solid transparent',
+                      borderTop: '7px solid var(--text-main, #333)',
+                    }} />
+                  </div>
+                  <div style={{ position: 'relative', height: '16px', marginTop: '6px' }}>
+                    {labels.map(v => {
+                      const pct = ((v - MIN) / (MAX - MIN)) * 100;
+                      return (
+                        <span key={v} style={{
+                          position: 'absolute',
+                          left: `${pct}%`,
+                          transform: 'translateX(-50%)',
+                          fontSize: '0.68rem',
+                          color: 'var(--text-muted)',
+                          whiteSpace: 'nowrap',
+                        }}>{v}</span>
+                      );
+                    })}
+                  </div>
+                </div>
+                <div style={{ marginTop: '8px', padding: '10px 12px', background: 'var(--bg-secondary, rgba(0,0,0,0.03))', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: '0.82rem', color: 'var(--text-muted)' }}>
+                  <span>身長</span>
+                  <span style={{ fontWeight: 600, color: 'var(--text-main)' }}>{profile.height} cm</span>
+                </div>
+              </div>
+            </div>
+          );
+        })()}
       </div>
     </section>
   );

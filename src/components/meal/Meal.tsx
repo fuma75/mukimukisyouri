@@ -19,6 +19,13 @@ export default function Meal() {
   const [loadingEstimate, setLoadingEstimate] = useState(false);
   const [loadingImageEstimate, setLoadingImageEstimate] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [loginDates, setLoginDates] = useState<Set<string>>(new Set());
+
+  useEffect(() => {
+    const saved = localStorage.getItem('kinnikun_logins');
+    const dates = saved ? JSON.parse(saved) : [];
+    setLoginDates(new Set(dates));
+  }, []);
 
   useEffect(() => {
     setMeals(getMeals(date));
@@ -103,10 +110,26 @@ export default function Meal() {
   const sortedMeals = [...meals].sort((a, b) => (timingOrder[a.timing] || 9) - (timingOrder[b.timing] || 9));
   const totalCalories = meals.reduce((sum, m) => sum + m.calories, 0);
 
+  // Calendar
+  const calendarBase = new Date(date);
+  const calendarDays = [];
+  let checkedCount = 0;
+  for (let i = -3; i <= 3; i++) {
+    const d = new Date(calendarBase);
+    d.setDate(d.getDate() + i);
+    const dStr = d.toISOString().split('T')[0];
+    const isChecked = loginDates.has(dStr);
+    if (isChecked) checkedCount++;
+    calendarDays.push({
+      date: d,
+      isSelected: i === 0,
+      isChecked,
+      dayStr: d.getDate(),
+      dayName: ['日', '月', '火', '水', '木', '金', '土'][d.getDay()]
+    });
+  }
+
   const todayStr = new Date().toLocaleDateString('ja-JP', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\//g, '-');
-  const displayDate = date === todayStr
-    ? `今日 (${date})`
-    : date;
 
   const timingColors: Record<string, string> = {
     '朝食': '#f59e0b',
@@ -119,32 +142,33 @@ export default function Meal() {
     <section id="meal" className="content-section active" style={{ paddingBottom: '100px' }}>
       <div style={{ maxWidth: '560px', margin: '0 auto', padding: '0 16px' }}>
 
-        {/* ── 日付 ── */}
-        <div style={{
-          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-          padding: '14px 18px', background: 'var(--card-bg)', borderRadius: '16px',
-          marginBottom: '16px', boxShadow: '0 2px 8px rgba(0,0,0,0.06)'
-        }}>
-          <button type="button" onClick={() => shiftDate(-1)}
-            style={{ background: 'none', border: 'none', fontSize: '1.2rem', color: 'var(--text-muted)', cursor: 'pointer', padding: '4px 10px' }}>
-            <i className="fa-solid fa-chevron-left" />
-          </button>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <i className="fa-regular fa-calendar" style={{ color: 'var(--primary)' }} />
-            <input
-              type="date"
-              value={date}
-              onChange={e => setDate(e.target.value)}
-              style={{
-                border: 'none', background: 'transparent', fontSize: '1rem',
-                fontWeight: 'bold', color: 'var(--text-main)', cursor: 'pointer', outline: 'none'
-              }}
-            />
+        {/* ── カレンダー（筋トレと同じUI） ── */}
+        <div className="workout-goal-calendar" style={{ marginBottom: '16px' }}>
+          <div className="workout-goal-header">
+            <h3 className="workout-goal-title">食事記録</h3>
+            <div className="workout-goal-progress">{checkedCount}/7 <i className="fa-solid fa-fire" style={{ marginLeft: '4px', opacity: 0.5 }} /></div>
           </div>
-          <button type="button" onClick={() => shiftDate(1)}
-            style={{ background: 'none', border: 'none', fontSize: '1.2rem', color: 'var(--text-muted)', cursor: 'pointer', padding: '4px 10px' }}>
-            <i className="fa-solid fa-chevron-right" />
-          </button>
+          <div className="calendar-days-row">
+            {calendarDays.map((d, idx) => (
+              <div
+                key={idx}
+                className="calendar-day-col"
+                onClick={() => {
+                  const ds = d.date.toLocaleDateString('ja-JP', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\//g, '-');
+                  setDate(ds);
+                }}
+                style={{ cursor: 'pointer' }}
+              >
+                <span className="calendar-day-name">{d.dayName}</span>
+                <span
+                  className={`calendar-day-num ${d.isSelected ? 'active' : ''}`}
+                  style={d.isChecked && !d.isSelected ? { color: '#1a73e8', background: '#e8f0fe', width: '32px', height: '32px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' } : {}}
+                >
+                  {d.isChecked ? <i className="fa-solid fa-check" /> : d.dayStr}
+                </span>
+              </div>
+            ))}
+          </div>
         </div>
 
         {/* ── 写真からAI推定 ── */}

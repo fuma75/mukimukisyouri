@@ -10,7 +10,6 @@ import Workout from '@/components/workout/Workout';
 import Meal from '@/components/meal/Meal';
 import TrainerChat from '@/components/trainer/TrainerChat';
 import Profile from '@/components/profile/Profile';
-import MuscleMap from '@/components/muscle-map/MuscleMap';
 import Map from '@/components/map/Map';
 import Login from '@/components/auth/Login';
 
@@ -38,7 +37,6 @@ function MainContent() {
           <div style={{ display: activeTab === 'workout' ? 'block' : 'none', height: '100%' }}><Workout /></div>
           <div style={{ display: activeTab === 'meal' ? 'block' : 'none', height: '100%' }}><Meal /></div>
           <div style={{ display: activeTab === 'trainer' ? 'block' : 'none', height: '100%' }}><TrainerChat /></div>
-          <div style={{ display: activeTab === 'muscle-map' ? 'block' : 'none', height: '100%' }}><MuscleMap /></div>
           <div style={{ display: activeTab === 'map' ? 'block' : 'none', height: '100%' }}><Map /></div>
           <div style={{ display: activeTab === 'profile' ? 'block' : 'none', height: '100%' }}><Profile /></div>
         </div>

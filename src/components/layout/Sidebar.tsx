@@ -10,7 +10,6 @@ export default function Sidebar() {
     { id: 'workout', icon: 'fa-calendar-check', label: '筋トレ記録' },
     { id: 'meal', icon: 'fa-utensils', label: '食事管理' },
     { id: 'trainer', icon: 'fa-comment-dots', label: '専属トレーナー' },
-    { id: 'muscle-map', icon: 'fa-child-reaching', label: '筋肉マップ' },
     { id: 'map', icon: 'fa-map-location-dot', label: 'ジム探し' },
   ];
 

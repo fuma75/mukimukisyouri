@@ -142,183 +142,196 @@ export default function WorkoutPlayer({ exercises, onComplete, onCancel, initial
   const progressPercent = ((currentIndex + (phase === 'rest' ? 1 : 0)) / exercises.length) * 100;
 
   return (
-    <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, zIndex: 10000, background: '#fff', display: 'flex', flexDirection: 'column' }}>
-      
+    <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: '68px', zIndex: 10000, background: '#fff', display: 'flex', flexDirection: 'column' }}>
+
       {/* Header / Progress */}
       {phase !== 'rest' && (
-        <div style={{ padding: '20px', display: 'flex', alignItems: 'center', gap: '15px', background: '#fff', borderBottom: '1px solid #f1f3f5' }}>
-          <button onClick={() => onCancel(currentIndex)} style={{ background: 'none', border: 'none', fontSize: '1.5rem', color: '#495057', cursor: 'pointer' }}>
+        <div style={{ padding: '8px 16px', display: 'flex', alignItems: 'center', gap: '12px', background: '#fff', borderBottom: '1px solid #f1f3f5', flexShrink: 0 }}>
+          <button onClick={() => onCancel(currentIndex)} style={{ background: 'none', border: 'none', fontSize: '1.2rem', color: '#495057', cursor: 'pointer', padding: '4px' }}>
             <i className="fa-solid fa-xmark"></i>
           </button>
-          <div style={{ flex: 1, height: '8px', background: '#e9ecef', borderRadius: '4px', overflow: 'hidden' }}>
-            <div style={{ width: `${progressPercent}%`, height: '100%', background: '#1a73e8', transition: 'width 0.3s ease' }}></div>
+          <div style={{ flex: 1, height: '5px', background: '#e9ecef', borderRadius: '3px', overflow: 'hidden' }}>
+            <div style={{ width: `${progressPercent}%`, height: '100%', background: '#1a73e8', transition: 'width 0.4s ease' }}></div>
           </div>
-          <div style={{ fontSize: '0.9rem', fontWeight: 'bold', color: '#868e96' }}>
+          <div style={{ fontSize: '0.8rem', fontWeight: 'bold', color: '#868e96', whiteSpace: 'nowrap' }}>
             {currentIndex + 1} / {exercises.length}
           </div>
         </div>
       )}
 
       {/* Main Content Area */}
-      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: phase === 'rest' ? 'flex-start' : 'center', padding: phase === 'rest' ? '0' : '20px', textAlign: 'center', position: 'relative' }}>
-        
+      <div style={{
+        flex: '1 1 auto',
+        height: 0, /* flexコンテナ内で正確に高さを100%にするためのCSS定石 */
+        width: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        overflow: 'hidden', /* スクロールを完全に防ぐ */
+        position: 'relative',
+        /* ready phase: center everything vertically */
+        justifyContent: phase === 'ready' ? 'center' : 'flex-start',
+        gap: phase === 'ready' ? '6px' : 0,
+        textAlign: phase === 'ready' ? 'center' : 'left',
+        padding: phase === 'ready' ? '8px 16px 12px' : 0,
+      }}>
+
+        {/* ── READY phase: content rendered directly in outer container ── */}
         {phase === 'ready' && currentEx && (
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%', height: '100%', position: 'absolute', top: 0, left: 0 }}>
-            <div style={{ flex: 1, width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'flex-end', paddingBottom: '20px' }}>
-              <img 
-                 src={getExerciseDetails(currentEx.exercise).gifUrl || getExerciseDetails(currentEx.exercise).image || 'https://v2.exercisedb.io/image/1'} 
-                 alt={currentEx.exercise} 
-                 style={{ width: '100%', maxHeight: '40vh', objectFit: 'contain' }} 
-               />
-            </div>
-            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'flex-start', animation: 'pulse 1s infinite', zIndex: 2 }}>
-              <h2 style={{ fontSize: '2rem', color: '#adb5bd', marginBottom: '10px', marginTop: '20px' }}>準備してください</h2>
-              <h3 style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#212529', marginBottom: '10px' }}>{currentEx.exercise}</h3>
-              <div style={{ fontSize: '6rem', fontWeight: 'bold', color: '#1a73e8', lineHeight: 1 }}>{timeLeft}</div>
-            </div>
-          </div>
+          <>
+            {(getExerciseDetails(currentEx.exercise).gifUrl || getExerciseDetails(currentEx.exercise).image) && (
+              <img
+                src={getExerciseDetails(currentEx.exercise).gifUrl || getExerciseDetails(currentEx.exercise).image}
+                alt={currentEx.exercise}
+                style={{ maxWidth: '140px', maxHeight: '20vh', objectFit: 'contain', marginBottom: '4px' }}
+              />
+            )}
+            <h2 style={{ fontSize: '0.85rem', color: '#adb5bd', margin: 0 }}>準備してください</h2>
+            <h3 style={{ fontSize: '1.2rem', fontWeight: 'bold', color: '#212529', margin: '0 0 2px' }}>{currentEx.exercise}</h3>
+            <div style={{ fontSize: '4rem', fontWeight: 'bold', color: '#1a73e8', lineHeight: 1 }}>{timeLeft}</div>
+          </>
         )}
 
+        {/* ── REST phase ── */}
         {phase === 'rest' && (
-          <div style={{ display: 'flex', flexDirection: 'column', height: '100%', width: '100%', position: 'absolute', top: 0, left: 0 }}>
-            <div style={{ flex: 1, background: '#fff', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', position: 'relative', padding: '20px' }}>
-              <div style={{ position: 'absolute', top: '20px', left: '0', right: '0', textAlign: 'center' }}>
-                <h2 style={{ fontSize: '1.5rem', fontWeight: '900', color: '#1a73e8', margin: 0 }}>次の種目</h2>
-              </div>
-              <div style={{ width: '100%', height: '100%', maxHeight: '40vh', display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '40px' }}>
-                <img 
-                  src={getExerciseDetails(exercises[currentIndex + 1]?.exercise || '').gifUrl || getExerciseDetails(exercises[currentIndex + 1]?.exercise || '').image || 'https://v2.exercisedb.io/image/1'} 
-                  alt="Next Exercise" 
-                  style={{ width: '100%', height: '100%', objectFit: 'contain' }} 
+          <div style={{ display: 'flex', flexDirection: 'column', width: '100%', height: '100%', justifyContent: 'space-between', padding: '0' }}>
+            {/* Next exercise preview — compact */}
+            <div style={{ flex: '0 0 auto', display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '6px 16px 2px', background: '#fff' }}>
+              <h2 style={{ fontSize: '0.85rem', fontWeight: '700', color: '#1a73e8', margin: '0 0 2px' }}>次の種目</h2>
+              {(getExerciseDetails(exercises[currentIndex + 1]?.exercise || '').gifUrl || getExerciseDetails(exercises[currentIndex + 1]?.exercise || '').image) ? (
+                <img
+                  src={getExerciseDetails(exercises[currentIndex + 1]?.exercise || '').gifUrl || getExerciseDetails(exercises[currentIndex + 1]?.exercise || '').image}
+                  alt="Next Exercise"
+                  style={{ maxWidth: '110px', maxHeight: '12vh', objectFit: 'contain' }}
                 />
-              </div>
+              ) : (
+                <div style={{ width: '36px', height: '36px', borderRadius: '50%', background: 'rgba(26,115,232,0.08)', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                  <i className="fa-solid fa-person-running" style={{ fontSize: '1.2rem', color: '#1a73e8' }}></i>
+                </div>
+              )}
             </div>
-            
-            <div style={{ flex: 1.2, background: '#0d6efd', color: '#fff', padding: '30px 20px', borderTopLeftRadius: '24px', borderTopRightRadius: '24px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-              <div style={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '10px' }}>
-                 <div style={{ textAlign: 'left' }}>
-                   <div style={{ fontSize: '1rem', fontWeight: 'bold', marginBottom: '5px', opacity: 0.9 }}>次へ {currentIndex + 2}/{exercises.length}</div>
-                   <div style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>{exercises[currentIndex + 1]?.exercise}</div>
-                 </div>
-                 <div style={{ fontSize: '1.3rem', fontWeight: 'bold', display: 'flex', alignItems: 'center', gap: '5px' }}>
-                   {exercises[currentIndex + 1]?.reps ? `x ${exercises[currentIndex + 1].reps}` : exercises[currentIndex + 1]?.duration ? `${exercises[currentIndex + 1].duration}` : ''}
-                 </div>
+
+            {/* Blue rest panel */}
+            <div style={{ flex: '1 1 auto', background: '#0d6efd', color: '#fff', padding: '10px 20px 14px', borderTopLeftRadius: '20px', borderTopRightRadius: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-between' }}>
+              {/* Next exercise info */}
+              <div style={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '2px' }}>
+                <div style={{ textAlign: 'left' }}>
+                  <div style={{ fontSize: '0.65rem', opacity: 0.85 }}>次へ {currentIndex + 2}/{exercises.length}</div>
+                  <div style={{ fontSize: '0.95rem', fontWeight: 'bold' }}>{exercises[currentIndex + 1]?.exercise}</div>
+                </div>
+                <div style={{ fontSize: '0.9rem', fontWeight: 'bold' }}>
+                  {exercises[currentIndex + 1]?.reps ? `x ${exercises[currentIndex + 1].reps}` : exercises[currentIndex + 1]?.duration || ''}
+                </div>
               </div>
-              
-              <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
-                <div style={{ fontSize: '1.2rem', opacity: 0.9 }}>休憩</div>
-                <div style={{ fontSize: '4.5rem', fontWeight: 'bold', lineHeight: 1, margin: '10px 0' }}>
+
+              {/* Timer */}
+              <div style={{ textAlign: 'center', margin: '2px 0' }}>
+                <div style={{ fontSize: '0.75rem', opacity: 0.9 }}>休憩</div>
+                <div style={{ fontSize: '2.5rem', fontWeight: 'bold', lineHeight: 1 }}>
                   {formatTime(timeLeft || 0)}
                 </div>
-                <button style={{ background: 'rgba(255,255,255,0.2)', color: '#fff', border: 'none', padding: '8px 20px', borderRadius: '20px', fontSize: '0.9rem', cursor: 'pointer' }}>
+                <button style={{ background: 'rgba(255,255,255,0.2)', color: '#fff', border: 'none', padding: '3px 10px', borderRadius: '20px', fontSize: '0.65rem', cursor: 'pointer', marginTop: '2px' }}>
                   休憩時間を編集
                 </button>
               </div>
-              
-              <div style={{ display: 'flex', gap: '15px', width: '100%', marginTop: '20px' }}>
-                <button 
+
+              {/* Action buttons */}
+              <div style={{ display: 'flex', gap: '8px', width: '100%', marginTop: '2px' }}>
+                <button
                   onClick={() => setTimeLeft((prev) => (prev !== null ? prev + 20 : null))}
-                  style={{ flex: 1, padding: '16px', background: 'rgba(255,255,255,0.2)', color: '#fff', border: 'none', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', cursor: 'pointer' }}
+                  style={{ flex: 1, padding: '9px', background: 'rgba(255,255,255,0.2)', color: '#fff', border: 'none', borderRadius: '30px', fontSize: '0.85rem', fontWeight: 'bold', cursor: 'pointer' }}
                 >
                   +20s
                 </button>
-                <button 
+                <button
                   onClick={handleSkipRest}
-                  style={{ flex: 1, padding: '16px', background: '#fff', color: '#0d6efd', border: 'none', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', cursor: 'pointer' }}
+                  style={{ flex: 1, padding: '9px', background: '#fff', color: '#0d6efd', border: 'none', borderRadius: '30px', fontSize: '0.85rem', fontWeight: 'bold', cursor: 'pointer' }}
                 >
                   スキップ
                 </button>
-              </div>
             </div>
           </div>
         )}
-
+        {/* ── WORK phase ── */}
         {phase === 'work' && currentEx && (
-          <div style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <div style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'flex-start', gap: '8px', padding: '8px 16px 12px' }}>
+            {/* Exercise image */}
             {getExerciseDetails(currentEx.exercise).gifUrl ? (
-              <div style={{ width: '100%', maxWidth: '350px', height: '250px', borderRadius: '24px', overflow: 'hidden', marginBottom: '20px', background: '#fff', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                <img 
-                  src={getExerciseDetails(currentEx.exercise).gifUrl} 
-                  alt={currentEx.exercise} 
-                  style={{ width: '100%', height: '100%', objectFit: 'contain' }} 
-                />
+              <div style={{ width: '100%', maxWidth: '180px', height: '110px', borderRadius: '16px', overflow: 'hidden', background: '#f8f9fa', display: 'flex', justifyContent: 'center', alignItems: 'center', flexShrink: 0 }}>
+                <img src={getExerciseDetails(currentEx.exercise).gifUrl} alt={currentEx.exercise} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
               </div>
             ) : getExerciseDetails(currentEx.exercise).images && getExerciseDetails(currentEx.exercise).images!.length > 0 ? (
-              <div style={{ width: '100%', maxWidth: '300px', height: '220px', borderRadius: '16px', overflow: 'hidden', marginBottom: '20px', boxShadow: '0 8px 24px rgba(0,0,0,0.1)', background: '#fff', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                <img 
-                  src={getExerciseDetails(currentEx.exercise).images![animFrame % getExerciseDetails(currentEx.exercise).images!.length]} 
-                  alt={currentEx.exercise} 
-                  style={{ width: '100%', height: '100%', objectFit: 'contain', animation: 'fadeIn 0.1s ease-in-out' }} 
-                />
+              <div style={{ width: '100%', maxWidth: '160px', height: '100px', borderRadius: '12px', overflow: 'hidden', boxShadow: '0 2px 10px rgba(0,0,0,0.06)', background: '#f8f9fa', display: 'flex', justifyContent: 'center', alignItems: 'center', flexShrink: 0 }}>
+                <img src={getExerciseDetails(currentEx.exercise).images![animFrame % getExerciseDetails(currentEx.exercise).images!.length]} alt={currentEx.exercise} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
               </div>
             ) : getExerciseDetails(currentEx.exercise).image ? (
-              <div style={{ width: '100%', maxWidth: '300px', height: '200px', borderRadius: '16px', overflow: 'hidden', marginBottom: '20px', boxShadow: '0 8px 24px rgba(0,0,0,0.1)' }}>
+              <div style={{ width: '100%', maxWidth: '160px', height: '90px', borderRadius: '12px', overflow: 'hidden', flexShrink: 0 }}>
                 <img src={getExerciseDetails(currentEx.exercise).image} alt={currentEx.exercise} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
               </div>
             ) : (
-              <div style={{ width: '120px', height: '120px', borderRadius: '50%', background: 'rgba(26, 115, 232, 0.1)', display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '20px' }}>
-                <i className="fa-solid fa-person-running" style={{ fontSize: '4rem', color: '#1a73e8', animation: 'workout-bob 1.5s infinite ease-in-out' }}></i>
+              <div style={{ width: '44px', height: '44px', borderRadius: '50%', background: 'rgba(26,115,232,0.08)', display: 'flex', justifyContent: 'center', alignItems: 'center', flexShrink: 0 }}>
+                <i className="fa-solid fa-person-running" style={{ fontSize: '1.4rem', color: '#1a73e8' }}></i>
               </div>
             )}
-            
-            <h2 style={{ fontSize: '2rem', fontWeight: '900', color: '#212529', marginBottom: '10px' }}>{currentEx.exercise}</h2>
-            <p style={{ fontSize: '1.2rem', color: '#868e96', marginBottom: '15px' }}>
-              {currentEx.weight ? `${currentEx.weight}kg × ` : ''}{currentEx.reps ? `${currentEx.reps}回` : ''} {currentEx.sets ? `× ${currentEx.sets}セット` : ''}
-            </p>
 
-            <div style={{ background: '#f8f9fa', padding: '15px 20px', borderRadius: '12px', width: '100%', maxWidth: '400px', textAlign: 'left', marginBottom: '25px', border: '1px solid #e9ecef' }}>
-              <h4 style={{ margin: '0 0 10px 0', fontSize: '0.9rem', color: '#495057' }}><i className="fa-solid fa-circle-info"></i> やり方・ポイント</h4>
-              <ul style={{ margin: 0, paddingLeft: '20px', fontSize: '0.95rem', color: '#495057', lineHeight: '1.6' }}>
+            {/* Exercise title & details */}
+            <div style={{ textAlign: 'center', margin: 0, flexShrink: 0 }}>
+              <h2 style={{ fontSize: '1.2rem', fontWeight: '900', color: '#212529', margin: '0 0 1px' }}>{currentEx.exercise}</h2>
+              <p style={{ fontSize: '0.85rem', color: '#868e96', margin: 0 }}>
+                {currentEx.weight ? `${currentEx.weight}kg × ` : ''}{currentEx.reps ? `${currentEx.reps}回` : ''} {currentEx.sets ? `× ${currentEx.sets}セット` : ''}
+              </p>
+            </div>
+
+            {/* Guide point box */}
+            <div style={{ background: '#f8f9fa', padding: '6px 10px', borderRadius: '10px', width: '100%', maxWidth: '400px', textAlign: 'left', border: '1px solid #e9ecef', flexShrink: 1, overflowY: 'auto', maxHeight: '12vh' }}>
+              <h4 style={{ margin: '0 0 2px', fontSize: '0.72rem', color: '#495057' }}><i className="fa-solid fa-circle-info"></i> やり方・ポイント</h4>
+              <ul style={{ margin: 0, paddingLeft: '14px', fontSize: '0.75rem', color: '#495057', lineHeight: '1.3' }}>
                 {(currentEx.instructions && currentEx.instructions.length > 0 ? currentEx.instructions : getExerciseDetails(currentEx.exercise).instructions).map((inst, i) => (
                   <li key={i}>{inst}</li>
                 ))}
               </ul>
             </div>
 
+            {/* Control action or timer */}
             {isTimeBased ? (
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '30px', marginTop: '20px' }}>
-                <div style={{ position: 'relative', width: '160px', height: '160px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                  <svg width="160" height="160" viewBox="0 0 160 160" style={{ position: 'absolute', top: 0, left: 0, transform: 'rotate(-90deg)' }}>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '14px', flexShrink: 0, marginTop: '2px' }}>
+                <div style={{ position: 'relative', width: '70px', height: '70px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                  <svg width="70" height="70" viewBox="0 0 160 160" style={{ position: 'absolute', top: 0, left: 0, transform: 'rotate(-90deg)' }}>
                     <circle cx="80" cy="80" r="72" fill="none" stroke="#f1f3f5" strokeWidth="12" />
-                    <circle 
-                      cx="80" cy="80" r="72" fill="none" stroke="#0d6efd" strokeWidth="12" 
-                      strokeLinecap="round"
-                      strokeDasharray="452.39" 
+                    <circle cx="80" cy="80" r="72" fill="none" stroke="#0d6efd" strokeWidth="12" strokeLinecap="round"
+                      strokeDasharray="452.39"
                       strokeDashoffset={452.39 * (1 - (timeLeft || 0) / (parseDuration(currentEx.duration) || 1))}
                       style={{ transition: 'stroke-dashoffset 1s linear' }}
                     />
                   </svg>
-                  <div style={{ fontSize: '4rem', fontWeight: '900', color: '#212529', zIndex: 1 }}>
-                    {timeLeft}
-                  </div>
+                  <div style={{ fontSize: '1.7rem', fontWeight: '900', color: '#212529', zIndex: 1 }}>{timeLeft}</div>
                 </div>
-                <button 
-                  onClick={handleNext} 
-                  style={{ width: '60px', height: '60px', background: '#fff', border: 'none', color: '#212529', fontSize: '2rem', cursor: 'pointer', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+                <button
+                  onClick={handleNext}
+                  style={{ width: '36px', height: '36px', background: '#f1f3f5', border: 'none', borderRadius: '50%', color: '#212529', fontSize: '1rem', cursor: 'pointer', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
                 >
                   <i className="fa-solid fa-chevron-right"></i>
                 </button>
               </div>
             ) : (
-              <div style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#1a73e8', marginBottom: '20px' }}>
-                自分のペースで完了させてください
+              <div style={{ display: 'flex', flexDirection: 'column', width: '100%', alignItems: 'center', gap: '2px', flexShrink: 0 }}>
+                <div style={{ fontSize: '0.78rem', color: '#868e96', textAlign: 'center' }}>
+                  自分のペースで完了させてください
+                </div>
+                <div style={{ width: '100%', padding: '2px 0' }}>
+                  <button
+                    onClick={handleNext}
+                    style={{ width: '100%', padding: '10px', background: '#1a73e8', color: '#fff', borderRadius: '40px', fontSize: '0.9rem', fontWeight: 'bold', border: 'none', cursor: 'pointer', boxShadow: '0 4px 14px rgba(26,115,232,0.3)' }}
+                  >
+                    <i className="fa-solid fa-check"></i> 完了して次へ
+                  </button>
+                </div>
               </div>
             )}
           </div>
         )}
-      </div>
 
-      {/* Controls */}
-      {phase === 'work' && !isTimeBased && (
-        <div style={{ padding: '30px', display: 'flex', justifyContent: 'center', gap: '20px', background: '#fff' }}>
-          <button 
-            onClick={handleNext} 
-            style={{ width: '100%', maxWidth: '300px', padding: '20px', background: '#1a73e8', color: '#fff', borderRadius: '40px', fontSize: '1.5rem', fontWeight: 'bold', border: 'none', cursor: 'pointer', boxShadow: '0 4px 14px rgba(26, 115, 232, 0.3)' }}
-          >
-            <i className="fa-solid fa-check"></i> 完了して次へ
-          </button>
-        </div>
-      )}
+      </div>
     </div>
   );
 }

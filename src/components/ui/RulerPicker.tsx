@@ -8,9 +8,11 @@ interface RulerPickerProps {
   value: number;
   onChange: (val: number) => void;
   orientation?: 'horizontal' | 'vertical';
+  tickColor?: string;
+  labelColor?: string;
 }
 
-export default function RulerPicker({ min, max, step, value, onChange, orientation = 'horizontal' }: RulerPickerProps) {
+export default function RulerPicker({ min, max, step, value, onChange, orientation = 'horizontal', tickColor = '#e9ecef', labelColor = '#adb5bd' }: RulerPickerProps) {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [isDraggingStyle, setIsDraggingStyle] = useState(false);
   const isDraggingRef = useRef(false);
@@ -124,7 +126,7 @@ export default function RulerPicker({ min, max, step, value, onChange, orientati
           bottom: 20, // push up so numbers fit below
           width: '2px',
           height: isMajor ? '40px' : isMedium ? '25px' : '15px',
-          backgroundColor: '#e9ecef',
+          backgroundColor: tickColor,
           transform: 'translateX(-50%)'
         }}>
           {isMajor && (
@@ -134,7 +136,7 @@ export default function RulerPicker({ min, max, step, value, onChange, orientati
               left: '50%',
               transform: 'translateX(-50%)',
               fontSize: '14px',
-              color: '#adb5bd',
+              color: labelColor,
               fontWeight: 'bold'
             }}>
               {Number(tickValue.toFixed(0))}
@@ -150,7 +152,7 @@ export default function RulerPicker({ min, max, step, value, onChange, orientati
           left: 0,
           height: '2px',
           width: isMajor ? '40px' : isMedium ? '25px' : '15px',
-          backgroundColor: '#e9ecef',
+          backgroundColor: tickColor,
           transform: 'translateY(-50%)'
         }}>
           {isMajor && (
@@ -160,7 +162,7 @@ export default function RulerPicker({ min, max, step, value, onChange, orientati
               top: '50%',
               transform: 'translateY(-50%)',
               fontSize: '14px',
-              color: '#adb5bd',
+              color: labelColor,
               fontWeight: 'bold'
             }}>
               {Number(tickValue.toFixed(0))}
