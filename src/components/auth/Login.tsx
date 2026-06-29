@@ -197,7 +197,7 @@ export default function Login() {
       if (targetAreas.includes('全身')) {
         setTargetAreas([]);
       } else {
-        setTargetAreas(['全身', '腕', '胸部', '腹筋', '脚']);
+        setTargetAreas(['全身', '腕', '胸部', '背筋', '腹筋', '脚']);
       }
       return;
     }
@@ -207,7 +207,7 @@ export default function Login() {
       newAreas = newAreas.filter(a => a !== area && a !== '全身');
     } else {
       newAreas.push(area);
-      if (newAreas.includes('腕') && newAreas.includes('胸部') && newAreas.includes('腹筋') && newAreas.includes('脚')) {
+      if (newAreas.includes('腕') && newAreas.includes('胸部') && newAreas.includes('背筋') && newAreas.includes('腹筋') && newAreas.includes('脚')) {
         newAreas.push('全身');
       }
     }
@@ -404,8 +404,12 @@ export default function Login() {
         boxSizing: 'border-box'
       }}
     >
-      <div style={{ width: '40px', display: 'flex', justifyContent: 'center', alignItems: 'center', marginRight: '15px' }}>
-        <i className={icon} style={{ fontSize: '1.5rem', color: selected ? '#1a73e8' : '#adb5bd' }}></i>
+      <div style={{ width: '40px', height: '40px', display: 'flex', justifyContent: 'center', alignItems: 'center', marginRight: '15px', overflow: 'hidden' }}>
+        {icon.startsWith('/') ? (
+          <img src={icon} alt={label} style={{ width: '100%', height: '100%', objectFit: 'contain', filter: selected ? 'none' : 'grayscale(100%)', opacity: selected ? 1 : 0.6 }} />
+        ) : (
+          <i className={icon} style={{ fontSize: '1.5rem', color: selected ? '#1a73e8' : '#adb5bd' }}></i>
+        )}
       </div>
       <div style={{ flex: 1, fontSize: '1.1rem', fontWeight: selected ? 'bold' : 'normal', color: selected ? '#1a73e8' : '#1e1e24', display: 'flex', alignItems: 'center' }}>
         {label}
@@ -570,8 +574,9 @@ export default function Login() {
               {renderOptionCard('全身', 'fa-solid fa-child', targetAreas.includes('全身'), () => handleAreaToggle('全身'))}
               {renderOptionCard('腕', 'fa-solid fa-hand-fist', targetAreas.includes('腕'), () => handleAreaToggle('腕'))}
               {renderOptionCard('胸部', 'fa-solid fa-child-reaching', targetAreas.includes('胸部'), () => handleAreaToggle('胸部'))}
-              {renderOptionCard('腹筋', 'fa-solid fa-cubes', targetAreas.includes('腹筋'), () => handleAreaToggle('腹筋'))}
-              {renderOptionCard('脚', 'fa-solid fa-shoe-prints', targetAreas.includes('脚'), () => handleAreaToggle('脚'))}
+              {renderOptionCard('背筋', '/images/tiger-back.png', targetAreas.includes('背筋'), () => handleAreaToggle('背筋'))}
+              {renderOptionCard('腹筋', '/images/tiger-abs.png', targetAreas.includes('腹筋'), () => handleAreaToggle('腹筋'))}
+              {renderOptionCard('脚', '/images/tiger-legs.png', targetAreas.includes('脚'), () => handleAreaToggle('脚'))}
             </div>
           </div>
 
