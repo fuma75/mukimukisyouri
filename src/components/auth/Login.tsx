@@ -490,7 +490,7 @@ export default function Login() {
                     style={{ 
                       flex: 1, 
                       maxWidth: '220px', 
-                      height: '350px', 
+                      height: 'min(350px, 40vh)', 
                       borderRadius: '20px', 
                       background: isSelected ? 'rgba(26, 115, 232, 0.05)' : '#fff', 
                       border: `2px solid ${isSelected ? '#1a73e8' : '#e9ecef'}`, 

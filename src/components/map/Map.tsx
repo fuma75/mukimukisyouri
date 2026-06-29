@@ -35,7 +35,7 @@ export default function Map() {
     }, []);
 
     return (
-        <section id="map" className="content-section active">
+        <section id="map" className="content-section active" style={{ paddingBottom: '100px' }}>
             <div className="section-layout single-column">
                 <div className="form-container glass-panel">
                     <div className="panel-header">
@@ -47,7 +47,7 @@ export default function Map() {
                         </button>
                     </div>
                     <p className="section-desc" style={{ marginBottom: '15px' }}>ボタンを押すと現在地を取得し、近くのフィットネスジムを検索します。</p>
-                    <div className="map-wrapper" style={{ borderRadius: '12px', overflow: 'hidden', height: '500px', boxShadow: '0 4px 15px rgba(0,0,0,0.2)', position: 'relative' }}>
+                    <div className="map-wrapper" style={{ borderRadius: '12px', overflow: 'hidden', height: 'calc(100vh - 280px)', minHeight: '350px', boxShadow: '0 4px 15px rgba(0,0,0,0.2)', position: 'relative' }}>
                         {loading ? (
                             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', background: 'rgba(0,0,0,0.05)' }}>
                                 <div style={{ textAlign: 'center', color: 'var(--text-muted)' }}>
