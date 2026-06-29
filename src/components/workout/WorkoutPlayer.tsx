@@ -140,16 +140,18 @@ export default function WorkoutPlayer({ exercises, onComplete, onCancel, initial
 
   if (phase === 'done') {
     return (
-      <div style={{ position: 'fixed', top: 0, left: 0, right: 0, height: '100dvh', zIndex: 10000, background: '#fff', color: '#212529', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', padding: '20px' }}>
-        <i className="fa-solid fa-trophy" style={{ fontSize: '4rem', color: '#ffd700', marginBottom: '15px' }}></i>
-        <h1 style={{ fontSize: '2rem', fontWeight: '900', color: '#1a73e8', marginBottom: '10px' }}>お疲れ様でした！</h1>
-        <p style={{ fontSize: '1rem', color: '#495057', marginBottom: '30px', textAlign: 'center' }}>{exercises.length}種類のエクササイズを完了しました。<br/>今日の頑張りを記録に残しましょう！</p>
-        <button 
-          onClick={onComplete}
-          style={{ padding: '14px 35px', background: '#1a73e8', color: '#fff', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer', boxShadow: '0 4px 14px rgba(26, 115, 232, 0.3)' }}
-        >
-          完了して記録する
-        </button>
+      <div style={{ position: 'fixed', top: 0, left: 0, right: 0, height: '100dvh', zIndex: 10000, background: 'rgba(0,0,0,0.8)', display: 'flex', justifyContent: 'center' }}>
+        <div style={{ width: '100%', maxWidth: '560px', height: '100%', background: '#fff', color: '#212529', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', padding: '20px', position: 'relative' }}>
+          <i className="fa-solid fa-trophy" style={{ fontSize: '4rem', color: '#ffd700', marginBottom: '15px' }}></i>
+          <h1 style={{ fontSize: '2rem', fontWeight: '900', color: '#1a73e8', marginBottom: '10px' }}>お疲れ様でした！</h1>
+          <p style={{ fontSize: '1rem', color: '#495057', marginBottom: '30px', textAlign: 'center' }}>{exercises.length}種類のエクササイズを完了しました。<br/>今日の頑張りを記録に残しましょう！</p>
+          <button 
+            onClick={onComplete}
+            style={{ padding: '14px 35px', background: '#1a73e8', color: '#fff', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer', boxShadow: '0 4px 14px rgba(26, 115, 232, 0.3)' }}
+          >
+            完了して記録する
+          </button>
+        </div>
       </div>
     );
   }
@@ -157,7 +159,8 @@ export default function WorkoutPlayer({ exercises, onComplete, onCancel, initial
   const progressPercent = ((currentIndex + (phase === 'rest' ? 1 : 0)) / exercises.length) * 100;
 
   return (
-    <div style={{ position: 'fixed', top: 0, left: 0, right: 0, height: '100dvh', zIndex: 10000, background: '#fff', display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+    <div style={{ position: 'fixed', top: 0, left: 0, right: 0, height: '100dvh', zIndex: 10000, background: 'rgba(0,0,0,0.8)', display: 'flex', justifyContent: 'center' }}>
+      <div style={{ width: '100%', maxWidth: '560px', height: '100%', background: '#fff', display: 'flex', flexDirection: 'column', overflow: 'hidden', position: 'relative' }}>
       
       {/* Detail Modal Popup */}
       {showDetailModal && currentEx && (
@@ -369,6 +372,7 @@ export default function WorkoutPlayer({ exercises, onComplete, onCancel, initial
         )}
 
       </div>
+    </div>
     </div>
   );
 }
