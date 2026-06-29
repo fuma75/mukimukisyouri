@@ -13,6 +13,7 @@ export default function Profile() {
     trainerName: userProfile?.trainerName || '筋にくん',
     height: userProfile?.height || 172,
     weight: userProfile?.weight || 65,
+    targetWeight: userProfile?.targetWeight || 60,
     goal: userProfile?.goal || '筋肥大・バルクアップ',
     activityLevel: userProfile?.activityLevel || '1.55',
     bmr: userProfile?.bmr || 0,
@@ -40,6 +41,7 @@ export default function Profile() {
         trainerName: userProfile.trainerName || prev.trainerName,
         height: userProfile.height || prev.height,
         weight: userProfile.weight || prev.weight,
+        targetWeight: userProfile.targetWeight || prev.targetWeight,
         goal: userProfile.goal || prev.goal,
         activityLevel: userProfile.activityLevel || prev.activityLevel,
       }));
@@ -115,6 +117,10 @@ export default function Profile() {
               <div className="form-group">
                 <label>体重 (kg)</label>
                 <input type="number" name="weight" value={formData.weight} onChange={handleChange} min="30" max="200" />
+              </div>
+              <div className="form-group">
+                <label>目標体重 (kg)</label>
+                <input type="number" name="targetWeight" value={formData.targetWeight} onChange={handleChange} min="30" max="200" />
               </div>
             </div>
 

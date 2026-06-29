@@ -21,6 +21,18 @@ function MainContent() {
     setMounted(true);
   }, []);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    const mainContent = document.querySelector('.main-content');
+    if (mainContent) {
+      mainContent.scrollTop = 0;
+    }
+    const contentBody = document.querySelector('.content-body');
+    if (contentBody) {
+      contentBody.scrollTop = 0;
+    }
+  }, [activeTab]);
+
   if (!mounted) return null;
 
   if (!userProfile) {

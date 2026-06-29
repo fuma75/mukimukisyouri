@@ -48,7 +48,7 @@ export default function HeightSelectModal({ isOpen, onClose, onConfirm, initialH
                 width: '24px',
                 height: '24px',
                 borderRadius: '50%',
-                border: selectedHeight === h ? '6px solid #ff4d6d' : '2px solid #e0e0e0',
+                border: selectedHeight === h ? '6px solid #1a73e8' : '2px solid #e0e0e0',
                 backgroundColor: '#fff',
                 transition: 'all 0.2s ease',
                 boxSizing: 'border-box'
@@ -142,7 +142,7 @@ const confirmButtonStyle: React.CSSProperties = {
   padding: '16px',
   borderRadius: '100px',
   border: 'none',
-  backgroundColor: '#ff4d6d',
+  backgroundColor: '#1a73e8',
   color: 'white',
   fontSize: '16px',
   fontWeight: 'bold',

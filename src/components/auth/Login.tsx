@@ -42,8 +42,13 @@ export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
 
   // Constants
-  const TOTAL_STEPS = 15;
-  const TOTAL_WIZARD_STEPS = 13; // Steps 2 to 14 are the wizard
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    const container = document.querySelector('.form-container');
+    if (container) {
+      container.scrollTop = 0;
+    }
+  }, [step]);
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -928,33 +933,77 @@ export default function Login() {
               </div>
             </div>
 
-            {estimatedResult?.samplePlan && (
-              <div style={{ background: '#fff', padding: '20px', borderRadius: '24px', border: '1px solid #e9ecef', marginBottom: '30px', textAlign: 'left', boxShadow: '0 4px 15px rgba(0,0,0,0.05)' }}>
-                <h3 style={{ fontSize: '1.2rem', fontWeight: 'bold', color: '#1a73e8', marginBottom: '10px', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <i className="fa-solid fa-bolt"></i> {estimatedResult.samplePlan.title}
-                </h3>
-                <p style={{ fontSize: '0.95rem', color: '#495057', marginBottom: '15px', lineHeight: '1.5' }}>
-                  {estimatedResult.samplePlan.description}
-                </p>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                  {estimatedResult.samplePlan.exercises.map((ex: any, idx: number) => (
-                    <div key={idx} style={{ display: 'flex', justifyContent: 'space-between', background: '#f8f9fa', padding: '12px 15px', borderRadius: '12px', alignItems: 'center' }}>
-                      <span style={{ fontWeight: 'bold', color: '#212529' }}>{ex.name}</span>
-                      <span style={{ color: '#8b8d9a', fontSize: '0.9rem', fontWeight: 'bold' }}>{ex.sets} × {ex.reps}</span>
+            {estimatedResult?.samplePlan && (() => {
+              const levelStr = (workoutLevel || '').toLowerCase();
+              let levelVal = '中級';
+              let timeVal = '約8分';
+              let bgVal = 'linear-gradient(135deg, #8d6e63 0%, #5d4037 100%)';
+              
+              if (levelStr.includes('簡単') || levelStr.includes('初級') || levelStr.includes('簡単に始められる')) {
+                levelVal = '初級';
+                timeVal = '約6分';
+                bgVal = 'linear-gradient(135deg, #1a73e8 0%, #0052cc 100%)';
+              } else if (levelStr.includes('やりごたえ') || levelStr.includes('上級') || levelStr.includes('少しやりごたえがある')) {
+                levelVal = '上級';
+                timeVal = '約12分';
+                bgVal = 'linear-gradient(135deg, #9c27b0 0%, #6a1b9a 100%)';
+              }
+              
+              return (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '15px', alignItems: 'center', marginBottom: '30px', width: '100%', textAlign: 'left' }}>
+                  <h3 style={{ fontSize: '1.2rem', fontWeight: 'bold', color: '#1a73e8', alignSelf: 'flex-start' }}>
+                    <i className="fa-solid fa-bolt"></i> おすすめプラン
+                  </h3>
+                  <div className="challenge-card animate-fade-in" style={{ background: bgVal, width: '100%', margin: 0, padding: '24px', borderRadius: '24px', color: '#fff', boxShadow: '0 8px 25px rgba(0,0,0,0.1)' }}>
+                    <span className="challenge-badge" style={{ background: 'rgba(255,255,255,0.2)', color: '#fff', padding: '6px 12px', borderRadius: '20px', fontSize: '0.8rem', fontWeight: 'bold', display: 'inline-block', marginBottom: '15px' }}>あなたにおすすめ</span>
+                    <h4 className="challenge-title" style={{ fontSize: '1.6rem', fontWeight: 'bold', margin: '0 0 20px 0' }}>全身脂肪燃焼 ({levelVal})</h4>
+                    
+                    <div className="challenge-stats" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px', marginBottom: '25px' }}>
+                      <div className="challenge-stat" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                        <div className="challenge-stat-icon" style={{ fontSize: '1.4rem', opacity: 0.8 }}><i className="fa-solid fa-calendar-days"></i></div>
+                        <div className="challenge-stat-text">
+                          <span className="challenge-stat-val" style={{ display: 'block', fontWeight: 'bold', fontSize: '1rem' }}>{timeVal}</span>
+                          <span className="challenge-stat-label" style={{ display: 'block', fontSize: '0.75rem', opacity: 0.7 }}>毎日の時間</span>
+                        </div>
+                      </div>
+                      
+                      <div className="challenge-stat" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                        <div className="challenge-stat-icon" style={{ fontSize: '1.4rem', opacity: 0.8 }}><i className="fa-solid fa-chart-simple"></i></div>
+                        <div className="challenge-stat-text">
+                          <span className="challenge-stat-val" style={{ display: 'block', fontWeight: 'bold', fontSize: '1rem' }}>{levelVal}</span>
+                          <span className="challenge-stat-label" style={{ display: 'block', fontSize: '0.75rem', opacity: 0.7 }}>難易度</span>
+                        </div>
+                      </div>
+                      
+                      <div className="challenge-stat" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                        <div className="challenge-stat-icon" style={{ fontSize: '1.4rem', opacity: 0.8 }}><i className="fa-solid fa-bullseye"></i></div>
+                        <div className="challenge-stat-text">
+                          <span className="challenge-stat-val" style={{ display: 'block', fontWeight: 'bold', fontSize: '1rem' }}>全身</span>
+                          <span className="challenge-stat-label" style={{ display: 'block', fontSize: '0.75rem', opacity: 0.7 }}>ターゲット部位</span>
+                        </div>
+                      </div>
+                      
+                      <div className="challenge-stat" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                        <div className="challenge-stat-icon" style={{ fontSize: '1.4rem', opacity: 0.8 }}><i className="fa-solid fa-check"></i></div>
+                        <div className="challenge-stat-text">
+                          <span className="challenge-stat-val" style={{ display: 'block', fontWeight: 'bold', fontSize: '1rem' }}>器具なし</span>
+                          <span className="challenge-stat-label" style={{ display: 'block', fontSize: '0.75rem', opacity: 0.7 }}>器具</span>
+                        </div>
+                      </div>
                     </div>
-                  ))}
+                    
+                    <button className="challenge-btn" onClick={handleComplete} style={{ width: '100%', padding: '16px', background: '#fff', color: '#1a73e8', border: 'none', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', boxShadow: '0 4px 15px rgba(0,0,0,0.08)' }}>
+                      トレーニングを開始する <i className="fa-solid fa-arrow-right"></i>
+                    </button>
+                  </div>
                 </div>
-              </div>
-            )}
+              );
+            })()}
 
-            <p style={{ fontSize: '0.95rem', color: '#5a5d72', marginBottom: '40px', lineHeight: '1.6' }}>
+            <p style={{ fontSize: '0.95rem', color: '#5a5d72', marginBottom: '30px', lineHeight: '1.6' }}>
               入力されたデータに基づいて、最適なトレーニングと食事の推奨値を設定しました。<br/>
               後からプロフィール画面で変更することも可能です！
             </p>
-
-            <button type="button" onClick={handleComplete} style={{ width: '100%', padding: '20px', background: '#1a73e8', color: '#fff', borderRadius: '30px', fontSize: '1.2rem', fontWeight: 'bold', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', boxShadow: '0 8px 25px rgba(26,115,232,0.3)' }}>
-              筋にくんとトレーニング開始！ <i className="fa-solid fa-fire"></i>
-            </button>
           </div>
         </div>
       )}

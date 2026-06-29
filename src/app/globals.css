@@ -3273,3 +3273,24 @@ img {
     from { opacity: 0; transform: translateY(14px); }
     to   { opacity: 1; transform: translateY(0); }
 }
+
+/* ── Hide bottom mobile nav during workout ── */
+body.workout-player-active {
+    overflow: hidden !important;
+    height: 100vh !important;
+}
+html:has(body.workout-player-active) {
+    overflow: hidden !important;
+}
+body.workout-player-active .mobile-nav {
+    display: none !important;
+}
+body.workout-player-active .main-content {
+    padding-bottom: 20px !important;
+    overflow: hidden !important;
+    height: 100vh !important;
+}
+body.workout-player-active .content-body {
+    padding-bottom: 0 !important;
+    overflow: hidden !important;
+}

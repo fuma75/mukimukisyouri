@@ -246,13 +246,26 @@ export default function Dashboard() {
           </div>
           
           <div className="dashboard-stat-middle">
-            {profile.estimatedDays ? (
-                <p className="estimated-days-text">
-                  目標達成まで約 {profile.estimatedDays} 日
-                </p>
-            ) : (
-               <p style={{ margin: '0', fontSize: '1.2rem', color: 'var(--text-muted)' }}>目標までの日数を計算中...</p>
-            )}
+            {(() => {
+              const estDays = profile.estimatedDays || (() => {
+                const w = Number(profile.weight);
+                const tw = Number(profile.targetWeight);
+                if (!w || !tw) return null;
+                const diff = Math.abs(w - tw);
+                if (diff === 0) return 0;
+                const dailyDiff = 400; // 1日あたりの目標摂取カロリーと消費の差分目安
+                return Math.round((diff * 7700) / dailyDiff);
+              })();
+              
+              if (estDays !== null && estDays !== undefined) {
+                return (
+                  <p className="estimated-days-text">
+                    目標達成まで約 {estDays} 日
+                  </p>
+                );
+              }
+              return <p style={{ margin: '0', fontSize: '1.2rem', color: 'var(--text-muted)' }}>目標までの日数を計算中...</p>;
+            })()}
           </div>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', flex: '1 1 auto', alignItems: 'center' }}>
@@ -352,60 +365,6 @@ export default function Dashboard() {
           </div>
         </div>
 
-        <div className="summary-card glass-panel workout-summary-card">
-          <div className="card-header">
-            <h3><i className="fa-solid fa-dumbbell icon-blue"></i> 本日のトレーニング</h3>
-            <button className="btn btn-icon btn-sm" title="トレーニングを追加" onClick={() => setActiveTab('workout')}>
-              <i className="fa-solid fa-plus"></i>
-            </button>
-          </div>
-          <div className="workout-summary-content">
-            {workouts.length === 0 ? (
-              <div className="empty-state">
-                <i className="fa-solid fa-circle-info"></i>
-                <p>今日の筋トレはまだ記録されていません。</p>
-                <button className="btn btn-secondary btn-sm nav-trigger-btn" onClick={() => setActiveTab('workout')}>筋トレを記録する</button>
-              </div>
-            ) : (
-              <div className="workout-summary-dashboard-view">
-                <div className="dashboard-workout-stats">
-                    <div className="stat-box">
-                        <span className="stat-label">総ボリューム</span>
-                        <span className="stat-val text-accent">{totalVolume.toLocaleString()} <span className="unit">kg</span></span>
-                    </div>
-                    <div className="stat-box">
-                        <span className="stat-label">実施部位数</span>
-                        <span className="stat-val">{Object.keys(summaryMap).length}</span>
-                    </div>
-                    <div className="stat-box">
-                        <span className="stat-label">総セット数</span>
-                        <span className="stat-val">{totalSets} <span className="unit">sets</span></span>
-                    </div>
-                </div>
-                <div className="dashboard-workout-details-list">
-                  {Object.entries(summaryMap).map(([cat, ws]) => {
-                    let categoryClass = 'other';
-                    switch (cat) {
-                        case '胸': categoryClass = 'chest'; break;
-                        case '背中': categoryClass = 'back'; break;
-                        case '脚': categoryClass = 'legs'; break;
-                        case '肩': categoryClass = 'shoulders'; break;
-                        case '腕': categoryClass = 'arms'; break;
-                        case '腹筋': categoryClass = 'abs'; break;
-                    }
-                    const exercisesStr = ws.map(w => `${w.exercise}(${w.sets}set)`).join(', ');
-                    return (
-                      <div key={cat} className="dashboard-workout-detail-row">
-                          <span className={`history-category-badge ${categoryClass}`}>{cat}</span>
-                          <span className="ex-detail-text">{exercisesStr}</span>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
 
         <div className="summary-card glass-panel chart-card" style={{ gridColumn: '1 / -1' }}>
           <div className="card-header">

@@ -158,6 +158,13 @@ export default function AiMenuModal({ data, onClose, onApply }: AiMenuModalProps
     setCurrentData(newData);
   };
 
+  React.useEffect(() => {
+    document.body.classList.add('workout-player-active');
+    return () => {
+      document.body.classList.remove('workout-player-active');
+    };
+  }, []);
+
   if (isPlaying) {
     return (
       <WorkoutPlayer 
