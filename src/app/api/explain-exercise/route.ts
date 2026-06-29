@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { callGemini } from '@/lib/gemini';
+import { EXERCISE_LIBRARY } from '@/lib/exerciseDictionary';
 
 export async function POST(request: Request) {
     try {
@@ -7,22 +7,44 @@ export async function POST(request: Request) {
         const { exercise } = body || {};
         if (!exercise) return NextResponse.json({ error: 'exercise required' }, { status: 400 });
 
-        const prompt = `あなたは熱血パーソナルトレーナー「筋にくん」です。「${exercise}」という筋トレ種目の正しいやり方、フォームの注意点、効果のある筋肉部位について説明してください。必ず以下のキーを持つ有効なJSONオブジェクト1件のみを返してください。余計なマークアップや説明は一切含めないでください。
-JSON形式：
-{
-  "explanation": "正しいやり方、フォームの注意点、効果のある筋肉部位の説明文（150文字〜200文字程度、熱血パーソナルトレーナー『筋にくん』の口調で。改行や箇条書きを含めること）"
-}`;
+        // 1. 辞書からエクササイズ情報を取得
+        const detail = EXERCISE_LIBRARY[exercise];
 
-        const text = await callGemini(prompt);
-        let cleanText = text.replace(/```json/g, '').replace(/```/g, '').trim();
-        try {
-            const parsed = JSON.parse(cleanText);
-            return NextResponse.json({ ok: true, text: parsed.explanation || cleanText });
-        } catch (e) {
-            return NextResponse.json({ ok: true, text: cleanText });
+        let explanation = "";
+
+        if (detail) {
+            const steps = detail.instructions.map((inst, i) => `${i + 1}. ${inst}！`).join('\n');
+            const targets = detail.targetTags ? detail.targetTags.join('、') : '全身';
+            
+            explanation = `パワーー！！『${exercise}』だな！
+${detail.description || '素晴らしい種目だ！'}
+
+【正しいやり方＆フォームの注意点】
+${steps}
+
+【効果のある部位】
+👉 ${targets} にバチバチ効くぞ！
+
+さあ、筋肉の声を聞きながら、1回1回を大切に限界を超えていこう！おい、俺の筋肉、やるのかい、やらないのかい、どっちなんだい！？やるーー！！`;
+        } else {
+            // 辞書にない未知の種目の場合の汎用熱血テキスト
+            explanation = `パワーー！！『${exercise}』に挑戦するんだな！素晴らしい！
+
+【フォームの注意点】
+1. 常に体幹（コア）を意識してお腹に力を入れること！
+2. 反動を使わずに、ターゲットの筋肉を意識してゆっくり動かすこと！
+3. 呼吸を止めずに、筋肉が縮む時に息を吐くこと！
+
+【効果】
+全身の代謝を爆上げし、最高のボディメイクに繋がるぞ！
+
+さあ、限界の先にある新しい自分に会いに行こう！おい、俺の筋肉、やるのかい、やらないのかい、どっちなんだい！？やるーー！！`;
         }
+
+        return NextResponse.json({ ok: true, text: explanation });
+
     } catch (err) {
         console.error(err);
-        return NextResponse.json({ error: 'gemini call failed', detail: String(err) }, { status: 500 });
+        return NextResponse.json({ error: 'calculation failed', detail: String(err) }, { status: 500 });
     }
 }

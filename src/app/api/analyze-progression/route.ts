@@ -1,5 +1,4 @@
 import { NextResponse } from 'next/server';
-import { callGemini } from '@/lib/gemini';
 
 export async function POST(request: Request) {
     try {
@@ -7,29 +6,56 @@ export async function POST(request: Request) {
         const { exercise, goal, history } = body || {};
         if (!exercise) return NextResponse.json({ error: 'exercise required' }, { status: 400 });
 
-        const prompt = `あなたは熱血パーソナルトレーナー「筋にくん」です。ユーザーの種目「${exercise}」の過去の筋トレ履歴を分析し、プログレッシブオーバーロード（漸進的過負荷）の原則に基づき、次回挑戦すべき重量・回数・セット数を提案してください。また、熱血かつ励みになるアドバイスメッセージ（「パワー！💪」等を含めて）を作成してください。ユーザーの全体目標は ${goal || 'maintain'} です。
-履歴：
-${JSON.stringify(history || [])}
+        // 1. 過去の最新履歴を取得
+        const lastSession = history && history.length > 0 ? history[history.length - 1] : null;
+        
+        let lastWeight = 0;
+        let lastReps = 10;
+        let lastSets = 3;
 
-必ず以下のキーを持つ有効なJSONオブジェクト1件のみを返してください。余計なコードブロックマークアップや余分なテキストは一切含めないでください。
-JSON形式：
-{
-  "recommendedWeight": 推奨重量kg（数値、自重の場合は0）,
-  "recommendedReps": 推奨回数（数値）,
-  "recommendedSets": 推奨セット数（数値）,
-  "message": "熱血トレーナーとしての解説や応援メッセージ（150文字程度）"
-}`;
-
-        const text = await callGemini(prompt);
-        let cleanText = text.replace(/```json/g, '').replace(/```/g, '').trim();
-        try {
-            const parsed = JSON.parse(cleanText);
-            return NextResponse.json({ ok: true, result: parsed });
-        } catch (e) {
-            return NextResponse.json({ ok: false, raw: text, error: 'JSON parse failed' });
+        if (lastSession) {
+            lastWeight = Number(lastSession.weight) || 0;
+            lastReps = Number(lastSession.reps) || 10;
+            lastSets = Number(lastSession.sets) || 3;
         }
+
+        // 2. プログレッシブ・オーバーロードの法則に沿って次回目標を算出
+        let recommendedWeight = lastWeight;
+        let recommendedReps = lastReps;
+        let recommendedSets = lastSets;
+
+        if (lastWeight === 0) {
+            // 自重トレーニングの場合は回数を増やす (+2回)
+            recommendedReps = lastReps + 2;
+            if (recommendedReps > 20) {
+                // 回数が20回を超える場合は、セット数を増やす
+                recommendedReps = 15;
+                recommendedSets = lastSets + 1;
+            }
+        } else {
+            // ウエイトトレーニングの場合は重量を少し増やす (+2.5kg)
+            recommendedWeight = lastWeight + 2.5;
+        }
+
+        // 3. 熱血アドバイスメッセージの自動生成
+        let targetText = recommendedWeight > 0 ? `${recommendedWeight}kg` : '自重';
+        let message = `パワー！💪 前回『${exercise}』をやり切った君なら、次回はこの限界を超えられる！
+次は【${targetText} × ${recommendedReps}回 × ${recommendedSets}セット】に挑戦だ！
+
+前回の記録をほんの少しでも更新し続けること（漸進的過負荷の原則）が、強い筋肉と引き締まった体を作る唯一無二の黄金律！
+限界を決めるのは自分の心だけだ！さあ、おい俺の筋肉、やるのかい、やらないのかい、どっちなんだい！？やるーー！！`;
+
+        const result = {
+            recommendedWeight,
+            recommendedReps,
+            recommendedSets,
+            message
+        };
+
+        return NextResponse.json({ ok: true, result });
+
     } catch (err) {
         console.error(err);
-        return NextResponse.json({ error: 'gemini call failed', detail: String(err) }, { status: 500 });
+        return NextResponse.json({ error: 'calculation failed', detail: String(err) }, { status: 500 });
     }
 }
