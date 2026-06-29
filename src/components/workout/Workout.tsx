@@ -395,8 +395,9 @@ export default function Workout() {
 
     return (
         <section id="workout" className="content-section active" style={{ paddingBottom: '100px' }}>
-            <div className="workout-goal-calendar">
-                <div className="workout-goal-header">
+            <div style={{ maxWidth: '560px', margin: '0 auto', padding: '0 16px' }}>
+                <div className="workout-goal-calendar">
+                    <div className="workout-goal-header">
                     <h3 className="workout-goal-title">一週間の目標</h3>
                     <div className="workout-goal-progress">{checkedCount}/7 <i className="fa-solid fa-pen" style={{marginLeft: '4px', opacity: 0.5}}></i></div>
                 </div>
@@ -770,6 +771,7 @@ export default function Workout() {
             </div>
           </div>
         </div>
+      </div>
       </div>
     </section>
   );
