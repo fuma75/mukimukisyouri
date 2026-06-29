@@ -32,11 +32,12 @@ interface AiMenuModalProps {
   onApply: (exercises: AiExercise[], percentage: number, title: string, isPartial?: boolean) => void;
 }
 
-const ExerciseItem = ({ item, onClick }: { item: AiExercise, onClick: () => void }) => {
+const ExerciseItem = ({ item, onClick, id }: { item: AiExercise, onClick: () => void, id?: string }) => {
   const details = getExerciseDetails(item.exercise);
 
   return (
     <div 
+      id={id}
       onClick={onClick}
       style={{ display: 'flex', alignItems: 'center', padding: '15px 0', borderBottom: '1px solid #f1f3f5', cursor: 'pointer', transition: 'background 0.2s' }}
       onMouseOver={(e) => e.currentTarget.style.background = '#f8f9fa'}
@@ -72,6 +73,15 @@ export default function AiMenuModal({ data, onClose, onApply }: AiMenuModalProps
       }
     }
   }, [data.title]);
+
+  React.useEffect(() => {
+    if (selectedIndex !== null) {
+      const el = document.getElementById(`exercise-item-${selectedIndex}`);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }
+  }, [selectedIndex]);
   
   // Clone the data to allow duration/reps updates
   const [currentData, setCurrentData] = useState<AiMenuData>(data);
@@ -251,7 +261,7 @@ export default function AiMenuModal({ data, onClose, onApply }: AiMenuModalProps
         {currentData.warmup && currentData.warmup.length > 0 && (
           <div style={{ marginBottom: '30px' }}>
             <h3 style={{ fontSize: '1rem', fontWeight: 'bold', color: '#212529', marginBottom: '10px' }}>ウォームアップ</h3>
-            {currentData.warmup.map((ex, i) => <ExerciseItem key={`w-${i}`} item={ex} onClick={() => setSelectedIndex(i)} />)}
+            {currentData.warmup.map((ex, i) => <ExerciseItem key={`w-${i}`} id={`exercise-item-${i}`} item={ex} onClick={() => setSelectedIndex(i)} />)}
           </div>
         )}
 
@@ -260,7 +270,7 @@ export default function AiMenuModal({ data, onClose, onApply }: AiMenuModalProps
             <h3 style={{ fontSize: '1rem', fontWeight: 'bold', color: '#212529', marginBottom: '10px' }}>トレーニング</h3>
             {currentData.training.map((ex, i) => {
               const offset = (currentData.warmup || []).length;
-              return <ExerciseItem key={`t-${i}`} item={ex} onClick={() => setSelectedIndex(offset + i)} />;
+              return <ExerciseItem key={`t-${i}`} id={`exercise-item-${offset + i}`} item={ex} onClick={() => setSelectedIndex(offset + i)} />;
             })}
           </div>
         )}
@@ -270,7 +280,7 @@ export default function AiMenuModal({ data, onClose, onApply }: AiMenuModalProps
             <h3 style={{ fontSize: '1rem', fontWeight: 'bold', color: '#212529', marginBottom: '10px' }}>クールダウン</h3>
             {currentData.cooldown.map((ex, i) => {
               const offset = (currentData.warmup || []).length + (currentData.training || []).length;
-              return <ExerciseItem key={`c-${i}`} item={ex} onClick={() => setSelectedIndex(offset + i)} />;
+              return <ExerciseItem key={`c-${i}`} id={`exercise-item-${offset + i}`} item={ex} onClick={() => setSelectedIndex(offset + i)} />;
             })}
           </div>
         )}

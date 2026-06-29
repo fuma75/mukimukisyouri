@@ -7,6 +7,8 @@ import RulerPicker from '../ui/RulerPicker';
 import DateWheelPicker from '../ui/DateWheelPicker';
 import ActivityLevelSlider from '../ui/ActivityLevelSlider';
 
+const TOTAL_WIZARD_STEPS = 14;
+
 export default function Login() {
   const { setUserProfile, setActiveTab } = useAppContext();
   
