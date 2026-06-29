@@ -182,8 +182,8 @@ export default function AiMenuModal({ data, onClose, onApply }: AiMenuModalProps
   }
 
   return (
-    <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, zIndex: 9999, background: 'rgba(0,0,0,0.5)', overflowY: 'auto', display: 'flex', justifyContent: 'center' }}>
-      <div style={{ width: '100%', maxWidth: '600px', background: '#fff', minHeight: '100%', display: 'flex', flexDirection: 'column', position: 'relative', boxShadow: '0 0 20px rgba(0,0,0,0.1)' }}>
+    <div style={{ position: 'fixed', top: 0, left: 0, right: 0, height: '100dvh', zIndex: 9999, background: 'rgba(0,0,0,0.5)', overflowY: 'auto', display: 'flex', justifyContent: 'center' }}>
+      <div style={{ width: '100%', maxWidth: '600px', background: '#fff', minHeight: '100dvh', display: 'flex', flexDirection: 'column', position: 'relative', boxShadow: '0 0 20px rgba(0,0,0,0.1)' }}>
       {selectedIndex !== null && (
         <ExerciseDetailModal
           exercise={allExercises[selectedIndex]}

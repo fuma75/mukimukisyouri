@@ -311,10 +311,11 @@ export default function Workout() {
         if (!challengeScrollRef.current) return;
         const container = challengeScrollRef.current;
         const recIdx = challenges.findIndex(c => c.level === recommendedLevel);
-        if (recIdx <= 0) return;
-        // Each card is 85vw wide + 15px gap
-        const cardWidth = container.clientWidth * 0.85 + 15;
-        container.scrollLeft = recIdx * cardWidth;
+        const firstCard = container.firstElementChild as HTMLElement;
+        if (firstCard) {
+            const cardWidth = firstCard.offsetWidth + 15;
+            container.scrollLeft = recIdx * cardWidth;
+        }
     }, [recommendedLevel]);
 
     const handleChallengeClick = (challengeLevel: number, challengeTitle: string) => {
@@ -416,9 +417,9 @@ export default function Workout() {
             </div>
 
             <h3 className="challenge-section-title">チャレンジ</h3>
-            <div ref={challengeScrollRef} className="challenges-scroll-container" style={{ display: 'flex', overflowX: 'auto', gap: '15px', padding: '5px 20px 20px', margin: '0 -20px', scrollSnapType: 'x mandatory', paddingBottom: '15px' }}>
+            <div ref={challengeScrollRef} className="challenges-scroll-container" style={{ display: 'flex', overflowX: 'auto', gap: '15px', padding: '5px 16px 20px', margin: '0 -16px', scrollSnapType: 'x mandatory', paddingBottom: '15px' }}>
                 {challenges.map(c => (
-                    <div key={c.level} className="challenge-card-banner" style={{ minWidth: '85vw', scrollSnapAlign: 'center', flexShrink: 0, background: c.bg, position: 'relative' }}>
+                    <div key={c.level} className="challenge-card-banner" style={{ minWidth: 'clamp(280px, 85vw, 480px)', scrollSnapAlign: 'center', flexShrink: 0, background: c.bg, position: 'relative' }}>
                         <div className="challenge-badge" style={{ visibility: recommendedLevel === c.level ? 'visible' : 'hidden' }}>あなたにおすすめ</div>
                         <h2 className="challenge-title">{c.title}</h2>
                         <div className="challenge-grid">

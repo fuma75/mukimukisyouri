@@ -140,7 +140,7 @@ export default function WorkoutPlayer({ exercises, onComplete, onCancel, initial
 
   if (phase === 'done') {
     return (
-      <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, zIndex: 10000, background: '#fff', color: '#212529', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', padding: '20px' }}>
+      <div style={{ position: 'fixed', top: 0, left: 0, right: 0, height: '100dvh', zIndex: 10000, background: '#fff', color: '#212529', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', padding: '20px' }}>
         <i className="fa-solid fa-trophy" style={{ fontSize: '4rem', color: '#ffd700', marginBottom: '15px' }}></i>
         <h1 style={{ fontSize: '2rem', fontWeight: '900', color: '#1a73e8', marginBottom: '10px' }}>お疲れ様でした！</h1>
         <p style={{ fontSize: '1rem', color: '#495057', marginBottom: '30px', textAlign: 'center' }}>{exercises.length}種類のエクササイズを完了しました。<br/>今日の頑張りを記録に残しましょう！</p>
@@ -157,7 +157,7 @@ export default function WorkoutPlayer({ exercises, onComplete, onCancel, initial
   const progressPercent = ((currentIndex + (phase === 'rest' ? 1 : 0)) / exercises.length) * 100;
 
   return (
-    <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, zIndex: 10000, background: '#fff', display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+    <div style={{ position: 'fixed', top: 0, left: 0, right: 0, height: '100dvh', zIndex: 10000, background: '#fff', display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
       
       {/* Detail Modal Popup */}
       {showDetailModal && currentEx && (
