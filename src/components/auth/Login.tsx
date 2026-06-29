@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAppContext } from '../AppContext';
 import { auth } from '@/lib/firebase';
-import { GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth';
+import { GoogleAuthProvider, signInWithPopup, signInWithRedirect, getRedirectResult, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth';
 import RulerPicker from '../ui/RulerPicker';
 import DateWheelPicker from '../ui/DateWheelPicker';
 import ActivityLevelSlider from '../ui/ActivityLevelSlider';
@@ -42,6 +42,24 @@ export default function Login() {
   const [heightUnit, setHeightUnit] = useState('cm');
   const [weightUnit, setWeightUnit] = useState('kg');
   const [showPassword, setShowPassword] = useState(false);
+
+  // Handle redirect result for mobile login
+  useEffect(() => {
+    const handleRedirect = async () => {
+      try {
+        const result = await getRedirectResult(auth);
+        if (result && result.user) {
+          handleLoginSuccess(result.user);
+        }
+      } catch (error: any) {
+        console.error("Redirect login error:", error);
+        if (error.code !== 'auth/redirect-cancelled-by-user') {
+          alert("Googleログインエラー: " + error.message);
+        }
+      }
+    };
+    handleRedirect();
+  }, []);
 
   // Constants
   useEffect(() => {
@@ -150,12 +168,20 @@ export default function Login() {
     setLoading(true);
     try {
       const provider = new GoogleAuthProvider();
-      const userCred = await signInWithPopup(auth, provider);
-      handleLoginSuccess(userCred.user);
+      // スマホの場合はリダイレクト、PCの場合はポップアップを使用する
+      const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+      
+      if (isMobile) {
+        await signInWithRedirect(auth, provider);
+        // リダイレクトされるためここは実行されません
+      } else {
+        const userCred = await signInWithPopup(auth, provider);
+        handleLoginSuccess(userCred.user);
+        setLoading(false);
+      }
     } catch (e: any) {
       console.error(e);
       alert("Googleログインエラー: " + e.message);
-    } finally {
       setLoading(false);
     }
   };
