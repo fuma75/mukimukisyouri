@@ -156,7 +156,7 @@ export const EXERCISE_LIBRARY: Record<string, ExerciseDetail> = {
     mets: 8.0
   },
   'ハイニーズ': { 
-    image: '', icon: '/icons/squat.png', gifUrl: 'https://raw.githubusercontent.com/omercotkd/exercises-gifs/main/assets/3220.gif', 
+    image: '', icon: '/icons/squat.png', gifUrl: 'https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/High_Knees/0505.gif', 
     instructions: ['その場で太ももを高く上げて走る', '腕を大きく振る', '着地はやさしく'],
     description: 'その場で太ももを高く上げるもも上げダッシュです。心肺機能を高める有酸素運動です。',
     targetTags: ['全身', '四頭筋'],

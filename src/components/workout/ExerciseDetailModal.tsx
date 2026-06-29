@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Model from 'react-body-highlighter';
 import { AiExercise } from './AiMenuModal';
 import { getExerciseDetails } from '@/lib/exerciseDictionary';
@@ -23,6 +23,14 @@ export default function ExerciseDetailModal({
   const muscleData = [
     { name: 'Target Muscles', muscles: details.targetMuscles || [] }
   ];
+
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollTop = 0;
+    }
+  }, [exercise, index]);
 
   const handleAdjustDuration = (delta: number) => {
     if (!exercise.duration && !exercise.reps) return;
@@ -54,7 +62,7 @@ export default function ExerciseDetailModal({
         </div>
 
         {/* Main Scrollable Content */}
-        <div style={{ flex: 1, overflowY: 'auto', padding: '0 24px 15px 24px' }}>
+        <div ref={scrollRef} style={{ flex: 1, overflowY: 'auto', padding: '0 24px 15px 24px' }}>
           
           {/* Big GIF */}
           <div style={{ width: '100%', height: '130px', background: '#f8f9fa', borderRadius: '16px', overflow: 'hidden', display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '15px' }}>
