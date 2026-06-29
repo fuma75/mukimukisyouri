@@ -253,7 +253,7 @@ export default function Workout() {
         });
     }
 
-    const TARGET_AREAS = ['腹筋', '腕', '胸部', '脚', '肩と背中'];
+    const TARGET_AREAS = ['腹筋', '腕', '胸部', '脚', '背筋'];
     const activePrograms = WORKOUT_PROGRAMS[activeTargetArea] || [];
 
     const startProgram = (prog: WorkoutProgram) => {
@@ -476,9 +476,10 @@ export default function Workout() {
                         // Custom image based on area
                         let imgUrl = 'https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80';
                         if (prog.targetArea === '胸') imgUrl = 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80';
-                        if (prog.targetArea === '腹筋') imgUrl = 'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80';
+                        if (prog.targetArea === '腹筋') imgUrl = '/images/tiger-abs.png';
                         if (prog.targetArea === '腕') imgUrl = 'https://images.unsplash.com/photo-1581009137042-c552e485697a?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80';
-                        if (prog.targetArea === '脚') imgUrl = 'https://images.unsplash.com/photo-1434682881908-b43d0467b798?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80';
+                        if (prog.targetArea === '脚') imgUrl = '/images/tiger-legs.png';
+                        if (prog.targetArea === '背筋' || prog.targetArea === '肩') imgUrl = '/images/tiger-back.png';
 
                         const getSmileyIcon = (diff: number) => {
                             if (diff === 1) return 'fa-face-smile';
@@ -489,7 +490,7 @@ export default function Workout() {
 
                         return (
                             <div key={prog.id} className="program-card" onClick={() => startProgram(prog)}>
-                                <div className="program-thumb" style={{ background: `url('${imgUrl}') center/cover` }}></div>
+                                <div className="program-thumb" style={{ background: `url('${imgUrl}') center / ${imgUrl.includes('tiger') ? '150%' : 'cover'} no-repeat` }}></div>
                                 <div className="program-info">
                                     <h4 className="program-title">{prog.title}</h4>
                                     <span className="program-meta">{prog.durationMin} 分・{prog.exerciseCount} エクササイズ</span>

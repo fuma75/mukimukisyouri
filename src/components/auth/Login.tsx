@@ -406,7 +406,7 @@ export default function Login() {
     >
       <div style={{ width: '40px', height: '40px', display: 'flex', justifyContent: 'center', alignItems: 'center', marginRight: '15px', overflow: 'hidden' }}>
         {icon.startsWith('/') ? (
-          <img src={icon} alt={label} style={{ width: '100%', height: '100%', objectFit: 'contain', filter: selected ? 'none' : 'grayscale(100%)', opacity: selected ? 1 : 0.6 }} />
+          <img src={icon} alt={label} style={{ width: '100%', height: '100%', objectFit: 'cover', transform: 'scale(1.5)', filter: selected ? 'none' : 'grayscale(100%)', opacity: selected ? 1 : 0.6 }} />
         ) : (
           <i className={icon} style={{ fontSize: '1.5rem', color: selected ? '#1a73e8' : '#adb5bd' }}></i>
         )}
