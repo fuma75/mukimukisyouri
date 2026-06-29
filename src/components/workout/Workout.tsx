@@ -394,8 +394,9 @@ export default function Workout() {
         setShowHistoryModal(true);
     };
 
-    return (
-        <section id="workout" className="content-section active" style={{ paddingBottom: '100px' }}>
+    if (!showManualForm) {
+      return (
+          <section id="workout" className="content-section active" style={{ paddingBottom: '100px' }}>
             <div style={{ maxWidth: '560px', margin: '0 auto', padding: '0 16px' }}>
                 <div className="workout-goal-calendar">
                     <div className="workout-goal-header">
@@ -582,12 +583,14 @@ export default function Workout() {
                     }}
                 />
             )}
+            </div>
         </section>
     );
   }
 
   return (
-    <section id="workout" className="content-section active">
+    <section id="workout" className="content-section active" style={{ paddingBottom: '100px' }}>
+      <div style={{ maxWidth: '560px', margin: '0 auto', padding: '0 16px' }}>
       <div style={{ marginBottom: '20px' }}>
           <button className="btn btn-outline" onClick={() => setShowManualForm(false)}>
               <i className="fa-solid fa-arrow-left"></i> ダッシュボードに戻る
@@ -776,4 +779,5 @@ export default function Workout() {
       </div>
     </section>
   );
+}
 }
