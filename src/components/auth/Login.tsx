@@ -547,7 +547,7 @@ export default function Login() {
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
             <h2 style={{ textAlign: 'center', fontSize: '1.8rem', fontWeight: 'bold', marginBottom: '30px' }}>主な目標は何ですか？</h2>
             
-            <div style={{ display: 'flex', flexDirection: 'column', flex: 1, justifyContent: 'flex-start', gap: '15px', paddingTop: '10px', paddingBottom: '20px' }}>
+            <div className="options-grid" style={{ flex: 1, justifyContent: 'flex-start', paddingTop: '10px', paddingBottom: '20px' }}>
               {renderOptionCard('体重を減らす', 'fa-solid fa-weight-scale', goal === '減量', () => setGoal('減量'))}
               {renderOptionCard('筋肉増強', 'fa-solid fa-dumbbell', goal === '増量', () => setGoal('増量'))}
               {renderOptionCard('健康維持', 'fa-solid fa-heart-pulse', goal === '現状維持', () => setGoal('現状維持'))}
@@ -570,7 +570,7 @@ export default function Login() {
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
             <h2 style={{ textAlign: 'center', fontSize: '1.8rem', fontWeight: 'bold', marginBottom: '30px' }}>ターゲットの部位はどこですか？</h2>
             
-            <div style={{ display: 'flex', flexDirection: 'column', flex: 1, justifyContent: 'flex-start', gap: '15px', paddingTop: '10px', paddingBottom: '20px' }}>
+            <div className="options-grid" style={{ flex: 1, justifyContent: 'flex-start', paddingTop: '10px', paddingBottom: '20px' }}>
               {renderOptionCard('全身', 'fa-solid fa-child', targetAreas.includes('全身'), () => handleAreaToggle('全身'))}
               {renderOptionCard('腕', 'fa-solid fa-hand-fist', targetAreas.includes('腕'), () => handleAreaToggle('腕'))}
               {renderOptionCard('胸部', 'fa-solid fa-child-reaching', targetAreas.includes('胸部'), () => handleAreaToggle('胸部'))}
@@ -777,7 +777,7 @@ export default function Login() {
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
             <h2 style={{ textAlign: 'center', fontSize: '1.6rem', fontWeight: 'bold', marginBottom: '30px' }}>どこでトレーニングしますか？</h2>
             
-            <div style={{ display: 'flex', flexDirection: 'column', flex: 1, justifyContent: 'flex-start', gap: '15px', paddingTop: '10px', paddingBottom: '20px' }}>
+            <div className="options-grid" style={{ flex: 1, justifyContent: 'flex-start', paddingTop: '10px', paddingBottom: '20px' }}>
               {renderOptionCard('家', 'fa-solid fa-house', environment === '家', () => setEnvironment('家'))}
               {renderOptionCard('ジム', 'fa-solid fa-dumbbell', environment === 'ジム', () => setEnvironment('ジム'))}
               {renderOptionCard('どの場所でもOK', 'fa-solid fa-earth-americas', environment === 'どの場所でもOK', () => setEnvironment('どの場所でもOK'))}
@@ -800,7 +800,7 @@ export default function Login() {
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
             <h2 style={{ textAlign: 'center', fontSize: '1.6rem', fontWeight: 'bold', marginBottom: '30px' }}>運動の種類の制限はありますか？</h2>
             
-            <div style={{ display: 'flex', flexDirection: 'column', flex: 1, justifyContent: 'flex-start', gap: '15px', paddingTop: '10px', paddingBottom: '20px' }}>
+            <div className="options-grid" style={{ flex: 1, justifyContent: 'flex-start', paddingTop: '10px', paddingBottom: '20px' }}>
               {renderOptionCard('なし（何でもできる）', 'fa-solid fa-check-double', exerciseTypes.includes('なし'), () => handleExerciseTypeToggle('なし'))}
               {renderOptionCard('器具無し（自重のみ）', 'fa-solid fa-hand-fist', exerciseTypes.includes('器具無し'), () => handleExerciseTypeToggle('器具無し'))}
               {renderOptionCard('ジャンプ無し（騒音配慮）', 'fa-solid fa-shoe-prints', exerciseTypes.includes('ジャンプ無し'), () => handleExerciseTypeToggle('ジャンプ無し'))}
@@ -824,7 +824,7 @@ export default function Login() {
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
             <h2 style={{ textAlign: 'center', fontSize: '1.6rem', fontWeight: 'bold', marginBottom: '30px' }}>ご希望のワークアウトレベルを選択してください</h2>
             
-            <div style={{ display: 'flex', flexDirection: 'column', flex: 1, justifyContent: 'flex-start', gap: '15px', paddingTop: '10px', paddingBottom: '20px' }}>
+            <div className="options-grid" style={{ flex: 1, justifyContent: 'flex-start', paddingTop: '10px', paddingBottom: '20px' }}>
               {renderOptionCard('簡単に始められる', 'fa-solid fa-hand-peace', workoutLevel === '簡単に始められる', () => setWorkoutLevel('簡単に始められる'))}
               {renderOptionCard('軽い汗をかく', 'fa-solid fa-droplet', workoutLevel === '軽い汗をかく', () => setWorkoutLevel('軽い汗をかく'))}
               {renderOptionCard('少しやりごたえがある', 'fa-solid fa-fire', workoutLevel === '少しやりごたえがある', () => setWorkoutLevel('少しやりごたえがある'))}
@@ -851,7 +851,7 @@ export default function Login() {
               <p style={{ margin: 0, color: '#495057', fontSize: '0.95rem', lineHeight: 1.5 }}>これにより、特別な注意が必要な部位に焦点を当て、あなたのフィットネスの旅をカスタマイズします。</p>
             </div>
             
-            <div style={{ display: 'flex', flexDirection: 'column', flex: 1, justifyContent: 'flex-start', gap: '15px', paddingTop: '10px', paddingBottom: '20px' }}>
+            <div className="options-grid" style={{ flex: 1, justifyContent: 'flex-start', paddingTop: '10px', paddingBottom: '20px' }}>
               {['なし', '膝', '腰', '手首', '首', '肩'].map(issue => (
                 <div 
                   key={issue}
@@ -922,7 +922,7 @@ export default function Login() {
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
             <h2 style={{ textAlign: 'center', fontSize: '1.6rem', fontWeight: 'bold', marginBottom: '30px' }}>目標とする運動頻度（1週間）</h2>
             
-            <div style={{ display: 'flex', flexDirection: 'column', flex: 1, justifyContent: 'flex-start', gap: '15px', paddingTop: '10px', paddingBottom: '20px' }}>
+            <div className="options-grid" style={{ flex: 1, justifyContent: 'flex-start', paddingTop: '10px', paddingBottom: '20px' }}>
               {renderOptionCard('週1回 (無理なく)', 'fa-solid fa-calendar-day', frequency === '週1回', () => setFrequency('週1回'))}
               {renderOptionCard('週2〜3回 (おすすめ！)', 'fa-solid fa-calendar-days', frequency === '週3回', () => setFrequency('週3回'))}
               {renderOptionCard('週4〜5回', 'fa-solid fa-calendar-week', frequency === '週5回', () => setFrequency('週5回'))}

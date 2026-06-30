@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { getExerciseDetails } from '@/lib/exerciseDictionary';
 import WorkoutPlayer from './WorkoutPlayer';
 import ExerciseDetailModal from './ExerciseDetailModal';
@@ -61,9 +61,18 @@ const ExerciseItem = ({ item, onClick, id }: { item: AiExercise, onClick: () => 
 };
 
 export default function AiMenuModal({ data, onClose, onApply }: AiMenuModalProps) {
+  const [mounted, setMounted] = useState(false);
+  React.useEffect(() => setMounted(true), []);
   const [isPlaying, setIsPlaying] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [resumeIndex, setResumeIndex] = useState(0);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  React.useEffect(() => {
+    if (containerRef.current) {
+      containerRef.current.scrollTo(0, 0);
+    }
+  }, []);
 
   React.useEffect(() => {
     if (data.title) {
@@ -181,9 +190,11 @@ export default function AiMenuModal({ data, onClose, onApply }: AiMenuModalProps
     );
   }
 
+  if (!mounted) return null;
+
   return (
-    <div style={{ position: 'fixed', top: 0, left: 0, right: 0, height: '100dvh', zIndex: 9999, background: 'rgba(0,0,0,0.5)', overflowY: 'auto', display: 'flex', justifyContent: 'center' }}>
-      <div style={{ width: '100%', maxWidth: '600px', background: '#fff', minHeight: '100dvh', display: 'flex', flexDirection: 'column', position: 'relative', boxShadow: '0 0 20px rgba(0,0,0,0.1)' }}>
+    <div ref={containerRef} style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, zIndex: 9999, display: 'flex', flexDirection: 'column', alignItems: 'center', background: 'var(--bg-secondary)', overflowY: 'auto', animation: 'section-enter 0.32s cubic-bezier(0.4, 0, 0.2, 1) both' }}>
+      <div style={{ width: '100%', maxWidth: '600px', background: 'var(--bg-primary)', flex: '1 0 auto', minHeight: '100dvh', display: 'flex', flexDirection: 'column', position: 'relative', boxShadow: '0 0 20px rgba(0,0,0,0.05)' }}>
       {selectedIndex !== null && (
         <ExerciseDetailModal
           exercise={allExercises[selectedIndex]}

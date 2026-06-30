@@ -396,7 +396,8 @@ export default function Workout() {
 
     if (!showManualForm) {
       return (
-          <section id="workout" className="content-section active" style={{ paddingBottom: '100px' }}>
+        <>
+          <section id="workout" className="content-section active" style={{ paddingBottom: '100px', display: aiMenuData ? 'none' : 'block' }}>
             <div style={{ maxWidth: '560px', margin: '0 auto', padding: '0 16px' }}>
                 <div className="workout-goal-calendar">
                     <div className="workout-goal-header">
@@ -564,32 +565,34 @@ export default function Workout() {
                 )}
               </div>
             </div>
-
-            {aiMenuData && (
-                <AiMenuModal 
-                    data={aiMenuData} 
-                    onClose={() => setAiMenuData(null)} 
-                    onApply={handleApplyAiMenu} 
-                />
-            )}
-
-            {showHistoryModal && (
-                <WorkoutHistory 
-                    initialDate={date} 
-                    onClose={() => setShowHistoryModal(false)}
-                    onSelectDate={(newDate) => {
-                        setDate(newDate);
-                        setShowHistoryModal(false);
-                    }}
-                />
-            )}
             </div>
         </section>
+
+        {aiMenuData && (
+            <AiMenuModal 
+                data={aiMenuData} 
+                onClose={() => setAiMenuData(null)} 
+                onApply={handleApplyAiMenu} 
+            />
+        )}
+
+        {showHistoryModal && (
+            <WorkoutHistory 
+                initialDate={date} 
+                onClose={() => setShowHistoryModal(false)}
+                onSelectDate={(newDate) => {
+                    setDate(newDate);
+                    setShowHistoryModal(false);
+                }}
+            />
+        )}
+        </>
     );
   }
 
   return (
-    <section id="workout" className="content-section active" style={{ paddingBottom: '100px' }}>
+    <>
+    <section id="workout" className="content-section active" style={{ paddingBottom: '100px', display: aiMenuData ? 'none' : 'block' }}>
       <div style={{ maxWidth: '560px', margin: '0 auto', padding: '0 16px' }}>
       <div style={{ marginBottom: '20px' }}>
           <button className="btn btn-outline" onClick={() => setShowManualForm(false)}>
@@ -652,13 +655,6 @@ export default function Workout() {
                     {loadingMenu ? <><i className="fa-solid fa-spinner fa-spin"></i> メニュー作成中...</> : <><i className="fa-solid fa-wand-magic-sparkles"></i> AI最適メニューを生成</>}
                   </button>
                   
-                  {aiMenuData && (
-                    <AiMenuModal 
-                      data={aiMenuData} 
-                      onClose={() => setAiMenuData(null)} 
-                      onApply={handleApplyAiMenu} 
-                    />
-                  )}
                 </div>
               )}
             </div>
@@ -778,6 +774,14 @@ export default function Workout() {
       </div>
       </div>
     </section>
+    {aiMenuData && (
+        <AiMenuModal 
+            data={aiMenuData} 
+            onClose={() => setAiMenuData(null)} 
+            onApply={handleApplyAiMenu} 
+        />
+    )}
+    </>
   );
 }
 }

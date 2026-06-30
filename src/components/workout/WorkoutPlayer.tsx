@@ -1,5 +1,6 @@
 'use client';
 import React, { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { AiExercise } from './AiMenuModal';
 import { getExerciseDetails } from '@/lib/exerciseDictionary';
 import ExerciseDetailModal from './ExerciseDetailModal';
@@ -27,6 +28,8 @@ const parseDuration = (dur?: string): number | null => {
 };
 
 export default function WorkoutPlayer({ exercises, onComplete, onCancel, initialIndex = 0 }: WorkoutPlayerProps) {
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
   const [currentIndex, setCurrentIndex] = useState(initialIndex);
   const [phase, setPhase] = useState<Phase>('ready');
   const [timeLeft, setTimeLeft] = useState<number | null>(15); // 準備時間は15秒
@@ -158,7 +161,9 @@ export default function WorkoutPlayer({ exercises, onComplete, onCancel, initial
 
   const progressPercent = ((currentIndex + (phase === 'rest' ? 1 : 0)) / exercises.length) * 100;
 
-  return (
+  if (!mounted) return null;
+
+  return createPortal(
     <div style={{ position: 'fixed', top: 0, left: 0, right: 0, height: '100dvh', zIndex: 10000, background: 'rgba(0,0,0,0.8)', display: 'flex', justifyContent: 'center' }}>
       <div style={{ width: '100%', maxWidth: '560px', height: '100%', background: '#fff', display: 'flex', flexDirection: 'column', overflow: 'hidden', position: 'relative' }}>
       
@@ -372,7 +377,8 @@ export default function WorkoutPlayer({ exercises, onComplete, onCancel, initial
         )}
 
       </div>
-    </div>
-    </div>
+      </div>
+    </div>,
+    document.body
   );
 }

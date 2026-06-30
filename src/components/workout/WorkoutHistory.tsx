@@ -8,11 +8,13 @@ interface WorkoutHistoryProps {
 }
 
 export default function WorkoutHistory({ onClose, initialDate, onSelectDate }: WorkoutHistoryProps) {
+  const [mounted, setMounted] = useState(false);
   const [currentMonth, setCurrentMonth] = useState(() => new Date(initialDate));
   const [selectedDate, setSelectedDate] = useState(() => new Date(initialDate));
   const [allWorkouts, setAllWorkouts] = useState<WorkoutItem[]>([]);
 
   useEffect(() => {
+    setMounted(true);
     // We fetch all workouts and then filter.
     // In a real large scale app, we'd fetch by month, but here localStorage is fast.
     const all = getWorkouts();
@@ -97,8 +99,10 @@ export default function WorkoutHistory({ onClose, initialDate, onSelectDate }: W
     return allWorkouts.filter(w => w.date === selectedDateStr);
   }, [selectedDateStr, allWorkouts]);
 
+  if (!mounted) return null;
+
   return (
-    <div className="history-modal-overlay">
+    <div className="history-modal-overlay" style={{ position: 'fixed', top: 0, left: 0, right: 0, height: '100dvh', zIndex: 9999, background: 'rgba(0,0,0,0.5)', overflowY: 'auto', display: 'flex', justifyContent: 'center' }}>
       <div className="history-modal-content">
         <div className="history-header">
             <button className="btn-icon" onClick={onClose}><i className="fa-solid fa-arrow-left"></i></button>
