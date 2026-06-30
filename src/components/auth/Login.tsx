@@ -567,7 +567,7 @@ export default function Login() {
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
             <h2 style={{ textAlign: 'center', fontSize: '1.8rem', fontWeight: 'bold', marginBottom: '30px' }}>主な目標は何ですか？</h2>
             
-            <div className="options-grid" style={{ flex: 1, justifyContent: 'flex-start', paddingTop: '10px', paddingBottom: '20px' }}>
+            <div className="options-grid options-grid-3" style={{ flex: 1, justifyContent: 'flex-start', paddingTop: '10px', paddingBottom: '20px' }}>
               {renderOptionCard('体重を減らす', 'fa-solid fa-weight-scale', goal === '減量', () => setGoal('減量'))}
               {renderOptionCard('筋肉増強', 'fa-solid fa-dumbbell', goal === '増量', () => setGoal('増量'))}
               {renderOptionCard('健康維持', 'fa-solid fa-heart-pulse', goal === '現状維持', () => setGoal('現状維持'))}
@@ -688,9 +688,14 @@ export default function Login() {
               </div>
             </div>
 
-            <div style={{ textAlign: 'center', marginBottom: '10px' }}>
-              <span style={{ fontSize: '4rem', fontWeight: 'bold', color: '#1e1e24' }}>{weight}</span>
-              <span style={{ fontSize: '1.1rem', color: '#495057', marginLeft: '5px' }}>{weightUnit}</span>
+            <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'center', marginBottom: '10px' }}>
+              <input 
+                type="number" 
+                value={weight} 
+                onChange={(e) => setWeight(e.target.value)} 
+                style={{ fontSize: '4rem', fontWeight: 'bold', color: '#1e1e24', background: 'transparent', border: 'none', borderBottom: '2px solid #1a73e8', width: '120px', textAlign: 'center', outline: 'none' }} 
+              />
+              <span style={{ fontSize: '1.5rem', color: '#495057', marginLeft: '5px' }}>{weightUnit}</span>
             </div>
             
             <div style={{ width: '100%', marginTop: '10px' }}>
@@ -963,25 +968,25 @@ export default function Login() {
       {step === 15 && (
         <div style={{ flex: '1 0 auto', maxWidth: '600px', margin: '0 auto', padding: '20px', width: '100%', display: 'flex', flexDirection: 'column', minHeight: '100%', justifyContent: 'center' }}>
           <div className="animate-fade-in" style={{ textAlign: 'center' }}>
-            <div style={{ fontSize: '4rem', color: '#1a73e8', marginBottom: '10px' }}>
+            <div style={{ fontSize: '3rem', color: '#1a73e8', marginBottom: '5px' }}>
               <i className="fa-solid fa-bullseye"></i>
             </div>
-            <h2 style={{ marginBottom: '10px', fontSize: '1.4rem', fontWeight: 'bold' }}>AI分析完了！</h2>
+            <h2 style={{ marginBottom: '5px', fontSize: '1.3rem', fontWeight: 'bold' }}>AI分析完了！</h2>
             
-            <div style={{ background: '#f8f9fa', padding: '15px 20px', borderRadius: '24px', border: '1px solid #e9ecef', marginBottom: '15px' }}>
-              <p style={{ color: '#495057', marginBottom: '5px', fontSize: '1rem' }}>目標（{targetWeight}{weightUnit}）到達までの予測日数</p>
-              <div style={{ fontSize: '3rem', fontWeight: 'bold', color: '#1a73e8', marginBottom: '15px' }}>
+            <div style={{ background: '#f8f9fa', padding: '10px 15px', borderRadius: '20px', border: '1px solid #e9ecef', marginBottom: '10px' }}>
+              <p style={{ color: '#495057', marginBottom: '0', fontSize: '0.9rem' }}>目標（{targetWeight}{weightUnit}）到達までの予測日数</p>
+              <div style={{ fontSize: '2.5rem', fontWeight: 'bold', color: '#1a73e8', marginBottom: '10px' }}>
                 約 {estimatedResult?.estimatedDays || '?'} 日
               </div>
               
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', justifyContent: 'center' }}>
-                <div style={{ background: '#fff', padding: '15px', borderRadius: '16px', minWidth: '120px', border: '1px solid #e9ecef', boxShadow: '0 4px 10px rgba(0,0,0,0.02)' }}>
-                  <div style={{ fontSize: '0.9rem', color: '#8b8d9a', marginBottom: '5px' }}>目標カロリー</div>
-                  <div style={{ fontWeight: 'bold', color: '#1e1e24', fontSize: '1.2rem' }}>{estimatedResult?.calories || '?'} kcal</div>
+                <div style={{ background: '#fff', padding: '10px', borderRadius: '16px', minWidth: '110px', border: '1px solid #e9ecef', boxShadow: '0 4px 10px rgba(0,0,0,0.02)' }}>
+                  <div style={{ fontSize: '0.8rem', color: '#8b8d9a', marginBottom: '2px' }}>目標カロリー</div>
+                  <div style={{ fontWeight: 'bold', color: '#1e1e24', fontSize: '1.1rem' }}>{estimatedResult?.calories || '?'} kcal</div>
                 </div>
-                <div style={{ background: '#fff', padding: '15px', borderRadius: '16px', minWidth: '120px', border: '1px solid #e9ecef', boxShadow: '0 4px 10px rgba(0,0,0,0.02)' }}>
-                  <div style={{ fontSize: '0.9rem', color: '#8b8d9a', marginBottom: '5px' }}>タンパク質</div>
-                  <div style={{ fontWeight: 'bold', color: '#1e1e24', fontSize: '1.2rem' }}>{estimatedResult?.protein || '?'} g</div>
+                <div style={{ background: '#fff', padding: '10px', borderRadius: '16px', minWidth: '110px', border: '1px solid #e9ecef', boxShadow: '0 4px 10px rgba(0,0,0,0.02)' }}>
+                  <div style={{ fontSize: '0.8rem', color: '#8b8d9a', marginBottom: '2px' }}>タンパク質</div>
+                  <div style={{ fontWeight: 'bold', color: '#1e1e24', fontSize: '1.1rem' }}>{estimatedResult?.protein || '?'} g</div>
                 </div>
               </div>
             </div>
@@ -1045,15 +1050,20 @@ export default function Login() {
                       </div>
                     </div>
                     
-                    <button className="challenge-btn" onClick={handleComplete} style={{ width: '100%', padding: '14px', background: '#fff', color: '#1a73e8', border: 'none', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', boxShadow: '0 4px 15px rgba(0,0,0,0.08)' }}>
-                      トレーニングを開始する <i className="fa-solid fa-arrow-right"></i>
-                    </button>
+                    <div style={{ display: 'flex', gap: '10px', marginTop: '10px' }}>
+                      <button className="challenge-btn" onClick={() => setActiveTab('dashboard')} style={{ flex: 1, padding: '12px', background: 'rgba(255,255,255,0.2)', color: '#fff', border: '1px solid rgba(255,255,255,0.3)', borderRadius: '30px', fontSize: '1rem', fontWeight: 'bold', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
+                        <i className="fa-solid fa-home"></i> ホームへ
+                      </button>
+                      <button className="challenge-btn" onClick={handleComplete} style={{ flex: 1, padding: '12px', background: '#fff', color: '#1a73e8', border: 'none', borderRadius: '30px', fontSize: '1rem', fontWeight: 'bold', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', boxShadow: '0 4px 15px rgba(0,0,0,0.08)' }}>
+                        開始する <i className="fa-solid fa-arrow-right"></i>
+                      </button>
+                    </div>
                   </div>
                 </div>
               );
             })()}
 
-            <p style={{ fontSize: '0.85rem', color: '#5a5d72', marginBottom: '15px', lineHeight: '1.5' }}>
+            <p style={{ fontSize: '0.8rem', color: '#5a5d72', marginBottom: '0', lineHeight: '1.4' }}>
               入力されたデータに基づいて、最適な推奨値を設定しました。<br/>
               後から変更することも可能です！
             </p>
