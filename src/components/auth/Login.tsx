@@ -176,16 +176,22 @@ export default function Login() {
     setLoading(true);
     try {
       const provider = new GoogleAuthProvider();
-      // スマホの場合はリダイレクト、PCの場合はポップアップを使用する
       const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
       
       if (isMobile) {
         await signInWithRedirect(auth, provider);
-        // リダイレクトされるためここは実行されません
       } else {
-        const userCred = await signInWithPopup(auth, provider);
-        handleLoginSuccess(userCred.user);
-        setLoading(false);
+        try {
+          const userCred = await signInWithPopup(auth, provider);
+          handleLoginSuccess(userCred.user);
+          setLoading(false);
+        } catch (popupError: any) {
+          if (popupError.code === 'auth/popup-blocked' || popupError.code === 'auth/popup-closed-by-user' || popupError.code === 'auth/cross-origin-opener-policy-failed') {
+            await signInWithRedirect(auth, provider);
+          } else {
+            throw popupError;
+          }
+        }
       }
     } catch (e: any) {
       console.error(e);
@@ -453,26 +459,28 @@ export default function Login() {
               <div style={{ flex: 1, height: '1px', background: '#e9ecef' }}></div>
             </div>
 
-            <div className="form-group" style={{ marginBottom: '15px' }}>
-              <input type="email" placeholder="メールアドレス" value={email} onChange={e => setEmail(e.target.value)} style={{ background: '#f8f9fa', border: '1px solid #ced4da', borderRadius: '12px', padding: '14px', width: '100%' }} />
-            </div>
-            
-            <div className="form-group" style={{ position: 'relative', marginBottom: '15px' }}>
-              <input type={showPassword ? "text" : "password"} placeholder="パスワード (6文字以上)" value={password} onChange={e => setPassword(e.target.value)} style={{ background: '#f8f9fa', border: '1px solid #ced4da', borderRadius: '12px', padding: '14px', width: '100%' }} />
-              <button type="button" onClick={() => setShowPassword(!showPassword)} style={{ position: 'absolute', right: '15px', top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', color: '#adb5bd', cursor: 'pointer' }}>
-                <i className={`fa-solid ${showPassword ? 'fa-eye-slash' : 'fa-eye'}`}></i>
-              </button>
-            </div>
-
-            {!isLoginMode && (
-              <div className="form-group" style={{ marginBottom: '20px' }}>
-                <input type="text" placeholder="お名前（ニックネーム）" value={name} onChange={e => setName(e.target.value)} style={{ background: '#f8f9fa', border: '1px solid #ced4da', borderRadius: '12px', padding: '14px', width: '100%' }} />
+            <form autoComplete="off" onSubmit={(e) => { e.preventDefault(); handleNext(); }}>
+              <div className="form-group" style={{ marginBottom: '15px' }}>
+                <input type="email" name="email" autoComplete="off" placeholder="メールアドレス" value={email} onChange={e => setEmail(e.target.value)} style={{ background: '#f8f9fa', border: '1px solid #ced4da', borderRadius: '12px', padding: '14px', width: '100%' }} />
               </div>
-            )}
-            
-            <button type="button" className="btn btn-block" style={{ marginTop: '10px', padding: '14px', background: '#1a73e8', color: '#fff', borderRadius: '24px', fontWeight: 'bold', border: 'none' }} onClick={handleNext} disabled={loading}>
-              {loading ? <i className="fa-solid fa-spinner fa-spin"></i> : (isLoginMode ? 'ログイン' : '次へ')}
-            </button>
+              
+              <div className="form-group" style={{ position: 'relative', marginBottom: '15px' }}>
+                <input type={showPassword ? "text" : "password"} name="password" autoComplete="new-password" placeholder="パスワード (6文字以上)" value={password} onChange={e => setPassword(e.target.value)} style={{ background: '#f8f9fa', border: '1px solid #ced4da', borderRadius: '12px', padding: '14px', width: '100%' }} />
+                <button type="button" onClick={() => setShowPassword(!showPassword)} style={{ position: 'absolute', right: '15px', top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', color: '#adb5bd', cursor: 'pointer' }}>
+                  <i className={`fa-solid ${showPassword ? 'fa-eye-slash' : 'fa-eye'}`}></i>
+                </button>
+              </div>
+
+              {!isLoginMode && (
+                <div className="form-group" style={{ marginBottom: '20px' }}>
+                  <input type="text" name="nickname" autoComplete="off" placeholder="お名前（ニックネーム）" value={name} onChange={e => setName(e.target.value)} style={{ background: '#f8f9fa', border: '1px solid #ced4da', borderRadius: '12px', padding: '14px', width: '100%' }} />
+                </div>
+              )}
+              
+              <button type="submit" className="btn btn-block" style={{ marginTop: '10px', padding: '14px', background: '#1a73e8', color: '#fff', borderRadius: '24px', fontWeight: 'bold', border: 'none' }} disabled={loading}>
+                {loading ? <i className="fa-solid fa-spinner fa-spin"></i> : (isLoginMode ? 'ログイン' : '次へ')}
+              </button>
+            </form>
 
             <div style={{ textAlign: 'center', marginTop: '25px', fontSize: '0.9rem', color: '#495057' }}>
               {isLoginMode ? (
