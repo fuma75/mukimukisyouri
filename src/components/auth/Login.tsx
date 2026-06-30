@@ -430,7 +430,7 @@ export default function Login() {
   );
 
   return (
-    <div className="login-overlay light-theme" style={{ overflowY: 'auto', padding: '0', background: '#fcfcfd', color: '#212529', height: '100dvh', maxHeight: '100dvh', display: 'flex', flexDirection: 'column' }}>
+    <div className="login-overlay light-theme" style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, zIndex: 9999, overflowY: 'auto', padding: '0', background: '#fcfcfd', color: '#212529', display: 'flex', flexDirection: 'column' }}>
       
       {/* STEP 1: Firebase Auth */}
       {step === 1 && (
@@ -487,7 +487,7 @@ export default function Login() {
 
       {/* STEP 2: Gender */}
       {step === 2 && (
-        <div style={{ flex: 1, maxWidth: '600px', margin: '0 auto', padding: '10px 20px 20px', width: '100%', display: 'flex', flexDirection: 'column' }}>
+        <div style={{ flex: '1 0 auto', maxWidth: '600px', margin: '0 auto', padding: '10px 20px 20px', width: '100%', display: 'flex', flexDirection: 'column' }}>
           {renderWizardHeader("01 目標とターゲット部位", 2)}
           
           <div style={{ flex: 1 }}>
@@ -553,7 +553,7 @@ export default function Login() {
 
       {/* STEP 3: Goal */}
       {step === 3 && (
-        <div style={{ flex: 1, maxWidth: '600px', margin: '0 auto', padding: '10px 20px 20px', width: '100%', display: 'flex', flexDirection: 'column' }}>
+        <div style={{ flex: '1 0 auto', maxWidth: '600px', margin: '0 auto', padding: '10px 20px 20px', width: '100%', display: 'flex', flexDirection: 'column' }}>
           {renderWizardHeader("01 目標とターゲット部位", 3)}
           
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
@@ -576,7 +576,7 @@ export default function Login() {
 
       {/* STEP 4: Target Area */}
       {step === 4 && (
-        <div style={{ flex: 1, maxWidth: '600px', margin: '0 auto', padding: '10px 20px 20px', width: '100%', display: 'flex', flexDirection: 'column' }}>
+        <div style={{ flex: '1 0 auto', maxWidth: '600px', margin: '0 auto', padding: '10px 20px 20px', width: '100%', display: 'flex', flexDirection: 'column' }}>
           {renderWizardHeader("01 目標とターゲット部位", 4)}
           
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
@@ -602,7 +602,7 @@ export default function Login() {
 
       {/* STEP 5: Date of Birth */}
       {step === 5 && (
-        <div style={{ flex: 1, maxWidth: '600px', margin: '0 auto', padding: '10px 20px 20px', width: '100%', display: 'flex', flexDirection: 'column' }}>
+        <div style={{ flex: '1 0 auto', maxWidth: '600px', margin: '0 auto', padding: '10px 20px 20px', width: '100%', display: 'flex', flexDirection: 'column' }}>
           {renderWizardHeader("02 身体情報の設定", 5)}
           
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
@@ -661,7 +661,7 @@ export default function Login() {
 
       {/* STEP 7: Current Weight */}
       {step === 7 && (
-        <div style={{ flex: 1, maxWidth: '600px', margin: '0 auto', padding: '10px 20px 20px', width: '100%', display: 'flex', flexDirection: 'column' }}>
+        <div style={{ flex: '1 0 auto', maxWidth: '600px', margin: '0 auto', padding: '10px 20px 20px', width: '100%', display: 'flex', flexDirection: 'column' }}>
           {renderWizardHeader("02 身体情報の設定", 7)}
           
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -737,7 +737,7 @@ export default function Login() {
 
       {/* STEP 8: Target Weight */}
       {step === 8 && (
-        <div style={{ flex: 1, maxWidth: '600px', margin: '0 auto', padding: '10px 20px 20px', width: '100%', display: 'flex', flexDirection: 'column' }}>
+        <div style={{ flex: '1 0 auto', maxWidth: '600px', margin: '0 auto', padding: '10px 20px 20px', width: '100%', display: 'flex', flexDirection: 'column' }}>
           {renderWizardHeader("02 身体情報の設定", 8)}
           
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -783,7 +783,7 @@ export default function Login() {
 
       {/* STEP 9: Environment */}
       {step === 9 && (
-        <div style={{ flex: 1, maxWidth: '600px', margin: '0 auto', padding: '10px 20px 20px', width: '100%', display: 'flex', flexDirection: 'column' }}>
+        <div style={{ flex: '1 0 auto', maxWidth: '600px', margin: '0 auto', padding: '10px 20px 20px', width: '100%', display: 'flex', flexDirection: 'column' }}>
           {renderWizardHeader("03 トレーニング環境", 9)}
           
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
@@ -806,7 +806,7 @@ export default function Login() {
 
       {/* STEP 10: Exercise Limitations */}
       {step === 10 && (
-        <div style={{ flex: 1, maxWidth: '600px', margin: '0 auto', padding: '10px 20px 20px', width: '100%', display: 'flex', flexDirection: 'column' }}>
+        <div style={{ flex: '1 0 auto', maxWidth: '600px', margin: '0 auto', padding: '10px 20px 20px', width: '100%', display: 'flex', flexDirection: 'column' }}>
           {renderWizardHeader("03 トレーニング環境", 10)}
           
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
@@ -830,7 +830,7 @@ export default function Login() {
 
       {/* STEP 11: Workout Level */}
       {step === 11 && (
-        <div style={{ flex: 1, maxWidth: '600px', margin: '0 auto', padding: '10px 20px 20px', width: '100%', display: 'flex', flexDirection: 'column' }}>
+        <div style={{ flex: '1 0 auto', maxWidth: '600px', margin: '0 auto', padding: '10px 20px 20px', width: '100%', display: 'flex', flexDirection: 'column' }}>
           {renderWizardHeader("03 フィットネスレベル評価", 11)}
           
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
@@ -853,7 +853,7 @@ export default function Login() {
 
       {/* STEP 12: Physical Issues */}
       {step === 12 && (
-        <div style={{ flex: 1, maxWidth: '600px', margin: '0 auto', padding: '10px 20px 20px', width: '100%', display: 'flex', flexDirection: 'column' }}>
+        <div style={{ flex: '1 0 auto', maxWidth: '600px', margin: '0 auto', padding: '10px 20px 20px', width: '100%', display: 'flex', flexDirection: 'column' }}>
           {renderWizardHeader("04 ライフスタイル", 12)}
           
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
@@ -907,7 +907,7 @@ export default function Login() {
 
       {/* STEP 13: Activity Level */}
       {step === 13 && (
-        <div style={{ flex: 1, maxWidth: '600px', margin: '0 auto', padding: '10px 20px 20px', width: '100%', display: 'flex', flexDirection: 'column' }}>
+        <div style={{ flex: '1 0 auto', maxWidth: '600px', margin: '0 auto', padding: '10px 20px 20px', width: '100%', display: 'flex', flexDirection: 'column' }}>
           {renderWizardHeader("04 ライフスタイル", 13)}
           
           <div style={{ flex: 1 }}>
@@ -928,7 +928,7 @@ export default function Login() {
 
       {/* STEP 14: Frequency */}
       {step === 14 && (
-        <div style={{ flex: 1, maxWidth: '600px', margin: '0 auto', padding: '10px 20px 20px', width: '100%', display: 'flex', flexDirection: 'column' }}>
+        <div style={{ flex: '1 0 auto', maxWidth: '600px', margin: '0 auto', padding: '10px 20px 20px', width: '100%', display: 'flex', flexDirection: 'column' }}>
           {renderWizardHeader("04 ライフスタイル", 14)}
           
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
@@ -953,20 +953,20 @@ export default function Login() {
 
       {/* STEP 15: AI Calculation Result & Finish */}
       {step === 15 && (
-        <div style={{ maxWidth: '600px', margin: '0 auto', padding: '20px', width: '100%', display: 'flex', flexDirection: 'column', minHeight: '100dvh', justifyContent: 'center' }}>
+        <div style={{ flex: '1 0 auto', maxWidth: '600px', margin: '0 auto', padding: '20px', width: '100%', display: 'flex', flexDirection: 'column', minHeight: '100%', justifyContent: 'center' }}>
           <div className="animate-fade-in" style={{ textAlign: 'center' }}>
             <div style={{ fontSize: '4rem', color: '#1a73e8', marginBottom: '10px' }}>
               <i className="fa-solid fa-bullseye"></i>
             </div>
-            <h2 style={{ marginBottom: '15px', fontSize: '1.6rem', fontWeight: 'bold' }}>AI分析完了！</h2>
+            <h2 style={{ marginBottom: '10px', fontSize: '1.4rem', fontWeight: 'bold' }}>AI分析完了！</h2>
             
-            <div style={{ background: '#f8f9fa', padding: '30px', borderRadius: '24px', border: '1px solid #e9ecef', marginBottom: '20px' }}>
-              <p style={{ color: '#495057', marginBottom: '10px', fontSize: '1.1rem' }}>目標（{targetWeight}{weightUnit}）到達までの予測日数</p>
-              <div style={{ fontSize: '3.5rem', fontWeight: 'bold', color: '#1a73e8', marginBottom: '25px' }}>
+            <div style={{ background: '#f8f9fa', padding: '15px 20px', borderRadius: '24px', border: '1px solid #e9ecef', marginBottom: '15px' }}>
+              <p style={{ color: '#495057', marginBottom: '5px', fontSize: '1rem' }}>目標（{targetWeight}{weightUnit}）到達までの予測日数</p>
+              <div style={{ fontSize: '3rem', fontWeight: 'bold', color: '#1a73e8', marginBottom: '15px' }}>
                 約 {estimatedResult?.estimatedDays || '?'} 日
               </div>
               
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '15px', justifyContent: 'center' }}>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', justifyContent: 'center' }}>
                 <div style={{ background: '#fff', padding: '15px', borderRadius: '16px', minWidth: '120px', border: '1px solid #e9ecef', boxShadow: '0 4px 10px rgba(0,0,0,0.02)' }}>
                   <div style={{ fontSize: '0.9rem', color: '#8b8d9a', marginBottom: '5px' }}>目標カロリー</div>
                   <div style={{ fontWeight: 'bold', color: '#1e1e24', fontSize: '1.2rem' }}>{estimatedResult?.calories || '?'} kcal</div>
@@ -995,15 +995,15 @@ export default function Login() {
               }
               
               return (
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '15px', alignItems: 'center', marginBottom: '30px', width: '100%', textAlign: 'left' }}>
-                  <h3 style={{ fontSize: '1.2rem', fontWeight: 'bold', color: '#1a73e8', alignSelf: 'flex-start' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', alignItems: 'center', marginBottom: '15px', width: '100%', textAlign: 'left' }}>
+                  <h3 style={{ fontSize: '1.1rem', fontWeight: 'bold', color: '#1a73e8', alignSelf: 'flex-start' }}>
                     <i className="fa-solid fa-bolt"></i> おすすめプラン
                   </h3>
-                  <div className="challenge-card animate-fade-in" style={{ background: bgVal, width: '100%', margin: 0, padding: '24px', borderRadius: '24px', color: '#fff', boxShadow: '0 8px 25px rgba(0,0,0,0.1)' }}>
-                    <span className="challenge-badge" style={{ background: 'rgba(255,255,255,0.2)', color: '#fff', padding: '6px 12px', borderRadius: '20px', fontSize: '0.8rem', fontWeight: 'bold', display: 'inline-block', marginBottom: '15px' }}>あなたにおすすめ</span>
-                    <h4 className="challenge-title" style={{ fontSize: '1.6rem', fontWeight: 'bold', margin: '0 0 20px 0' }}>全身脂肪燃焼 ({levelVal})</h4>
+                  <div className="challenge-card animate-fade-in" style={{ background: bgVal, width: '100%', margin: 0, padding: '16px', borderRadius: '24px', color: '#fff', boxShadow: '0 4px 15px rgba(0,0,0,0.1)' }}>
+                    <span className="challenge-badge" style={{ background: 'rgba(255,255,255,0.2)', color: '#fff', padding: '4px 10px', borderRadius: '20px', fontSize: '0.75rem', fontWeight: 'bold', display: 'inline-block', marginBottom: '10px' }}>あなたにおすすめ</span>
+                    <h4 className="challenge-title" style={{ fontSize: '1.4rem', fontWeight: 'bold', margin: '0 0 15px 0' }}>全身脂肪燃焼 ({levelVal})</h4>
                     
-                    <div className="challenge-stats" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px', marginBottom: '25px' }}>
+                    <div className="challenge-stats" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginBottom: '15px' }}>
                       <div className="challenge-stat" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                         <div className="challenge-stat-icon" style={{ fontSize: '1.4rem', opacity: 0.8 }}><i className="fa-solid fa-calendar-days"></i></div>
                         <div className="challenge-stat-text">
@@ -1037,7 +1037,7 @@ export default function Login() {
                       </div>
                     </div>
                     
-                    <button className="challenge-btn" onClick={handleComplete} style={{ width: '100%', padding: '16px', background: '#fff', color: '#1a73e8', border: 'none', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', boxShadow: '0 4px 15px rgba(0,0,0,0.08)' }}>
+                    <button className="challenge-btn" onClick={handleComplete} style={{ width: '100%', padding: '14px', background: '#fff', color: '#1a73e8', border: 'none', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', boxShadow: '0 4px 15px rgba(0,0,0,0.08)' }}>
                       トレーニングを開始する <i className="fa-solid fa-arrow-right"></i>
                     </button>
                   </div>
@@ -1045,9 +1045,9 @@ export default function Login() {
               );
             })()}
 
-            <p style={{ fontSize: '0.95rem', color: '#5a5d72', marginBottom: '30px', lineHeight: '1.6' }}>
-              入力されたデータに基づいて、最適なトレーニングと食事の推奨値を設定しました。<br/>
-              後からプロフィール画面で変更することも可能です！
+            <p style={{ fontSize: '0.85rem', color: '#5a5d72', marginBottom: '15px', lineHeight: '1.5' }}>
+              入力されたデータに基づいて、最適な推奨値を設定しました。<br/>
+              後から変更することも可能です！
             </p>
           </div>
         </div>
