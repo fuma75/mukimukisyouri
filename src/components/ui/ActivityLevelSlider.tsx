@@ -282,10 +282,10 @@ export default function ActivityLevelSlider({ value, onChange }: { value: string
               padding: '20px 0'
             }}
           >
-            <div style={{ height: '220px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <div style={{ height: '140px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <act.Component />
             </div>
-            <p style={{ textAlign: 'center', fontSize: '1.2rem', fontWeight: 'bold', color: '#1e1e24', marginTop: '20px', padding: '0 20px', minHeight: '60px' }}>
+            <p style={{ textAlign: 'center', fontSize: '1.1rem', fontWeight: 'bold', color: '#1e1e24', marginTop: '10px', padding: '0 20px', minHeight: '40px' }}>
               {act.label}
             </p>
           </div>
@@ -293,7 +293,7 @@ export default function ActivityLevelSlider({ value, onChange }: { value: string
       </div>
 
       {/* Slideable Bar UI */}
-      <div style={{ width: '100%', padding: '0 20px', marginTop: '30px' }}>
+      <div style={{ width: '100%', padding: '0 20px', marginTop: '10px' }}>
         <div style={{ position: 'relative', height: '32px', display: 'flex', alignItems: 'center' }}>
           
           {/* Track Background */}
