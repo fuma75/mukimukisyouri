@@ -2,7 +2,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 
 const SittingSvg = () => (
-  <svg viewBox="0 0 100 100" width="160" height="160">
+  <svg viewBox="0 0 100 100" width="110" height="110">
     {/* Desk */}
     <rect x="40" y="60" width="45" height="5" fill="#1a73e8" rx="2" />
     <rect x="75" y="65" width="5" height="25" fill="#1a73e8" rx="2" />
@@ -32,7 +32,7 @@ const SittingSvg = () => (
 );
 
 const WalkingSvg = () => (
-  <svg viewBox="0 0 100 100" width="160" height="160">
+  <svg viewBox="0 0 100 100" width="110" height="110">
     <g transform="translate(100, 0) scale(-1, 1)">
       <g>
         <animateTransform attributeName="transform" type="translate" values="0 0; 0 3; 0 0; 0 3; 0 0" dur="1s" repeatCount="indefinite" />
@@ -63,7 +63,7 @@ const WalkingSvg = () => (
 );
 
 const RunningSvg = () => (
-  <svg viewBox="0 0 100 100" width="160" height="160">
+  <svg viewBox="0 0 100 100" width="110" height="110">
     <g transform="translate(100, 0) scale(-1, 1)">
       <g>
         <animateTransform attributeName="transform" type="translate" values="0 -2; 0 3; 0 -2; 0 3; 0 -2" dur="0.6s" repeatCount="indefinite" />
@@ -94,7 +94,7 @@ const RunningSvg = () => (
 );
 
 const JumpingSvg = () => (
-  <svg viewBox="0 0 100 100" width="160" height="160">
+  <svg viewBox="0 0 100 100" width="110" height="110">
     <g>
       <animateTransform attributeName="transform" type="translate" values="0 0; 0 -10; 0 0" dur="1s" repeatCount="indefinite" />
       

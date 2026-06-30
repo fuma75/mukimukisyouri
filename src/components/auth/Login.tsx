@@ -354,7 +354,7 @@ export default function Login() {
 
     setUserProfile(newProfile);
     localStorage.setItem('kinnikun_profile', JSON.stringify(newProfile));
-    setActiveTab('dashboard');
+    setActiveTab('workout');
   };
 
   const handleCardKeyDown = (e: React.KeyboardEvent<HTMLElement>, onClick: () => void) => {
