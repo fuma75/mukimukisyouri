@@ -22,21 +22,21 @@ export default function Login() {
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
   
-  const [gender, setGender] = useState<'male'|'female'|'other'|''>('');
-  const [goal, setGoal] = useState('');
-  const [targetAreas, setTargetAreas] = useState<string[]>([]);
+  const [gender, setGender] = useState<'male'|'female'|'other'|''>('male');
+  const [goal, setGoal] = useState('減量');
+  const [targetAreas, setTargetAreas] = useState<string[]>(['全身']);
   
   const [dob, setDob] = useState('2000-01-01');
   const [height, setHeight] = useState('150');
   const [weight, setWeight] = useState('50');
   const [targetWeight, setTargetWeight] = useState('50');
   
-  const [environment, setEnvironment] = useState('');
-  const [exerciseTypes, setExerciseTypes] = useState<string[]>([]);
-  const [workoutLevel, setWorkoutLevel] = useState('');
-  const [physicalIssues, setPhysicalIssues] = useState<string[]>([]);
-  const [activityLevel, setActivityLevel] = useState('');
-  const [frequency, setFrequency] = useState('');
+  const [environment, setEnvironment] = useState('家');
+  const [exerciseTypes, setExerciseTypes] = useState<string[]>(['なし']);
+  const [workoutLevel, setWorkoutLevel] = useState('簡単に始められる');
+  const [physicalIssues, setPhysicalIssues] = useState<string[]>(['なし']);
+  const [activityLevel, setActivityLevel] = useState('座学メイン');
+  const [frequency, setFrequency] = useState('週3回');
 
   // Toggles
   const [heightUnit, setHeightUnit] = useState('cm');
@@ -404,17 +404,18 @@ export default function Login() {
       style={{
         display: 'flex',
         alignItems: 'center',
-        padding: '20px 25px',
+        padding: '14px 20px',
         background: selected ? 'rgba(26, 115, 232, 0.05)' : '#ffffff',
         border: `2px solid ${selected ? '#1a73e8' : '#f4f6fb'}`,
         borderRadius: '16px',
         cursor: 'pointer',
         boxShadow: selected ? '0 4px 12px rgba(26, 115, 232, 0.1)' : '0 4px 12px rgba(0,0,0,0.03)',
         transition: 'all 0.2s ease',
-        boxSizing: 'border-box'
+        boxSizing: 'border-box',
+        marginBottom: '10px'
       }}
     >
-      <div style={{ width: '40px', height: '40px', display: 'flex', justifyContent: 'center', alignItems: 'center', marginRight: '15px', overflow: 'hidden' }}>
+      <div style={{ width: '35px', height: '35px', display: 'flex', justifyContent: 'center', alignItems: 'center', marginRight: '15px', overflow: 'hidden' }}>
         {icon.startsWith('/') ? (
           <img src={icon} alt={label} style={{ width: '100%', height: '100%', objectFit: 'cover', transform: 'scale(1.5)', filter: selected ? 'none' : 'grayscale(100%)', opacity: selected ? 1 : 0.6 }} />
         ) : (
@@ -580,7 +581,7 @@ export default function Login() {
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
             <h2 style={{ textAlign: 'center', fontSize: '1.8rem', fontWeight: 'bold', marginBottom: '30px' }}>ターゲットの部位はどこですか？</h2>
             
-            <div className="options-grid" style={{ flex: 1, justifyContent: 'flex-start', paddingTop: '10px', paddingBottom: '20px' }}>
+            <div className="options-grid" style={{ flex: 1, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', paddingTop: '10px', paddingBottom: '20px' }}>
               {renderOptionCard('全身', 'fa-solid fa-child', targetAreas.includes('全身'), () => handleAreaToggle('全身'))}
               {renderOptionCard('腕', 'fa-solid fa-hand-fist', targetAreas.includes('腕'), () => handleAreaToggle('腕'))}
               {renderOptionCard('胸部', 'fa-solid fa-child-reaching', targetAreas.includes('胸部'), () => handleAreaToggle('胸部'))}
@@ -663,9 +664,9 @@ export default function Login() {
           {renderWizardHeader("02 身体情報の設定", 7)}
           
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-            <h2 style={{ textAlign: 'center', fontSize: '1.8rem', fontWeight: 'bold', marginBottom: '30px' }}>現在の体重を入力してください。</h2>
+            <h2 style={{ textAlign: 'center', fontSize: '1.8rem', fontWeight: 'bold', marginBottom: '20px' }}>現在の体重を入力してください。</h2>
             
-            <div style={{ display: 'flex', border: '1px solid #1a73e8', borderRadius: '30px', overflow: 'hidden', marginBottom: '50px' }}>
+            <div style={{ display: 'flex', border: '1px solid #1a73e8', borderRadius: '30px', overflow: 'hidden', marginBottom: '20px' }}>
               <div 
                 onClick={() => setWeightUnit('kg')}
                 style={{ padding: '10px 30px', fontWeight: 'bold', cursor: 'pointer', background: weightUnit === 'kg' ? '#1a73e8' : '#fff', color: weightUnit === 'kg' ? '#fff' : '#1e1e24' }}>
@@ -739,9 +740,9 @@ export default function Login() {
           {renderWizardHeader("02 身体情報の設定", 8)}
           
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-            <h2 style={{ textAlign: 'center', fontSize: '1.8rem', fontWeight: 'bold', marginBottom: '30px' }}>目標体重を入力してください。</h2>
+            <h2 style={{ textAlign: 'center', fontSize: '1.8rem', fontWeight: 'bold', marginBottom: '20px' }}>目標体重を入力してください。</h2>
             
-            <div style={{ display: 'flex', border: '1px solid #1a73e8', borderRadius: '30px', overflow: 'hidden', marginBottom: '50px' }}>
+            <div style={{ display: 'flex', border: '1px solid #1a73e8', borderRadius: '30px', overflow: 'hidden', marginBottom: '20px' }}>
               <div 
                 onClick={() => setWeightUnit('kg')}
                 style={{ padding: '10px 30px', fontWeight: 'bold', cursor: 'pointer', background: weightUnit === 'kg' ? '#1a73e8' : '#fff', color: weightUnit === 'kg' ? '#fff' : '#1e1e24' }}>
