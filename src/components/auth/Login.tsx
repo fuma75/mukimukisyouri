@@ -142,10 +142,11 @@ export default function Login() {
       setLoading(true);
       try {
         let userCred;
+        const cleanEmail = email.trim();
         if (isLoginMode) {
-          userCred = await signInWithEmailAndPassword(auth, email, password);
+          userCred = await signInWithEmailAndPassword(auth, cleanEmail, password);
         } else {
-          userCred = await createUserWithEmailAndPassword(auth, email, password);
+          userCred = await createUserWithEmailAndPassword(auth, cleanEmail, password);
         }
         handleLoginSuccess(userCred.user);
       } catch (e: any) {
@@ -180,7 +181,15 @@ export default function Login() {
       const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
       
       if (isMobile) {
-        await signInWithRedirect(auth, provider);
+        try {
+          await signInWithRedirect(auth, provider);
+        } catch (redirectError: any) {
+          if (redirectError.code === 'auth/operation-not-supported-in-this-environment') {
+            alert("このブラウザ（LINEやInstagram等）ではGoogleログインがサポートされていません。SafariやChromeで開き直してお試しください。");
+          } else {
+            throw redirectError;
+          }
+        }
       } else {
         try {
           const userCred = await signInWithPopup(auth, provider);
@@ -196,8 +205,12 @@ export default function Login() {
       }
     } catch (e: any) {
       console.error(e);
-      if (e.code !== 'auth/popup-closed-by-user' && e.code !== 'auth/cancelled-popup-request') {
-        alert("Googleログインエラー: " + e.message);
+      if (e.code === 'auth/invalid-email') {
+         alert("メールアドレスの形式が正しくありません。");
+      } else if (e.code === 'auth/operation-not-supported-in-this-environment') {
+         alert("このブラウザではGoogleログインが利用できません。標準のブラウザ（SafariやChrome）でお試しください。");
+      } else if (e.code !== 'auth/popup-closed-by-user' && e.code !== 'auth/cancelled-popup-request') {
+        alert("Googleログインエラー: " + (e.message || e.code));
       }
       setLoading(false);
     }
