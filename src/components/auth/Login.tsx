@@ -43,7 +43,7 @@ export default function Login() {
   const [weightUnit, setWeightUnit] = useState('kg');
   const [showPassword, setShowPassword] = useState(false);
 
-  // Handle redirect result for mobile login
+  // Handle auth state and redirect result for mobile login
   useEffect(() => {
     const handleRedirect = async () => {
       try {
@@ -59,6 +59,14 @@ export default function Login() {
       }
     };
     handleRedirect();
+
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        handleLoginSuccess(user);
+      }
+    });
+
+    return () => unsubscribe();
   }, []);
 
   // Constants
