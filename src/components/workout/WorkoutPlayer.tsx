@@ -12,7 +12,7 @@ interface WorkoutPlayerProps {
   initialIndex?: number;
 }
 
-type Phase = 'ready' | 'work' | 'rest' | 'done';
+type Phase = 'ready' | 'countdown' | 'work' | 'rest' | 'done';
 
 const parseDuration = (dur?: string): number | null => {
   if (!dur) return null;
@@ -49,7 +49,7 @@ export default function WorkoutPlayer({ exercises, onComplete, onCancel, initial
   const isTimeBased = currentEx && parseDuration(currentEx.duration) !== null;
 
   // Sound effects
-  const playBeep = () => {
+  const playBeep = (freq = 800, dur = 0.3) => {
     try {
       const AudioContext = window.AudioContext || (window as any).webkitAudioContext;
       if (AudioContext) {
@@ -59,12 +59,12 @@ export default function WorkoutPlayer({ exercises, onComplete, onCancel, initial
         osc.connect(gain);
         gain.connect(ctx.destination);
         osc.type = 'sine';
-        osc.frequency.value = 800;
+        osc.frequency.value = freq;
         gain.gain.setValueAtTime(0, ctx.currentTime);
         gain.gain.linearRampToValueAtTime(1, ctx.currentTime + 0.05);
-        gain.gain.linearRampToValueAtTime(0, ctx.currentTime + 0.3);
+        gain.gain.linearRampToValueAtTime(0, ctx.currentTime + dur);
         osc.start(ctx.currentTime);
-        osc.stop(ctx.currentTime + 0.3);
+        osc.stop(ctx.currentTime + dur);
       }
     } catch (e) {
       console.log('Audio not supported or disabled');
@@ -75,15 +75,24 @@ export default function WorkoutPlayer({ exercises, onComplete, onCancel, initial
     let timer: NodeJS.Timeout;
     
     if (!isPaused && phase !== 'done' && timeLeft !== null && timeLeft > 0) {
-      timer = setInterval(() => {
-        setTimeLeft(prev => prev !== null ? prev - 1 : null);
+      timer = setTimeout(() => {
+        const nextTime = timeLeft - 1;
+        setTimeLeft(nextTime);
+        if (phase === 'countdown' && nextTime > 0) {
+          playBeep(800, 0.15); // short beep for 3, 2, 1
+        }
       }, 1000);
     } else if (timeLeft === 0) {
-      playBeep();
       if (phase === 'ready') {
+        setPhase('countdown');
+        setTimeLeft(3);
+        playBeep(800, 0.15);
+      } else if (phase === 'countdown') {
+        playBeep(1200, 0.5); // long beep for go
         setPhase('work');
         setTimeLeft(parseDuration(exercises[currentIndex].duration) || 30);
       } else if (phase === 'work') {
+        playBeep();
         if (currentIndex < exercises.length - 1) {
           setPhase('rest');
           setTimeLeft(10); // 休憩時間10秒
@@ -93,12 +102,13 @@ export default function WorkoutPlayer({ exercises, onComplete, onCancel, initial
         }
       } else if (phase === 'rest') {
         setCurrentIndex(prev => prev + 1);
-        setPhase('work');
-        setTimeLeft(parseDuration(exercises[currentIndex + 1].duration) || 30);
+        setPhase('countdown');
+        setTimeLeft(3);
+        playBeep(800, 0.15);
       }
     }
 
-    return () => clearInterval(timer);
+    return () => clearTimeout(timer);
   }, [timeLeft, isPaused, phase, currentIndex, exercises]);
 
   const handleNext = () => {
@@ -122,10 +132,10 @@ export default function WorkoutPlayer({ exercises, onComplete, onCancel, initial
   };
 
   const handleSkipRest = () => {
-    playBeep();
+    playBeep(800, 0.15);
     setCurrentIndex(prev => prev + 1);
-    setPhase('work');
-    setTimeLeft(parseDuration(exercises[currentIndex + 1].duration) || 30);
+    setPhase('countdown');
+    setTimeLeft(3);
   };
 
   useEffect(() => {
@@ -244,6 +254,18 @@ export default function WorkoutPlayer({ exercises, onComplete, onCancel, initial
               >
                 <i className="fa-solid fa-chevron-right"></i>
               </button>
+            </div>
+          </div>
+        )}
+
+        {/* ── COUNTDOWN phase ── */}
+        {phase === 'countdown' && currentEx && (
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%', width: '100%', background: '#1a73e8', color: '#fff', position: 'absolute', top: 0, left: 0, zIndex: 10 }}>
+            <div style={{ fontSize: '1.2rem', fontWeight: 'bold', marginBottom: '15px', opacity: 0.9 }}>
+              次の種目: {currentEx.exercise}
+            </div>
+            <div style={{ fontSize: '8rem', fontWeight: '900', fontFamily: 'Outfit, monospace', lineHeight: 1, textShadow: '0 4px 15px rgba(0,0,0,0.1)' }}>
+              {timeLeft}
             </div>
           </div>
         )}
