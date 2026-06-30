@@ -354,6 +354,7 @@ export default function Login() {
 
     setUserProfile(newProfile);
     localStorage.setItem('kinnikun_profile', JSON.stringify(newProfile));
+    sessionStorage.setItem('open_welcome_workout', 'true');
     setActiveTab('workout');
   };
 
@@ -486,7 +487,7 @@ export default function Login() {
 
       {/* STEP 2: Gender */}
       {step === 2 && (
-        <div style={{ maxWidth: '600px', margin: '0 auto', padding: '20px', width: '100%', display: 'flex', flexDirection: 'column', minHeight: '100dvh' }}>
+        <div style={{ flex: 1, maxWidth: '600px', margin: '0 auto', padding: '20px 20px 40px', width: '100%', display: 'flex', flexDirection: 'column' }}>
           {renderWizardHeader("01 目標とターゲット部位", 2)}
           
           <div style={{ flex: 1 }}>
@@ -552,7 +553,7 @@ export default function Login() {
 
       {/* STEP 3: Goal */}
       {step === 3 && (
-        <div style={{ maxWidth: '600px', margin: '0 auto', padding: '20px', width: '100%', display: 'flex', flexDirection: 'column', minHeight: '100dvh' }}>
+        <div style={{ flex: 1, maxWidth: '600px', margin: '0 auto', padding: '20px 20px 40px', width: '100%', display: 'flex', flexDirection: 'column' }}>
           {renderWizardHeader("01 目標とターゲット部位", 3)}
           
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
@@ -575,7 +576,7 @@ export default function Login() {
 
       {/* STEP 4: Target Area */}
       {step === 4 && (
-        <div style={{ maxWidth: '600px', margin: '0 auto', padding: '20px', width: '100%', display: 'flex', flexDirection: 'column', minHeight: '100dvh' }}>
+        <div style={{ flex: 1, maxWidth: '600px', margin: '0 auto', padding: '20px 20px 40px', width: '100%', display: 'flex', flexDirection: 'column' }}>
           {renderWizardHeader("01 目標とターゲット部位", 4)}
           
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
@@ -601,7 +602,7 @@ export default function Login() {
 
       {/* STEP 5: Date of Birth */}
       {step === 5 && (
-        <div style={{ maxWidth: '600px', margin: '0 auto', padding: '20px', width: '100%', display: 'flex', flexDirection: 'column', minHeight: '100dvh' }}>
+        <div style={{ flex: 1, maxWidth: '600px', margin: '0 auto', padding: '20px 20px 40px', width: '100%', display: 'flex', flexDirection: 'column' }}>
           {renderWizardHeader("02 身体情報の設定", 5)}
           
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
@@ -660,7 +661,7 @@ export default function Login() {
 
       {/* STEP 7: Current Weight */}
       {step === 7 && (
-        <div style={{ maxWidth: '600px', margin: '0 auto', padding: '20px', width: '100%', display: 'flex', flexDirection: 'column', minHeight: '100dvh' }}>
+        <div style={{ flex: 1, maxWidth: '600px', margin: '0 auto', padding: '20px 20px 40px', width: '100%', display: 'flex', flexDirection: 'column' }}>
           {renderWizardHeader("02 身体情報の設定", 7)}
           
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -736,7 +737,7 @@ export default function Login() {
 
       {/* STEP 8: Target Weight */}
       {step === 8 && (
-        <div style={{ maxWidth: '600px', margin: '0 auto', padding: '20px', width: '100%', display: 'flex', flexDirection: 'column', minHeight: '100dvh' }}>
+        <div style={{ flex: 1, maxWidth: '600px', margin: '0 auto', padding: '20px 20px 40px', width: '100%', display: 'flex', flexDirection: 'column' }}>
           {renderWizardHeader("02 身体情報の設定", 8)}
           
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -782,7 +783,7 @@ export default function Login() {
 
       {/* STEP 9: Environment */}
       {step === 9 && (
-        <div style={{ maxWidth: '600px', margin: '0 auto', padding: '20px', width: '100%', display: 'flex', flexDirection: 'column', minHeight: '100dvh' }}>
+        <div style={{ flex: 1, maxWidth: '600px', margin: '0 auto', padding: '20px 20px 40px', width: '100%', display: 'flex', flexDirection: 'column' }}>
           {renderWizardHeader("03 トレーニング環境", 9)}
           
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
@@ -805,7 +806,7 @@ export default function Login() {
 
       {/* STEP 10: Exercise Limitations */}
       {step === 10 && (
-        <div style={{ maxWidth: '600px', margin: '0 auto', padding: '20px', width: '100%', display: 'flex', flexDirection: 'column', minHeight: '100dvh' }}>
+        <div style={{ flex: 1, maxWidth: '600px', margin: '0 auto', padding: '20px 20px 40px', width: '100%', display: 'flex', flexDirection: 'column' }}>
           {renderWizardHeader("03 トレーニング環境", 10)}
           
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
@@ -829,7 +830,7 @@ export default function Login() {
 
       {/* STEP 11: Workout Level */}
       {step === 11 && (
-        <div style={{ maxWidth: '600px', margin: '0 auto', padding: '20px', width: '100%', display: 'flex', flexDirection: 'column', minHeight: '100dvh' }}>
+        <div style={{ flex: 1, maxWidth: '600px', margin: '0 auto', padding: '20px 20px 40px', width: '100%', display: 'flex', flexDirection: 'column' }}>
           {renderWizardHeader("03 フィットネスレベル評価", 11)}
           
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
@@ -852,7 +853,7 @@ export default function Login() {
 
       {/* STEP 12: Physical Issues */}
       {step === 12 && (
-        <div style={{ maxWidth: '600px', margin: '0 auto', padding: '20px', width: '100%', display: 'flex', flexDirection: 'column', minHeight: '100dvh' }}>
+        <div style={{ flex: 1, maxWidth: '600px', margin: '0 auto', padding: '20px 20px 40px', width: '100%', display: 'flex', flexDirection: 'column' }}>
           {renderWizardHeader("04 ライフスタイル", 12)}
           
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
@@ -906,7 +907,7 @@ export default function Login() {
 
       {/* STEP 13: Activity Level */}
       {step === 13 && (
-        <div style={{ maxWidth: '600px', margin: '0 auto', padding: '20px', width: '100%', display: 'flex', flexDirection: 'column', minHeight: '100dvh' }}>
+        <div style={{ flex: 1, maxWidth: '600px', margin: '0 auto', padding: '20px 20px 40px', width: '100%', display: 'flex', flexDirection: 'column' }}>
           {renderWizardHeader("04 ライフスタイル", 13)}
           
           <div style={{ flex: 1 }}>
@@ -927,7 +928,7 @@ export default function Login() {
 
       {/* STEP 14: Frequency */}
       {step === 14 && (
-        <div style={{ maxWidth: '600px', margin: '0 auto', padding: '20px', width: '100%', display: 'flex', flexDirection: 'column', minHeight: '100dvh' }}>
+        <div style={{ flex: 1, maxWidth: '600px', margin: '0 auto', padding: '20px 20px 40px', width: '100%', display: 'flex', flexDirection: 'column' }}>
           {renderWizardHeader("04 ライフスタイル", 14)}
           
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>

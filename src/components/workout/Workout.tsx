@@ -231,6 +231,102 @@ export default function Workout() {
     summaryMap[w.category].push(w);
   });
 
+  const handleChallengeClick = (challengeLevel: number, challengeTitle: string) => {
+      const prof = getProfile() || {} as any;
+      let warmup = [
+          { exercise: 'ジャンピングジャック', duration: '00:30' },
+          { exercise: 'ハイニーズ', duration: '00:30' },
+      ];
+      let training = [
+          { exercise: 'スクワット', duration: '00:30' },
+          { exercise: 'プッシュアップ', duration: '00:30' },
+          { exercise: 'シザーズ', duration: '00:35' },
+          { exercise: 'ヒップブリッジ', duration: '00:30' },
+          { exercise: 'ランジ', duration: '00:30' },
+          { exercise: 'マウンテンクライマー', duration: '00:30' },
+          { exercise: 'プランク', duration: '00:30' },
+      ];
+      let cooldown = [
+          { exercise: 'ストレッチ', duration: '00:30' },
+          { exercise: 'ストレッチ', duration: '00:30' },
+          { exercise: 'ストレッチ', duration: '00:30' },
+      ];
+
+      const noJumps = prof.exerciseTypes?.includes('ジャンプ禁止') || prof.exerciseTypes?.includes('ジャンプなし') || prof.physicalIssues?.some((i: string) => i.includes('膝') || i.includes('足首'));
+      const upperInjury = prof.physicalIssues?.some((i: string) => i.includes('肩') || i.includes('手首') || i.includes('腕'));
+      
+      if (noJumps) {
+          warmup[0] = { exercise: 'スクワット', duration: '00:30' }; 
+          training = training.map(t => {
+              if (t.exercise === 'ジャンピングジャック') return { exercise: 'スクワット', duration: '00:30' };
+              return t;
+          });
+      }
+      
+      if (upperInjury) {
+          training = training.map(t => {
+              if (t.exercise === 'プッシュアップ') return { exercise: 'プランク', duration: '00:30' };
+              if (t.exercise === 'マウンテンクライマー') return { exercise: 'クランチ', duration: '00:30' };
+              return t;
+          });
+      }
+
+      if (challengeLevel === 1) {
+          training = training.map(t => ({...t, duration: t.duration.replace('00:35', '00:20').replace('00:30', '00:20')}));
+          warmup = warmup.map(t => ({...t, duration: t.duration.replace('00:30', '00:20')}));
+          training = training.filter(t => t.exercise !== 'スパイダーマンプランク'); 
+      } else if (challengeLevel === 3) {
+          training = training.map(t => ({...t, duration: t.duration.replace('00:30', '00:45').replace('00:35', '00:45')}));
+          training.push({ exercise: 'バーピージャンプ', duration: '00:45' });
+      }
+      
+      if (noJumps) {
+          training = training.map(t => t.exercise === 'バーピージャンプ' ? { exercise: 'スクワットホールド', duration: '00:45' } : t);
+      }
+
+      const totalEx = warmup.length + training.length + cooldown.length;
+      const totalMinutes = challengeLevel === 1 ? 6 : challengeLevel === 2 ? 8 : 12;
+
+      setAiMenuData({
+          title: challengeTitle,
+          goal: '全身の脂肪燃焼',
+          environment: prof.environment || '家トレ',
+          category: '全身',
+          estimatedCalories: totalMinutes * 8,
+          estimatedMinutes: totalMinutes,
+          exerciseCount: totalEx,
+          warmup,
+          training,
+          cooldown,
+          message: `あなたに合わせた${challengeTitle}プログラムです！無理せず頑張りましょう。`
+      });
+  };
+
+  useEffect(() => {
+    if (sessionStorage.getItem('open_welcome_workout') === 'true') {
+      sessionStorage.removeItem('open_welcome_workout');
+      
+      const prof = getProfile() || {} as any;
+      let recommendedLevel = 2; 
+      if (prof.workoutLevel === '初級' || prof.workoutLevel === '簡単に始められる' || prof.frequency?.includes('1') || prof.frequency?.includes('たまに')) {
+          recommendedLevel = 1;
+      } else if (prof.workoutLevel === '上級' || prof.workoutLevel === '少しやりごたえがある' || prof.frequency?.includes('毎日') || prof.frequency?.includes('5')) {
+          recommendedLevel = 3;
+      }
+
+      const challenges = [
+        { level: 1, title: '全身脂肪燃焼 (初級)' },
+        { level: 2, title: '全身脂肪燃焼 (中級)' },
+        { level: 3, title: '全身脂肪燃焼 (上級)' }
+      ];
+      
+      const challenge = challenges.find(c => c.level === recommendedLevel);
+      if (challenge) {
+        handleChallengeClick(challenge.level, challenge.title);
+      }
+    }
+  }, []);
+
   if (!showManualForm) {
     const selectedDate = new Date(date);
     const calendarDays = [];
@@ -317,78 +413,6 @@ export default function Workout() {
             container.scrollLeft = recIdx * cardWidth;
         }
     }, [recommendedLevel]);
-
-    const handleChallengeClick = (challengeLevel: number, challengeTitle: string) => {
-        let warmup = [
-            { exercise: 'ジャンピングジャック', duration: '00:30' },
-            { exercise: 'ハイニーズ', duration: '00:30' },
-        ];
-        let training = [
-            { exercise: 'スクワット', duration: '00:30' },
-            { exercise: 'プッシュアップ', duration: '00:30' },
-            { exercise: 'シザーズ', duration: '00:35' },
-            { exercise: 'ヒップブリッジ', duration: '00:30' },
-            { exercise: 'ランジ', duration: '00:30' },
-            { exercise: 'マウンテンクライマー', duration: '00:30' },
-            { exercise: 'プランク', duration: '00:30' },
-        ];
-        let cooldown = [
-            { exercise: 'ストレッチ', duration: '00:30' },
-            { exercise: 'ストレッチ', duration: '00:30' },
-            { exercise: 'ストレッチ', duration: '00:30' },
-        ];
-
-        // Jump and injury adjustments
-        const noJumps = prof.exerciseTypes?.includes('ジャンプ禁止') || prof.exerciseTypes?.includes('ジャンプなし') || prof.physicalIssues?.some((i: string) => i.includes('膝') || i.includes('足首'));
-        const upperInjury = prof.physicalIssues?.some((i: string) => i.includes('肩') || i.includes('手首') || i.includes('腕'));
-        
-        if (noJumps) {
-            warmup[0] = { exercise: 'スクワット', duration: '00:30' }; 
-            training = training.map(t => {
-                if (t.exercise === 'ジャンピングジャック') return { exercise: 'スクワット', duration: '00:30' };
-                return t;
-            });
-        }
-        
-        if (upperInjury) {
-            training = training.map(t => {
-                if (t.exercise === 'プッシュアップ') return { exercise: 'プランク', duration: '00:30' };
-                if (t.exercise === 'マウンテンクライマー') return { exercise: 'クランチ', duration: '00:30' };
-                return t;
-            });
-        }
-
-        // Frequency & Level adjustments
-        if (challengeLevel === 1) {
-            training = training.map(t => ({...t, duration: t.duration.replace('00:35', '00:20').replace('00:30', '00:20')}));
-            warmup = warmup.map(t => ({...t, duration: t.duration.replace('00:30', '00:20')}));
-            training = training.filter(t => t.exercise !== 'スパイダーマンプランク'); 
-        } else if (challengeLevel === 3) {
-            training = training.map(t => ({...t, duration: t.duration.replace('00:30', '00:45').replace('00:35', '00:45')}));
-            training.push({ exercise: 'バーピージャンプ', duration: '00:45' });
-        }
-        
-        if (noJumps) {
-            training = training.map(t => t.exercise === 'バーピージャンプ' ? { exercise: 'スクワットホールド', duration: '00:45' } : t);
-        }
-
-        const totalEx = warmup.length + training.length + cooldown.length;
-        const totalMinutes = challengeLevel === 1 ? 6 : challengeLevel === 2 ? 8 : 12;
-
-        setAiMenuData({
-            title: challengeTitle,
-            goal: '全身の脂肪燃焼',
-            environment: prof.environment || '家トレ',
-            category: '全身',
-            estimatedCalories: totalMinutes * 8,
-            estimatedMinutes: totalMinutes,
-            exerciseCount: totalEx,
-            warmup,
-            training,
-            cooldown,
-            message: `あなたに合わせた${challengeTitle}プログラムです！無理せず頑張りましょう。`
-        });
-    };
 
     const handleCalendarClick = () => {
         setShowHistoryModal(true);
