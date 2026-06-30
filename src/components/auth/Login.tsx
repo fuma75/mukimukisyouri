@@ -1,4 +1,5 @@
 'use client';
+// アンチグラビティでのコミットテスト用コメントです
 import React, { useState, useEffect } from 'react';
 import { useAppContext } from '../AppContext';
 import { auth } from '@/lib/firebase';
