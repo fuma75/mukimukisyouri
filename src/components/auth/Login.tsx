@@ -181,7 +181,9 @@ export default function Login() {
       }
     } catch (e: any) {
       console.error(e);
-      alert("Googleログインエラー: " + e.message);
+      if (e.code !== 'auth/popup-closed-by-user' && e.code !== 'auth/cancelled-popup-request') {
+        alert("Googleログインエラー: " + e.message);
+      }
       setLoading(false);
     }
   };
