@@ -327,47 +327,49 @@ export default function WorkoutPlayer({ exercises, onComplete, onCancel, initial
             </div>
 
             {/* Bottom: Blue rest panel */}
-            <div style={{ flex: '1 1 auto', background: '#0d6efd', color: '#fff', padding: '18px 24px 30px', borderTopLeftRadius: '24px', borderTopRightRadius: '24px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'flex-start', gap: '15px' }}>
+            <div style={{ flex: '1 1 auto', background: '#0d6efd', color: '#fff', padding: '24px 24px 30px', borderTopLeftRadius: '24px', borderTopRightRadius: '24px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-between', gap: '15px' }}>
               {/* Header inside blue area */}
               <div style={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <div>
-                  <div style={{ fontSize: '0.75rem', opacity: 0.8 }}>次へ {currentIndex + 2}/{exercises.length}</div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginTop: '2px' }}>
-                    <span style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>{exercises[currentIndex + 1]?.exercise}</span>
+                  <div style={{ fontSize: '0.8rem', opacity: 0.8, marginBottom: '2px' }}>次へ {currentIndex + 2}/{exercises.length}</div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <span style={{ fontSize: '1.4rem', fontWeight: 'bold' }}>{exercises[currentIndex + 1]?.exercise}</span>
                     <i 
                       className="fa-regular fa-circle-question" 
                       onClick={() => setShowDetailModal(true)}
-                      style={{ fontSize: '1.1rem', color: 'rgba(255,255,255,0.7)', cursor: 'pointer' }}
+                      style={{ fontSize: '1.2rem', color: 'rgba(255,255,255,0.7)', cursor: 'pointer' }}
                     ></i>
                   </div>
                 </div>
-                <div style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>
+                <div style={{ fontSize: '1.4rem', fontWeight: 'bold' }}>
                   {exercises[currentIndex + 1]?.reps ? `x ${exercises[currentIndex + 1].reps}` : exercises[currentIndex + 1]?.duration || ''}
                 </div>
               </div>
 
               {/* Timer */}
-              <div style={{ textAlign: 'center', margin: '10px 0' }}>
-                <div style={{ fontSize: '0.9rem', opacity: 0.9 }}>休憩</div>
-                <div style={{ fontSize: '4.5rem', fontWeight: 'bold', fontFamily: 'Outfit, monospace', lineHeight: 1, margin: '8px 0' }}>
+              <div style={{ textAlign: 'center', flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                <div style={{ fontSize: '1rem', opacity: 0.9 }}>休憩</div>
+                <div style={{ fontSize: '5rem', fontWeight: 'bold', fontFamily: 'Outfit, monospace', lineHeight: 1, margin: '15px 0' }}>
                   {formatTime(timeLeft || 0)}
                 </div>
-                <button style={{ background: 'rgba(255,255,255,0.2)', color: '#fff', border: 'none', padding: '6px 16px', borderRadius: '20px', fontSize: '0.8rem', cursor: 'pointer', fontWeight: 'bold' }}>
-                  休憩時間を編集
-                </button>
+                <div>
+                  <button style={{ background: 'rgba(255,255,255,0.2)', color: '#fff', border: 'none', padding: '8px 20px', borderRadius: '20px', fontSize: '0.9rem', cursor: 'pointer', fontWeight: 'bold' }}>
+                    休憩時間を編集
+                  </button>
+                </div>
               </div>
 
               {/* Action buttons */}
-              <div style={{ display: 'flex', gap: '12px', width: '100%', marginTop: '15px' }}>
+              <div style={{ display: 'flex', gap: '15px', width: '100%', marginTop: 'auto' }}>
                 <button
                   onClick={() => setTimeLeft((prev) => (prev !== null ? prev + 20 : null))}
-                  style={{ flex: 1, padding: '15px', background: 'rgba(255,255,255,0.15)', color: '#fff', border: 'none', borderRadius: '30px', fontSize: '1rem', fontWeight: 'bold', cursor: 'pointer', backdropFilter: 'blur(4px)' }}
+                  style={{ flex: 1, padding: '16px', background: 'rgba(255,255,255,0.15)', color: '#fff', border: 'none', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', cursor: 'pointer', backdropFilter: 'blur(4px)' }}
                 >
                   +20s
                 </button>
                 <button
                   onClick={handleSkipRest}
-                  style={{ flex: 1, padding: '15px', background: '#fff', color: '#0d6efd', border: 'none', borderRadius: '30px', fontSize: '1rem', fontWeight: 'bold', cursor: 'pointer', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}
+                  style={{ flex: 1, padding: '16px', background: '#fff', color: '#0d6efd', border: 'none', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', cursor: 'pointer', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}
                 >
                   スキップ
                 </button>
