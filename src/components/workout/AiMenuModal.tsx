@@ -123,6 +123,13 @@ export default function AiMenuModal({ data, onClose, onApply }: AiMenuModalProps
   const totalTime = currentData.estimatedMinutes || calculateTotalTime();
   const totalExercises = currentData.exerciseCount || allExercises.length;
 
+  let heroImgUrl = '/trainer-hero.png';
+  if (currentData.category === '胸' || currentData.category === '胸部') heroImgUrl = 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80';
+  if (currentData.category === '腹筋') heroImgUrl = '/images/tiger-abs.png';
+  if (currentData.category === '腕') heroImgUrl = 'https://images.unsplash.com/photo-1581009137042-c552e485697a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80';
+  if (currentData.category === '脚') heroImgUrl = '/images/tiger-legs.png';
+  if (currentData.category === '背筋' || currentData.category === '肩') heroImgUrl = '/images/tiger-back.png';
+
   const handleStart = (startIdx: number = 0) => {
     setResumeIndex(startIdx);
     setIsPlaying(true);
@@ -210,9 +217,9 @@ export default function AiMenuModal({ data, onClose, onApply }: AiMenuModalProps
       {/* Header Image */}
       <div style={{ position: 'relative', height: '300px', flexShrink: 0, background: '#e9ecef', overflow: 'hidden' }}>
         <img 
-          src="/trainer-hero.png" 
+          src={heroImgUrl} 
           alt="Trainer" 
-          style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top' }}
+          style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center' }}
         />
         <div style={{ position: 'absolute', top: '20px', left: '20px', width: '40px', height: '40px', borderRadius: '50%', background: 'rgba(0,0,0,0.5)', display: 'flex', justifyContent: 'center', alignItems: 'center', cursor: 'pointer', color: '#fff' }} onClick={onClose}>
           <i className="fa-solid fa-arrow-left"></i>
