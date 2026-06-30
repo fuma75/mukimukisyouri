@@ -3311,6 +3311,6 @@ body.workout-player-active .content-body {
         gap: 15px;
     }
     .options-grid-3 {
-        grid-template-columns: repeat(3, 1fr) !important;
+        grid-template-columns: 1fr !important;
     }
 }

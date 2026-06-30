@@ -26,7 +26,7 @@ export default function Login() {
   
   const [gender, setGender] = useState<'male'|'female'|'other'|''>('male');
   const [goal, setGoal] = useState('減量');
-  const [targetAreas, setTargetAreas] = useState<string[]>(['全身']);
+  const [targetAreas, setTargetAreas] = useState<string[]>(['全身', '腕', '胸部', '背筋', '腹筋', '脚']);
   
   const [dob, setDob] = useState('2000-01-01');
   const [height, setHeight] = useState('150');
@@ -325,7 +325,7 @@ export default function Login() {
     }
   };
 
-  const handleComplete = () => {
+  const handleComplete = (targetTab: string = 'workout') => {
     let age = 20; 
     if (dob) {
       const birthDate = new Date(dob);
@@ -373,10 +373,17 @@ export default function Login() {
       trainerName: '筋にくん'
     };
 
+    try {
+      localStorage.setItem('kinnikun_profile', JSON.stringify(newProfile));
+      if (targetTab === 'workout') {
+        sessionStorage.setItem('open_welcome_workout', 'true');
+      }
+    } catch (e) {
+      console.warn("Storage exception", e);
+    }
+    
     setUserProfile(newProfile);
-    localStorage.setItem('kinnikun_profile', JSON.stringify(newProfile));
-    sessionStorage.setItem('open_welcome_workout', 'true');
-    setActiveTab('workout');
+    setActiveTab(targetTab);
   };
 
   const handleCardKeyDown = (e: React.KeyboardEvent<HTMLElement>, onClick: () => void) => {
@@ -784,12 +791,17 @@ export default function Login() {
               </div>
             </div>
 
-            <div style={{ textAlign: 'center', marginBottom: '15px' }}>
-              <span style={{ fontSize: '4rem', fontWeight: 'bold', color: '#1e1e24' }}>{targetWeight}</span>
-              <span style={{ fontSize: '1.1rem', color: '#495057', marginLeft: '5px' }}>{weightUnit}</span>
+            <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'center', marginBottom: '10px' }}>
+              <input 
+                type="number" 
+                value={targetWeight} 
+                onChange={(e) => setTargetWeight(e.target.value)} 
+                style={{ fontSize: '4rem', fontWeight: 'bold', color: '#1e1e24', background: 'transparent', border: 'none', borderBottom: '2px solid #1a73e8', width: '120px', textAlign: 'center', outline: 'none' }} 
+              />
+              <span style={{ fontSize: '1.5rem', color: '#495057', marginLeft: '5px' }}>{weightUnit}</span>
             </div>
             
-            <div style={{ width: '100%', marginTop: '15px' }}>
+            <div style={{ width: '100%', marginTop: '10px' }}>
               <RulerPicker 
                 min={weightUnit === 'kg' ? 30 : 60} 
                 max={weightUnit === 'kg' ? 150 : 330} 
@@ -799,6 +811,36 @@ export default function Login() {
                 orientation="horizontal"
               />
             </div>
+
+            {/* BMI Display for Target Weight */}
+            {height && (() => {
+              const weightKg = weightUnit === 'lbs' ? Number(targetWeight) * 0.453592 : Number(targetWeight);
+              const heightM = Number(height) / 100;
+              const bmi = heightM > 0 ? (weightKg / (heightM * heightM)) : 0;
+              const bmiFixed = bmi.toFixed(1);
+              const bmiLabel = bmi < 18.5 ? '低体重' : bmi < 25 ? '標準' : bmi < 30 ? '過体重' : '肥満';
+              const bmiColor = bmi < 18.5 ? '#3b82f6' : bmi < 25 ? '#22c55e' : bmi < 30 ? '#f59e0b' : '#ef4444';
+              const bmiPercent = Math.min(Math.max(((bmi - 10) / (40 - 10)) * 100, 0), 100);
+              return (
+                <div style={{ width: '100%', marginTop: '16px', padding: '12px 16px', background: '#f8f9fa', borderRadius: '16px', border: '1px solid #e9ecef' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
+                    <span style={{ fontSize: '0.9rem', fontWeight: 'bold', color: '#8b8d9a' }}>目標のBMI</span>
+                    <div style={{ display: 'flex', alignItems: 'baseline', gap: '6px' }}>
+                      <span style={{ fontSize: '1.8rem', fontWeight: 'bold', color: bmiColor }}>{bmiFixed}</span>
+                      <span style={{ fontSize: '1rem', fontWeight: 'bold', color: bmiColor, background: bmiColor + '20', padding: '2px 10px', borderRadius: '20px' }}>{bmiLabel}</span>
+                    </div>
+                  </div>
+                  <div style={{ width: '100%', height: '8px', borderRadius: '4px', background: 'linear-gradient(to right, #3b82f6 0%, #22c55e 40%, #f59e0b 65%, #ef4444 100%)', position: 'relative' }}>
+                    <div style={{ position: 'absolute', top: '-4px', left: `calc(${bmiPercent}% - 8px)`, width: '16px', height: '16px', borderRadius: '50%', background: '#fff', border: `3px solid ${bmiColor}`, boxShadow: '0 2px 6px rgba(0,0,0,0.2)', transition: 'left 0.3s' }} />
+                  </div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '6px', fontSize: '0.75rem', color: '#adb5bd' }}>
+                    <span>低体重 〜18.5</span>
+                    <span>標準 18.5〜24.9</span>
+                    <span>肥満 25〜</span>
+                  </div>
+                </div>
+              );
+            })()}
           </div>
 
           <div style={{ padding: '10px 0' }}>
@@ -817,7 +859,7 @@ export default function Login() {
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
             <h2 style={{ textAlign: 'center', fontSize: '1.6rem', fontWeight: 'bold', marginBottom: '30px' }}>どこでトレーニングしますか？</h2>
             
-            <div className="options-grid" style={{ flex: 1, justifyContent: 'flex-start', paddingTop: '10px', paddingBottom: '20px' }}>
+            <div className="options-grid options-grid-3" style={{ flex: 1, justifyContent: 'flex-start', paddingTop: '10px', paddingBottom: '20px' }}>
               {renderOptionCard('家', 'fa-solid fa-house', environment === '家', () => setEnvironment('家'))}
               {renderOptionCard('ジム', 'fa-solid fa-dumbbell', environment === 'ジム', () => setEnvironment('ジム'))}
               {renderOptionCard('どの場所でもOK', 'fa-solid fa-earth-americas', environment === 'どの場所でもOK', () => setEnvironment('どの場所でもOK'))}
@@ -864,7 +906,7 @@ export default function Login() {
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
             <h2 style={{ textAlign: 'center', fontSize: '1.6rem', fontWeight: 'bold', marginBottom: '30px' }}>ご希望のワークアウトレベルを選択してください</h2>
             
-            <div className="options-grid" style={{ flex: 1, justifyContent: 'flex-start', paddingTop: '10px', paddingBottom: '20px' }}>
+            <div className="options-grid options-grid-3" style={{ flex: 1, justifyContent: 'flex-start', paddingTop: '10px', paddingBottom: '20px' }}>
               {renderOptionCard('簡単に始められる', 'fa-solid fa-hand-peace', workoutLevel === '簡単に始められる', () => setWorkoutLevel('簡単に始められる'))}
               {renderOptionCard('軽い汗をかく', 'fa-solid fa-droplet', workoutLevel === '軽い汗をかく', () => setWorkoutLevel('軽い汗をかく'))}
               {renderOptionCard('少しやりごたえがある', 'fa-solid fa-fire', workoutLevel === '少しやりごたえがある', () => setWorkoutLevel('少しやりごたえがある'))}
@@ -1066,11 +1108,11 @@ export default function Login() {
                     </div>
                     
                     <div style={{ display: 'flex', gap: '10px', marginTop: '10px' }}>
-                      <button className="challenge-btn" onClick={() => setActiveTab('dashboard')} style={{ flex: 1, padding: '12px', background: 'rgba(255,255,255,0.2)', color: '#fff', border: '1px solid rgba(255,255,255,0.3)', borderRadius: '30px', fontSize: '1rem', fontWeight: 'bold', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
-                        <i className="fa-solid fa-home"></i> ホームへ
+                      <button type="button" className="challenge-btn" onClick={(e) => { e.preventDefault(); e.stopPropagation(); handleComplete('dashboard'); }} style={{ flex: 1, padding: '12px', background: 'rgba(255,255,255,0.2)', color: '#fff', border: '1px solid rgba(255,255,255,0.3)', borderRadius: '30px', fontSize: '1rem', fontWeight: 'bold', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
+                        <i className="fa-solid fa-home" style={{ pointerEvents: 'none' }}></i> ホームへ
                       </button>
-                      <button className="challenge-btn" onClick={handleComplete} style={{ flex: 1, padding: '12px', background: '#fff', color: '#1a73e8', border: 'none', borderRadius: '30px', fontSize: '1rem', fontWeight: 'bold', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', boxShadow: '0 4px 15px rgba(0,0,0,0.08)' }}>
-                        開始する <i className="fa-solid fa-arrow-right"></i>
+                      <button type="button" className="challenge-btn" onClick={(e) => { e.preventDefault(); e.stopPropagation(); handleComplete('workout'); }} style={{ flex: 1, padding: '12px', background: '#fff', color: '#1a73e8', border: 'none', borderRadius: '30px', fontSize: '1rem', fontWeight: 'bold', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', boxShadow: '0 4px 15px rgba(0,0,0,0.08)' }}>
+                        開始する <i className="fa-solid fa-arrow-right" style={{ pointerEvents: 'none' }}></i>
                       </button>
                     </div>
                   </div>
