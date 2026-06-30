@@ -53,9 +53,6 @@ const ExerciseItem = ({ item, onClick, id }: { item: AiExercise, onClick: () => 
           {item.duration ? item.duration : `${item.weight ? item.weight+'kg × ' : ''}${item.reps ? 'x'+item.reps : ''}`}
         </div>
       </div>
-      <button style={{ background: 'none', border: 'none', color: '#adb5bd', padding: '5px' }}>
-        <i className="fa-solid fa-right-left"></i>
-      </button>
     </div>
   );
 };
@@ -224,9 +221,6 @@ export default function AiMenuModal({ data, onClose, onApply }: AiMenuModalProps
         <div style={{ position: 'absolute', top: '20px', left: '20px', width: '40px', height: '40px', borderRadius: '50%', background: 'rgba(0,0,0,0.5)', display: 'flex', justifyContent: 'center', alignItems: 'center', cursor: 'pointer', color: '#fff' }} onClick={onClose}>
           <i className="fa-solid fa-arrow-left"></i>
         </div>
-        <div style={{ position: 'absolute', top: '20px', right: '20px', width: '40px', height: '40px', borderRadius: '50%', background: 'rgba(0,0,0,0.5)', display: 'flex', justifyContent: 'center', alignItems: 'center', cursor: 'pointer', color: '#fff' }}>
-          <i className="fa-solid fa-ellipsis-vertical"></i>
-        </div>
       </div>
 
       {/* Content */}
@@ -234,11 +228,6 @@ export default function AiMenuModal({ data, onClose, onApply }: AiMenuModalProps
         
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
           <h1 style={{ fontSize: '1.8rem', fontWeight: 'bold', margin: 0, color: '#000' }}>{currentData.title || '1日目'}</h1>
-          <button style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '1.4rem', color: '#000' }}>
-            <i className="fa-solid fa-bars-staggered" style={{ position: 'relative' }}>
-              <i className="fa-solid fa-gear" style={{ position: 'absolute', bottom: '-4px', right: '-6px', fontSize: '0.6rem', background: '#fff', borderRadius: '50%' }}></i>
-            </i>
-          </button>
         </div>
 
         <div style={{ display: 'flex', gap: '20px', fontSize: '0.95rem', color: '#6c757d', fontWeight: 'bold', marginBottom: '24px' }}>

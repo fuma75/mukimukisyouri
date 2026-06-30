@@ -235,7 +235,7 @@ export default function Workout() {
       const prof = getProfile() || {} as any;
       let warmup = [
           { exercise: 'ジャンピングジャック', duration: '00:30' },
-          { exercise: 'ハイニーズ', duration: '00:30' },
+          { exercise: 'カーフレイズ', duration: '00:30' },
       ];
       let training = [
           { exercise: 'スクワット', duration: '00:30' },
