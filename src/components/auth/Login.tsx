@@ -179,6 +179,7 @@ export default function Login() {
     setLoading(true);
     try {
       const provider = new GoogleAuthProvider();
+      provider.setCustomParameters({ prompt: 'select_account' });
       // まずは全環境で Popup を試す（in-appブラウザのredirect session lossを防ぐため）
       try {
         const userCred = await signInWithPopup(auth, provider);
