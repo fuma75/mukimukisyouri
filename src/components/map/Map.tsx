@@ -2,7 +2,8 @@
 import React, { useState, useEffect } from 'react';
 
 export default function Map() {
-    const [searchQuery, setSearchQuery] = useState('');
+    const [searchQuery, setSearchQuery] = useState('フィットネスジム');
+    const [location, setLocation] = useState<{lat: number, lng: number} | null>(null);
     const [loading, setLoading] = useState(true);
 
     const handleFindGyms = () => {
@@ -12,18 +13,21 @@ export default function Map() {
                 (position) => {
                     const lat = position.coords.latitude;
                     const lng = position.coords.longitude;
-                    setSearchQuery(`${lat},${lng} ジム`);
+                    setLocation({lat, lng});
+                    setSearchQuery('フィットネスジム');
                     setLoading(false);
                 },
                 (error) => {
                     console.warn("Location access denied or timeout");
                     // 取得できない場合はデフォルトの検索
+                    setLocation(null);
                     setSearchQuery('フィットネスジム');
                     setLoading(false);
                 },
                 { timeout: 5000, maximumAge: 60000 }
             );
         } else {
+            setLocation(null);
             setSearchQuery('フィットネスジム');
             setLoading(false);
         }
@@ -58,7 +62,9 @@ export default function Map() {
                         ) : (
                             <>
                                 <a 
-                                    href={`https://maps.google.co.jp/maps?q=${encodeURIComponent(searchQuery)}&hl=ja`} 
+                                    href={location 
+                                        ? `https://maps.google.co.jp/maps?q=${encodeURIComponent(searchQuery)}&ll=${location.lat},${location.lng}` 
+                                        : `https://maps.google.co.jp/maps?q=${encodeURIComponent(searchQuery)}&hl=ja`} 
                                     target="_blank" 
                                     rel="noopener noreferrer"
                                     style={{
@@ -86,9 +92,12 @@ export default function Map() {
                                     height="100%" 
                                     frameBorder="0" 
                                     style={{ border: 0 }} 
-                                    src={`https://maps.google.co.jp/maps?q=${encodeURIComponent(searchQuery)}&hl=ja&z=13&output=embed`} 
+                                    src={location 
+                                        ? `https://maps.google.co.jp/maps?q=${encodeURIComponent(searchQuery)}&ll=${location.lat},${location.lng}&sll=${location.lat},${location.lng}&hl=ja&z=14&output=embed` 
+                                        : `https://maps.google.co.jp/maps?q=${encodeURIComponent(searchQuery)}&hl=ja&z=14&output=embed`} 
                                     allowFullScreen
-                                    loading="lazy">
+                                    loading="lazy"
+                                    allow="geolocation">
                                 </iframe>
                             </>
                         )}

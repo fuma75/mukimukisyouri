@@ -432,8 +432,10 @@ export default function Login() {
       onKeyDown={(e) => handleCardKeyDown(e, onClick)}
       style={{
         display: 'flex',
+        flexDirection: 'column',
         alignItems: 'center',
-        padding: '14px 20px',
+        justifyContent: 'center',
+        padding: '20px 10px',
         background: selected ? 'rgba(26, 115, 232, 0.05)' : '#ffffff',
         border: `2px solid ${selected ? '#1a73e8' : '#f4f6fb'}`,
         borderRadius: '16px',
@@ -441,17 +443,18 @@ export default function Login() {
         boxShadow: selected ? '0 4px 12px rgba(26, 115, 232, 0.1)' : '0 4px 12px rgba(0,0,0,0.03)',
         transition: 'all 0.2s ease',
         boxSizing: 'border-box',
-        marginBottom: '10px'
+        marginBottom: '10px',
+        gap: '12px'
       }}
     >
-      <div style={{ width: '35px', height: '35px', display: 'flex', justifyContent: 'center', alignItems: 'center', marginRight: '15px', overflow: 'hidden' }}>
+      <div style={{ width: '45px', height: '45px', display: 'flex', justifyContent: 'center', alignItems: 'center', overflow: 'hidden' }}>
         {icon.startsWith('/') ? (
           <img src={icon} alt={label} style={{ width: '100%', height: '100%', objectFit: 'cover', transform: 'scale(1.5)', filter: selected ? 'none' : 'grayscale(100%)', opacity: selected ? 1 : 0.6 }} />
         ) : (
-          <i className={icon} style={{ fontSize: '1.5rem', color: selected ? '#1a73e8' : '#adb5bd' }}></i>
+          <i className={icon} style={{ fontSize: '2rem', color: selected ? '#1a73e8' : '#adb5bd' }}></i>
         )}
       </div>
-      <div style={{ flex: 1, fontSize: '1.1rem', fontWeight: selected ? 'bold' : 'normal', color: selected ? '#1a73e8' : '#1e1e24', display: 'flex', alignItems: 'center' }}>
+      <div style={{ fontSize: '1.15rem', fontWeight: selected ? 'bold' : 'bold', color: selected ? '#1a73e8' : '#1e1e24', textAlign: 'center' }}>
         {label}
       </div>
     </div>
@@ -642,6 +645,21 @@ export default function Login() {
               <p style={{ margin: 0, color: '#495057', fontSize: '0.95rem', lineHeight: 1.5 }}>あなたの年齢グループに最も適したワークアウトに調整しやすくなります。</p>
             </div>
             
+            <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'center', marginBottom: '10px' }}>
+              <input 
+                type="number" 
+                value={dob ? new Date(dob).getFullYear() : 2000} 
+                onChange={(e) => {
+                  const y = Number(e.target.value);
+                  if (y > 1900 && y <= new Date().getFullYear()) {
+                    setDob(`${y}-01-01`);
+                  }
+                }} 
+                style={{ fontSize: '3.5rem', fontWeight: 'bold', color: '#1e1e24', background: 'transparent', border: 'none', borderBottom: '2px solid #1a73e8', width: '140px', textAlign: 'center', outline: 'none' }} 
+              />
+              <span style={{ fontSize: '1.5rem', color: '#495057', marginLeft: '5px' }}>年</span>
+            </div>
+
             <div style={{ width: '100%', maxWidth: '400px' }}>
               <DateWheelPicker value={dob} onChange={setDob} mode="year" />
             </div>
@@ -657,34 +675,38 @@ export default function Login() {
 
       {/* STEP 6: Height */}
       {step === 6 && (
-        <div style={{ maxWidth: '600px', margin: '0 auto', padding: '0', width: '100%', display: 'flex', flexDirection: 'column', height: '100dvh', background: '#fcfcfd' }}>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '20px', position: 'relative', borderBottom: '1px solid #e9ecef', flexShrink: 0 }}>
-            <button onClick={handleBack} style={{ position: 'absolute', left: '20px', background: 'none', border: 'none', fontSize: '1.2rem', color: '#adb5bd', cursor: 'pointer' }}>
-              <i className="fa-solid fa-chevron-left"></i>
-            </button>
-            <h2 style={{ fontSize: '1.1rem', fontWeight: 'bold', margin: 0, color: '#495057' }}>身長を選択してください</h2>
-          </div>
+        <div style={{ flex: '1 0 auto', maxWidth: '600px', margin: '0 auto', padding: '10px 20px 20px', width: '100%', display: 'flex', flexDirection: 'column' }}>
+          {renderWizardHeader("02 身体情報の設定", 6)}
           
-          <div style={{ flex: 1, overflowY: 'auto', padding: '0 20px' }}>
-            {['130cm以下', ...Array.from({length: 69}, (_, i) => `${131 + i}cm`), '200cm以上'].map(h => {
-              const numVal = h.replace(/[^0-9]/g, '');
-              const isSelected = height === numVal;
-              return (
-                <div 
-                  key={h}
-                  id={isSelected ? "selected-height-option" : undefined}
-                  onClick={() => { setHeight(numVal); setHeightUnit('cm'); }}
-                  style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '18px 0', borderBottom: '1px solid #f1f3f5', cursor: 'pointer' }}
-                >
-                  <span style={{ fontSize: '1.1rem', color: '#495057' }}>{h}</span>
-                  <div style={{ width: '22px', height: '22px', borderRadius: '50%', border: isSelected ? '6px solid #1a73e8' : '2px solid #dee2e6', background: '#fff', transition: 'all 0.2s' }}></div>
-                </div>
-              );
-            })}
+          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <h2 style={{ textAlign: 'center', fontSize: '1.6rem', fontWeight: 'bold', marginBottom: '30px' }}>身長を入力してください。</h2>
+
+            <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'center', marginBottom: '0' }}>
+              <input 
+                type="number" 
+                value={height} 
+                onChange={(e) => { setHeight(e.target.value); setHeightUnit('cm'); }} 
+                style={{ fontSize: '4rem', fontWeight: 'bold', color: '#1e1e24', background: 'transparent', border: 'none', borderBottom: '2px solid #1a73e8', width: '180px', textAlign: 'center', outline: 'none' }} 
+              />
+              <span style={{ fontSize: '1.5rem', color: '#495057', marginLeft: '5px' }}>cm</span>
+            </div>
+            
+            <div style={{ width: '100%', marginTop: '0' }}>
+              <RulerPicker 
+                min={100} 
+                max={220} 
+                step={1}
+                value={Number(height)} 
+                onChange={val => { setHeight(String(val)); setHeightUnit('cm'); }} 
+                orientation="horizontal"
+              />
+            </div>
           </div>
 
-          <div style={{ padding: '20px', background: '#fff', borderTop: '1px solid #e9ecef', flexShrink: 0 }}>
-            <button onClick={handleNext} disabled={!height} style={{ width: '100%', padding: '16px', background: height ? '#1a73e8' : '#dee2e6', color: height ? '#fff' : '#adb5bd', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer' }}>決定</button>
+          <div style={{ padding: '10px 0' }}>
+            <button onClick={handleNext} disabled={!height} style={{ width: '100%', padding: '14px', background: height ? '#1a73e8' : '#dee2e6', color: height ? '#fff' : '#adb5bd', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer' }}>
+              次へ
+            </button>
           </div>
         </div>
       )}
@@ -710,7 +732,7 @@ export default function Login() {
               </div>
             </div>
 
-            <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'center', marginBottom: '10px' }}>
+            <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'center', marginBottom: '0' }}>
               <input 
                 type="number" 
                 value={weight} 
@@ -720,7 +742,7 @@ export default function Login() {
               <span style={{ fontSize: '1.5rem', color: '#495057', marginLeft: '5px' }}>{weightUnit}</span>
             </div>
             
-            <div style={{ width: '100%', marginTop: '10px' }}>
+            <div style={{ width: '100%', marginTop: '-15px' }}>
               <RulerPicker 
                 min={weightUnit === 'kg' ? 30 : 60} 
                 max={weightUnit === 'kg' ? 150 : 330} 
@@ -791,7 +813,7 @@ export default function Login() {
               </div>
             </div>
 
-            <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'center', marginBottom: '10px' }}>
+            <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'center', marginBottom: '0' }}>
               <input 
                 type="number" 
                 value={targetWeight} 
@@ -801,7 +823,7 @@ export default function Login() {
               <span style={{ fontSize: '1.5rem', color: '#495057', marginLeft: '5px' }}>{weightUnit}</span>
             </div>
             
-            <div style={{ width: '100%', marginTop: '10px' }}>
+            <div style={{ width: '100%', marginTop: '-15px' }}>
               <RulerPicker 
                 min={weightUnit === 'kg' ? 30 : 60} 
                 max={weightUnit === 'kg' ? 150 : 330} 
@@ -980,8 +1002,8 @@ export default function Login() {
         <div style={{ flex: '1 0 auto', maxWidth: '600px', margin: '0 auto', padding: '10px 20px 20px', width: '100%', display: 'flex', flexDirection: 'column' }}>
           {renderWizardHeader("04 ライフスタイル", 13)}
           
-          <div style={{ flex: 1 }}>
-            <h2 style={{ textAlign: 'center', fontSize: '1.6rem', fontWeight: 'bold', marginBottom: '15px' }}>あなたの身体活動レベルは？</h2>
+          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', paddingBottom: '20px' }}>
+            <h2 style={{ textAlign: 'center', fontSize: '1.6rem', fontWeight: 'bold', marginBottom: '0px' }}>あなたの身体活動レベルは？</h2>
             
             <div style={{ display: 'flex', flexDirection: 'column' }}>
               <ActivityLevelSlider value={activityLevel} onChange={setActivityLevel} />

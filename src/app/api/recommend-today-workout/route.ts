@@ -8,7 +8,12 @@ export async function POST(request: Request) {
 
         const isGym = environment === 'ジムトレ' || environment === 'ジム';
         const userLevel = (profile?.workoutLevel || '中級').toLowerCase();
-        const noJumps = profile?.exerciseTypes?.includes('ジャンプ禁止') || profile?.exerciseTypes?.includes('ジャンプなし') || profile?.physicalIssues?.some((i: string) => i.includes('膝') || i.includes('足首'));
+        
+        const exerciseTypes = profile?.exerciseTypes || [];
+        const canDoAnything = exerciseTypes.includes('なし') || exerciseTypes.includes('なし（何でもできる）');
+        const isBodyweightOnly = exerciseTypes.includes('器具無し') || exerciseTypes.includes('器具無し（自重のみ）');
+        const isLyingDownOnly = exerciseTypes.includes('寝たままの運動') || exerciseTypes.includes('寝たままの運動（負担軽減）');
+        const noJumps = exerciseTypes.includes('ジャンプ無し') || exerciseTypes.includes('ジャンプ禁止') || exerciseTypes.includes('ジャンプなし') || profile?.physicalIssues?.some((i: string) => i.includes('膝') || i.includes('足首'));
         const upperInjury = profile?.physicalIssues?.some((i: string) => i.includes('肩') || i.includes('手首') || i.includes('腕'));
 
         // ウォームアップ
@@ -25,43 +30,75 @@ export async function POST(request: Request) {
 
         let training = [];
 
-        // カテゴリ（部位）と環境に応じた基本トレーニング種目の決定
-        if (isGym) {
-            // ジムメニュー
+        // カテゴリ（部位）と環境・制限に応じたトレーニング種目の決定
+        if (isLyingDownOnly) {
+            // 寝たままできる負担軽減メニュー
             if (category === '胸' || category === '上半身') {
                 training = [
-                    { exercise: 'ベンチプレス (胸)', weight: 30, reps: 10, sets: 3, duration: '00:30', calories: 20, instructions: ['肩甲骨を寄せてバーベルを下ろす', '足裏でしっかり床を踏ん張る'] },
-                    { exercise: 'チェストプレス (マシン)', weight: 25, reps: 12, sets: 3, duration: '00:30', calories: 15, instructions: ['胸の高さでグリップを押し出す', 'ゆっくり戻す動作も意識する'] },
+                    { exercise: 'フロアプレス (胸)', weight: 0, reps: 15, sets: 3, duration: '00:30', calories: 10, instructions: ['仰向けになり、両手で空気を押し上げる', '胸の筋肉を意識する'] },
+                    { exercise: 'ライイング・トライセプス', weight: 0, reps: 15, sets: 3, duration: '00:30', calories: 8, instructions: ['仰向けで両手を上げ、肘を曲げ伸ばす', '二の腕を意識する'] },
+                    { exercise: 'アームサークル', weight: 0, reps: 20, sets: 3, duration: '00:30', calories: 8, instructions: ['仰向けで両腕を大きく回す', '肩周りをほぐす'] }
+                ];
+            } else if (category === '背中') {
+                training = [
+                    { exercise: 'ライイング・プルダウン', weight: 0, reps: 15, sets: 3, duration: '00:30', calories: 8, instructions: ['うつ伏せになり、両手でエアプルダウン', '肩甲骨を寄せる'] },
+                    { exercise: 'スーパーマン (背中)', weight: 0, reps: 12, sets: 3, duration: '00:30', calories: 10, instructions: ['うつ伏せで手足を軽く浮かせる', '腰に無理のない範囲で行う'] },
+                    { exercise: 'ヒップリフト', weight: 0, reps: 15, sets: 3, duration: '00:30', calories: 8, instructions: ['仰向けで膝を立て、お尻を浮かせる', '背中下部とお尻に効かせる'] }
+                ];
+            } else if (category === '脚' || category === '下半身') {
+                training = [
+                    { exercise: 'ヒップリフト (お尻・もも裏)', weight: 0, reps: 15, sets: 3, duration: '00:30', calories: 12, instructions: ['仰向けで膝を立て、お尻を高く上げる', 'もも裏とお尻の収縮を意識'] },
+                    { exercise: 'ライイング・レッグアブダクション', weight: 0, reps: 15, sets: 3, duration: '00:30', calories: 10, instructions: ['横向きに寝て、上側の脚を上げる', 'お尻の横の筋肉を使う'] },
+                    { exercise: 'ドンキーキック (膝立ち)', weight: 0, reps: 15, sets: 3, duration: '00:30', calories: 10, instructions: ['四つん這いになり、片脚を後ろに蹴り上げる', 'お尻に集中する'] }
+                ];
+            } else if (category === '腹筋') {
+                training = [
+                    { exercise: 'クランチ (お腹上部)', weight: 0, reps: 15, sets: 3, duration: '00:30', calories: 10, instructions: ['仰向けで膝を曲げ、おへそを覗き込む'] },
+                    { exercise: 'レッグレイズ (下腹部)', weight: 0, reps: 12, sets: 3, duration: '00:30', calories: 10, instructions: ['仰向けで脚を伸ばしたまま上下させる'] },
+                    { exercise: 'デッドバグ', weight: 0, reps: 12, sets: 3, duration: '00:30', calories: 8, instructions: ['仰向けで対角の手足をゆっくり下ろす', '腰が浮かないようにする'] }
+                ];
+            } else {
+                training = [
+                    { exercise: 'ヒップリフト', weight: 0, reps: 15, sets: 3, duration: '00:30', calories: 12, instructions: ['下半身と体幹を鍛える'] },
+                    { exercise: 'フロアプレス', weight: 0, reps: 15, sets: 3, duration: '00:30', calories: 10, instructions: ['上半身の筋肉を刺激する'] },
+                    { exercise: 'クランチ', weight: 0, reps: 15, sets: 3, duration: '00:30', calories: 10, instructions: ['お腹周りを引き締める'] }
+                ];
+            }
+        } else if (canDoAnything) {
+            // 何でもできる（ダンベルと自重） - バーベルやマシンは除外
+            if (category === '胸' || category === '上半身') {
+                training = [
+                    { exercise: 'ダンベルプレス (胸)', weight: 10, reps: 10, sets: 3, duration: '00:30', calories: 18, instructions: ['仰向けになりダンベルを押し上げる', '胸の筋肉の収縮を感じる'] },
+                    { exercise: 'プッシュアップ (胸)', weight: 0, reps: 12, sets: 3, duration: '00:30', calories: 12, instructions: ['体幹を締め、床スレスレまで胸を下ろす'] },
                     { exercise: 'ダンベルフライ (大胸筋)', weight: 8, reps: 12, sets: 3, duration: '00:30', calories: 15, instructions: ['大きな円を描くようにダンベルを広げる', '胸のストレッチ感を意識する'] }
                 ];
             } else if (category === '背中') {
                 training = [
-                    { exercise: 'ラットプルダウン (背中)', weight: 30, reps: 12, sets: 3, duration: '00:30', calories: 18, instructions: ['バーを引き寄せるときに胸を張る', '背中の広背筋を収縮させる'] },
-                    { exercise: 'シーテッドローイング (背中)', weight: 25, reps: 12, sets: 3, duration: '00:30', calories: 18, instructions: ['骨盤を立ててお腹に引き寄せる', '肩甲骨を寄せるように引く'] },
-                    { exercise: 'バックエクステンション (腰)', weight: 0, reps: 15, sets: 3, duration: '00:30', calories: 10, instructions: ['腰を反らしすぎないように上体を起こす', '臀部とハムストリングスも意識する'] }
+                    { exercise: 'ワンアーム・ダンベルロウ', weight: 10, reps: 12, sets: 3, duration: '00:30', calories: 15, instructions: ['片手と片膝をベンチや椅子につき、ダンベルを引き上げる', '肩甲骨を寄せる'] },
+                    { exercise: 'ダンベル・デッドリフト', weight: 15, reps: 10, sets: 3, duration: '00:30', calories: 18, instructions: ['背中をまっすぐにして腰から曲げる', 'もも裏と背中を意識'] },
+                    { exercise: 'バックエクステンション (腰)', weight: 0, reps: 15, sets: 3, duration: '00:30', calories: 10, instructions: ['腰を反らしすぎないように上体を起こす'] }
                 ];
             } else if (category === '脚' || category === '下半身') {
                 training = [
-                    { exercise: 'バーベルスクワット (脚)', weight: 40, reps: 8, sets: 3, duration: '00:30', calories: 25, instructions: ['お尻を後ろに引くようにしゃがむ', '膝とつま先を同じ方向にする'] },
-                    { exercise: 'レッグプレス (太もも)', weight: 60, reps: 12, sets: 3, duration: '00:30', calories: 20, instructions: ['足の裏全体でプレートを押す', '膝を伸ばしきらないように注意'] },
-                    { exercise: 'レッグカール (裏もも)', weight: 20, reps: 12, sets: 3, duration: '00:30', calories: 12, instructions: ['かかとをお尻に引き寄せるように曲げる', 'もも裏の収縮を意識する'] }
+                    { exercise: 'ゴブレットスクワット (ダンベル)', weight: 12, reps: 12, sets: 3, duration: '00:30', calories: 20, instructions: ['ダンベルを胸の前に持ち、深くしゃがむ', '背筋をまっすぐに保つ'] },
+                    { exercise: 'ダンベルランジ', weight: 8, reps: 10, sets: 3, duration: '00:30', calories: 18, instructions: ['両手にダンベルを持ち、片脚を前に出す', '後ろの膝が床スレスレになるまで下げる'] },
+                    { exercise: 'カーフレイズ (ダンベル)', weight: 10, reps: 15, sets: 3, duration: '00:30', calories: 10, instructions: ['両手にダンベルを持ち、かかとを高く上げる'] }
                 ];
             } else if (category === '腹筋') {
                 training = [
-                    { exercise: 'アブドミナルクランチ', weight: 15, reps: 15, sets: 3, duration: '00:30', calories: 10, instructions: ['お腹を丸めるようにマシンを倒す', 'ゆっくり元の位置に戻す'] },
-                    { exercise: 'ハンギングレッグレイズ', weight: 0, reps: 12, sets: 3, duration: '00:30', calories: 12, instructions: ['ぶら下がった状態から両脚を持ち上げる', '下腹部の筋肉を強く意識する'] },
-                    { exercise: 'プランク (体幹)', weight: 0, reps: 0, sets: 3, duration: '00:30', calories: 8, instructions: ['体を床と並行に一直線にキープ', 'お腹とお尻に力を入れる'] }
+                    { exercise: 'ダンベル・ロシアンツイスト', weight: 5, reps: 20, sets: 3, duration: '00:30', calories: 12, instructions: ['ダンベルを持ち、お腹を捻る', '腹斜筋に効かせる'] },
+                    { exercise: 'クランチ (お腹上部)', weight: 0, reps: 15, sets: 3, duration: '00:30', calories: 10, instructions: ['おへそを見るように背中を丸めながら起こす'] },
+                    { exercise: 'プランク (体幹)', weight: 0, reps: 0, sets: 3, duration: '00:30', calories: 8, instructions: ['体を床と並行に一直線にキープ'] }
                 ];
             } else {
-                // 全身、またはその他
                 training = [
-                    { exercise: 'バーベルスクワット (脚)', weight: 30, reps: 10, sets: 3, duration: '00:30', calories: 22, instructions: ['下半身全体を使う基本のスクワット', '腰が丸まらないように注意'] },
-                    { exercise: 'チェストプレス (マシン) (胸)', weight: 25, reps: 12, sets: 3, duration: '00:30', calories: 15, instructions: ['大胸筋に刺激を与えるプレス運動'] },
-                    { exercise: 'ラットプルダウン (背中)', weight: 25, reps: 12, sets: 3, duration: '00:30', calories: 15, instructions: ['背中全体の筋肉をバランスよく鍛える'] }
+                    { exercise: 'ゴブレットスクワット', weight: 12, reps: 12, sets: 3, duration: '00:30', calories: 20, instructions: ['下半身全体を使うスクワット'] },
+                    { exercise: 'ダンベルプレス', weight: 10, reps: 10, sets: 3, duration: '00:30', calories: 18, instructions: ['大胸筋に刺激を与える'] },
+                    { exercise: 'ワンアーム・ダンベルロウ', weight: 10, reps: 12, sets: 3, duration: '00:30', calories: 15, instructions: ['背中全体を鍛える'] }
                 ];
             }
         } else {
-            // 自宅メニュー (家トレ)
+            // 器具無し（自重のみ） およびデフォルトの家トレ
             if (category === '胸' || category === '上半身') {
                 training = [
                     { exercise: 'プッシュアップ (胸)', weight: 0, reps: 12, sets: 3, duration: '00:30', calories: 12, instructions: ['肩幅よりやや広く手をつく', '体幹を締め、床スレスレまで胸を下ろす'] },

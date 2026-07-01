@@ -22,6 +22,7 @@ export default function Profile() {
     targetP: userProfile?.targetP || 0,
     targetF: userProfile?.targetF || 0,
     targetC: userProfile?.targetC || 0,
+    exerciseTime: userProfile?.exerciseTime || 30,
   });
 
   const [isHeightModalOpen, setIsHeightModalOpen] = useState(false);
@@ -44,6 +45,7 @@ export default function Profile() {
         targetWeight: userProfile.targetWeight || prev.targetWeight,
         goal: userProfile.goal || prev.goal,
         activityLevel: userProfile.activityLevel || prev.activityLevel,
+        exerciseTime: userProfile.exerciseTime || prev.exerciseTime,
       }));
     }
   }, [userProfile]);
@@ -141,6 +143,11 @@ export default function Profile() {
                 <option value="１時間">1日1時間程度歩く/動く</option>
                 <option value="運動大好き">肉体労働・運動大好き</option>
               </select>
+            </div>
+
+            <div className="form-group" style={{ marginTop: '15px' }}>
+              <label>1回あたりの目標運動時間 (分)</label>
+              <input type="number" name="exerciseTime" value={formData.exerciseTime} onChange={handleChange} min="5" max="300" step="5" />
             </div>
 
             <button type="submit" className="btn btn-primary btn-block" style={{ marginTop: '25px' }}>
