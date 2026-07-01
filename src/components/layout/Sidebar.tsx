@@ -9,7 +9,7 @@ export default function Sidebar() {
     { id: 'dashboard', icon: 'fa-chart-simple', label: 'ダッシュボード' },
     { id: 'workout', icon: 'fa-calendar-check', label: '筋トレ記録' },
     { id: 'meal', icon: 'fa-utensils', label: '食事管理' },
-    { id: 'trainer', icon: 'fa-comment-dots', label: '専属トレーナー' },
+    { id: 'equipment', icon: 'fa-dumbbell', label: '器具ガイド＆プラン' },
     { id: 'map', icon: 'fa-map-location-dot', label: 'ジム探し' },
   ];
 

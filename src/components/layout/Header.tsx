@@ -12,7 +12,7 @@ export default function Header() {
       case 'dashboard': return 'ダッシュボード';
       case 'workout': return '筋トレ記録';
       case 'meal': return '食事管理';
-      case 'trainer': return '専属トレーナー';
+      case 'equipment': return '器具ガイド＆プラン';
       case 'muscle-map': return '筋肉マップ';
       case 'map': return '周辺のジム探し';
       case 'profile': return 'プロフィール設定';

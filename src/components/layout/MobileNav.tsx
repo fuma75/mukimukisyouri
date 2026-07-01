@@ -19,9 +19,9 @@ export default function MobileNav() {
         <i className="fa-solid fa-utensils"></i>
         <span>食事</span>
       </button>
-      <button className={`mobile-nav-item ${activeTab === 'trainer' ? 'active' : ''}`} onClick={() => setActiveTab('trainer')}>
-        <i className="fa-solid fa-comment-dots"></i>
-        <span>トレーナー</span>
+      <button className={`mobile-nav-item ${activeTab === 'equipment' ? 'active' : ''}`} onClick={() => setActiveTab('equipment')}>
+        <i className="fa-solid fa-dumbbell"></i>
+        <span>ガイド</span>
       </button>
       <button className={`mobile-nav-item ${activeTab === 'map' ? 'active' : ''}`} onClick={() => setActiveTab('map')}>
         <i className="fa-solid fa-map-location-dot"></i>
