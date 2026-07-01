@@ -16,7 +16,7 @@ export default function Sidebar() {
   return (
     <aside className="sidebar" id="app-sidebar">
       <div className="sidebar-logo">
-        <i className="fa-solid fa-dumbbell logo-icon"></i>
+        <img src="/images/logo.png" alt="logo" style={{ width: '36px', height: '36px', borderRadius: '50%', objectFit: 'cover' }} />
         <span className="logo-text">筋虎</span>
       </div>
       <nav className="sidebar-nav">

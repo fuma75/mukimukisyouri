@@ -467,7 +467,7 @@ export default function Login() {
       {step === 1 && (
         <div className="login-container" style={{ maxWidth: '400px', margin: 'auto', padding: '40px 20px', width: '100%' }}>
           <div className="login-logo" style={{ marginBottom: '30px', textAlign: 'center' }}>
-            <i className="fa-solid fa-dumbbell" style={{ fontSize: '3rem', color: '#1a73e8', marginBottom: '10px' }}></i>
+            <img src="/images/logo.png" alt="筋虎" style={{ width: '90px', height: '90px', borderRadius: '50%', objectFit: 'cover', marginBottom: '10px', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }} />
             <h1 style={{ fontSize: '2.2rem', margin: '0', fontWeight: 'bold' }}>筋虎</h1>
             <p style={{ color: '#495057', fontSize: '0.9rem', marginTop: '5px' }}>あなた専用のAIパーソナルトレーナー</p>
           </div>
