@@ -10,7 +10,7 @@ export default function Profile() {
     name: userProfile?.name || '',
     gender: userProfile?.gender || 'male',
     age: userProfile?.age || 28,
-    trainerName: userProfile?.trainerName || '筋にくん',
+    trainerName: userProfile?.trainerName || '筋虎',
     height: userProfile?.height || 172,
     weight: userProfile?.weight || 65,
     targetWeight: userProfile?.targetWeight || 60,

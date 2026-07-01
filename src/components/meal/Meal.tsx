@@ -6,7 +6,6 @@ import { useAppContext } from '../AppContext';
 export default function Meal() {
   const { selectedDate: date, setSelectedDate: setDate } = useAppContext();
   const [meals, setMeals] = useState<MealItem[]>([]);
-  const [showForm, setShowForm] = useState(false);
 
   const [timing, setTiming] = useState('朝食');
   const [name, setName] = useState('');
@@ -17,8 +16,6 @@ export default function Meal() {
   const [carb, setCarb] = useState('');
 
   const [loadingEstimate, setLoadingEstimate] = useState(false);
-  const [loadingImageEstimate, setLoadingImageEstimate] = useState(false);
-  const fileInputRef = useRef<HTMLInputElement>(null);
   const [loginDates, setLoginDates] = useState<Set<string>>(new Set());
 
   useEffect(() => {
@@ -60,7 +57,6 @@ export default function Meal() {
     saveMeal(item);
     setMeals(getMeals(date));
     resetForm();
-    setShowForm(false);
   };
 
   const handleDelete = (id: string) => {
@@ -68,41 +64,33 @@ export default function Meal() {
     setMeals(getMeals(date));
   };
 
-  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    setLoadingImageEstimate(true);
-    setShowForm(true);
+  const handleTextEstimate = async () => {
+    if (!name) return alert('メニュー名を入力してください');
+    
+    setLoadingEstimate(true);
     try {
-      const reader = new FileReader();
-      reader.onloadend = async () => {
-        const base64Data = (reader.result as string).split(',')[1];
-        const res = await fetch('/api/estimate-meal-image', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ imageBase64: base64Data, mimeType: file.type })
-        });
-        const data = await res.json();
-
-        if (data.ok && data.result) {
-          if (data.result.name) setName(data.result.name);
-          if (data.result.calories !== undefined) setCalories(Math.round(data.result.calories).toString());
-          if (data.result.protein !== undefined) setProtein((Math.round(data.result.protein * 10) / 10).toString());
-          if (data.result.fat !== undefined) setFat((Math.round(data.result.fat * 10) / 10).toString());
-          if (data.result.carb !== undefined) setCarb((Math.round(data.result.carb * 10) / 10).toString());
-          if (data.result.amountGrams !== undefined) setAmount(Math.round(data.result.amountGrams).toString());
-        } else {
-          alert('写真からのAI推定失敗: ' + JSON.stringify(data));
-        }
-        setLoadingImageEstimate(false);
-        if (fileInputRef.current) fileInputRef.current.value = '';
-      };
-      reader.readAsDataURL(file);
+      const res = await fetch('/api/estimate-meal', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ description: name, amount })
+      });
+      const data = await res.json();
+      
+      if (data.ok && data.result) {
+        if (data.result.name) setName(data.result.name);
+        if (data.result.calories !== undefined) setCalories(Math.round(data.result.calories).toString());
+        if (data.result.protein !== undefined) setProtein((Math.round(data.result.protein * 10) / 10).toString());
+        if (data.result.fat !== undefined) setFat((Math.round(data.result.fat * 10) / 10).toString());
+        if (data.result.carb !== undefined) setCarb((Math.round(data.result.carb * 10) / 10).toString());
+        if (data.result.amountGrams !== undefined && data.result.amountGrams > 0) setAmount(Math.round(data.result.amountGrams).toString());
+      } else {
+        alert('AI推定失敗: ' + JSON.stringify(data));
+      }
     } catch (e) {
       console.error(e);
       alert('エラーが発生しました');
-      setLoadingImageEstimate(false);
+    } finally {
+      setLoadingEstimate(false);
     }
   };
 
@@ -171,105 +159,71 @@ export default function Meal() {
           </div>
         </div>
 
-        {/* ── 写真からAI推定 ── */}
-        <input
-          type="file" accept="image/*" capture="environment"
-          ref={fileInputRef} style={{ display: 'none' }} onChange={handleImageUpload}
-        />
-        <button
-          type="button"
-          onClick={() => fileInputRef.current?.click()}
-          disabled={loadingImageEstimate}
-          style={{
-            width: '100%', padding: '22px 20px', marginBottom: '20px',
-            background: loadingImageEstimate
-              ? 'var(--card-bg)'
-              : 'linear-gradient(135deg, #1a73e8 0%, #0052cc 100%)',
-            color: loadingImageEstimate ? 'var(--text-muted)' : '#fff',
-            border: loadingImageEstimate ? '2px dashed var(--border-color)' : 'none',
-            borderRadius: '18px',
-            fontSize: '1.15rem', fontWeight: 'bold', cursor: 'pointer',
-            display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '12px',
-            boxShadow: loadingImageEstimate ? 'none' : '0 6px 20px rgba(26,115,232,0.35)',
-            transition: 'all 0.2s'
-          }}
-        >
-          {loadingImageEstimate
-            ? <><i className="fa-solid fa-spinner fa-spin" /> 写真を分析中...</>
-            : <><i className="fa-solid fa-camera" style={{ fontSize: '1.4rem' }} /> 写真からAI栄養推定</>
-          }
-        </button>
+        {/* ── 手動入力フォーム（常時表示） ── */}
+        <div style={{
+          background: 'var(--card-bg)', borderRadius: '18px', padding: '20px',
+          marginBottom: '24px', boxShadow: '0 4px 16px rgba(0,0,0,0.07)',
+          border: '1px solid var(--border-color)'
+        }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '18px' }}>
+            <span style={{ fontWeight: 'bold', fontSize: '1rem' }}>
+              <i className="fa-solid fa-pen" style={{ color: 'var(--primary)', marginRight: '6px' }} />手動入力
+            </span>
+            <button type="button" onClick={resetForm}
+              style={{ background: 'none', border: 'none', fontSize: '0.8rem', color: 'var(--text-muted)', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}>
+              <i className="fa-solid fa-rotate-left" /> クリア
+            </button>
+          </div>
 
-        {/* ── 区切り ── */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '20px' }}>
-          <div style={{ flex: 1, height: '1px', background: 'var(--border-color)' }} />
-          <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)', fontWeight: 'bold' }}>または</span>
-          <div style={{ flex: 1, height: '1px', background: 'var(--border-color)' }} />
-        </div>
-
-        {/* ── 手動入力ボタン ── */}
-        {!showForm ? (
-          <button
-            type="button"
-            onClick={() => setShowForm(true)}
-            style={{
-              width: '100%', padding: '14px 20px', marginBottom: '24px',
-              background: 'var(--card-bg)', border: '2px dashed var(--border-color)',
-              borderRadius: '14px', fontSize: '1rem', fontWeight: 'bold',
-              color: 'var(--text-main)', cursor: 'pointer',
-              display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
-              transition: 'all 0.2s'
-            }}
-          >
-            <i className="fa-solid fa-plus" style={{ color: 'var(--primary)' }} /> 手動入力
-          </button>
-        ) : (
-          /* ── 手動入力フォーム（展開） ── */
-          <div style={{
-            background: 'var(--card-bg)', borderRadius: '18px', padding: '20px',
-            marginBottom: '24px', boxShadow: '0 4px 16px rgba(0,0,0,0.07)',
-            border: '1px solid var(--border-color)'
-          }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '18px' }}>
-              <span style={{ fontWeight: 'bold', fontSize: '1rem' }}>
-                <i className="fa-solid fa-pen" style={{ color: 'var(--primary)', marginRight: '6px' }} />手動入力
-              </span>
-              <button type="button" onClick={() => { setShowForm(false); resetForm(); }}
-                style={{ background: 'none', border: 'none', fontSize: '1.1rem', color: 'var(--text-muted)', cursor: 'pointer' }}>
-                <i className="fa-solid fa-xmark" />
-              </button>
+          <form onSubmit={handleAddMeal}>
+            {/* 食事タイミング */}
+            <div style={{ marginBottom: '14px' }}>
+              <label style={{ fontSize: '0.8rem', fontWeight: 'bold', color: 'var(--text-muted)', display: 'block', marginBottom: '6px' }}>食事タイミング</label>
+              <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                {['朝食', '昼食', '夕食', '間食/プロテイン'].map(t => (
+                  <button key={t} type="button" onClick={() => setTiming(t)} style={{
+                    padding: '7px 14px', borderRadius: '20px', fontSize: '0.85rem', fontWeight: 'bold',
+                    border: `2px solid ${timing === t ? timingColors[t] : 'var(--border-color)'}`,
+                    background: timing === t ? timingColors[t] + '22' : 'transparent',
+                    color: timing === t ? timingColors[t] : 'var(--text-muted)',
+                    cursor: 'pointer', transition: 'all 0.15s'
+                  }}>{t}</button>
+                ))}
+              </div>
             </div>
 
-            <form onSubmit={handleAddMeal}>
-              {/* 食事タイミング */}
-              <div style={{ marginBottom: '14px' }}>
-                <label style={{ fontSize: '0.8rem', fontWeight: 'bold', color: 'var(--text-muted)', display: 'block', marginBottom: '6px' }}>食事タイミング</label>
-                <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-                  {['朝食', '昼食', '夕食', '間食/プロテイン'].map(t => (
-                    <button key={t} type="button" onClick={() => setTiming(t)} style={{
-                      padding: '7px 14px', borderRadius: '20px', fontSize: '0.85rem', fontWeight: 'bold',
-                      border: `2px solid ${timing === t ? timingColors[t] : 'var(--border-color)'}`,
-                      background: timing === t ? timingColors[t] + '22' : 'transparent',
-                      color: timing === t ? timingColors[t] : 'var(--text-muted)',
-                      cursor: 'pointer', transition: 'all 0.15s'
-                    }}>{t}</button>
-                  ))}
-                </div>
-              </div>
-
-              {/* メニュー */}
-              <div style={{ marginBottom: '14px' }}>
-                <label style={{ fontSize: '0.8rem', fontWeight: 'bold', color: 'var(--text-muted)', display: 'block', marginBottom: '6px' }}>メニュー名</label>
+            {/* メニュー */}
+            <div style={{ marginBottom: '14px' }}>
+              <label style={{ fontSize: '0.8rem', fontWeight: 'bold', color: 'var(--text-muted)', display: 'block', marginBottom: '6px' }}>メニュー名</label>
+              <div style={{ display: 'flex', gap: '8px' }}>
                 <input
                   type="text" placeholder="例: 鳥胸肉とブロッコリー" value={name}
                   onChange={e => setName(e.target.value)}
                   style={{
-                    width: '100%', padding: '11px 14px', borderRadius: '10px',
+                    flex: 1, padding: '11px 14px', borderRadius: '10px',
                     border: '1.5px solid var(--border-color)', background: 'var(--bg-secondary)',
                     color: 'var(--text-main)', fontSize: '0.95rem', boxSizing: 'border-box'
                   }}
                 />
+                <button
+                  type="button"
+                  onClick={handleTextEstimate}
+                  disabled={loadingEstimate || !name}
+                  style={{
+                    padding: '0 16px', borderRadius: '10px',
+                    background: loadingEstimate || !name ? 'var(--card-bg)' : '#1a73e8',
+                    color: loadingEstimate || !name ? 'var(--text-muted)' : '#fff',
+                    border: loadingEstimate || !name ? '1px solid var(--border-color)' : 'none',
+                    fontWeight: 'bold', fontSize: '0.9rem', cursor: loadingEstimate || !name ? 'default' : 'pointer',
+                    display: 'flex', alignItems: 'center', gap: '6px', whiteSpace: 'nowrap',
+                    boxShadow: loadingEstimate || !name ? 'none' : '0 2px 8px rgba(26,115,232,0.2)'
+                  }}
+                >
+                  {loadingEstimate ? <i className="fa-solid fa-spinner fa-spin" /> : <i className="fa-solid fa-wand-magic-sparkles" />}
+                  AI推定
+                </button>
               </div>
+            </div>
 
               {/* 重量 */}
               <div style={{ marginBottom: '14px' }}>
@@ -326,9 +280,8 @@ export default function Meal() {
               </button>
             </form>
           </div>
-        )}
 
-        {/* ── 区切り ── */}
+          {/* ── 区切り ── */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
           <div style={{ flex: 1, height: '1px', background: 'var(--border-color)' }} />
           <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)', fontWeight: 'bold' }}>今日の食事一覧</span>

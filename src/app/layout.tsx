@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "筋にくん - 筋トレ＆食事管理と熱血アドバイス",
-  description: "筋トレ記録、食事管理、そして熱血AIトレーナー「筋にくん」によるアドバイスで、あなたのボディメイクをトータルサポートするWebアプリ。",
+  title: "筋虎 - 筋トレ＆食事管理と熱血アドバイス",
+  description: "筋トレ記録、食事管理、そして熱血AIトレーナー「筋虎」によるアドバイスで、あなたのボディメイクをトータルサポートするWebアプリ。",
 };
 
 export default function RootLayout({

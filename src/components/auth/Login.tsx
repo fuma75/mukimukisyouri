@@ -370,7 +370,7 @@ export default function Login() {
       targetProtein: Math.round(tPro),
       targetFat: Math.round(tFat),
       targetCarb: Math.round(tCarb),
-      trainerName: '筋にくん'
+      trainerName: '筋虎'
     };
 
     try {
@@ -465,7 +465,7 @@ export default function Login() {
         <div className="login-container" style={{ maxWidth: '400px', margin: 'auto', padding: '40px 20px', width: '100%' }}>
           <div className="login-logo" style={{ marginBottom: '30px', textAlign: 'center' }}>
             <i className="fa-solid fa-dumbbell" style={{ fontSize: '3rem', color: '#1a73e8', marginBottom: '10px' }}></i>
-            <h1 style={{ fontSize: '2.2rem', margin: '0', fontWeight: 'bold' }}>筋にくん</h1>
+            <h1 style={{ fontSize: '2.2rem', margin: '0', fontWeight: 'bold' }}>筋虎</h1>
             <p style={{ color: '#495057', fontSize: '0.9rem', marginTop: '5px' }}>あなた専用のAIパーソナルトレーナー</p>
           </div>
 

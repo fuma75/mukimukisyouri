@@ -16,7 +16,7 @@ export default function Header() {
       case 'muscle-map': return '筋肉マップ';
       case 'map': return '周辺のジム探し';
       case 'profile': return 'プロフィール設定';
-      default: return '筋にくん';
+      default: return '筋虎';
     }
   };
 

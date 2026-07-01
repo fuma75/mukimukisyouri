@@ -21,7 +21,7 @@ export default function TrainerChat() {
   const videoChunksRef = useRef<Blob[]>([]);
   const videoStreamRef = useRef<MediaStream | null>(null);
 
-  const trainerName = userProfile?.trainerName || '筋にくん';
+  const trainerName = userProfile?.trainerName || '筋虎';
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });

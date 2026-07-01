@@ -17,7 +17,7 @@ export default function Sidebar() {
     <aside className="sidebar" id="app-sidebar">
       <div className="sidebar-logo">
         <i className="fa-solid fa-dumbbell logo-icon"></i>
-        <span className="logo-text">筋にくん</span>
+        <span className="logo-text">筋虎</span>
       </div>
       <nav className="sidebar-nav">
         {navItems.map((item) => (

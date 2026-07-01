@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { callGemini } from '@/lib/gemini';
 
 // 代表的な定番料理の栄養素・カロリーデータベース (1人前目安)
 const MEAL_DICTIONARY: Record<string, { calories: number; protein: number; fat: number; carb: number; amountGrams: number }> = {
@@ -73,15 +74,38 @@ export async function POST(request: Request) {
             }
         }
 
-        // 何もマッチしなかった場合のフォールバック (それっぽい平均値を算出)
+        // 何もマッチしなかった場合のフォールバック (GeminiでAI推定)
         if (!matchedAny) {
-            // 文字列の長さを少し掛け合わせることで、何かしら入力された文字に応じた変化を持たせる
-            const seed = (description.length * 7) % 20; // 0〜19
-            calories = 500 + seed * 10;                // 500〜690 kcal
-            protein = 15 + (seed % 8);                 // 15〜22 g
-            fat = 12 + (seed % 6);                     // 12〜17 g
-            carb = 65 + seed * 2;                      // 65〜103 g
-            amountGrams = 350;
+            const prompt = `「${description}」という食事の概算の栄養成分を推測し、JSON形式で出力してください。
+【重要事項】
+・必ずJSONオブジェクト1つのみを出力してください。マークダウンの装飾(\`\`\`json)や説明文は一切含めないでください。
+・キーはすべて小文字で "name", "calories", "protein", "fat", "carb", "amountGrams" とし、値は以下のようにしてください：
+  - "name": "${description}" (string)
+  - "calories", "protein", "fat", "carb": この食事（1人前相当）の推定される栄養成分（number）。単位はそれぞれkcal, g, g, g。
+  - "amountGrams": この食事（1人前相当）の全体量（グラム数）（number）。
+`;
+            const text = await callGemini(prompt);
+            
+            // Clean up potential markdown formatting
+            let cleanText = text.replace(/```json/g, '').replace(/```/g, '').trim();
+            const jsonStart = cleanText.indexOf('{');
+            const jsonEnd = cleanText.lastIndexOf('}');
+            if (jsonStart !== -1 && jsonEnd !== -1) {
+                cleanText = cleanText.substring(jsonStart, jsonEnd + 1);
+            }
+            
+            try {
+                const aiResult = JSON.parse(cleanText);
+                calories = Number(aiResult.calories) || 500;
+                protein = Number(aiResult.protein) || 15;
+                fat = Number(aiResult.fat) || 10;
+                carb = Number(aiResult.carb) || 50;
+                amountGrams = Number(aiResult.amountGrams) || 300;
+            } catch (e) {
+                console.error("Gemini JSON parse error:", e);
+                // JSONパース失敗時のフォールバック
+                calories = 500; protein = 15; fat = 12; carb = 65; amountGrams = 350;
+            }
         }
 
         // もしユーザーから分量（g）が明示的に渡されている場合は、その比率で栄養素を掛け算

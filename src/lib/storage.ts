@@ -70,7 +70,7 @@ export function getProfile(): Profile {
             name: 'ゲストユーザー',
             gender: 'male',
             age: 28,
-            trainerName: '筋にくん',
+            trainerName: '筋虎',
             height: 172,
             weight: 68.5,
             activity: 'low',
