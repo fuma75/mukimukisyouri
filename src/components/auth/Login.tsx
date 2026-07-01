@@ -715,7 +715,7 @@ export default function Login() {
                 type="number" 
                 value={weight} 
                 onChange={(e) => setWeight(e.target.value)} 
-                style={{ fontSize: '4rem', fontWeight: 'bold', color: '#1e1e24', background: 'transparent', border: 'none', borderBottom: '2px solid #1a73e8', width: '120px', textAlign: 'center', outline: 'none' }} 
+                style={{ fontSize: '4rem', fontWeight: 'bold', color: '#1e1e24', background: 'transparent', border: 'none', borderBottom: '2px solid #1a73e8', width: '180px', textAlign: 'center', outline: 'none' }} 
               />
               <span style={{ fontSize: '1.5rem', color: '#495057', marginLeft: '5px' }}>{weightUnit}</span>
             </div>
@@ -776,9 +776,9 @@ export default function Login() {
           {renderWizardHeader("02 身体情報の設定", 8)}
           
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-            <h2 style={{ textAlign: 'center', fontSize: '1.6rem', fontWeight: 'bold', marginBottom: '15px' }}>目標体重を入力してください。</h2>
+            <h2 style={{ textAlign: 'center', fontSize: '1.6rem', fontWeight: 'bold', marginBottom: '10px' }}>目標体重を入力してください。</h2>
             
-            <div style={{ display: 'flex', border: '1px solid #1a73e8', borderRadius: '30px', overflow: 'hidden', marginBottom: '15px' }}>
+            <div style={{ display: 'flex', border: '1px solid #1a73e8', borderRadius: '30px', overflow: 'hidden', marginBottom: '10px' }}>
               <div 
                 onClick={() => setWeightUnit('kg')}
                 style={{ padding: '8px 24px', fontWeight: 'bold', cursor: 'pointer', background: weightUnit === 'kg' ? '#1a73e8' : '#fff', color: weightUnit === 'kg' ? '#fff' : '#1e1e24' }}>
@@ -796,7 +796,7 @@ export default function Login() {
                 type="number" 
                 value={targetWeight} 
                 onChange={(e) => setTargetWeight(e.target.value)} 
-                style={{ fontSize: '4rem', fontWeight: 'bold', color: '#1e1e24', background: 'transparent', border: 'none', borderBottom: '2px solid #1a73e8', width: '120px', textAlign: 'center', outline: 'none' }} 
+                style={{ fontSize: '4rem', fontWeight: 'bold', color: '#1e1e24', background: 'transparent', border: 'none', borderBottom: '2px solid #1a73e8', width: '180px', textAlign: 'center', outline: 'none' }} 
               />
               <span style={{ fontSize: '1.5rem', color: '#495057', marginLeft: '5px' }}>{weightUnit}</span>
             </div>
