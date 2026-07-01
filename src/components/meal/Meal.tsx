@@ -40,19 +40,60 @@ export default function Meal() {
     setTiming('朝食');
   };
 
-  const handleAddMeal = (e?: React.FormEvent) => {
+  const handleAddMeal = async (e?: React.FormEvent) => {
     if (e) e.preventDefault();
     if (!name) return alert('食事内容を入力してください');
+
+    let finalName = name;
+    let finalAmount = amount ? Number(amount) : undefined;
+    let finalCalories = Number(calories) || 0;
+    let finalProtein = Number(protein) || 0;
+    let finalFat = Number(fat) || 0;
+    let finalCarb = Number(carb) || 0;
+
+    // もしカロリーなどが未入力（0）の場合は自動でAI推定を行う
+    if (finalCalories === 0 && finalProtein === 0 && finalFat === 0 && finalCarb === 0) {
+      setLoadingEstimate(true);
+      try {
+        const res = await fetch('/api/estimate-meal', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ description: name, amount })
+        });
+        const data = await res.json();
+        
+        if (data.ok && data.result) {
+          if (data.result.name) finalName = data.result.name;
+          finalCalories = data.result.calories !== undefined ? Math.round(data.result.calories) : 0;
+          finalProtein = data.result.protein !== undefined ? Math.round(data.result.protein * 10) / 10 : 0;
+          finalFat = data.result.fat !== undefined ? Math.round(data.result.fat * 10) / 10 : 0;
+          finalCarb = data.result.carb !== undefined ? Math.round(data.result.carb * 10) / 10 : 0;
+          if (data.result.amountGrams !== undefined && data.result.amountGrams > 0) {
+            finalAmount = Math.round(data.result.amountGrams);
+          }
+        } else {
+          alert('AI推定失敗: ' + JSON.stringify(data));
+          setLoadingEstimate(false);
+          return;
+        }
+      } catch (e) {
+        console.error(e);
+        alert('エラーが発生しました');
+        setLoadingEstimate(false);
+        return;
+      }
+      setLoadingEstimate(false);
+    }
 
     const item: MealItem = {
       date,
       timing,
-      name,
-      amount: amount ? Number(amount) : undefined,
-      calories: Number(calories) || 0,
-      protein: Number(protein) || 0,
-      fat: Number(fat) || 0,
-      carb: Number(carb) || 0
+      name: finalName,
+      amount: finalAmount,
+      calories: finalCalories,
+      protein: finalProtein,
+      fat: finalFat,
+      carb: finalCarb
     };
     saveMeal(item);
     setMeals(getMeals(date));
@@ -62,36 +103,6 @@ export default function Meal() {
   const handleDelete = (id: string) => {
     deleteMeal(id);
     setMeals(getMeals(date));
-  };
-
-  const handleTextEstimate = async () => {
-    if (!name) return alert('メニュー名を入力してください');
-    
-    setLoadingEstimate(true);
-    try {
-      const res = await fetch('/api/estimate-meal', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ description: name, amount })
-      });
-      const data = await res.json();
-      
-      if (data.ok && data.result) {
-        if (data.result.name) setName(data.result.name);
-        if (data.result.calories !== undefined) setCalories(Math.round(data.result.calories).toString());
-        if (data.result.protein !== undefined) setProtein((Math.round(data.result.protein * 10) / 10).toString());
-        if (data.result.fat !== undefined) setFat((Math.round(data.result.fat * 10) / 10).toString());
-        if (data.result.carb !== undefined) setCarb((Math.round(data.result.carb * 10) / 10).toString());
-        if (data.result.amountGrams !== undefined && data.result.amountGrams > 0) setAmount(Math.round(data.result.amountGrams).toString());
-      } else {
-        alert('AI推定失敗: ' + JSON.stringify(data));
-      }
-    } catch (e) {
-      console.error(e);
-      alert('エラーが発生しました');
-    } finally {
-      setLoadingEstimate(false);
-    }
   };
 
   const timingOrder: Record<string, number> = { '朝食': 1, '昼食': 2, '夕食': 3, '間食/プロテイン': 4 };
@@ -205,23 +216,6 @@ export default function Meal() {
                     color: 'var(--text-main)', fontSize: '0.95rem', boxSizing: 'border-box'
                   }}
                 />
-                <button
-                  type="button"
-                  onClick={handleTextEstimate}
-                  disabled={loadingEstimate || !name}
-                  style={{
-                    padding: '0 16px', borderRadius: '10px',
-                    background: loadingEstimate || !name ? 'var(--card-bg)' : '#1a73e8',
-                    color: loadingEstimate || !name ? 'var(--text-muted)' : '#fff',
-                    border: loadingEstimate || !name ? '1px solid var(--border-color)' : 'none',
-                    fontWeight: 'bold', fontSize: '0.9rem', cursor: loadingEstimate || !name ? 'default' : 'pointer',
-                    display: 'flex', alignItems: 'center', gap: '6px', whiteSpace: 'nowrap',
-                    boxShadow: loadingEstimate || !name ? 'none' : '0 2px 8px rgba(26,115,232,0.2)'
-                  }}
-                >
-                  {loadingEstimate ? <i className="fa-solid fa-spinner fa-spin" /> : <i className="fa-solid fa-wand-magic-sparkles" />}
-                  AI推定
-                </button>
               </div>
             </div>
 
@@ -270,13 +264,17 @@ export default function Meal() {
                 </div>
               </div>
 
-              <button type="submit" style={{
+              <button type="submit" disabled={loadingEstimate} style={{
                 width: '100%', padding: '14px', borderRadius: '12px',
-                background: 'linear-gradient(135deg, #1a73e8 0%, #0052cc 100%)',
-                color: '#fff', fontWeight: 'bold', fontSize: '1rem', border: 'none',
-                cursor: 'pointer', boxShadow: '0 4px 12px rgba(26,115,232,0.3)'
+                background: loadingEstimate ? 'var(--bg-secondary)' : 'linear-gradient(135deg, #1a73e8 0%, #0052cc 100%)',
+                color: loadingEstimate ? 'var(--text-muted)' : '#fff', fontWeight: 'bold', fontSize: '1rem', border: loadingEstimate ? '1px solid var(--border-color)' : 'none',
+                cursor: loadingEstimate ? 'default' : 'pointer', boxShadow: loadingEstimate ? 'none' : '0 4px 12px rgba(26,115,232,0.3)'
               }}>
-                <i className="fa-solid fa-check" style={{ marginRight: '8px' }} />食事を追加
+                {loadingEstimate ? (
+                  <><i className="fa-solid fa-spinner fa-spin" style={{ marginRight: '8px' }} />AI推定して追加中...</>
+                ) : (
+                  <><i className="fa-solid fa-check" style={{ marginRight: '8px' }} />食事を追加</>
+                )}
               </button>
             </form>
           </div>
