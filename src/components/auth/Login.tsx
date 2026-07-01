@@ -678,10 +678,10 @@ export default function Login() {
         <div style={{ flex: '1 0 auto', maxWidth: '600px', margin: '0 auto', padding: '10px 20px 20px', width: '100%', display: 'flex', flexDirection: 'column' }}>
           {renderWizardHeader("02 身体情報の設定", 6)}
           
-          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
             <h2 style={{ textAlign: 'center', fontSize: '1.6rem', fontWeight: 'bold', marginBottom: '30px' }}>身長を入力してください。</h2>
 
-            <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'center', marginBottom: '0' }}>
+            <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'center', marginBottom: '20px' }}>
               <input 
                 type="number" 
                 value={height} 
@@ -716,8 +716,8 @@ export default function Login() {
         <div style={{ flex: '1 0 auto', maxWidth: '600px', margin: '0 auto', padding: '10px 20px 20px', width: '100%', display: 'flex', flexDirection: 'column' }}>
           {renderWizardHeader("02 身体情報の設定", 7)}
           
-          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-            <h2 style={{ textAlign: 'center', fontSize: '1.6rem', fontWeight: 'bold', marginBottom: '10px' }}>現在の体重を入力してください。</h2>
+          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+            <h2 style={{ textAlign: 'center', fontSize: '1.6rem', fontWeight: 'bold', marginBottom: '20px' }}>現在の体重を入力してください。</h2>
             
             <div style={{ display: 'flex', border: '1px solid #1a73e8', borderRadius: '30px', overflow: 'hidden', marginBottom: '10px' }}>
               <div 
@@ -732,7 +732,7 @@ export default function Login() {
               </div>
             </div>
 
-            <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'center', marginBottom: '0' }}>
+            <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'center', marginBottom: '10px' }}>
               <input 
                 type="number" 
                 value={weight} 
@@ -742,7 +742,7 @@ export default function Login() {
               <span style={{ fontSize: '1.5rem', color: '#495057', marginLeft: '5px' }}>{weightUnit}</span>
             </div>
             
-            <div style={{ width: '100%', marginTop: '-15px' }}>
+            <div style={{ width: '100%', marginTop: '0' }}>
               <RulerPicker 
                 min={weightUnit === 'kg' ? 30 : 60} 
                 max={weightUnit === 'kg' ? 150 : 330} 
@@ -797,8 +797,8 @@ export default function Login() {
         <div style={{ flex: '1 0 auto', maxWidth: '600px', margin: '0 auto', padding: '10px 20px 20px', width: '100%', display: 'flex', flexDirection: 'column' }}>
           {renderWizardHeader("02 身体情報の設定", 8)}
           
-          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-            <h2 style={{ textAlign: 'center', fontSize: '1.6rem', fontWeight: 'bold', marginBottom: '10px' }}>目標体重を入力してください。</h2>
+          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+            <h2 style={{ textAlign: 'center', fontSize: '1.6rem', fontWeight: 'bold', marginBottom: '20px' }}>目標体重を入力してください。</h2>
             
             <div style={{ display: 'flex', border: '1px solid #1a73e8', borderRadius: '30px', overflow: 'hidden', marginBottom: '10px' }}>
               <div 
@@ -813,7 +813,7 @@ export default function Login() {
               </div>
             </div>
 
-            <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'center', marginBottom: '0' }}>
+            <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'center', marginBottom: '10px' }}>
               <input 
                 type="number" 
                 value={targetWeight} 
@@ -823,7 +823,7 @@ export default function Login() {
               <span style={{ fontSize: '1.5rem', color: '#495057', marginLeft: '5px' }}>{weightUnit}</span>
             </div>
             
-            <div style={{ width: '100%', marginTop: '-15px' }}>
+            <div style={{ width: '100%', marginTop: '0' }}>
               <RulerPicker 
                 min={weightUnit === 'kg' ? 30 : 60} 
                 max={weightUnit === 'kg' ? 150 : 330} 

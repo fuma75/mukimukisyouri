@@ -35,6 +35,16 @@
     color: #212529;
 }
 
+/* Hide number spinners */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
 .light-theme .btn-outline {
     border: 2px solid #e9ecef;
     color: #212529;
