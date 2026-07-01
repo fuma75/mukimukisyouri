@@ -179,29 +179,27 @@ export default function Login() {
     setLoading(true);
     try {
       const provider = new GoogleAuthProvider();
-      const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-      
-      if (isMobile) {
-        try {
-          await signInWithRedirect(auth, provider);
-        } catch (redirectError: any) {
-          if (redirectError.code === 'auth/operation-not-supported-in-this-environment') {
-            alert("このブラウザ（LINEやInstagram等）ではGoogleログインがサポートされていません。SafariやChromeで開き直してお試しください。");
+      // まずは全環境で Popup を試す（in-appブラウザのredirect session lossを防ぐため）
+      try {
+        const userCred = await signInWithPopup(auth, provider);
+        handleLoginSuccess(userCred.user);
+        setLoading(false);
+      } catch (popupError: any) {
+        if (popupError.code === 'auth/popup-blocked' || popupError.code === 'auth/popup-closed-by-user' || popupError.code === 'auth/cross-origin-opener-policy-failed') {
+          // Popupがブロックされた場合は Redirect にフォールバックする
+          const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+          if (isMobile) {
+            try {
+              await signInWithRedirect(auth, provider);
+            } catch (redirectError: any) {
+              alert("ログインエラー: このブラウザ（LINEやYay!等）では制限によりGoogleログインが失敗する場合があります。右上のメニューから「Safariで開く」または「ブラウザで開く」をお試しください。");
+              setLoading(false);
+            }
           } else {
-            throw redirectError;
+            setLoading(false);
           }
-        }
-      } else {
-        try {
-          const userCred = await signInWithPopup(auth, provider);
-          handleLoginSuccess(userCred.user);
-          setLoading(false);
-        } catch (popupError: any) {
-          if (popupError.code === 'auth/popup-blocked' || popupError.code === 'auth/popup-closed-by-user' || popupError.code === 'auth/cross-origin-opener-policy-failed') {
-            await signInWithRedirect(auth, provider);
-          } else {
-            throw popupError;
-          }
+        } else {
+          throw popupError;
         }
       }
     } catch (e: any) {
@@ -473,47 +471,54 @@ export default function Login() {
           </div>
 
           <div className="animate-fade-in">
-            <button type="button" className="btn btn-block" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', padding: '12px', marginBottom: '20px', background: '#ffffff', color: '#333', border: '1px solid #ddd', borderRadius: '24px', fontWeight: 'bold' }} onClick={handleGoogleLogin} disabled={loading}>
-              <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" style={{ width: '20px' }} />
-              Googleで{isLoginMode ? 'ログイン' : '登録'}
-            </button>
+            <form autoComplete="off" onSubmit={(e) => { e.preventDefault(); handleNext(); }}>
+              <div className="form-group" style={{ marginBottom: '15px' }}>
+                <label style={{display: 'block', fontSize: '0.85rem', fontWeight: 'bold', color: '#1e1e24', marginBottom: '5px', textAlign: 'left'}}>{isLoginMode ? 'メールアドレス' : 'メールアドレス'}</label>
+                <input type="email" name="email" autoComplete="off" placeholder="メールアドレスを入力" value={email} onChange={e => setEmail(e.target.value)} style={{ background: '#f8f9fa', border: '1px solid #ced4da', borderRadius: '8px', padding: '14px', width: '100%', color: '#212529' }} />
+              </div>
+              
+              <div className="form-group" style={{ position: 'relative', marginBottom: '15px' }}>
+                <label style={{display: 'block', fontSize: '0.85rem', fontWeight: 'bold', color: '#1e1e24', marginBottom: '5px', textAlign: 'left'}}>パスワード</label>
+                <input type={showPassword ? "text" : "password"} name="password" autoComplete="new-password" placeholder="パスワードを入力" value={password} onChange={e => setPassword(e.target.value)} style={{ background: '#f8f9fa', border: '1px solid #ced4da', borderRadius: '8px', padding: '14px', width: '100%', color: '#212529' }} />
+                <button type="button" onClick={() => setShowPassword(!showPassword)} style={{ position: 'absolute', right: '15px', top: '38px', background: 'none', border: 'none', color: '#1a73e8', fontWeight: 'bold', cursor: 'pointer', fontSize: '0.85rem' }}>
+                  {showPassword ? '非表示' : '表示'}
+                </button>
+              </div>
 
-            <div style={{ display: 'flex', alignItems: 'center', margin: '20px 0', color: '#adb5bd', fontSize: '0.9rem' }}>
+              {!isLoginMode && (
+                <div className="form-group" style={{ marginBottom: '15px' }}>
+                  <label style={{display: 'block', fontSize: '0.85rem', fontWeight: 'bold', color: '#1e1e24', marginBottom: '5px', textAlign: 'left'}}>ユーザー名</label>
+                  <input type="text" name="nickname" autoComplete="off" placeholder="ユーザー名を入力" value={name} onChange={e => setName(e.target.value)} style={{ background: '#f8f9fa', border: '1px solid #ced4da', borderRadius: '8px', padding: '14px', width: '100%', color: '#212529' }} />
+                </div>
+              )}
+
+              {isLoginMode && (
+                <div style={{ display: 'flex', alignItems: 'center', marginBottom: '20px', fontSize: '0.85rem', color: '#1e1e24', fontWeight: 'bold' }}>
+                  <input type="checkbox" id="keepLoggedIn" style={{ marginRight: '8px', width: '16px', height: '16px', accentColor: '#1a73e8' }} defaultChecked />
+                  <label htmlFor="keepLoggedIn">ログイン状態を保持</label>
+                </div>
+              )}
+              
+              <button type="submit" className="btn btn-block" style={{ marginTop: '5px', padding: '14px', background: '#1a73e8', color: '#fff', borderRadius: '8px', fontWeight: 'bold', border: 'none', boxShadow: '0 4px 10px rgba(26,115,232,0.3)', fontSize: '1rem' }} disabled={loading}>
+                {loading ? <i className="fa-solid fa-spinner fa-spin"></i> : (isLoginMode ? 'ログイン' : '新規登録')}
+              </button>
+            </form>
+
+            <div style={{ display: 'flex', alignItems: 'center', margin: '20px 0', color: '#adb5bd', fontSize: '0.85rem' }}>
               <div style={{ flex: 1, height: '1px', background: '#e9ecef' }}></div>
               <div style={{ padding: '0 10px' }}>または</div>
               <div style={{ flex: 1, height: '1px', background: '#e9ecef' }}></div>
             </div>
 
-            <form autoComplete="off" onSubmit={(e) => { e.preventDefault(); handleNext(); }}>
-              <div className="form-group" style={{ marginBottom: '15px' }}>
-                <input type="email" name="email" autoComplete="off" placeholder="メールアドレス" value={email} onChange={e => setEmail(e.target.value)} style={{ background: '#f8f9fa', border: '1px solid #ced4da', borderRadius: '12px', padding: '14px', width: '100%' }} />
-              </div>
-              
-              <div className="form-group" style={{ position: 'relative', marginBottom: '15px' }}>
-                <input type={showPassword ? "text" : "password"} name="password" autoComplete="new-password" placeholder="パスワード (6文字以上)" value={password} onChange={e => setPassword(e.target.value)} style={{ background: '#f8f9fa', border: '1px solid #ced4da', borderRadius: '12px', padding: '14px', width: '100%' }} />
-                <button type="button" onClick={() => setShowPassword(!showPassword)} style={{ position: 'absolute', right: '15px', top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', color: '#adb5bd', cursor: 'pointer' }}>
-                  <i className={`fa-solid ${showPassword ? 'fa-eye-slash' : 'fa-eye'}`}></i>
-                </button>
-              </div>
+            <button type="button" className="btn btn-block" style={{ padding: '14px', marginBottom: '15px', background: '#6ea8f0', color: '#fff', border: 'none', borderRadius: '8px', fontWeight: 'bold', boxShadow: '0 4px 10px rgba(110,168,240,0.3)', fontSize: '1rem' }} onClick={() => setIsLoginMode(!isLoginMode)}>
+              {isLoginMode ? '✨ 新規登録' : 'ログイン画面へ戻る'}
+            </button>
 
-              {!isLoginMode && (
-                <div className="form-group" style={{ marginBottom: '20px' }}>
-                  <input type="text" name="nickname" autoComplete="off" placeholder="お名前（ニックネーム）" value={name} onChange={e => setName(e.target.value)} style={{ background: '#f8f9fa', border: '1px solid #ced4da', borderRadius: '12px', padding: '14px', width: '100%' }} />
-                </div>
-              )}
-              
-              <button type="submit" className="btn btn-block" style={{ marginTop: '10px', padding: '14px', background: '#1a73e8', color: '#fff', borderRadius: '24px', fontWeight: 'bold', border: 'none' }} disabled={loading}>
-                {loading ? <i className="fa-solid fa-spinner fa-spin"></i> : (isLoginMode ? 'ログイン' : '次へ')}
-              </button>
-            </form>
-
-            <div style={{ textAlign: 'center', marginTop: '25px', fontSize: '0.9rem', color: '#495057' }}>
-              {isLoginMode ? (
-                <span>アカウントをお持ちでない方は <a href="#" onClick={(e) => { e.preventDefault(); setIsLoginMode(false); }} style={{ color: '#1a73e8', fontWeight: 'bold', textDecoration: 'none' }}>新規登録</a></span>
-              ) : (
-                <span>既にアカウントをお持ちの方は <a href="#" onClick={(e) => { e.preventDefault(); setIsLoginMode(true); }} style={{ color: '#1a73e8', fontWeight: 'bold', textDecoration: 'none' }}>ログイン</a></span>
-              )}
-            </div>
+            <button type="button" className="btn btn-block" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', padding: '12px', background: '#ffffff', color: '#333', border: '1px solid #ddd', borderRadius: '8px', fontWeight: 'bold', fontSize: '0.9rem' }} onClick={handleGoogleLogin} disabled={loading}>
+              <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" style={{ width: '18px' }} />
+              Googleで{isLoginMode ? 'ログイン' : '登録'}
+            </button>
+            
           </div>
         </div>
       )}
