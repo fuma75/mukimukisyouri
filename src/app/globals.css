@@ -930,7 +930,7 @@ body::before {
 .pfc-legend-item.carb .dot    { background-color: var(--meal-green); color: var(--meal-green); }
 
 .pfc-legend-item .label {
-    font-size: 12px;
+    font-size: 0.75rem;
     color: var(--text-secondary);
     display: flex;
     align-items: center;
@@ -939,7 +939,7 @@ body::before {
 }
 
 .pfc-legend-item .val {
-    font-size: 14px;
+    font-size: 0.875rem;
     font-weight: 700;
     padding-left: 18px;
     color: var(--text-primary);

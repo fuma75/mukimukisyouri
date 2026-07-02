@@ -9,7 +9,7 @@ import RulerPicker from '@/components/ui/RulerPicker';
 ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement, Title, PointElement, LineElement, Filler);
 
 export default function Dashboard() {
-  const { activeTab, setActiveTab } = useAppContext();
+  const { activeTab, setActiveTab, textSize } = useAppContext();
   const [profile, setProfile] = useState<Profile | null>(null);
   const [workouts, setWorkouts] = useState<WorkoutItem[]>([]);
   const [meals, setMeals] = useState<MealItem[]>([]);
@@ -230,6 +230,10 @@ export default function Dashboard() {
     }
   };
 
+
+  // Scale chart fonts based on textSize
+  ChartJS.defaults.font.size = textSize === 'large' ? 14 : 12;
+  
   return (
     <section id="dashboard" className="content-section active">
       <div className="dashboard-grid">
