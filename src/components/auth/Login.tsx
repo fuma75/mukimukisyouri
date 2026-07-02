@@ -404,7 +404,7 @@ export default function Login() {
     const normalizedStep = currentStep - 1;
     
     return (
-      <div style={{ display: 'flex', alignItems: 'center', marginBottom: '15px', position: 'relative', paddingTop: '5px' }}>
+      <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px', position: 'relative', paddingTop: '5px' }}>
         <button onClick={handleBack} style={{ background: 'none', border: 'none', fontSize: '1.4rem', cursor: 'pointer', padding: '10px', color: '#1e1e24' }}>
           <i className="fa-solid fa-arrow-left"></i>
         </button>
@@ -467,7 +467,7 @@ export default function Login() {
         <div className="login-container" style={{ maxWidth: '400px', margin: 'auto', padding: '20px', width: '100%' }}>
           <div className="login-logo" style={{ marginBottom: '20px', textAlign: 'center' }}>
             <img src="/images/logo.png" alt="筋虎" style={{ width: '70px', height: '70px', borderRadius: '50%', objectFit: 'cover', marginBottom: '10px', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }} />
-            <h1 style={{ fontSize: '1.8rem', margin: '0', fontWeight: 'bold' }}>筋虎</h1>
+            <h1 style={{ fontSize: 'clamp(1.3rem, 5vw, 1.6rem)', margin: '0', fontWeight: 'bold' }}>筋虎</h1>
             <p style={{ color: '#495057', fontSize: '0.9rem', marginTop: '5px' }}>あなた専用の虎コーチ</p>
           </div>
 
@@ -494,7 +494,7 @@ export default function Login() {
               )}
 
               {isLoginMode && (
-                <div style={{ display: 'flex', alignItems: 'center', marginBottom: '15px', fontSize: '0.85rem', color: '#1e1e24', fontWeight: 'bold' }}>
+                <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px', fontSize: '0.85rem', color: '#1e1e24', fontWeight: 'bold' }}>
                   <input type="checkbox" id="keepLoggedIn" style={{ marginRight: '8px', width: '16px', height: '16px', accentColor: 'var(--primary)' }} defaultChecked />
                   <label htmlFor="keepLoggedIn">ログイン状態を保持</label>
                 </div>
@@ -526,12 +526,12 @@ export default function Login() {
 
       {/* STEP 2: Gender */}
       {step === 2 && (
-        <div style={{ flex: '1 0 auto', maxWidth: '600px', margin: '0 auto', padding: '10px 20px 20px', width: '100%', display: 'flex', flexDirection: 'column' }}>
+        <div style={{ flex: '1 0 auto', maxWidth: '600px', margin: '0 auto', padding: '10px 15px 15px', width: '100%', display: 'flex', flexDirection: 'column' }}>
           {renderWizardHeader("01 目標とターゲット部位", 2)}
           
           <div style={{ flex: 0, paddingBottom: '10px' }}>
-            <h2 style={{ textAlign: 'center', fontSize: '1.8rem', fontWeight: 'bold', marginBottom: '5px' }}>あなたの性別は？</h2>
-            <p style={{ textAlign: 'center', color: '#495057', marginBottom: '15px' }}>あなたについて教えてください</p>
+            <h2 style={{ textAlign: 'center', fontSize: 'clamp(1.3rem, 5vw, 1.6rem)', fontWeight: 'bold', marginBottom: '5px' }}>あなたの性別は？</h2>
+            <p style={{ textAlign: 'center', color: '#495057', marginBottom: '10px' }}>あなたについて教えてください</p>
             
             <div style={{ display: 'flex', gap: '20px', justifyContent: 'center' }}>
               {['male', 'female'].map((g) => {
@@ -558,11 +558,11 @@ export default function Login() {
                     }}>
                     
                     <div style={{ flex: 1, background: '#f8f9fa', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#adb5bd' }}>
-                      <i className={`fa-solid ${g === 'male' ? 'fa-person' : 'fa-person-dress'}`} style={{ fontSize: '4rem' }}></i>
+                      <i className={`fa-solid ${g === 'male' ? 'fa-person' : 'fa-person-dress'}`} style={{ fontSize: '3rem' }}></i>
                     </div>
                     
                     <div style={{ padding: '20px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px' }}>
-                      <span style={{ fontSize: '1.2rem', fontWeight: 'bold', color: isSelected ? 'var(--primary)' : '#495057' }}>
+                      <span style={{ fontSize: '1.1rem', fontWeight: 'bold', color: isSelected ? 'var(--primary)' : '#495057' }}>
                         {g === 'male' ? '男性' : '女性'}
                       </span>
                       {isSelected && <i className="fa-solid fa-circle-check" style={{ color: 'var(--primary)', fontSize: '1.2rem' }}></i>}
@@ -572,18 +572,18 @@ export default function Login() {
               })}
             </div>
 
-            <div style={{ textAlign: 'center', marginTop: '15px' }}>
+            <div style={{ textAlign: 'center', marginTop: '10px' }}>
               <button 
                 type="button" 
                 onClick={() => setGender('other')}
-                style={{ background: gender === 'other' ? 'var(--primary)' : '#f8f9fa', border: 'none', padding: '12px 30px', borderRadius: '24px', color: gender === 'other' ? '#fff' : '#495057', fontSize: '0.95rem', cursor: 'pointer', transition: 'all 0.2s' }}>
+                style={{ background: gender === 'other' ? 'var(--primary)' : '#f8f9fa', border: 'none', padding: '10px 24px', borderRadius: '24px', color: gender === 'other' ? '#fff' : '#495057', fontSize: '0.9rem', cursor: 'pointer', transition: 'all 0.2s' }}>
                 その他 / 言いたくない
               </button>
             </div>
           </div>
 
           <div style={{ padding: '10px 0' }}>
-            <button onClick={handleNext} disabled={!gender} style={{ width: '100%', padding: '14px', background: gender ? 'var(--primary)' : '#dee2e6', color: gender ? '#fff' : '#adb5bd', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer' }}>
+            <button onClick={handleNext} disabled={!gender} style={{ width: '100%', padding: '12px', background: gender ? 'var(--primary)' : '#dee2e6', color: gender ? '#fff' : '#adb5bd', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer' }}>
               次へ
             </button>
           </div>
@@ -592,13 +592,13 @@ export default function Login() {
 
       {/* STEP 3: Goal */}
       {step === 3 && (
-        <div style={{ flex: '1 0 auto', maxWidth: '600px', margin: '0 auto', padding: '10px 20px 20px', width: '100%', display: 'flex', flexDirection: 'column' }}>
+        <div style={{ flex: '1 0 auto', maxWidth: '600px', margin: '0 auto', padding: '10px 15px 15px', width: '100%', display: 'flex', flexDirection: 'column' }}>
           {renderWizardHeader("01 目標とターゲット部位", 3)}
           
-          <div style={{ flex: 0, display: 'flex', flexDirection: 'column', paddingBottom: '20px' }}>
-            <h2 style={{ textAlign: 'center', fontSize: '1.8rem', fontWeight: 'bold', marginBottom: '15px' }}>主な目標は何ですか？</h2>
+          <div style={{ flex: 0, display: 'flex', flexDirection: 'column', paddingBottom: '10px' }}>
+            <h2 style={{ textAlign: 'center', fontSize: 'clamp(1.3rem, 5vw, 1.6rem)', fontWeight: 'bold', marginBottom: '10px' }}>主な目標は何ですか？</h2>
             
-            <div className="options-grid options-grid-3" style={{ flex: 1, justifyContent: 'flex-start', paddingTop: '10px', paddingBottom: '20px' }}>
+            <div className="options-grid options-grid-3" style={{ flex: 1, justifyContent: 'flex-start', paddingTop: '10px', paddingBottom: '10px' }}>
               {renderOptionCard('体重を減らす', 'fa-solid fa-weight-scale', goal === '減量', () => setGoal('減量'))}
               {renderOptionCard('筋肉増強', 'fa-solid fa-dumbbell', goal === '増量', () => setGoal('増量'))}
               {renderOptionCard('健康維持', 'fa-solid fa-heart-pulse', goal === '現状維持', () => setGoal('現状維持'))}
@@ -606,7 +606,7 @@ export default function Login() {
           </div>
 
           <div style={{ padding: '10px 0' }}>
-            <button onClick={handleNext} disabled={!goal} style={{ width: '100%', padding: '14px', background: goal ? 'var(--primary)' : '#dee2e6', color: goal ? '#fff' : '#adb5bd', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer' }}>
+            <button onClick={handleNext} disabled={!goal} style={{ width: '100%', padding: '12px', background: goal ? 'var(--primary)' : '#dee2e6', color: goal ? '#fff' : '#adb5bd', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer' }}>
               次へ
             </button>
           </div>
@@ -615,13 +615,13 @@ export default function Login() {
 
       {/* STEP 4: Target Area */}
       {step === 4 && (
-        <div style={{ flex: '1 0 auto', maxWidth: '600px', margin: '0 auto', padding: '10px 20px 20px', width: '100%', display: 'flex', flexDirection: 'column' }}>
+        <div style={{ flex: '1 0 auto', maxWidth: '600px', margin: '0 auto', padding: '10px 15px 15px', width: '100%', display: 'flex', flexDirection: 'column' }}>
           {renderWizardHeader("01 目標とターゲット部位", 4)}
           
-          <div style={{ flex: 0, display: 'flex', flexDirection: 'column', paddingBottom: '20px' }}>
-            <h2 style={{ textAlign: 'center', fontSize: '1.8rem', fontWeight: 'bold', marginBottom: '15px' }}>ターゲットの部位はどこですか？</h2>
+          <div style={{ flex: 0, display: 'flex', flexDirection: 'column', paddingBottom: '10px' }}>
+            <h2 style={{ textAlign: 'center', fontSize: 'clamp(1.3rem, 5vw, 1.6rem)', fontWeight: 'bold', marginBottom: '10px' }}>ターゲットの部位はどこですか？</h2>
             
-            <div className="options-grid" style={{ flex: 1, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', paddingTop: '10px', paddingBottom: '20px' }}>
+            <div className="options-grid" style={{ flex: 1, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', paddingTop: '10px', paddingBottom: '10px' }}>
               {renderOptionCard('全身', 'fa-solid fa-child', targetAreas.includes('全身'), () => handleAreaToggle('全身'))}
               {renderOptionCard('腕', 'fa-solid fa-hand-fist', targetAreas.includes('腕'), () => handleAreaToggle('腕'))}
               {renderOptionCard('胸部', 'fa-solid fa-child-reaching', targetAreas.includes('胸部'), () => handleAreaToggle('胸部'))}
@@ -632,7 +632,7 @@ export default function Login() {
           </div>
 
           <div style={{ padding: '10px 0', marginTop: '10px' }}>
-            <button onClick={handleNext} disabled={targetAreas.length === 0} style={{ width: '100%', padding: '14px', background: targetAreas.length > 0 ? 'var(--primary)' : '#dee2e6', color: targetAreas.length > 0 ? '#fff' : '#adb5bd', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer' }}>
+            <button onClick={handleNext} disabled={targetAreas.length === 0} style={{ width: '100%', padding: '12px', background: targetAreas.length > 0 ? 'var(--primary)' : '#dee2e6', color: targetAreas.length > 0 ? '#fff' : '#adb5bd', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer' }}>
               次へ
             </button>
           </div>
@@ -641,14 +641,14 @@ export default function Login() {
 
       {/* STEP 5: Date of Birth */}
       {step === 5 && (
-        <div style={{ flex: '1 0 auto', maxWidth: '600px', margin: '0 auto', padding: '10px 20px 20px', width: '100%', display: 'flex', flexDirection: 'column' }}>
+        <div style={{ flex: '1 0 auto', maxWidth: '600px', margin: '0 auto', padding: '10px 15px 15px', width: '100%', display: 'flex', flexDirection: 'column' }}>
           {renderWizardHeader("02 身体情報の設定", 5)}
           
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-            <h2 style={{ textAlign: 'center', fontSize: '1.8rem', fontWeight: 'bold', marginBottom: '20px' }}>生まれた年は？</h2>
+            <h2 style={{ textAlign: 'center', fontSize: 'clamp(1.3rem, 5vw, 1.6rem)', fontWeight: 'bold', marginBottom: '20px' }}>生まれた年は？</h2>
             <div style={{ background: '#f4f6fb', padding: '15px 20px', borderRadius: '12px', display: 'flex', alignItems: 'center', gap: '15px', marginBottom: '20px', width: '100%', maxWidth: '400px' }}>
               <i className="fa-solid fa-clipboard-list" style={{ fontSize: '1.5rem', color: 'var(--primary)' }}></i>
-              <p style={{ margin: 0, color: '#495057', fontSize: '0.95rem', lineHeight: 1.5 }}>あなたの年齢グループに最も適したワークアウトに調整しやすくなります。</p>
+              <p style={{ margin: 0, color: '#495057', fontSize: '0.9rem', lineHeight: 1.5 }}>あなたの年齢グループに最も適したワークアウトに調整しやすくなります。</p>
             </div>
             
             <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'center', marginBottom: '10px' }}>
@@ -681,18 +681,18 @@ export default function Login() {
 
       {/* STEP 6: Height */}
       {step === 6 && (
-        <div style={{ flex: '1 0 auto', maxWidth: '600px', margin: '0 auto', padding: '10px 20px 20px', width: '100%', display: 'flex', flexDirection: 'column' }}>
+        <div style={{ flex: '1 0 auto', maxWidth: '600px', margin: '0 auto', padding: '10px 15px 15px', width: '100%', display: 'flex', flexDirection: 'column' }}>
           {renderWizardHeader("02 身体情報の設定", 6)}
           
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-            <h2 style={{ textAlign: 'center', fontSize: '1.6rem', fontWeight: 'bold', marginBottom: '10px' }}>身長を入力してください。</h2>
+            <h2 style={{ textAlign: 'center', fontSize: 'clamp(1.2rem, 5vw, 1.5rem)', fontWeight: 'bold', marginBottom: '10px' }}>身長を入力してください。</h2>
 
             <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'center', marginBottom: '10px' }}>
               <input 
                 type="number" 
                 value={height} 
                 onChange={(e) => { setHeight(e.target.value); setHeightUnit('cm'); }} 
-                style={{ fontSize: '4rem', fontWeight: 'bold', color: '#1e1e24', background: 'transparent', border: 'none', borderBottom: '2px solid var(--primary)', width: '180px', textAlign: 'center', outline: 'none' }} 
+                style={{ fontSize: '3rem', fontWeight: 'bold', color: '#1e1e24', background: 'transparent', border: 'none', borderBottom: '2px solid var(--primary)', width: '180px', textAlign: 'center', outline: 'none' }} 
               />
               <span style={{ fontSize: '1.5rem', color: '#495057', marginLeft: '5px' }}>cm</span>
             </div>
@@ -719,11 +719,11 @@ export default function Login() {
 
       {/* STEP 7: Current Weight */}
       {step === 7 && (
-        <div style={{ flex: '1 0 auto', maxWidth: '600px', margin: '0 auto', padding: '10px 20px 20px', width: '100%', display: 'flex', flexDirection: 'column' }}>
+        <div style={{ flex: '1 0 auto', maxWidth: '600px', margin: '0 auto', padding: '10px 15px 15px', width: '100%', display: 'flex', flexDirection: 'column' }}>
           {renderWizardHeader("02 身体情報の設定", 7)}
           
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-            <h2 style={{ textAlign: 'center', fontSize: '1.6rem', fontWeight: 'bold', marginBottom: '10px' }}>現在の体重を入力してください。</h2>
+            <h2 style={{ textAlign: 'center', fontSize: 'clamp(1.2rem, 5vw, 1.5rem)', fontWeight: 'bold', marginBottom: '10px' }}>現在の体重を入力してください。</h2>
             
             <div style={{ display: 'flex', border: '1px solid var(--primary)', borderRadius: '30px', overflow: 'hidden', marginBottom: '10px' }}>
               <div 
@@ -743,7 +743,7 @@ export default function Login() {
                 type="number" 
                 value={weight} 
                 onChange={(e) => setWeight(e.target.value)} 
-                style={{ fontSize: '4rem', fontWeight: 'bold', color: '#1e1e24', background: 'transparent', border: 'none', borderBottom: '2px solid var(--primary)', width: '180px', textAlign: 'center', outline: 'none' }} 
+                style={{ fontSize: '3rem', fontWeight: 'bold', color: '#1e1e24', background: 'transparent', border: 'none', borderBottom: '2px solid var(--primary)', width: '180px', textAlign: 'center', outline: 'none' }} 
               />
               <span style={{ fontSize: '1.5rem', color: '#495057', marginLeft: '5px' }}>{weightUnit}</span>
             </div>
@@ -773,7 +773,7 @@ export default function Login() {
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
                     <span style={{ fontSize: '0.9rem', fontWeight: 'bold', color: '#8b8d9a' }}>あなたのBMI</span>
                     <div style={{ display: 'flex', alignItems: 'baseline', gap: '6px' }}>
-                      <span style={{ fontSize: '1.8rem', fontWeight: 'bold', color: bmiColor }}>{bmiFixed}</span>
+                      <span style={{ fontSize: 'clamp(1.3rem, 5vw, 1.6rem)', fontWeight: 'bold', color: bmiColor }}>{bmiFixed}</span>
                       <span style={{ fontSize: '1rem', fontWeight: 'bold', color: bmiColor, background: bmiColor + '20', padding: '2px 10px', borderRadius: '20px' }}>{bmiLabel}</span>
                     </div>
                   </div>
@@ -800,11 +800,11 @@ export default function Login() {
 
       {/* STEP 8: Target Weight */}
       {step === 8 && (
-        <div style={{ flex: '1 0 auto', maxWidth: '600px', margin: '0 auto', padding: '10px 20px 20px', width: '100%', display: 'flex', flexDirection: 'column' }}>
+        <div style={{ flex: '1 0 auto', maxWidth: '600px', margin: '0 auto', padding: '10px 15px 15px', width: '100%', display: 'flex', flexDirection: 'column' }}>
           {renderWizardHeader("02 身体情報の設定", 8)}
           
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-            <h2 style={{ textAlign: 'center', fontSize: '1.6rem', fontWeight: 'bold', marginBottom: '20px' }}>目標体重を入力してください。</h2>
+            <h2 style={{ textAlign: 'center', fontSize: 'clamp(1.2rem, 5vw, 1.5rem)', fontWeight: 'bold', marginBottom: '20px' }}>目標体重を入力してください。</h2>
             
             <div style={{ display: 'flex', border: '1px solid var(--primary)', borderRadius: '30px', overflow: 'hidden', marginBottom: '10px' }}>
               <div 
@@ -824,7 +824,7 @@ export default function Login() {
                 type="number" 
                 value={targetWeight} 
                 onChange={(e) => setTargetWeight(e.target.value)} 
-                style={{ fontSize: '4rem', fontWeight: 'bold', color: '#1e1e24', background: 'transparent', border: 'none', borderBottom: '2px solid var(--primary)', width: '180px', textAlign: 'center', outline: 'none' }} 
+                style={{ fontSize: '3rem', fontWeight: 'bold', color: '#1e1e24', background: 'transparent', border: 'none', borderBottom: '2px solid var(--primary)', width: '180px', textAlign: 'center', outline: 'none' }} 
               />
               <span style={{ fontSize: '1.5rem', color: '#495057', marginLeft: '5px' }}>{weightUnit}</span>
             </div>
@@ -854,7 +854,7 @@ export default function Login() {
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
                     <span style={{ fontSize: '0.9rem', fontWeight: 'bold', color: '#8b8d9a' }}>目標のBMI</span>
                     <div style={{ display: 'flex', alignItems: 'baseline', gap: '6px' }}>
-                      <span style={{ fontSize: '1.8rem', fontWeight: 'bold', color: bmiColor }}>{bmiFixed}</span>
+                      <span style={{ fontSize: 'clamp(1.3rem, 5vw, 1.6rem)', fontWeight: 'bold', color: bmiColor }}>{bmiFixed}</span>
                       <span style={{ fontSize: '1rem', fontWeight: 'bold', color: bmiColor, background: bmiColor + '20', padding: '2px 10px', borderRadius: '20px' }}>{bmiLabel}</span>
                     </div>
                   </div>
@@ -881,13 +881,13 @@ export default function Login() {
 
       {/* STEP 9: Environment */}
       {step === 9 && (
-        <div style={{ flex: '1 0 auto', maxWidth: '600px', margin: '0 auto', padding: '10px 20px 20px', width: '100%', display: 'flex', flexDirection: 'column' }}>
+        <div style={{ flex: '1 0 auto', maxWidth: '600px', margin: '0 auto', padding: '10px 15px 15px', width: '100%', display: 'flex', flexDirection: 'column' }}>
           {renderWizardHeader("03 トレーニング環境", 9)}
           
-          <div style={{ flex: 0, display: 'flex', flexDirection: 'column', paddingBottom: '20px' }}>
-            <h2 style={{ textAlign: 'center', fontSize: '1.6rem', fontWeight: 'bold', marginBottom: '15px' }}>どこでトレーニングしますか？</h2>
+          <div style={{ flex: 0, display: 'flex', flexDirection: 'column', paddingBottom: '10px' }}>
+            <h2 style={{ textAlign: 'center', fontSize: 'clamp(1.2rem, 5vw, 1.5rem)', fontWeight: 'bold', marginBottom: '10px' }}>どこでトレーニングしますか？</h2>
             
-            <div className="options-grid options-grid-3" style={{ flex: 1, justifyContent: 'flex-start', paddingTop: '10px', paddingBottom: '20px' }}>
+            <div className="options-grid options-grid-3" style={{ flex: 1, justifyContent: 'flex-start', paddingTop: '10px', paddingBottom: '10px' }}>
               {renderOptionCard('家', 'fa-solid fa-house', environment === '家', () => setEnvironment('家'))}
               {renderOptionCard('ジム', 'fa-solid fa-dumbbell', environment === 'ジム', () => setEnvironment('ジム'))}
               {renderOptionCard('どの場所でもOK', 'fa-solid fa-earth-americas', environment === 'どの場所でもOK', () => setEnvironment('どの場所でもOK'))}
@@ -904,13 +904,13 @@ export default function Login() {
 
       {/* STEP 10: Exercise Limitations */}
       {step === 10 && (
-        <div style={{ flex: '1 0 auto', maxWidth: '600px', margin: '0 auto', padding: '10px 20px 20px', width: '100%', display: 'flex', flexDirection: 'column' }}>
+        <div style={{ flex: '1 0 auto', maxWidth: '600px', margin: '0 auto', padding: '10px 15px 15px', width: '100%', display: 'flex', flexDirection: 'column' }}>
           {renderWizardHeader("03 トレーニング環境", 10)}
           
-          <div style={{ flex: 0, display: 'flex', flexDirection: 'column', paddingBottom: '20px' }}>
-            <h2 style={{ textAlign: 'center', fontSize: '1.6rem', fontWeight: 'bold', marginBottom: '15px' }}>運動の種類の制限はありますか？</h2>
+          <div style={{ flex: 0, display: 'flex', flexDirection: 'column', paddingBottom: '10px' }}>
+            <h2 style={{ textAlign: 'center', fontSize: 'clamp(1.2rem, 5vw, 1.5rem)', fontWeight: 'bold', marginBottom: '10px' }}>運動の種類の制限はありますか？</h2>
             
-            <div className="options-grid" style={{ flex: 1, justifyContent: 'flex-start', paddingTop: '10px', paddingBottom: '20px' }}>
+            <div className="options-grid" style={{ flex: 1, justifyContent: 'flex-start', paddingTop: '10px', paddingBottom: '10px' }}>
               {renderOptionCard('なし（何でもできる）', 'fa-solid fa-check-double', exerciseTypes.includes('なし'), () => handleExerciseTypeToggle('なし'))}
               {renderOptionCard('器具無し（自重のみ）', 'fa-solid fa-hand-fist', exerciseTypes.includes('器具無し'), () => handleExerciseTypeToggle('器具無し'))}
               {renderOptionCard('ジャンプ無し（騒音配慮）', 'fa-solid fa-shoe-prints', exerciseTypes.includes('ジャンプ無し'), () => handleExerciseTypeToggle('ジャンプ無し'))}
@@ -928,13 +928,13 @@ export default function Login() {
 
       {/* STEP 11: Workout Level */}
       {step === 11 && (
-        <div style={{ flex: '1 0 auto', maxWidth: '600px', margin: '0 auto', padding: '10px 20px 20px', width: '100%', display: 'flex', flexDirection: 'column' }}>
+        <div style={{ flex: '1 0 auto', maxWidth: '600px', margin: '0 auto', padding: '10px 15px 15px', width: '100%', display: 'flex', flexDirection: 'column' }}>
           {renderWizardHeader("03 フィットネスレベル評価", 11)}
           
-          <div style={{ flex: 0, display: 'flex', flexDirection: 'column', paddingBottom: '20px' }}>
-            <h2 style={{ textAlign: 'center', fontSize: '1.6rem', fontWeight: 'bold', marginBottom: '15px' }}>ご希望のワークアウトレベルを選択してください</h2>
+          <div style={{ flex: 0, display: 'flex', flexDirection: 'column', paddingBottom: '10px' }}>
+            <h2 style={{ textAlign: 'center', fontSize: 'clamp(1.2rem, 5vw, 1.5rem)', fontWeight: 'bold', marginBottom: '10px' }}>ご希望のワークアウトレベルを選択してください</h2>
             
-            <div className="options-grid options-grid-3" style={{ flex: 1, justifyContent: 'flex-start', paddingTop: '10px', paddingBottom: '20px' }}>
+            <div className="options-grid options-grid-3" style={{ flex: 1, justifyContent: 'flex-start', paddingTop: '10px', paddingBottom: '10px' }}>
               {renderOptionCard('簡単に始められる', 'fa-solid fa-hand-peace', workoutLevel === '簡単に始められる', () => setWorkoutLevel('簡単に始められる'))}
               {renderOptionCard('軽い汗をかく', 'fa-solid fa-droplet', workoutLevel === '軽い汗をかく', () => setWorkoutLevel('軽い汗をかく'))}
               {renderOptionCard('少しやりごたえがある', 'fa-solid fa-fire', workoutLevel === '少しやりごたえがある', () => setWorkoutLevel('少しやりごたえがある'))}
@@ -951,17 +951,17 @@ export default function Login() {
 
       {/* STEP 12: Physical Issues */}
       {step === 12 && (
-        <div style={{ flex: '1 0 auto', maxWidth: '600px', margin: '0 auto', padding: '10px 20px 20px', width: '100%', display: 'flex', flexDirection: 'column' }}>
+        <div style={{ flex: '1 0 auto', maxWidth: '600px', margin: '0 auto', padding: '10px 15px 15px', width: '100%', display: 'flex', flexDirection: 'column' }}>
           {renderWizardHeader("04 ライフスタイル", 12)}
           
-          <div style={{ flex: 0, display: 'flex', flexDirection: 'column', paddingBottom: '20px' }}>
-            <h2 style={{ textAlign: 'center', fontSize: '1.6rem', fontWeight: 'bold', marginBottom: '15px' }}>体に不快感や懸念はありますか？</h2>
+          <div style={{ flex: 0, display: 'flex', flexDirection: 'column', paddingBottom: '10px' }}>
+            <h2 style={{ textAlign: 'center', fontSize: 'clamp(1.2rem, 5vw, 1.5rem)', fontWeight: 'bold', marginBottom: '10px' }}>体に不快感や懸念はありますか？</h2>
             <div style={{ background: '#f4f6fb', padding: '15px 20px', borderRadius: '12px', display: 'flex', alignItems: 'center', gap: '15px', marginBottom: '10px', width: '100%' }}>
               <i className="fa-solid fa-briefcase-medical" style={{ fontSize: '1.5rem', color: 'var(--primary)' }}></i>
-              <p style={{ margin: 0, color: '#495057', fontSize: '0.95rem', lineHeight: 1.5 }}>これにより、特別な注意が必要な部位に焦点を当て、あなたのフィットネスの旅をカスタマイズします。</p>
+              <p style={{ margin: 0, color: '#495057', fontSize: '0.9rem', lineHeight: 1.5 }}>これにより、特別な注意が必要な部位に焦点を当て、あなたのフィットネスの旅をカスタマイズします。</p>
             </div>
             
-            <div className="options-grid" style={{ flex: 1, justifyContent: 'flex-start', paddingTop: '10px', paddingBottom: '20px' }}>
+            <div className="options-grid" style={{ flex: 1, justifyContent: 'flex-start', paddingTop: '10px', paddingBottom: '10px' }}>
               {['なし', '膝', '腰', '手首', '首', '肩'].map(issue => (
                 <div 
                   key={issue}
@@ -1005,11 +1005,11 @@ export default function Login() {
 
       {/* STEP 13: Activity Level */}
       {step === 13 && (
-        <div style={{ flex: '1 0 auto', maxWidth: '600px', margin: '0 auto', padding: '10px 20px 20px', width: '100%', display: 'flex', flexDirection: 'column' }}>
+        <div style={{ flex: '1 0 auto', maxWidth: '600px', margin: '0 auto', padding: '10px 15px 15px', width: '100%', display: 'flex', flexDirection: 'column' }}>
           {renderWizardHeader("04 ライフスタイル", 13)}
           
-          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', paddingBottom: '20px' }}>
-            <h2 style={{ textAlign: 'center', fontSize: '1.6rem', fontWeight: 'bold', marginBottom: '0px' }}>あなたの身体活動レベルは？</h2>
+          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', paddingBottom: '10px' }}>
+            <h2 style={{ textAlign: 'center', fontSize: 'clamp(1.2rem, 5vw, 1.5rem)', fontWeight: 'bold', marginBottom: '0px' }}>あなたの身体活動レベルは？</h2>
             
             <div style={{ display: 'flex', flexDirection: 'column' }}>
               <ActivityLevelSlider value={activityLevel} onChange={setActivityLevel} />
@@ -1026,13 +1026,13 @@ export default function Login() {
 
       {/* STEP 14: Frequency */}
       {step === 14 && (
-        <div style={{ flex: '1 0 auto', maxWidth: '600px', margin: '0 auto', padding: '10px 20px 20px', width: '100%', display: 'flex', flexDirection: 'column' }}>
+        <div style={{ flex: '1 0 auto', maxWidth: '600px', margin: '0 auto', padding: '10px 15px 15px', width: '100%', display: 'flex', flexDirection: 'column' }}>
           {renderWizardHeader("04 ライフスタイル", 14)}
           
-          <div style={{ flex: 0, display: 'flex', flexDirection: 'column', paddingBottom: '20px' }}>
-            <h2 style={{ textAlign: 'center', fontSize: '1.6rem', fontWeight: 'bold', marginBottom: '15px' }}>目標とする運動頻度（1週間）</h2>
+          <div style={{ flex: 0, display: 'flex', flexDirection: 'column', paddingBottom: '10px' }}>
+            <h2 style={{ textAlign: 'center', fontSize: 'clamp(1.2rem, 5vw, 1.5rem)', fontWeight: 'bold', marginBottom: '10px' }}>目標とする運動頻度（1週間）</h2>
             
-            <div className="options-grid" style={{ flex: 1, justifyContent: 'flex-start', paddingTop: '10px', paddingBottom: '20px' }}>
+            <div className="options-grid" style={{ flex: 1, justifyContent: 'flex-start', paddingTop: '10px', paddingBottom: '10px' }}>
               {renderOptionCard('週1回 (無理なく)', 'fa-solid fa-calendar-day', frequency === '週1回', () => setFrequency('週1回'))}
               {renderOptionCard('週2〜3回 (おすすめ！)', 'fa-solid fa-calendar-days', frequency === '週3回', () => setFrequency('週3回'))}
               {renderOptionCard('週4〜5回', 'fa-solid fa-calendar-week', frequency === '週5回', () => setFrequency('週5回'))}
@@ -1093,7 +1093,7 @@ export default function Login() {
               }
               
               return (
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', alignItems: 'center', marginBottom: '15px', width: '100%', textAlign: 'left' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', alignItems: 'center', marginBottom: '10px', width: '100%', textAlign: 'left' }}>
                   <h3 style={{ fontSize: '1.1rem', fontWeight: 'bold', color: 'var(--primary)', alignSelf: 'flex-start' }}>
                     <i className="fa-solid fa-bolt"></i> おすすめプラン
                   </h3>
@@ -1101,7 +1101,7 @@ export default function Login() {
                     <span className="challenge-badge" style={{ background: 'rgba(255,255,255,0.2)', color: '#fff', padding: '4px 10px', borderRadius: '20px', fontSize: '0.75rem', fontWeight: 'bold', display: 'inline-block', marginBottom: '10px' }}>あなたにおすすめ</span>
                     <h4 className="challenge-title" style={{ fontSize: '1.4rem', fontWeight: 'bold', margin: '0 0 15px 0' }}>全身脂肪燃焼 ({levelVal})</h4>
                     
-                    <div className="challenge-stats" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginBottom: '15px' }}>
+                    <div className="challenge-stats" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginBottom: '10px' }}>
                       <div className="challenge-stat" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                         <div className="challenge-stat-icon" style={{ fontSize: '1.4rem', opacity: 0.8 }}><i className="fa-solid fa-calendar-days"></i></div>
                         <div className="challenge-stat-text">
