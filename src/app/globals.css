@@ -2,6 +2,15 @@
    CSS Design System - 筋虎 (Kintora) — Premium Edition
    ========================================================================== */
 
+
+/* ---- Text Size Modifiers ---- */
+html.text-size-normal, body.text-size-normal {
+    font-size: 16px;
+}
+html.text-size-large, body.text-size-large {
+    font-size: 18px;
+}
+
 /* ---- Google Fonts (loaded in HTML) ---- */
 :root {
   --primary: #F59E0B;

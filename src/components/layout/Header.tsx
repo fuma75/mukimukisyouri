@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useAppContext } from '../AppContext';
 
 export default function Header() {
-  const { activeTab, setActiveTab, userProfile, streak } = useAppContext();
+  const { activeTab, setActiveTab, userProfile, streak, theme, setTheme, textSize, setTextSize } = useAppContext();
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [settingsMenuOpen, setSettingsMenuOpen] = useState(false);
 
@@ -78,22 +78,36 @@ export default function Header() {
                 <button className="dropdown-item" onClick={() => setSettingsMenuOpen(false)} style={{ color: 'var(--text-muted)' }}>
                   <i className="fa-solid fa-arrow-left"></i> 戻る
                 </button>
-                <div style={{ padding: '8px 16px', fontSize: '0.8rem', color: 'var(--text-muted)' }}>
-                  言語設定 / Language
+                <div style={{ padding: '12px 16px 4px', fontSize: '0.8rem', color: 'var(--text-muted)' }}>
+                  テーマ
                 </div>
-                {['日本語', 'English', '한국어', '中文'].map(lang => (
+                <div style={{ display: 'flex', padding: '0 16px 8px', gap: '8px' }}>
                   <button 
-                    key={lang} 
-                    className="dropdown-item" 
-                    onClick={() => selectLanguage(lang)}
-                    style={{ 
-                      background: appLang === lang ? 'rgba(255,87,51,0.1)' : 'transparent', 
-                      color: appLang === lang ? 'var(--primary)' : 'inherit' 
-                    }}
-                  >
-                    <i className={`fa-solid ${appLang === lang ? 'fa-check' : 'fa-globe'}`}></i> {lang}
+                    onClick={() => setTheme('light')}
+                    style={{ flex: 1, padding: '8px', borderRadius: '8px', border: theme === 'light' ? '2px solid var(--primary)' : '1px solid rgba(255,255,255,0.1)', background: theme === 'light' ? 'rgba(255,255,255,0.1)' : 'transparent', color: 'var(--text-primary)', cursor: 'pointer' }}>
+                    <i className="fa-solid fa-sun"></i> ライト
                   </button>
-                ))}
+                  <button 
+                    onClick={() => setTheme('dark')}
+                    style={{ flex: 1, padding: '8px', borderRadius: '8px', border: theme === 'dark' ? '2px solid var(--primary)' : '1px solid rgba(255,255,255,0.1)', background: theme === 'dark' ? 'rgba(0,0,0,0.2)' : 'transparent', color: 'var(--text-primary)', cursor: 'pointer' }}>
+                    <i className="fa-solid fa-moon"></i> ダーク
+                  </button>
+                </div>
+                <div style={{ padding: '12px 16px 4px', fontSize: '0.8rem', color: 'var(--text-muted)' }}>
+                  文字の大きさ
+                </div>
+                <div style={{ display: 'flex', padding: '0 16px 16px', gap: '8px' }}>
+                  <button 
+                    onClick={() => setTextSize('normal')}
+                    style={{ flex: 1, padding: '8px', borderRadius: '8px', border: textSize === 'normal' ? '2px solid var(--primary)' : '1px solid rgba(255,255,255,0.1)', background: textSize === 'normal' ? 'rgba(255,255,255,0.1)' : 'transparent', color: 'var(--text-primary)', cursor: 'pointer', fontSize: '1rem' }}>
+                    標準
+                  </button>
+                  <button 
+                    onClick={() => setTextSize('large')}
+                    style={{ flex: 1, padding: '8px', borderRadius: '8px', border: textSize === 'large' ? '2px solid var(--primary)' : '1px solid rgba(255,255,255,0.1)', background: textSize === 'large' ? 'rgba(255,255,255,0.1)' : 'transparent', color: 'var(--text-primary)', cursor: 'pointer', fontSize: '1.2rem', fontWeight: 'bold' }}>
+                    大
+                  </button>
+                </div>
               </>
             ) : (
               <>
