@@ -456,7 +456,7 @@ export default function Workout() {
     const challenges = [
         { level: 1, title: '全身脂肪燃焼 (初級)', time: '約6分', levelText: '初級', bg: 'linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%)' },
         { level: 2, title: '全身脂肪燃焼 (中級)', time: '約8分', levelText: '中級', bg: 'linear-gradient(135deg, #8d6e63 0%, #5d4037 100%)' },
-        { level: 3, title: '全身脂肪燃焼 (上級)', time: '約12分', levelText: '上級', bg: 'linear-gradient(135deg, #9c27b0 0%, #6a1b9a 100%)' }
+        { level: 3, title: '全身脂肪燃焼 (上級)', time: '約12分', levelText: '上級', bg: 'linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%)' }
     ];
 
     // Auto-scroll to recommended card on render
