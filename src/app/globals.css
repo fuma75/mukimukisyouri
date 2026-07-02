@@ -3063,7 +3063,7 @@ body::before {
 }
 
 .summary-card {
-    background: white;
+    background: var(--bg-card);
     border-radius: 12px;
     padding: 15px;
     margin-bottom: 20px;
@@ -3109,7 +3109,7 @@ body::before {
 }
 
 .daily-workout-card {
-    background: white;
+    background: var(--bg-card);
     border-radius: 12px;
     padding: 10px;
     display: flex;
