@@ -460,7 +460,7 @@ export default function Login() {
   );
 
   return (
-    <div className="login-overlay light-theme" style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, zIndex: 9999, overflowY: 'auto', padding: '0', background: '#fcfcfd', color: '#212529', display: 'flex', flexDirection: 'column' }}>
+    <div className="login-overlay light-theme" style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, zIndex: 9999, overflowY: 'auto', padding: '0', background: '#FAFAFA', color: '#212529', display: 'flex', flexDirection: 'column' }}>
       
       {/* STEP 1: Firebase Auth */}
       {step === 1 && (
@@ -468,7 +468,7 @@ export default function Login() {
           <div className="login-logo" style={{ marginBottom: '20px', textAlign: 'center' }}>
             <img src="/images/logo.png" alt="筋虎" style={{ width: '70px', height: '70px', borderRadius: '50%', objectFit: 'cover', marginBottom: '10px', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }} />
             <h1 style={{ fontSize: 'clamp(1.3rem, 5vw, 1.6rem)', margin: '0', fontWeight: 'bold' }}>筋虎</h1>
-            <p style={{ color: '#495057', fontSize: '0.9rem', marginTop: '5px' }}>あなた専用の虎コーチ</p>
+            <p style={{ color: '#111827', fontSize: '0.9rem', marginTop: '5px' }}>あなた専用の虎コーチ</p>
           </div>
 
           <div className="animate-fade-in">
@@ -505,7 +505,7 @@ export default function Login() {
               </button>
             </form>
 
-            <div style={{ display: 'flex', alignItems: 'center', margin: '15px 0', color: '#adb5bd', fontSize: '0.85rem' }}>
+            <div style={{ display: 'flex', alignItems: 'center', margin: '15px 0', color: '#6c757d', fontSize: '0.85rem' }}>
               <div style={{ flex: 1, height: '1px', background: '#e9ecef' }}></div>
               <div style={{ padding: '0 10px' }}>または</div>
               <div style={{ flex: 1, height: '1px', background: '#e9ecef' }}></div>
@@ -531,7 +531,7 @@ export default function Login() {
           
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', paddingBottom: '10px' }}>
             <h2 style={{ textAlign: 'center', fontSize: 'clamp(1.3rem, 5vw, 1.6rem)', fontWeight: 'bold', marginBottom: '5px' }}>あなたの性別は？</h2>
-            <p style={{ textAlign: 'center', color: '#495057', marginBottom: '10px' }}>あなたについて教えてください</p>
+            <p style={{ textAlign: 'center', color: '#111827', marginBottom: '10px' }}>あなたについて教えてください</p>
             
             <div style={{ display: 'flex', gap: '20px', justifyContent: 'center' }}>
               {['male', 'female'].map((g) => {
@@ -547,7 +547,7 @@ export default function Login() {
                       maxWidth: '220px', 
                       height: 'min(240px, 35vh)', 
                       borderRadius: '20px', 
-                      background: isSelected ? 'rgba(245, 158, 11, 0.05)' : '#fff', 
+                      background: '#fff', 
                       border: `2px solid ${isSelected ? 'var(--primary)' : '#e9ecef'}`, 
                       cursor: 'pointer',
                       display: 'flex',
@@ -557,15 +557,15 @@ export default function Login() {
                       transform: isSelected ? 'scale(1.02)' : 'scale(1)'
                     }}>
                     
-                    <div style={{ flex: 1, background: '#f8f9fa', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#adb5bd' }}>
+                    <div style={{ flex: 1, background: '#f8f9fa', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#6c757d' }}>
                       <i className={`fa-solid ${g === 'male' ? 'fa-person' : 'fa-person-dress'}`} style={{ fontSize: '3rem' }}></i>
                     </div>
                     
                     <div style={{ padding: '20px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px' }}>
-                      <span style={{ fontSize: '1.1rem', fontWeight: 'bold', color: isSelected ? 'var(--primary)' : '#495057' }}>
+                      <span style={{ fontSize: '1.1rem', fontWeight: 'bold', color: isSelected ? '#111827' : '#6c757d' }}>
                         {g === 'male' ? '男性' : '女性'}
                       </span>
-                      {isSelected && <i className="fa-solid fa-circle-check" style={{ color: 'var(--primary)', fontSize: '1.2rem' }}></i>}
+                      {isSelected && <i className="fa-solid fa-circle-check" style={{ color: '#F59E0B', fontSize: '1.2rem' }}></i>}
                     </div>
                   </div>
                 );
@@ -576,14 +576,14 @@ export default function Login() {
               <button 
                 type="button" 
                 onClick={() => setGender('other')}
-                style={{ background: gender === 'other' ? 'var(--primary)' : '#f8f9fa', border: 'none', padding: '10px 24px', borderRadius: '24px', color: gender === 'other' ? '#fff' : '#495057', fontSize: '0.9rem', cursor: 'pointer', transition: 'all 0.2s' }}>
+                style={{ background: gender === 'other' ? '#111827' : '#fff', border: '1px solid ' + (gender === 'other' ? '#111827' : '#ddd'), padding: '10px 24px', borderRadius: '24px', color: gender === 'other' ? '#fff' : '#111827', fontSize: '0.9rem', cursor: 'pointer', transition: 'all 0.2s' }}>
                 その他 / 言いたくない
               </button>
             </div>
           </div>
 
           <div style={{ padding: '10px 0' }}>
-            <button onClick={handleNext} disabled={!gender} style={{ width: '100%', padding: '12px', background: gender ? 'var(--primary)' : '#dee2e6', color: gender ? '#fff' : '#adb5bd', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer' }}>
+            <button onClick={handleNext} disabled={!gender} style={{ width: '100%', padding: '12px', background: gender ? 'linear-gradient(135deg, #F59E0B 0%, #D97706 100%)' : '#e9ecef', boxShadow: gender ? '0 4px 15px rgba(217, 119, 6, 0.3)' : 'none', color: gender ? '#fff' : '#adb5bd', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer' }}>
               次へ
             </button>
           </div>
@@ -606,7 +606,7 @@ export default function Login() {
           </div>
 
           <div style={{ padding: '10px 0' }}>
-            <button onClick={handleNext} disabled={!goal} style={{ width: '100%', padding: '12px', background: goal ? 'var(--primary)' : '#dee2e6', color: goal ? '#fff' : '#adb5bd', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer' }}>
+            <button onClick={handleNext} disabled={!goal} style={{ width: '100%', padding: '12px', background: goal ? 'linear-gradient(135deg, #F59E0B 0%, #D97706 100%)' : '#e9ecef', boxShadow: goal ? '0 4px 15px rgba(217, 119, 6, 0.3)' : 'none', color: goal ? '#fff' : '#adb5bd', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer' }}>
               次へ
             </button>
           </div>
@@ -632,7 +632,7 @@ export default function Login() {
           </div>
 
           <div style={{ padding: '10px 0', marginTop: '10px' }}>
-            <button onClick={handleNext} disabled={targetAreas.length === 0} style={{ width: '100%', padding: '12px', background: targetAreas.length > 0 ? 'var(--primary)' : '#dee2e6', color: targetAreas.length > 0 ? '#fff' : '#adb5bd', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer' }}>
+            <button onClick={handleNext} disabled={targetAreas.length === 0} style={{ width: '100%', padding: '12px', background: targetAreas.length > 0 ? 'linear-gradient(135deg, #F59E0B 0%, #D97706 100%)' : '#e9ecef', boxShadow: targetAreas.length > 0 ? '0 4px 15px rgba(217, 119, 6, 0.3)' : 'none', color: targetAreas.length > 0 ? '#fff' : '#adb5bd', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer' }}>
               次へ
             </button>
           </div>
@@ -648,7 +648,7 @@ export default function Login() {
             <h2 style={{ textAlign: 'center', fontSize: 'clamp(1.3rem, 5vw, 1.6rem)', fontWeight: 'bold', marginBottom: '20px' }}>生まれた年は？</h2>
             <div style={{ background: '#f4f6fb', padding: '15px 20px', borderRadius: '12px', display: 'flex', alignItems: 'center', gap: '15px', marginBottom: '20px', width: '100%', maxWidth: '400px' }}>
               <i className="fa-solid fa-clipboard-list" style={{ fontSize: '1.5rem', color: 'var(--primary)' }}></i>
-              <p style={{ margin: 0, color: '#495057', fontSize: '0.9rem', lineHeight: 1.5 }}>あなたの年齢グループに最も適したワークアウトに調整しやすくなります。</p>
+              <p style={{ margin: 0, color: '#111827', fontSize: '0.9rem', lineHeight: 1.5 }}>あなたの年齢グループに最も適したワークアウトに調整しやすくなります。</p>
             </div>
             
             <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'center', marginBottom: '10px' }}>
@@ -663,7 +663,7 @@ export default function Login() {
                 }} 
                 style={{ fontSize: '3.5rem', fontWeight: 'bold', color: '#1e1e24', background: 'transparent', border: 'none', borderBottom: '2px solid var(--primary)', width: '140px', textAlign: 'center', outline: 'none' }} 
               />
-              <span style={{ fontSize: '1.5rem', color: '#495057', marginLeft: '5px' }}>年</span>
+              <span style={{ fontSize: '1.5rem', color: '#111827', marginLeft: '5px' }}>年</span>
             </div>
 
             <div style={{ width: '100%', maxWidth: '400px' }}>
@@ -672,7 +672,7 @@ export default function Login() {
           </div>
 
           <div style={{ padding: '10px 0' }}>
-            <button onClick={handleNext} disabled={!dob} style={{ width: '100%', padding: '14px', background: dob ? 'var(--primary)' : '#dee2e6', color: dob ? '#fff' : '#adb5bd', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer' }}>
+            <button onClick={handleNext} disabled={!dob} style={{ width: '100%', padding: '14px', background: dob ? 'linear-gradient(135deg, #F59E0B 0%, #D97706 100%)' : '#e9ecef', boxShadow: dob ? '0 4px 15px rgba(217, 119, 6, 0.3)' : 'none', color: dob ? '#fff' : '#adb5bd', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer' }}>
               次へ
             </button>
           </div>
@@ -694,7 +694,7 @@ export default function Login() {
                 onChange={(e) => { setHeight(e.target.value); setHeightUnit('cm'); }} 
                 style={{ fontSize: '3rem', fontWeight: 'bold', color: '#1e1e24', background: 'transparent', border: 'none', borderBottom: '2px solid var(--primary)', width: '180px', textAlign: 'center', outline: 'none' }} 
               />
-              <span style={{ fontSize: '1.5rem', color: '#495057', marginLeft: '5px' }}>cm</span>
+              <span style={{ fontSize: '1.5rem', color: '#111827', marginLeft: '5px' }}>cm</span>
             </div>
             
             <div style={{ width: '100%', marginTop: '0' }}>
@@ -710,7 +710,7 @@ export default function Login() {
           </div>
 
           <div style={{ padding: '10px 0' }}>
-            <button onClick={handleNext} disabled={!height} style={{ width: '100%', padding: '14px', background: height ? 'var(--primary)' : '#dee2e6', color: height ? '#fff' : '#adb5bd', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer' }}>
+            <button onClick={handleNext} disabled={!height} style={{ width: '100%', padding: '14px', background: height ? 'linear-gradient(135deg, #F59E0B 0%, #D97706 100%)' : '#e9ecef', boxShadow: height ? '0 4px 15px rgba(217, 119, 6, 0.3)' : 'none', color: height ? '#fff' : '#adb5bd', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer' }}>
               次へ
             </button>
           </div>
@@ -745,7 +745,7 @@ export default function Login() {
                 onChange={(e) => setWeight(e.target.value)} 
                 style={{ fontSize: '3rem', fontWeight: 'bold', color: '#1e1e24', background: 'transparent', border: 'none', borderBottom: '2px solid var(--primary)', width: '180px', textAlign: 'center', outline: 'none' }} 
               />
-              <span style={{ fontSize: '1.5rem', color: '#495057', marginLeft: '5px' }}>{weightUnit}</span>
+              <span style={{ fontSize: '1.5rem', color: '#111827', marginLeft: '5px' }}>{weightUnit}</span>
             </div>
             
             <div style={{ width: '100%', marginTop: '0' }}>
@@ -780,7 +780,7 @@ export default function Login() {
                   <div style={{ width: '100%', height: '8px', borderRadius: '4px', background: 'linear-gradient(to right, #3b82f6 0%, #22c55e 40%, #f59e0b 65%, #ef4444 100%)', position: 'relative' }}>
                     <div style={{ position: 'absolute', top: '-4px', left: `calc(${bmiPercent}% - 8px)`, width: '16px', height: '16px', borderRadius: '50%', background: '#fff', border: `3px solid ${bmiColor}`, boxShadow: '0 2px 6px rgba(0,0,0,0.2)', transition: 'left 0.3s' }} />
                   </div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '6px', fontSize: '0.75rem', color: '#adb5bd' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '6px', fontSize: '0.75rem', color: '#6c757d' }}>
                     <span>低体重 〜18.5</span>
                     <span>標準 18.5〜24.9</span>
                     <span>肥満 25〜</span>
@@ -826,7 +826,7 @@ export default function Login() {
                 onChange={(e) => setTargetWeight(e.target.value)} 
                 style={{ fontSize: '3rem', fontWeight: 'bold', color: '#1e1e24', background: 'transparent', border: 'none', borderBottom: '2px solid var(--primary)', width: '180px', textAlign: 'center', outline: 'none' }} 
               />
-              <span style={{ fontSize: '1.5rem', color: '#495057', marginLeft: '5px' }}>{weightUnit}</span>
+              <span style={{ fontSize: '1.5rem', color: '#111827', marginLeft: '5px' }}>{weightUnit}</span>
             </div>
             
             <div style={{ width: '100%', marginTop: '0' }}>
@@ -861,7 +861,7 @@ export default function Login() {
                   <div style={{ width: '100%', height: '8px', borderRadius: '4px', background: 'linear-gradient(to right, #3b82f6 0%, #22c55e 40%, #f59e0b 65%, #ef4444 100%)', position: 'relative' }}>
                     <div style={{ position: 'absolute', top: '-4px', left: `calc(${bmiPercent}% - 8px)`, width: '16px', height: '16px', borderRadius: '50%', background: '#fff', border: `3px solid ${bmiColor}`, boxShadow: '0 2px 6px rgba(0,0,0,0.2)', transition: 'left 0.3s' }} />
                   </div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '6px', fontSize: '0.75rem', color: '#adb5bd' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '6px', fontSize: '0.75rem', color: '#6c757d' }}>
                     <span>低体重 〜18.5</span>
                     <span>標準 18.5〜24.9</span>
                     <span>肥満 25〜</span>
@@ -895,7 +895,7 @@ export default function Login() {
           </div>
 
           <div style={{ padding: '10px 0' }}>
-            <button onClick={handleNext} disabled={!environment} style={{ width: '100%', padding: '14px', background: environment ? 'var(--primary)' : '#dee2e6', color: environment ? '#fff' : '#adb5bd', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer' }}>
+            <button onClick={handleNext} disabled={!environment} style={{ width: '100%', padding: '14px', background: environment ? 'linear-gradient(135deg, #F59E0B 0%, #D97706 100%)' : '#e9ecef', boxShadow: environment ? '0 4px 15px rgba(217, 119, 6, 0.3)' : 'none', color: environment ? '#fff' : '#adb5bd', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer' }}>
               次へ
             </button>
           </div>
@@ -919,7 +919,7 @@ export default function Login() {
           </div>
 
           <div style={{ padding: '10px 0' }}>
-            <button onClick={handleNext} disabled={exerciseTypes.length === 0} style={{ width: '100%', padding: '14px', background: exerciseTypes.length > 0 ? 'var(--primary)' : '#dee2e6', color: exerciseTypes.length > 0 ? '#fff' : '#adb5bd', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer' }}>
+            <button onClick={handleNext} disabled={exerciseTypes.length === 0} style={{ width: '100%', padding: '14px', background: exerciseTypes.length > 0 ? 'linear-gradient(135deg, #F59E0B 0%, #D97706 100%)' : '#e9ecef', boxShadow: exerciseTypes.length > 0 ? '0 4px 15px rgba(217, 119, 6, 0.3)' : 'none', color: exerciseTypes.length > 0 ? '#fff' : '#adb5bd', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer' }}>
               次へ
             </button>
           </div>
@@ -942,7 +942,7 @@ export default function Login() {
           </div>
 
           <div style={{ padding: '10px 0' }}>
-            <button onClick={handleNext} disabled={!workoutLevel} style={{ width: '100%', padding: '14px', background: workoutLevel ? 'var(--primary)' : '#dee2e6', color: workoutLevel ? '#fff' : '#adb5bd', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer' }}>
+            <button onClick={handleNext} disabled={!workoutLevel} style={{ width: '100%', padding: '14px', background: workoutLevel ? 'linear-gradient(135deg, #F59E0B 0%, #D97706 100%)' : '#e9ecef', boxShadow: workoutLevel ? '0 4px 15px rgba(217, 119, 6, 0.3)' : 'none', color: workoutLevel ? '#fff' : '#adb5bd', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer' }}>
               次へ
             </button>
           </div>
@@ -958,7 +958,7 @@ export default function Login() {
             <h2 style={{ textAlign: 'center', fontSize: 'clamp(1.2rem, 5vw, 1.5rem)', fontWeight: 'bold', marginBottom: '10px' }}>体に不快感や懸念はありますか？</h2>
             <div style={{ background: '#f4f6fb', padding: '15px 20px', borderRadius: '12px', display: 'flex', alignItems: 'center', gap: '15px', marginBottom: '10px', width: '100%' }}>
               <i className="fa-solid fa-briefcase-medical" style={{ fontSize: '1.5rem', color: 'var(--primary)' }}></i>
-              <p style={{ margin: 0, color: '#495057', fontSize: '0.9rem', lineHeight: 1.5 }}>これにより、特別な注意が必要な部位に焦点を当て、あなたのフィットネスの旅をカスタマイズします。</p>
+              <p style={{ margin: 0, color: '#111827', fontSize: '0.9rem', lineHeight: 1.5 }}>これにより、特別な注意が必要な部位に焦点を当て、あなたのフィットネスの旅をカスタマイズします。</p>
             </div>
             
             <div className="options-grid" style={{ flex: 1, justifyContent: 'flex-start', paddingTop: '10px', paddingBottom: '10px' }}>
@@ -1017,7 +1017,7 @@ export default function Login() {
           </div>
 
           <div style={{ padding: '10px 0' }}>
-            <button onClick={handleNext} disabled={!activityLevel} style={{ width: '100%', padding: '14px', background: activityLevel ? 'var(--primary)' : '#dee2e6', color: activityLevel ? '#fff' : '#adb5bd', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer' }}>
+            <button onClick={handleNext} disabled={!activityLevel} style={{ width: '100%', padding: '14px', background: activityLevel ? 'linear-gradient(135deg, #F59E0B 0%, #D97706 100%)' : '#e9ecef', boxShadow: activityLevel ? '0 4px 15px rgba(217, 119, 6, 0.3)' : 'none', color: activityLevel ? '#fff' : '#adb5bd', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer' }}>
               次へ
             </button>
           </div>
@@ -1041,7 +1041,7 @@ export default function Login() {
           </div>
 
           <div style={{ padding: '10px 0' }}>
-            <button type="button" onClick={handleCalculateAI} disabled={!frequency || loading} style={{ width: '100%', padding: '14px', background: frequency ? 'var(--primary)' : '#dee2e6', color: frequency ? '#fff' : '#adb5bd', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px' }}>
+            <button type="button" onClick={handleCalculateAI} disabled={!frequency || loading} style={{ width: '100%', padding: '14px', background: frequency ? 'linear-gradient(135deg, #F59E0B 0%, #D97706 100%)' : '#e9ecef', boxShadow: frequency ? '0 4px 15px rgba(217, 119, 6, 0.3)' : 'none', color: frequency ? '#fff' : '#adb5bd', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px' }}>
               {loading ? <i className="fa-solid fa-spinner fa-spin"></i> : <i className="fa-solid fa-robot"></i>}
               {loading ? 'AIで目標を計算中...' : 'AIで目標を計算して完了'}
             </button>
@@ -1059,7 +1059,7 @@ export default function Login() {
             <h2 style={{ marginBottom: '5px', fontSize: '1.3rem', fontWeight: 'bold' }}>AI分析完了！</h2>
             
             <div style={{ background: '#f8f9fa', padding: '10px 15px', borderRadius: '20px', border: '1px solid #e9ecef', marginBottom: '10px' }}>
-              <p style={{ color: '#495057', marginBottom: '0', fontSize: '0.9rem' }}>目標（{targetWeight}{weightUnit}）到達までの予測日数</p>
+              <p style={{ color: '#111827', marginBottom: '0', fontSize: '0.9rem' }}>目標（{targetWeight}{weightUnit}）到達までの予測日数</p>
               <div style={{ fontSize: '2.5rem', fontWeight: 'bold', color: 'var(--primary)', marginBottom: '10px' }}>
                 約 {estimatedResult?.estimatedDays || '?'} 日
               </div>
