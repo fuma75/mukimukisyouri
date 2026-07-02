@@ -47,6 +47,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     localStorage.setItem('kinnikun_textSize', textSize);
     
     // Apply classes to body
+    document.documentElement.className = theme + '-theme text-size-' + textSize;
     document.body.className = theme + '-theme text-size-' + textSize;
   }, [theme, textSize]);
 
