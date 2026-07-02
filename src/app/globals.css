@@ -367,10 +367,7 @@ body::before {
     font-size: 22px;
     font-weight: 900;
     letter-spacing: 0.04em;
-    background: var(--text-primary);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: #ffffff;
 }
 
 .sidebar-nav {
