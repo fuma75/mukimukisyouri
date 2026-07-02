@@ -2785,6 +2785,7 @@ body::before {
     position: relative;
     z-index: 2;
     transition: transform 0.2s;
+    gap: 10px;
 }
 
 .challenge-btn:active {
@@ -2792,8 +2793,6 @@ body::before {
 }
 
 .challenge-btn i {
-    position: absolute;
-    right: 20px;
     background: #0066ff;
     color: white;
     width: 24px;
