@@ -546,7 +546,7 @@ export default function Workout() {
                             </div>
                         </div>
                         <button className="challenge-btn" onClick={() => handleChallengeClick(c.level, c.title)}>
-                            狩りを開始する <i className="fa-solid fa-arrow-right"></i>
+                            トレーニングを開始する <i className="fa-solid fa-arrow-right"></i>
                         </button>
                     </div>
                 ))}
