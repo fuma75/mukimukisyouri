@@ -84,12 +84,12 @@ export default function Header() {
                 <div style={{ display: 'flex', padding: '0 16px 8px', gap: '8px' }}>
                   <button 
                     onClick={() => setTheme('light')}
-                    style={{ flex: 1, padding: '8px', borderRadius: '8px', border: theme === 'light' ? '2px solid var(--primary)' : '1px solid rgba(255,255,255,0.1)', background: theme === 'light' ? 'rgba(255,255,255,0.1)' : 'transparent', color: 'var(--text-primary)', cursor: 'pointer' }}>
+                    style={{ flex: 1, padding: '8px', borderRadius: '8px', border: theme === 'light' ? '2px solid var(--primary)' : '1px solid rgba(255,255,255,0.1)', background: theme === 'light' ? 'rgba(255,255,255,0.1)' : 'transparent', color: '#fff', cursor: 'pointer' }}>
                     <i className="fa-solid fa-sun"></i> ライト
                   </button>
                   <button 
                     onClick={() => setTheme('dark')}
-                    style={{ flex: 1, padding: '8px', borderRadius: '8px', border: theme === 'dark' ? '2px solid var(--primary)' : '1px solid rgba(255,255,255,0.1)', background: theme === 'dark' ? 'rgba(0,0,0,0.2)' : 'transparent', color: 'var(--text-primary)', cursor: 'pointer' }}>
+                    style={{ flex: 1, padding: '8px', borderRadius: '8px', border: theme === 'dark' ? '2px solid var(--primary)' : '1px solid rgba(255,255,255,0.1)', background: theme === 'dark' ? 'rgba(0,0,0,0.2)' : 'transparent', color: '#fff', cursor: 'pointer' }}>
                     <i className="fa-solid fa-moon"></i> ダーク
                   </button>
                 </div>
@@ -99,12 +99,12 @@ export default function Header() {
                 <div style={{ display: 'flex', padding: '0 16px 16px', gap: '8px' }}>
                   <button 
                     onClick={() => setTextSize('normal')}
-                    style={{ flex: 1, padding: '8px', borderRadius: '8px', border: textSize === 'normal' ? '2px solid var(--primary)' : '1px solid rgba(255,255,255,0.1)', background: textSize === 'normal' ? 'rgba(255,255,255,0.1)' : 'transparent', color: 'var(--text-primary)', cursor: 'pointer', fontSize: '1rem' }}>
+                    style={{ flex: 1, padding: '8px', borderRadius: '8px', border: textSize === 'normal' ? '2px solid var(--primary)' : '1px solid rgba(255,255,255,0.1)', background: textSize === 'normal' ? 'rgba(255,255,255,0.1)' : 'transparent', color: '#fff', cursor: 'pointer', fontSize: '1rem' }}>
                     標準
                   </button>
                   <button 
                     onClick={() => setTextSize('large')}
-                    style={{ flex: 1, padding: '8px', borderRadius: '8px', border: textSize === 'large' ? '2px solid var(--primary)' : '1px solid rgba(255,255,255,0.1)', background: textSize === 'large' ? 'rgba(255,255,255,0.1)' : 'transparent', color: 'var(--text-primary)', cursor: 'pointer', fontSize: '1.2rem', fontWeight: 'bold' }}>
+                    style={{ flex: 1, padding: '8px', borderRadius: '8px', border: textSize === 'large' ? '2px solid var(--primary)' : '1px solid rgba(255,255,255,0.1)', background: textSize === 'large' ? 'rgba(255,255,255,0.1)' : 'transparent', color: '#fff', cursor: 'pointer', fontSize: '1.2rem', fontWeight: 'bold' }}>
                     大
                   </button>
                 </div>
