@@ -464,37 +464,37 @@ export default function Login() {
       
       {/* STEP 1: Firebase Auth */}
       {step === 1 && (
-        <div className="login-container" style={{ maxWidth: '400px', margin: 'auto', padding: '40px 20px', width: '100%' }}>
-          <div className="login-logo" style={{ marginBottom: '30px', textAlign: 'center' }}>
-            <img src="/images/logo.png" alt="筋虎" style={{ width: '90px', height: '90px', borderRadius: '50%', objectFit: 'cover', marginBottom: '10px', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }} />
-            <h1 style={{ fontSize: '2.2rem', margin: '0', fontWeight: 'bold' }}>筋虎</h1>
+        <div className="login-container" style={{ maxWidth: '400px', margin: 'auto', padding: '20px', width: '100%' }}>
+          <div className="login-logo" style={{ marginBottom: '20px', textAlign: 'center' }}>
+            <img src="/images/logo.png" alt="筋虎" style={{ width: '70px', height: '70px', borderRadius: '50%', objectFit: 'cover', marginBottom: '10px', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }} />
+            <h1 style={{ fontSize: '1.8rem', margin: '0', fontWeight: 'bold' }}>筋虎</h1>
             <p style={{ color: '#495057', fontSize: '0.9rem', marginTop: '5px' }}>あなた専用のAIパーソナルトレーナー</p>
           </div>
 
           <div className="animate-fade-in">
             <form autoComplete="off" onSubmit={(e) => { e.preventDefault(); handleNext(); }}>
-              <div className="form-group" style={{ marginBottom: '15px' }}>
+              <div className="form-group" style={{ marginBottom: '12px' }}>
                 <label style={{display: 'block', fontSize: '0.85rem', fontWeight: 'bold', color: '#1e1e24', marginBottom: '5px', textAlign: 'left'}}>{isLoginMode ? 'メールアドレス' : 'メールアドレス'}</label>
-                <input type="email" name="email" autoComplete="off" placeholder="メールアドレスを入力" value={email} onChange={e => setEmail(e.target.value)} style={{ background: '#f8f9fa', border: '1px solid #ced4da', borderRadius: '8px', padding: '14px', width: '100%', color: '#212529' }} />
+                <input type="email" name="email" autoComplete="off" placeholder="メールアドレスを入力" value={email} onChange={e => setEmail(e.target.value)} style={{ background: '#f8f9fa', border: '1px solid #ced4da', borderRadius: '8px', padding: '12px', width: '100%', color: '#212529' }} />
               </div>
               
-              <div className="form-group" style={{ position: 'relative', marginBottom: '15px' }}>
+              <div className="form-group" style={{ position: 'relative', marginBottom: '12px' }}>
                 <label style={{display: 'block', fontSize: '0.85rem', fontWeight: 'bold', color: '#1e1e24', marginBottom: '5px', textAlign: 'left'}}>パスワード</label>
-                <input type={showPassword ? "text" : "password"} name="password" autoComplete="new-password" placeholder="パスワードを入力" value={password} onChange={e => setPassword(e.target.value)} style={{ background: '#f8f9fa', border: '1px solid #ced4da', borderRadius: '8px', padding: '14px', width: '100%', color: '#212529' }} />
-                <button type="button" onClick={() => setShowPassword(!showPassword)} style={{ position: 'absolute', right: '15px', top: '38px', background: 'none', border: 'none', color: '#1a73e8', fontWeight: 'bold', cursor: 'pointer', fontSize: '0.85rem' }}>
+                <input type={showPassword ? "text" : "password"} name="password" autoComplete="new-password" placeholder="パスワードを入力" value={password} onChange={e => setPassword(e.target.value)} style={{ background: '#f8f9fa', border: '1px solid #ced4da', borderRadius: '8px', padding: '12px', width: '100%', color: '#212529' }} />
+                <button type="button" onClick={() => setShowPassword(!showPassword)} style={{ position: 'absolute', right: '15px', top: '36px', background: 'none', border: 'none', color: '#1a73e8', fontWeight: 'bold', cursor: 'pointer', fontSize: '0.85rem' }}>
                   {showPassword ? '非表示' : '表示'}
                 </button>
               </div>
 
               {!isLoginMode && (
-                <div className="form-group" style={{ marginBottom: '15px' }}>
+                <div className="form-group" style={{ marginBottom: '12px' }}>
                   <label style={{display: 'block', fontSize: '0.85rem', fontWeight: 'bold', color: '#1e1e24', marginBottom: '5px', textAlign: 'left'}}>ユーザー名</label>
-                  <input type="text" name="nickname" autoComplete="off" placeholder="ユーザー名を入力" value={name} onChange={e => setName(e.target.value)} style={{ background: '#f8f9fa', border: '1px solid #ced4da', borderRadius: '8px', padding: '14px', width: '100%', color: '#212529' }} />
+                  <input type="text" name="nickname" autoComplete="off" placeholder="ユーザー名を入力" value={name} onChange={e => setName(e.target.value)} style={{ background: '#f8f9fa', border: '1px solid #ced4da', borderRadius: '8px', padding: '12px', width: '100%', color: '#212529' }} />
                 </div>
               )}
 
               {isLoginMode && (
-                <div style={{ display: 'flex', alignItems: 'center', marginBottom: '20px', fontSize: '0.85rem', color: '#1e1e24', fontWeight: 'bold' }}>
+                <div style={{ display: 'flex', alignItems: 'center', marginBottom: '15px', fontSize: '0.85rem', color: '#1e1e24', fontWeight: 'bold' }}>
                   <input type="checkbox" id="keepLoggedIn" style={{ marginRight: '8px', width: '16px', height: '16px', accentColor: '#1a73e8' }} defaultChecked />
                   <label htmlFor="keepLoggedIn">ログイン状態を保持</label>
                 </div>
@@ -505,14 +505,14 @@ export default function Login() {
               </button>
             </form>
 
-            <div style={{ display: 'flex', alignItems: 'center', margin: '20px 0', color: '#adb5bd', fontSize: '0.85rem' }}>
+            <div style={{ display: 'flex', alignItems: 'center', margin: '15px 0', color: '#adb5bd', fontSize: '0.85rem' }}>
               <div style={{ flex: 1, height: '1px', background: '#e9ecef' }}></div>
               <div style={{ padding: '0 10px' }}>または</div>
               <div style={{ flex: 1, height: '1px', background: '#e9ecef' }}></div>
             </div>
 
-            <button type="button" className="btn btn-block" style={{ padding: '14px', marginBottom: '15px', background: '#6ea8f0', color: '#fff', border: 'none', borderRadius: '8px', fontWeight: 'bold', boxShadow: '0 4px 10px rgba(110,168,240,0.3)', fontSize: '1rem' }} onClick={() => setIsLoginMode(!isLoginMode)}>
-              {isLoginMode ? '✨ 新規登録' : 'ログイン画面へ戻る'}
+            <button type="button" className="btn btn-block" style={{ padding: '14px', marginBottom: '12px', background: '#6ea8f0', color: '#fff', border: 'none', borderRadius: '8px', fontWeight: 'bold', boxShadow: '0 4px 10px rgba(110,168,240,0.3)', fontSize: '1rem' }} onClick={() => setIsLoginMode(!isLoginMode)}>
+              {isLoginMode ? '新規登録' : 'ログイン画面へ戻る'}
             </button>
 
             <button type="button" className="btn btn-block" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', padding: '12px', background: '#ffffff', color: '#333', border: '1px solid #ddd', borderRadius: '8px', fontWeight: 'bold', fontSize: '0.9rem' }} onClick={handleGoogleLogin} disabled={loading}>
@@ -646,8 +646,8 @@ export default function Login() {
           
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
             <h2 style={{ textAlign: 'center', fontSize: '1.8rem', fontWeight: 'bold', marginBottom: '20px' }}>生まれた年は？</h2>
-            <div style={{ background: '#f4f6fb', padding: '15px 20px', borderRadius: '12px', display: 'flex', alignItems: 'center', gap: '15px', marginBottom: '50px', width: '100%', maxWidth: '400px' }}>
-              <span style={{ fontSize: '1.5rem' }}>📋</span>
+            <div style={{ background: '#f4f6fb', padding: '15px 20px', borderRadius: '12px', display: 'flex', alignItems: 'center', gap: '15px', marginBottom: '20px', width: '100%', maxWidth: '400px' }}>
+              <i className="fa-solid fa-clipboard-list" style={{ fontSize: '1.5rem', color: '#1a73e8' }}></i>
               <p style={{ margin: 0, color: '#495057', fontSize: '0.95rem', lineHeight: 1.5 }}>あなたの年齢グループに最も適したワークアウトに調整しやすくなります。</p>
             </div>
             
@@ -685,9 +685,9 @@ export default function Login() {
           {renderWizardHeader("02 身体情報の設定", 6)}
           
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-            <h2 style={{ textAlign: 'center', fontSize: '1.6rem', fontWeight: 'bold', marginBottom: '30px' }}>身長を入力してください。</h2>
+            <h2 style={{ textAlign: 'center', fontSize: '1.6rem', fontWeight: 'bold', marginBottom: '10px' }}>身長を入力してください。</h2>
 
-            <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'center', marginBottom: '20px' }}>
+            <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'center', marginBottom: '10px' }}>
               <input 
                 type="number" 
                 value={height} 
@@ -723,7 +723,7 @@ export default function Login() {
           {renderWizardHeader("02 身体情報の設定", 7)}
           
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-            <h2 style={{ textAlign: 'center', fontSize: '1.6rem', fontWeight: 'bold', marginBottom: '20px' }}>現在の体重を入力してください。</h2>
+            <h2 style={{ textAlign: 'center', fontSize: '1.6rem', fontWeight: 'bold', marginBottom: '10px' }}>現在の体重を入力してください。</h2>
             
             <div style={{ display: 'flex', border: '1px solid #1a73e8', borderRadius: '30px', overflow: 'hidden', marginBottom: '10px' }}>
               <div 
@@ -1140,7 +1140,7 @@ export default function Login() {
                         <i className="fa-solid fa-home" style={{ pointerEvents: 'none' }}></i> ホームへ
                       </button>
                       <button type="button" className="challenge-btn" onClick={(e) => { e.preventDefault(); e.stopPropagation(); handleComplete('workout'); }} style={{ flex: 1, padding: '12px', background: '#fff', color: '#1a73e8', border: 'none', borderRadius: '30px', fontSize: '1rem', fontWeight: 'bold', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', boxShadow: '0 4px 15px rgba(0,0,0,0.08)' }}>
-                        開始する <i className="fa-solid fa-arrow-right" style={{ pointerEvents: 'none' }}></i>
+                        <i className="fa-solid fa-arrow-right" style={{ pointerEvents: 'none' }}></i> 開始する
                       </button>
                     </div>
                   </div>
