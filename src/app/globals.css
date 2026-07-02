@@ -78,27 +78,24 @@ input[type=number] {
 }
 
 :root {
-    /* ── Refined Light Color Palette ── */
-    --bg-primary: #fcfcfd;
+    /* ── Tiger Theme Color Palette ── */
+    --bg-primary: var(--main-bg, #FFF9F2);
     --bg-secondary: #f8f9fa;
     --bg-tertiary: #f1f3f5;
-    --bg-card: #ffffff;
-    --bg-card-hover: #f8f9fa;
+    --bg-card: var(--card-bg, #ffffff);
+    --bg-card-hover: #fff3e0;
     --bg-card-solid: #ffffff;
 
-    --primary: var(--primary);
-    --primary-light: #4285f4;
-    --primary-dark: #004ba0;
+    --primary-light: #FBBF24;
     --primary-glow: rgba(245, 158, 11, 0.2);
-    --primary-grad: linear-gradient(135deg, var(--primary) 0%, #4285f4 100%);
-    --primary-grad-subtle: linear-gradient(135deg, rgba(26,115,232,0.1) 0%, rgba(66,133,244,0.05) 100%);
+    --primary-grad: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    --primary-grad-subtle: linear-gradient(135deg, rgba(245, 158, 11, 0.1) 0%, rgba(245, 158, 11, 0.05) 100%);
 
-    --secondary: #ffc107;
-    --secondary-glow: rgba(255, 193, 7, 0.2);
+    --secondary-glow: rgba(251, 191, 36, 0.2);
 
     --workout-blue: var(--primary);
     --workout-blue-glow: rgba(245, 158, 11, 0.15);
-    --workout-grad: linear-gradient(135deg, var(--primary) 0%, #4285f4 100%);
+    --workout-grad: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
 
     --meal-green: #34a853;
     --meal-green-light: #81c995;
@@ -388,7 +385,7 @@ body::before {
     background: transparent;
     border: none;
     outline: none;
-    color: var(--text-secondary);
+    color: #a0aec0;
     padding: 13px 18px;
     border-radius: var(--radius-md);
     cursor: pointer;
