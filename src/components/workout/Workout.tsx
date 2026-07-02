@@ -16,6 +16,45 @@ export default function Workout() {
   const dateInputRef = useRef<HTMLInputElement>(null);
   const challengeScrollRef = useRef<HTMLDivElement>(null);
 
+  const [isDragging, setIsDragging] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [scrollLeft, setScrollLeft] = useState(0);
+
+  const handleMouseDown = (e: React.MouseEvent) => {
+      if (!challengeScrollRef.current) return;
+      setIsDragging(true);
+      setStartX(e.pageX - challengeScrollRef.current.offsetLeft);
+      setScrollLeft(challengeScrollRef.current.scrollLeft);
+  };
+
+  const handleMouseLeave = () => {
+      setIsDragging(false);
+  };
+
+  const handleMouseUp = () => {
+      setIsDragging(false);
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+      if (!isDragging || !challengeScrollRef.current) return;
+      e.preventDefault();
+      const x = e.pageX - challengeScrollRef.current.offsetLeft;
+      const walk = (x - startX) * 1.5;
+      challengeScrollRef.current.scrollLeft = scrollLeft - walk;
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+      if (!challengeScrollRef.current) return;
+      const cardWidth = challengeScrollRef.current.firstElementChild?.clientWidth || 300;
+      if (e.key === 'ArrowRight') {
+          e.preventDefault();
+          challengeScrollRef.current.scrollBy({ left: cardWidth + 15, behavior: 'smooth' });
+      } else if (e.key === 'ArrowLeft') {
+          e.preventDefault();
+          challengeScrollRef.current.scrollBy({ left: -(cardWidth + 15), behavior: 'smooth' });
+      }
+  };
+
   const [workouts, setWorkouts] = useState<WorkoutItem[]>([]);
   
   const [category, setCategory] = useState('');
@@ -443,7 +482,17 @@ export default function Workout() {
             </div>
 
             <h3 className="challenge-section-title">チャレンジ</h3>
-            <div ref={challengeScrollRef} className="challenges-scroll-container" style={{ display: 'flex', overflowX: 'auto', gap: '15px', padding: '5px 16px 20px', margin: '0 -16px', scrollSnapType: 'x mandatory', paddingBottom: '15px' }}>
+            <div 
+                ref={challengeScrollRef} 
+                className="challenges-scroll-container" 
+                style={{ display: 'flex', overflowX: 'auto', gap: '15px', padding: '5px 16px 20px', margin: '0 -16px', scrollSnapType: isDragging ? 'none' : 'x mandatory', paddingBottom: '15px', cursor: isDragging ? 'grabbing' : 'grab', outline: 'none' }}
+                tabIndex={0}
+                onMouseDown={handleMouseDown}
+                onMouseLeave={handleMouseLeave}
+                onMouseUp={handleMouseUp}
+                onMouseMove={handleMouseMove}
+                onKeyDown={handleKeyDown}
+            >
                 {challenges.map(c => (
                     <div key={c.level} className="challenge-card-banner" style={{ minWidth: 'clamp(280px, 85vw, 480px)', scrollSnapAlign: 'center', flexShrink: 0, background: c.bg, position: 'relative' }}>
                         <div className="challenge-badge" style={{ visibility: recommendedLevel === c.level ? 'visible' : 'hidden' }}>あなたにおすすめ</div>

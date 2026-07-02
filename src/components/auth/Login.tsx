@@ -466,9 +466,8 @@ export default function Login() {
       {step === 1 && (
         <div className="login-container" style={{ maxWidth: '400px', margin: 'auto', padding: '20px', width: '100%' }}>
           <div className="login-logo" style={{ marginBottom: '20px', textAlign: 'center' }}>
-            <img src="/images/logo.png" alt="🐯 筋虎" style={{ width: '70px', height: '70px', borderRadius: '50%', objectFit: 'cover', marginBottom: '10px', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }} />
-            <h1 style={{ fontSize: '1.8rem', margin: '0', fontWeight: 'bold' }}>🐯 筋虎</h1>
-            <div style={{ fontSize: '2rem', letterSpacing: '30px', margin: '10px 0', opacity: 0.8, display: 'flex', justifyContent: 'center', paddingLeft: '30px' }}>🐯 🐯</div>
+            <img src="/images/logo.png" alt="筋虎" style={{ width: '70px', height: '70px', borderRadius: '50%', objectFit: 'cover', marginBottom: '10px', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }} />
+            <h1 style={{ fontSize: '1.8rem', margin: '0', fontWeight: 'bold' }}>筋虎</h1>
             <p style={{ color: '#495057', fontSize: '0.9rem', marginTop: '5px' }}>あなた専用の虎コーチ</p>
           </div>
 
