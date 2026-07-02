@@ -24,41 +24,9 @@ html.text-size-large, body.text-size-large {
   --card-bg: #FFFFFF;
 }
 
-.dark-theme {
-    --bg-primary: #0f0f11;
-    --bg-secondary: #1a1a1f;
-    --bg-tertiary: #2a2a30;
-    --bg-card: rgba(30, 30, 42, 0.8);
-    --bg-card-hover: rgba(40, 40, 52, 0.9);
-    --bg-card-solid: #1e1e2a;
-    --text-primary: #f8f9fa;
-    --text-secondary: #adb5bd;
-    --text-muted: #6c757d;
-    --text-bright: #ffffff;
-    --border-color: rgba(255, 255, 255, 0.1);
-    --border-hover: rgba(255, 255, 255, 0.2);
-    --border-active: var(--primary);
-    --glass-blur: blur(20px);
-}
 
-.light-theme {
-    --bg-primary: var(--main-bg);
-    --bg-secondary: #fef4e8;
-    --bg-tertiary: #ffffff;
-    --bg-card: var(--card-bg);
-    --bg-card-hover: #fff3e0;
-    --bg-card-solid: var(--card-bg);
-    --text-primary: #212529;
-    --text-secondary: #495057;
-    --text-muted: #adb5bd;
-    --text-bright: #000000;
-    --border-color: rgba(0, 0, 0, 0.08);
-    --border-hover: rgba(0, 0, 0, 0.15);
-    --border-active: var(--primary);
-    --glass-blur: blur(0px);
-    background-color: var(--bg-primary);
-    color: var(--text-primary);
-}
+
+
 
 .light-theme .glass-panel {
     background: #ffffff;
@@ -3392,4 +3360,42 @@ body.workout-player-active .content-body {
     pointer-events: none;
     letter-spacing: -5px;
     font-family: monospace;
+}
+
+
+/* ---- Themes ---- */
+.light-theme {
+    --bg-primary: var(--main-bg);
+    --bg-secondary: #fef4e8;
+    --bg-tertiary: #ffffff;
+    --bg-card: var(--card-bg);
+    --bg-card-hover: #fff3e0;
+    --bg-card-solid: var(--card-bg);
+    --text-primary: #212529;
+    --text-secondary: #495057;
+    --text-muted: #adb5bd;
+    --text-bright: #000000;
+    --border-color: rgba(0, 0, 0, 0.08);
+    --border-hover: rgba(0, 0, 0, 0.15);
+    --border-active: var(--primary);
+    --glass-blur: blur(0px);
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+}
+
+.dark-theme {
+    --bg-primary: #0f0f11;
+    --bg-secondary: #1a1a1f;
+    --bg-tertiary: #2a2a30;
+    --bg-card: rgba(30, 30, 42, 0.8);
+    --bg-card-hover: rgba(40, 40, 52, 0.9);
+    --bg-card-solid: #1e1e2a;
+    --text-primary: #f8f9fa;
+    --text-secondary: #adb5bd;
+    --text-muted: #6c757d;
+    --text-bright: #ffffff;
+    --border-color: rgba(255, 255, 255, 0.1);
+    --border-hover: rgba(255, 255, 255, 0.2);
+    --border-active: var(--primary);
+    --glass-blur: blur(20px);
 }
