@@ -148,7 +148,7 @@ html {
 body {
     background-color: var(--bg-primary);
     color: var(--text-primary);
-    font-family: 'Outfit', 'Noto Sans JP', -apple-system, sans-serif;
+    font-family: 'Noto Sans JP', 'Outfit', -apple-system, sans-serif;
     overflow-x: hidden;
     width: 100%;
     max-width: 100%;
