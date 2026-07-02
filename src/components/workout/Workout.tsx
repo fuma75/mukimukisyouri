@@ -27,12 +27,30 @@ export default function Workout() {
       setScrollLeft(challengeScrollRef.current.scrollLeft);
   };
 
+  const snapToNearestCard = () => {
+      if (!challengeScrollRef.current) return;
+      const container = challengeScrollRef.current;
+      const card = container.firstElementChild as HTMLElement;
+      if (!card) return;
+      
+      const cardWidth = card.offsetWidth + 15; // 15 is the gap
+      const currentScroll = container.scrollLeft;
+      const index = Math.round(currentScroll / cardWidth);
+      container.scrollTo({ left: index * cardWidth, behavior: 'smooth' });
+  };
+
   const handleMouseLeave = () => {
-      setIsDragging(false);
+      if (isDragging) {
+          setIsDragging(false);
+          snapToNearestCard();
+      }
   };
 
   const handleMouseUp = () => {
-      setIsDragging(false);
+      if (isDragging) {
+          setIsDragging(false);
+          snapToNearestCard();
+      }
   };
 
   const handleMouseMove = (e: React.MouseEvent) => {
