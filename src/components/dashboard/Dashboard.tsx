@@ -238,9 +238,9 @@ export default function Dashboard() {
           <div style={{ flex: '0 0 auto', minWidth: '150px', textAlign: 'left' }}>
             <h3 style={{ margin: 0, fontSize: '1rem', color: 'var(--text-muted)' }}>現在の目標</h3>
             <h2 style={{ margin: '5px 0 0 0', fontSize: '1.5rem', color: 'var(--text-main)', display: 'flex', alignItems: 'center', gap: '10px' }}>
-              {profile.goal === 'lose-fat' || profile.goal === 'ダイエット・減量' ? '🔥 ダイエット・減量' : 
-               profile.goal === 'gain-muscle' || profile.goal === '筋肥大・バルクアップ' ? '💪 筋肥大・バルクアップ' : 
-               profile.goal === 'maintain' || profile.goal === '健康維持・体力アップ' ? '🏃‍♂️ 健康維持・体力アップ' : 
+              {profile.goal === 'lose-fat' || profile.goal === 'ダイエット・減量' || profile.goal === '減量' ? '🔥 ダイエット・減量' : 
+               profile.goal === 'gain-muscle' || profile.goal === '筋肥大・バルクアップ' || profile.goal === '増量' ? '💪 筋肥大・バルクアップ' : 
+               profile.goal === 'maintain' || profile.goal === '健康維持・体力アップ' || profile.goal === '維持' ? '🏃‍♂️ 健康維持・体力アップ' : 
                `🎯 ${profile.goal || '目標未設定'}`}
             </h2>
           </div>
@@ -320,16 +320,16 @@ export default function Dashboard() {
               <div style={{ borderTop: '1px solid var(--border-color)', marginTop: '10px', paddingTop: '10px' }}>
                 <p style={{ margin: '0 0 8px 0', fontSize: '0.78rem', color: 'var(--text-muted)', fontWeight: 'bold', letterSpacing: '0.05em' }}>本日のPFC摂取</p>
                 <div className="cal-detail-item">
-                  <span className="detail-label" style={{ color: '#ff5224' }}>P (タンパク質)</span>
-                  <span className="detail-val" style={{ color: '#ff5224' }}>{Math.round(totalP)} g</span>
+                  <span className="detail-label" style={{ color: '#F59E0B' }}>P (タンパク質)</span>
+                  <span className="detail-val" style={{ color: '#F59E0B' }}>{Math.round(totalP)} g</span>
                 </div>
                 <div className="cal-detail-item">
-                  <span className="detail-label" style={{ color: '#ffac1c' }}>F (脂質)</span>
-                  <span className="detail-val" style={{ color: '#ffac1c' }}>{Math.round(totalF)} g</span>
+                  <span className="detail-label" style={{ color: '#FBBF24' }}>F (脂質)</span>
+                  <span className="detail-val" style={{ color: '#FBBF24' }}>{Math.round(totalF)} g</span>
                 </div>
                 <div className="cal-detail-item">
-                  <span className="detail-label" style={{ color: '#00e676' }}>C (炭水化物)</span>
-                  <span className="detail-val" style={{ color: '#00e676' }}>{Math.round(totalC)} g</span>
+                  <span className="detail-label" style={{ color: '#EF4444' }}>C (炭水化物)</span>
+                  <span className="detail-val" style={{ color: '#EF4444' }}>{Math.round(totalC)} g</span>
                 </div>
               </div>
             </div>
