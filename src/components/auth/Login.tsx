@@ -500,7 +500,7 @@ export default function Login() {
                 </div>
               )}
               
-              <button type="submit" className="btn btn-block" style={{ marginTop: '5px', padding: '14px', background: 'var(--primary)', color: '#fff', borderRadius: '8px', fontWeight: 'bold', border: 'none', boxShadow: '0 4px 10px rgba(26,115,232,0.3)', fontSize: '1rem' }} disabled={loading}>
+              <button type="submit" className="btn btn-block" style={{ marginTop: '5px', padding: '14px', background: 'var(--primary)', color: '#fff', borderRadius: '8px', fontWeight: 'bold', border: 'none', boxShadow: '0 4px 10px rgba(245,158,11,0.3)', fontSize: '1rem' }} disabled={loading}>
                 {loading ? <i className="fa-solid fa-spinner fa-spin"></i> : (isLoginMode ? 'ログイン' : '新規登録')}
               </button>
             </form>
@@ -511,7 +511,7 @@ export default function Login() {
               <div style={{ flex: 1, height: '1px', background: '#e9ecef' }}></div>
             </div>
 
-            <button type="button" className="btn btn-block" style={{ padding: '14px', marginBottom: '12px', background: '#6ea8f0', color: '#fff', border: 'none', borderRadius: '8px', fontWeight: 'bold', boxShadow: '0 4px 10px rgba(110,168,240,0.3)', fontSize: '1rem' }} onClick={() => setIsLoginMode(!isLoginMode)}>
+            <button type="button" className="btn btn-block" style={{ padding: '14px', marginBottom: '12px', background: '#212529', color: '#fff', border: 'none', borderRadius: '8px', fontWeight: 'bold', boxShadow: '0 4px 10px rgba(0,0,0,0.2)', fontSize: '1rem' }} onClick={() => setIsLoginMode(!isLoginMode)}>
               {isLoginMode ? '新規登録' : 'ログイン画面へ戻る'}
             </button>
 
