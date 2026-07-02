@@ -526,10 +526,10 @@ export default function Login() {
 
       {/* STEP 2: Gender */}
       {step === 2 && (
-        <div style={{ flex: '1 0 auto', maxWidth: '800px', margin: '0 auto', padding: '10px 15px 15px', width: '100%', display: 'flex', flexDirection: 'column' }}>
+        <div style={{ flex: '1 0 auto', maxWidth: '600px', margin: '0 auto', padding: '10px 15px 15px', width: '100%', display: 'flex', flexDirection: 'column' }}>
           {renderWizardHeader("01 目標とターゲット部位", 2)}
           
-          <div style={{ flex: 0, paddingBottom: '10px' }}>
+          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', paddingBottom: '10px' }}>
             <h2 style={{ textAlign: 'center', fontSize: 'clamp(1.3rem, 5vw, 1.6rem)', fontWeight: 'bold', marginBottom: '5px' }}>あなたの性別は？</h2>
             <p style={{ textAlign: 'center', color: '#495057', marginBottom: '10px' }}>あなたについて教えてください</p>
             
@@ -592,10 +592,10 @@ export default function Login() {
 
       {/* STEP 3: Goal */}
       {step === 3 && (
-        <div style={{ flex: '1 0 auto', maxWidth: '800px', margin: '0 auto', padding: '10px 15px 15px', width: '100%', display: 'flex', flexDirection: 'column' }}>
+        <div style={{ flex: '1 0 auto', maxWidth: '600px', margin: '0 auto', padding: '10px 15px 15px', width: '100%', display: 'flex', flexDirection: 'column' }}>
           {renderWizardHeader("01 目標とターゲット部位", 3)}
           
-          <div style={{ flex: 0, display: 'flex', flexDirection: 'column', paddingBottom: '10px' }}>
+          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', paddingBottom: '10px', justifyContent: 'center' }}>
             <h2 style={{ textAlign: 'center', fontSize: 'clamp(1.3rem, 5vw, 1.6rem)', fontWeight: 'bold', marginBottom: '10px' }}>主な目標は何ですか？</h2>
             
             <div className="options-grid options-grid-3" style={{ flex: 1, justifyContent: 'flex-start', paddingTop: '10px', paddingBottom: '10px' }}>
@@ -615,10 +615,10 @@ export default function Login() {
 
       {/* STEP 4: Target Area */}
       {step === 4 && (
-        <div style={{ flex: '1 0 auto', maxWidth: '800px', margin: '0 auto', padding: '10px 15px 15px', width: '100%', display: 'flex', flexDirection: 'column' }}>
+        <div style={{ flex: '1 0 auto', maxWidth: '600px', margin: '0 auto', padding: '10px 15px 15px', width: '100%', display: 'flex', flexDirection: 'column' }}>
           {renderWizardHeader("01 目標とターゲット部位", 4)}
           
-          <div style={{ flex: 0, display: 'flex', flexDirection: 'column', paddingBottom: '10px' }}>
+          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', paddingBottom: '10px', justifyContent: 'center' }}>
             <h2 style={{ textAlign: 'center', fontSize: 'clamp(1.3rem, 5vw, 1.6rem)', fontWeight: 'bold', marginBottom: '10px' }}>ターゲットの部位はどこですか？</h2>
             
             <div className="options-grid" style={{ flex: 1, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', paddingTop: '10px', paddingBottom: '10px' }}>
@@ -641,7 +641,7 @@ export default function Login() {
 
       {/* STEP 5: Date of Birth */}
       {step === 5 && (
-        <div style={{ flex: '1 0 auto', maxWidth: '800px', margin: '0 auto', padding: '10px 15px 15px', width: '100%', display: 'flex', flexDirection: 'column' }}>
+        <div style={{ flex: '1 0 auto', maxWidth: '600px', margin: '0 auto', padding: '10px 15px 15px', width: '100%', display: 'flex', flexDirection: 'column' }}>
           {renderWizardHeader("02 身体情報の設定", 5)}
           
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
@@ -681,7 +681,7 @@ export default function Login() {
 
       {/* STEP 6: Height */}
       {step === 6 && (
-        <div style={{ flex: '1 0 auto', maxWidth: '800px', margin: '0 auto', padding: '10px 15px 15px', width: '100%', display: 'flex', flexDirection: 'column' }}>
+        <div style={{ flex: '1 0 auto', maxWidth: '600px', margin: '0 auto', padding: '10px 15px 15px', width: '100%', display: 'flex', flexDirection: 'column' }}>
           {renderWizardHeader("02 身体情報の設定", 6)}
           
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
@@ -719,7 +719,7 @@ export default function Login() {
 
       {/* STEP 7: Current Weight */}
       {step === 7 && (
-        <div style={{ flex: '1 0 auto', maxWidth: '800px', margin: '0 auto', padding: '10px 15px 15px', width: '100%', display: 'flex', flexDirection: 'column' }}>
+        <div style={{ flex: '1 0 auto', maxWidth: '600px', margin: '0 auto', padding: '10px 15px 15px', width: '100%', display: 'flex', flexDirection: 'column' }}>
           {renderWizardHeader("02 身体情報の設定", 7)}
           
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
@@ -800,7 +800,7 @@ export default function Login() {
 
       {/* STEP 8: Target Weight */}
       {step === 8 && (
-        <div style={{ flex: '1 0 auto', maxWidth: '800px', margin: '0 auto', padding: '10px 15px 15px', width: '100%', display: 'flex', flexDirection: 'column' }}>
+        <div style={{ flex: '1 0 auto', maxWidth: '600px', margin: '0 auto', padding: '10px 15px 15px', width: '100%', display: 'flex', flexDirection: 'column' }}>
           {renderWizardHeader("02 身体情報の設定", 8)}
           
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
@@ -881,10 +881,10 @@ export default function Login() {
 
       {/* STEP 9: Environment */}
       {step === 9 && (
-        <div style={{ flex: '1 0 auto', maxWidth: '800px', margin: '0 auto', padding: '10px 15px 15px', width: '100%', display: 'flex', flexDirection: 'column' }}>
+        <div style={{ flex: '1 0 auto', maxWidth: '600px', margin: '0 auto', padding: '10px 15px 15px', width: '100%', display: 'flex', flexDirection: 'column' }}>
           {renderWizardHeader("03 トレーニング環境", 9)}
           
-          <div style={{ flex: 0, display: 'flex', flexDirection: 'column', paddingBottom: '10px' }}>
+          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', paddingBottom: '10px', justifyContent: 'center' }}>
             <h2 style={{ textAlign: 'center', fontSize: 'clamp(1.2rem, 5vw, 1.5rem)', fontWeight: 'bold', marginBottom: '10px' }}>どこでトレーニングしますか？</h2>
             
             <div className="options-grid options-grid-3" style={{ flex: 1, justifyContent: 'flex-start', paddingTop: '10px', paddingBottom: '10px' }}>
@@ -904,10 +904,10 @@ export default function Login() {
 
       {/* STEP 10: Exercise Limitations */}
       {step === 10 && (
-        <div style={{ flex: '1 0 auto', maxWidth: '800px', margin: '0 auto', padding: '10px 15px 15px', width: '100%', display: 'flex', flexDirection: 'column' }}>
+        <div style={{ flex: '1 0 auto', maxWidth: '600px', margin: '0 auto', padding: '10px 15px 15px', width: '100%', display: 'flex', flexDirection: 'column' }}>
           {renderWizardHeader("03 トレーニング環境", 10)}
           
-          <div style={{ flex: 0, display: 'flex', flexDirection: 'column', paddingBottom: '10px' }}>
+          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', paddingBottom: '10px', justifyContent: 'center' }}>
             <h2 style={{ textAlign: 'center', fontSize: 'clamp(1.2rem, 5vw, 1.5rem)', fontWeight: 'bold', marginBottom: '10px' }}>運動の種類の制限はありますか？</h2>
             
             <div className="options-grid" style={{ flex: 1, justifyContent: 'flex-start', paddingTop: '10px', paddingBottom: '10px' }}>
@@ -928,10 +928,10 @@ export default function Login() {
 
       {/* STEP 11: Workout Level */}
       {step === 11 && (
-        <div style={{ flex: '1 0 auto', maxWidth: '800px', margin: '0 auto', padding: '10px 15px 15px', width: '100%', display: 'flex', flexDirection: 'column' }}>
+        <div style={{ flex: '1 0 auto', maxWidth: '600px', margin: '0 auto', padding: '10px 15px 15px', width: '100%', display: 'flex', flexDirection: 'column' }}>
           {renderWizardHeader("03 フィットネスレベル評価", 11)}
           
-          <div style={{ flex: 0, display: 'flex', flexDirection: 'column', paddingBottom: '10px' }}>
+          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', paddingBottom: '10px', justifyContent: 'center' }}>
             <h2 style={{ textAlign: 'center', fontSize: 'clamp(1.2rem, 5vw, 1.5rem)', fontWeight: 'bold', marginBottom: '10px' }}>ご希望のワークアウトレベルを選択してください</h2>
             
             <div className="options-grid options-grid-3" style={{ flex: 1, justifyContent: 'flex-start', paddingTop: '10px', paddingBottom: '10px' }}>
@@ -951,10 +951,10 @@ export default function Login() {
 
       {/* STEP 12: Physical Issues */}
       {step === 12 && (
-        <div style={{ flex: '1 0 auto', maxWidth: '800px', margin: '0 auto', padding: '10px 15px 15px', width: '100%', display: 'flex', flexDirection: 'column' }}>
+        <div style={{ flex: '1 0 auto', maxWidth: '600px', margin: '0 auto', padding: '10px 15px 15px', width: '100%', display: 'flex', flexDirection: 'column' }}>
           {renderWizardHeader("04 ライフスタイル", 12)}
           
-          <div style={{ flex: 0, display: 'flex', flexDirection: 'column', paddingBottom: '10px' }}>
+          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', paddingBottom: '10px', justifyContent: 'center' }}>
             <h2 style={{ textAlign: 'center', fontSize: 'clamp(1.2rem, 5vw, 1.5rem)', fontWeight: 'bold', marginBottom: '10px' }}>体に不快感や懸念はありますか？</h2>
             <div style={{ background: '#f4f6fb', padding: '15px 20px', borderRadius: '12px', display: 'flex', alignItems: 'center', gap: '15px', marginBottom: '10px', width: '100%' }}>
               <i className="fa-solid fa-briefcase-medical" style={{ fontSize: '1.5rem', color: 'var(--primary)' }}></i>
@@ -1005,7 +1005,7 @@ export default function Login() {
 
       {/* STEP 13: Activity Level */}
       {step === 13 && (
-        <div style={{ flex: '1 0 auto', maxWidth: '800px', margin: '0 auto', padding: '10px 15px 15px', width: '100%', display: 'flex', flexDirection: 'column' }}>
+        <div style={{ flex: '1 0 auto', maxWidth: '600px', margin: '0 auto', padding: '10px 15px 15px', width: '100%', display: 'flex', flexDirection: 'column' }}>
           {renderWizardHeader("04 ライフスタイル", 13)}
           
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', paddingBottom: '10px' }}>
@@ -1026,10 +1026,10 @@ export default function Login() {
 
       {/* STEP 14: Frequency */}
       {step === 14 && (
-        <div style={{ flex: '1 0 auto', maxWidth: '800px', margin: '0 auto', padding: '10px 15px 15px', width: '100%', display: 'flex', flexDirection: 'column' }}>
+        <div style={{ flex: '1 0 auto', maxWidth: '600px', margin: '0 auto', padding: '10px 15px 15px', width: '100%', display: 'flex', flexDirection: 'column' }}>
           {renderWizardHeader("04 ライフスタイル", 14)}
           
-          <div style={{ flex: 0, display: 'flex', flexDirection: 'column', paddingBottom: '10px' }}>
+          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', paddingBottom: '10px', justifyContent: 'center' }}>
             <h2 style={{ textAlign: 'center', fontSize: 'clamp(1.2rem, 5vw, 1.5rem)', fontWeight: 'bold', marginBottom: '10px' }}>目標とする運動頻度（1週間）</h2>
             
             <div className="options-grid" style={{ flex: 1, justifyContent: 'flex-start', paddingTop: '10px', paddingBottom: '10px' }}>
@@ -1051,7 +1051,7 @@ export default function Login() {
 
       {/* STEP 15: AI Calculation Result & Finish */}
       {step === 15 && (
-        <div style={{ flex: '1 0 auto', maxWidth: '800px', margin: '0 auto', padding: '20px', width: '100%', display: 'flex', flexDirection: 'column', minHeight: '100%', justifyContent: 'center' }}>
+        <div style={{ flex: '1 0 auto', maxWidth: '600px', margin: '0 auto', padding: '20px', width: '100%', display: 'flex', flexDirection: 'column', minHeight: '100%', justifyContent: 'center' }}>
           <div className="animate-fade-in" style={{ textAlign: 'center' }}>
             <div style={{ fontSize: '3rem', color: 'var(--primary)', marginBottom: '5px' }}>
               <i className="fa-solid fa-bullseye"></i>
