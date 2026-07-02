@@ -200,7 +200,7 @@ export default function DateWheelPicker({ value, onChange, mode = 'full' }: { va
         height: '50px',
         borderTop: '1px solid #ced4da',
         borderBottom: '1px solid #ced4da',
-        background: 'rgba(26, 115, 232, 0.03)',
+        background: 'rgba(245, 158, 11, 0.03)',
         pointerEvents: 'none',
         zIndex: 1,
         borderRadius: '8px'
@@ -223,7 +223,7 @@ export default function DateWheelPicker({ value, onChange, mode = 'full' }: { va
       <style>{`
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .wheel-col:focus {
-          background: rgba(26, 115, 232, 0.03);
+          background: rgba(245, 158, 11, 0.03);
           border-radius: 8px;
         }
       `}</style>

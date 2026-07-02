@@ -3,7 +3,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "筋虎 - 筋トレ＆食事管理と熱血アドバイス",
-  description: "筋トレ記録、食事管理、そして熱血AIトレーナー「筋虎」によるアドバイスで、あなたのボディメイクをトータルサポートするWebアプリ。",
+  description: "筋トレ記録、食事管理、そして熱血🐯 虎コーチ「筋虎」によるアドバイスで、あなたのボディメイクをトータルサポートするWebアプリ。",
 };
 
 export default function RootLayout({

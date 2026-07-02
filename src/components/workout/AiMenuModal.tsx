@@ -245,7 +245,7 @@ export default function AiMenuModal({ data, onClose, onApply }: AiMenuModalProps
             </button>
             <button 
               onClick={() => handleStart(resumeIndex)}
-              style={{ flex: 1, padding: '12px 0', background: '#0066ff', color: '#fff', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer', boxShadow: '0 4px 14px rgba(0, 102, 255, 0.3)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}
+              style={{ flex: 1, padding: '12px 0', background: 'var(--primary)', color: '#fff', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer', boxShadow: '0 4px 14px rgba(0, 102, 255, 0.3)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}
             >
               <span style={{ fontSize: '1.1rem', marginBottom: '2px' }}>続行</span>
               <span style={{ fontSize: '0.85rem', fontWeight: 'normal' }}>{Math.round((resumeIndex / totalExercises) * 100)}% 完了</span>
@@ -254,7 +254,7 @@ export default function AiMenuModal({ data, onClose, onApply }: AiMenuModalProps
         ) : (
           <button 
             onClick={() => handleStart(0)}
-            style={{ width: '100%', padding: '18px', background: '#0066ff', color: '#fff', borderRadius: '30px', fontSize: '1.2rem', fontWeight: 'bold', border: 'none', cursor: 'pointer', marginBottom: '30px', boxShadow: '0 4px 14px rgba(0, 102, 255, 0.3)' }}
+            style={{ width: '100%', padding: '18px', background: 'var(--primary)', color: '#fff', borderRadius: '30px', fontSize: '1.2rem', fontWeight: 'bold', border: 'none', cursor: 'pointer', marginBottom: '30px', boxShadow: '0 4px 14px rgba(0, 102, 255, 0.3)' }}
           >
             スタート
           </button>

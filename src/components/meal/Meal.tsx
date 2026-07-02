@@ -161,7 +161,7 @@ export default function Meal() {
                 <span className="calendar-day-name">{d.dayName}</span>
                 <span
                   className={`calendar-day-num ${d.isSelected ? 'active' : ''}`}
-                  style={d.isChecked && !d.isSelected ? { color: '#1a73e8', background: '#e8f0fe', width: '32px', height: '32px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' } : {}}
+                  style={d.isChecked && !d.isSelected ? { color: 'var(--primary)', background: '#e8f0fe', width: '32px', height: '32px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' } : {}}
                 >
                   {d.isChecked ? <i className="fa-solid fa-check" /> : d.dayStr}
                 </span>
@@ -266,7 +266,7 @@ export default function Meal() {
 
               <button type="submit" disabled={loadingEstimate} style={{
                 width: '100%', padding: '14px', borderRadius: '12px',
-                background: loadingEstimate ? 'var(--bg-secondary)' : 'linear-gradient(135deg, #1a73e8 0%, #0052cc 100%)',
+                background: loadingEstimate ? 'var(--bg-secondary)' : 'linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%)',
                 color: loadingEstimate ? 'var(--text-muted)' : '#fff', fontWeight: 'bold', fontSize: '1rem', border: loadingEstimate ? '1px solid var(--border-color)' : 'none',
                 cursor: loadingEstimate ? 'default' : 'pointer', boxShadow: loadingEstimate ? 'none' : '0 4px 12px rgba(26,115,232,0.3)'
               }}>
@@ -289,7 +289,7 @@ export default function Meal() {
         {/* ── 合計カロリー ── */}
         {meals.length > 0 && (
           <div style={{
-            background: 'linear-gradient(135deg, #1a73e8 0%, #0052cc 100%)',
+            background: 'linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%)',
             borderRadius: '14px', padding: '12px 20px', marginBottom: '14px',
             display: 'flex', justifyContent: 'space-between', alignItems: 'center'
           }}>

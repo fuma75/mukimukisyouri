@@ -182,7 +182,7 @@ export default function RulerPicker({ min, max, step, value, onChange, orientati
           bottom: 30, // matches bottom of ticks
           width: '3px',
           height: '50px',
-          backgroundColor: '#1a73e8',
+          backgroundColor: 'var(--primary)',
           transform: 'translateX(-50%)',
           zIndex: 10,
           borderRadius: '2px'
@@ -224,7 +224,7 @@ export default function RulerPicker({ min, max, step, value, onChange, orientati
         <style>{`
           .no-scrollbar::-webkit-scrollbar { display: none; }
           .ruler-col:focus {
-            box-shadow: inset 0 0 0 2px rgba(26, 115, 232, 0.4);
+            box-shadow: inset 0 0 0 2px rgba(245, 158, 11, 0.4);
             border-radius: 8px;
           }
         `}</style>
@@ -241,7 +241,7 @@ export default function RulerPicker({ min, max, step, value, onChange, orientati
           left: 10,
           height: '3px',
           width: '50px',
-          backgroundColor: '#1a73e8',
+          backgroundColor: 'var(--primary)',
           transform: 'translateY(-50%)',
           zIndex: 10,
           borderRadius: '2px'
@@ -283,7 +283,7 @@ export default function RulerPicker({ min, max, step, value, onChange, orientati
         <style>{`
           .no-scrollbar::-webkit-scrollbar { display: none; }
           .ruler-col:focus {
-            box-shadow: inset 0 0 0 2px rgba(26, 115, 232, 0.4);
+            box-shadow: inset 0 0 0 2px rgba(245, 158, 11, 0.4);
             border-radius: 8px;
           }
         `}</style>

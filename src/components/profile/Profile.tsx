@@ -93,7 +93,7 @@ export default function Profile() {
                 <input type="number" name="age" value={formData.age} onChange={handleChange} min="15" max="100" />
               </div>
               <div className="form-group">
-                <label>AIトレーナーの名前</label>
+                <label>🐯 虎コーチの名前</label>
                 <input type="text" name="trainerName" value={formData.trainerName} onChange={handleChange} />
               </div>
               <div className="form-group">

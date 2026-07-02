@@ -73,19 +73,19 @@ export default function ExerciseDetailModal({
           <div style={{ display: 'flex', background: '#f1f3f5', borderRadius: '30px', padding: '4px', marginBottom: '15px' }}>
             <button 
               onClick={() => setActiveTab('video')}
-              style={{ flex: 1, padding: '9px 0', borderRadius: '30px', border: 'none', fontWeight: 'bold', cursor: 'pointer', background: activeTab === 'video' ? '#0066ff' : 'transparent', color: activeTab === 'video' ? '#fff' : '#6c757d', transition: 'all 0.2s', fontSize: '0.85rem' }}
+              style={{ flex: 1, padding: '9px 0', borderRadius: '30px', border: 'none', fontWeight: 'bold', cursor: 'pointer', background: activeTab === 'video' ? 'var(--primary)' : 'transparent', color: activeTab === 'video' ? '#fff' : '#6c757d', transition: 'all 0.2s', fontSize: '0.85rem' }}
             >
               動画
             </button>
             <button 
               onClick={() => setActiveTab('muscle')}
-              style={{ flex: 1, padding: '9px 0', borderRadius: '30px', border: 'none', fontWeight: 'bold', cursor: 'pointer', background: activeTab === 'muscle' ? '#0066ff' : 'transparent', color: activeTab === 'muscle' ? '#fff' : '#6c757d', transition: 'all 0.2s', fontSize: '0.85rem' }}
+              style={{ flex: 1, padding: '9px 0', borderRadius: '30px', border: 'none', fontWeight: 'bold', cursor: 'pointer', background: activeTab === 'muscle' ? 'var(--primary)' : 'transparent', color: activeTab === 'muscle' ? '#fff' : '#6c757d', transition: 'all 0.2s', fontSize: '0.85rem' }}
             >
               筋肉
             </button>
             <button 
               onClick={() => setActiveTab('tutorial')}
-              style={{ flex: 1, padding: '9px 0', borderRadius: '30px', border: 'none', fontWeight: 'bold', cursor: 'pointer', background: activeTab === 'tutorial' ? '#0066ff' : 'transparent', color: activeTab === 'tutorial' ? '#fff' : '#6c757d', transition: 'all 0.2s', fontSize: '0.85rem' }}
+              style={{ flex: 1, padding: '9px 0', borderRadius: '30px', border: 'none', fontWeight: 'bold', cursor: 'pointer', background: activeTab === 'tutorial' ? 'var(--primary)' : 'transparent', color: activeTab === 'tutorial' ? '#fff' : '#6c757d', transition: 'all 0.2s', fontSize: '0.85rem' }}
             >
               チュートリアル
             </button>
@@ -96,7 +96,7 @@ export default function ExerciseDetailModal({
             <div className="animate-fade-in">
               {/* Duration/Reps Adjuster */}
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '15px' }}>
-                <h3 style={{ margin: 0, fontSize: '0.95rem', color: '#0066ff', fontWeight: 'bold' }}>
+                <h3 style={{ margin: 0, fontSize: '0.95rem', color: 'var(--primary)', fontWeight: 'bold' }}>
                   {exercise.duration ? '期間' : '回数'}
                 </h3>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
@@ -110,7 +110,7 @@ export default function ExerciseDetailModal({
 
               {/* Description */}
               <div style={{ marginBottom: '15px' }}>
-                <h3 style={{ margin: '0 0 8px 0', fontSize: '0.95rem', color: '#0066ff', fontWeight: 'bold' }}>説明</h3>
+                <h3 style={{ margin: '0 0 8px 0', fontSize: '0.95rem', color: 'var(--primary)', fontWeight: 'bold' }}>説明</h3>
                 <p style={{ margin: 0, fontSize: '0.88rem', lineHeight: '1.45', color: '#495057', whiteSpace: 'pre-wrap' }}>
                   {details.description || 'このトレーニングの詳しい説明はありません。正しいフォームを意識して行いましょう。'}
                 </p>
@@ -118,11 +118,11 @@ export default function ExerciseDetailModal({
 
               {/* Target Area Tags */}
               <div style={{ marginBottom: '5px' }}>
-                <h3 style={{ margin: '0 0 8px 0', fontSize: '0.95rem', color: '#0066ff', fontWeight: 'bold' }}>ターゲット部位</h3>
+                <h3 style={{ margin: '0 0 8px 0', fontSize: '0.95rem', color: 'var(--primary)', fontWeight: 'bold' }}>ターゲット部位</h3>
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
                   {(details.targetTags || ['全身']).map((tag, idx) => (
                     <span key={idx} style={{ padding: '6px 12px', background: '#f8f9fa', borderRadius: '20px', fontSize: '0.8rem', fontWeight: 'bold', color: '#495057', display: 'flex', alignItems: 'center' }}>
-                      <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#0066ff', marginRight: '6px' }}></div>
+                      <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: 'var(--primary)', marginRight: '6px' }}></div>
                       {tag}
                     </span>
                   ))}
@@ -152,7 +152,7 @@ export default function ExerciseDetailModal({
           {/* Tab Content: Tutorial */}
           {activeTab === 'tutorial' && (
             <div className="animate-fade-in" style={{ paddingBottom: '10px' }}>
-              <h3 style={{ margin: '0 0 10px 0', fontSize: '1rem', color: '#0066ff', fontWeight: 'bold' }}>やり方・ポイント</h3>
+              <h3 style={{ margin: '0 0 10px 0', fontSize: '1rem', color: 'var(--primary)', fontWeight: 'bold' }}>やり方・ポイント</h3>
               <ul style={{ margin: 0, paddingLeft: '20px', color: '#495057', lineHeight: '1.6', fontSize: '0.9rem' }}>
                 {details.instructions.map((inst, idx) => (
                   <li key={idx} style={{ marginBottom: '6px' }}>{inst}</li>
@@ -190,7 +190,7 @@ export default function ExerciseDetailModal({
 
           <button 
             onClick={onClose}
-            style={{ padding: '10px 30px', background: '#0066ff', color: '#fff', borderRadius: '30px', fontSize: '1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer', boxShadow: '0 4px 10px rgba(0, 102, 255, 0.3)' }}
+            style={{ padding: '10px 30px', background: 'var(--primary)', color: '#fff', borderRadius: '30px', fontSize: '1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer', boxShadow: '0 4px 10px rgba(0, 102, 255, 0.3)' }}
           >
             閉じる
           </button>

@@ -156,11 +156,11 @@ export default function WorkoutPlayer({ exercises, onComplete, onCancel, initial
       <div style={{ position: 'fixed', top: 0, left: 0, right: 0, height: '100dvh', zIndex: 10000, background: 'rgba(0,0,0,0.8)', display: 'flex', justifyContent: 'center' }}>
         <div style={{ width: '100%', maxWidth: '560px', height: '100%', background: '#fff', color: '#212529', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', padding: '20px', position: 'relative' }}>
           <i className="fa-solid fa-trophy" style={{ fontSize: '4rem', color: '#ffd700', marginBottom: '15px' }}></i>
-          <h1 style={{ fontSize: '2rem', fontWeight: '900', color: '#1a73e8', marginBottom: '10px' }}>お疲れ様でした！</h1>
+          <h1 style={{ fontSize: '2rem', fontWeight: '900', color: 'var(--primary)', marginBottom: '10px' }}>お疲れ様でした！</h1>
           <p style={{ fontSize: '1rem', color: '#495057', marginBottom: '30px', textAlign: 'center' }}>{exercises.length}種類のエクササイズを完了しました。<br/>今日の頑張りを記録に残しましょう！</p>
           <button 
             onClick={onComplete}
-            style={{ padding: '14px 35px', background: '#1a73e8', color: '#fff', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer', boxShadow: '0 4px 14px rgba(26, 115, 232, 0.3)' }}
+            style={{ padding: '14px 35px', background: 'var(--primary)', color: '#fff', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer', boxShadow: '0 4px 14px rgba(245, 158, 11, 0.3)' }}
           >
             完了して記録する
           </button>
@@ -197,7 +197,7 @@ export default function WorkoutPlayer({ exercises, onComplete, onCancel, initial
             <i className="fa-solid fa-xmark"></i>
           </button>
           <div style={{ flex: 1, height: '6px', background: '#e9ecef', borderRadius: '3px', overflow: 'hidden' }}>
-            <div style={{ width: `${progressPercent}%`, height: '100%', background: '#1a73e8', transition: 'width 0.4s ease' }}></div>
+            <div style={{ width: `${progressPercent}%`, height: '100%', background: 'var(--primary)', transition: 'width 0.4s ease' }}></div>
           </div>
           <div style={{ fontSize: '0.85rem', fontWeight: 'bold', color: '#868e96', whiteSpace: 'nowrap' }}>
             {currentIndex + 1} / {exercises.length}
@@ -224,7 +224,7 @@ export default function WorkoutPlayer({ exercises, onComplete, onCancel, initial
 
             {/* Info text */}
             <div style={{ textAlign: 'center', marginTop: '10px' }}>
-              <div style={{ fontSize: '1.8rem', fontWeight: 'bold', color: '#1a73e8', marginBottom: '6px' }}>用意スタート</div>
+              <div style={{ fontSize: '1.8rem', fontWeight: 'bold', color: 'var(--primary)', marginBottom: '6px' }}>用意スタート</div>
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}>
                 <span style={{ fontSize: '1.3rem', fontWeight: 'bold', color: '#212529' }}>{currentEx.exercise}</span>
                 <i 
@@ -260,7 +260,7 @@ export default function WorkoutPlayer({ exercises, onComplete, onCancel, initial
 
         {/* ── COUNTDOWN phase ── */}
         {phase === 'countdown' && currentEx && (
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%', width: '100%', background: '#1a73e8', color: '#fff', position: 'absolute', top: 0, left: 0, zIndex: 10 }}>
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%', width: '100%', background: 'var(--primary)', color: '#fff', position: 'absolute', top: 0, left: 0, zIndex: 10 }}>
             <div style={{ fontSize: '1.2rem', fontWeight: 'bold', marginBottom: '15px', opacity: 0.9 }}>
               次の種目: {currentEx.exercise}
             </div>
@@ -332,7 +332,7 @@ export default function WorkoutPlayer({ exercises, onComplete, onCancel, initial
             
             {/* Top: Next exercise preview card */}
             <div style={{ flex: '0 0 auto', display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '12px 16px', background: '#fff' }}>
-              <div style={{ fontSize: '0.85rem', fontWeight: '700', color: '#1a73e8', marginBottom: '8px' }}>次の種目</div>
+              <div style={{ fontSize: '0.85rem', fontWeight: '700', color: 'var(--primary)', marginBottom: '8px' }}>次の種目</div>
               <div style={{ width: '100%', height: '180px', display: 'flex', justifyContent: 'center', alignItems: 'center', background: '#f8f9fa', borderRadius: '12px', overflow: 'hidden' }}>
                 {(getExerciseDetails(exercises[currentIndex + 1]?.exercise || '').gifUrl || getExerciseDetails(exercises[currentIndex + 1]?.exercise || '').image) ? (
                   <img
@@ -342,7 +342,7 @@ export default function WorkoutPlayer({ exercises, onComplete, onCancel, initial
                   />
                 ) : (
                   <div style={{ width: '40px', height: '40px', borderRadius: '50%', background: 'rgba(26,115,232,0.08)', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                    <i className="fa-solid fa-person-running" style={{ fontSize: '1.4rem', color: '#1a73e8' }}></i>
+                    <i className="fa-solid fa-person-running" style={{ fontSize: '1.4rem', color: 'var(--primary)' }}></i>
                   </div>
                 )}
               </div>

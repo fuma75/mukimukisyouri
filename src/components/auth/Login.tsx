@@ -90,7 +90,7 @@ export default function Login() {
         }
       }
 
-      const selectedCard = document.querySelector('.option-card[style*="rgba(26, 115, 232, 0.05)"]');
+      const selectedCard = document.querySelector('.option-card[style*="rgba(245, 158, 11, 0.05)"]');
       if (selectedCard instanceof HTMLElement) {
         selectedCard.focus();
         return;
@@ -409,12 +409,12 @@ export default function Login() {
           <i className="fa-solid fa-arrow-left"></i>
         </button>
         <div style={{ flex: 1, textAlign: 'center' }}>
-          <div style={{ fontSize: '0.85rem', color: '#1a73e8', fontWeight: 'bold', marginBottom: '8px' }}>
+          <div style={{ fontSize: '0.85rem', color: 'var(--primary)', fontWeight: 'bold', marginBottom: '8px' }}>
             {title}
           </div>
           <div style={{ display: 'flex', gap: '4px', justifyContent: 'center', width: '200px', margin: '0 auto' }}>
             {[...Array(TOTAL_WIZARD_STEPS)].map((_, i) => (
-              <div key={i} style={{ flex: 1, height: '3px', background: i < normalizedStep ? '#1a73e8' : '#e9ecef', borderRadius: '3px' }}></div>
+              <div key={i} style={{ flex: 1, height: '3px', background: i < normalizedStep ? 'var(--primary)' : '#e9ecef', borderRadius: '3px' }}></div>
             ))}
           </div>
         </div>
@@ -435,11 +435,11 @@ export default function Login() {
         alignItems: 'center',
         justifyContent: 'center',
         padding: '20px 10px',
-        background: selected ? 'rgba(26, 115, 232, 0.05)' : '#ffffff',
-        border: `2px solid ${selected ? '#1a73e8' : '#f4f6fb'}`,
+        background: selected ? 'rgba(245, 158, 11, 0.05)' : '#ffffff',
+        border: `2px solid ${selected ? 'var(--primary)' : '#f4f6fb'}`,
         borderRadius: '16px',
         cursor: 'pointer',
-        boxShadow: selected ? '0 4px 12px rgba(26, 115, 232, 0.1)' : '0 4px 12px rgba(0,0,0,0.03)',
+        boxShadow: selected ? '0 4px 12px rgba(245, 158, 11, 0.1)' : '0 4px 12px rgba(0,0,0,0.03)',
         transition: 'all 0.2s ease',
         boxSizing: 'border-box',
         marginBottom: '10px',
@@ -450,10 +450,10 @@ export default function Login() {
         {icon.startsWith('/') ? (
           <img src={icon} alt={label} style={{ width: '100%', height: '100%', objectFit: 'cover', transform: 'scale(1.5)', filter: selected ? 'none' : 'grayscale(100%)', opacity: selected ? 1 : 0.6 }} />
         ) : (
-          <i className={icon} style={{ fontSize: '2rem', color: selected ? '#1a73e8' : '#adb5bd' }}></i>
+          <i className={icon} style={{ fontSize: '2rem', color: selected ? 'var(--primary)' : '#adb5bd' }}></i>
         )}
       </div>
-      <div style={{ fontSize: '1.15rem', fontWeight: selected ? 'bold' : 'bold', color: selected ? '#1a73e8' : '#1e1e24', textAlign: 'center' }}>
+      <div style={{ fontSize: '1.15rem', fontWeight: selected ? 'bold' : 'bold', color: selected ? 'var(--primary)' : '#1e1e24', textAlign: 'center' }}>
         {label}
       </div>
     </div>
@@ -466,9 +466,10 @@ export default function Login() {
       {step === 1 && (
         <div className="login-container" style={{ maxWidth: '400px', margin: 'auto', padding: '20px', width: '100%' }}>
           <div className="login-logo" style={{ marginBottom: '20px', textAlign: 'center' }}>
-            <img src="/images/logo.png" alt="筋虎" style={{ width: '70px', height: '70px', borderRadius: '50%', objectFit: 'cover', marginBottom: '10px', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }} />
-            <h1 style={{ fontSize: '1.8rem', margin: '0', fontWeight: 'bold' }}>筋虎</h1>
-            <p style={{ color: '#495057', fontSize: '0.9rem', marginTop: '5px' }}>あなた専用のAIパーソナルトレーナー</p>
+            <img src="/images/logo.png" alt="🐯 筋虎" style={{ width: '70px', height: '70px', borderRadius: '50%', objectFit: 'cover', marginBottom: '10px', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }} />
+            <h1 style={{ fontSize: '1.8rem', margin: '0', fontWeight: 'bold' }}>🐯 筋虎</h1>
+            <div style={{ fontSize: '2rem', letterSpacing: '30px', margin: '10px 0', opacity: 0.8, display: 'flex', justifyContent: 'center', paddingLeft: '30px' }}>🐯 🐯</div>
+            <p style={{ color: '#495057', fontSize: '0.9rem', marginTop: '5px' }}>あなた専用の虎コーチ</p>
           </div>
 
           <div className="animate-fade-in">
@@ -481,7 +482,7 @@ export default function Login() {
               <div className="form-group" style={{ position: 'relative', marginBottom: '12px' }}>
                 <label style={{display: 'block', fontSize: '0.85rem', fontWeight: 'bold', color: '#1e1e24', marginBottom: '5px', textAlign: 'left'}}>パスワード</label>
                 <input type={showPassword ? "text" : "password"} name="password" autoComplete="new-password" placeholder="パスワードを入力" value={password} onChange={e => setPassword(e.target.value)} style={{ background: '#f8f9fa', border: '1px solid #ced4da', borderRadius: '8px', padding: '12px', width: '100%', color: '#212529' }} />
-                <button type="button" onClick={() => setShowPassword(!showPassword)} style={{ position: 'absolute', right: '15px', top: '36px', background: 'none', border: 'none', color: '#1a73e8', fontWeight: 'bold', cursor: 'pointer', fontSize: '0.85rem' }}>
+                <button type="button" onClick={() => setShowPassword(!showPassword)} style={{ position: 'absolute', right: '15px', top: '36px', background: 'none', border: 'none', color: 'var(--primary)', fontWeight: 'bold', cursor: 'pointer', fontSize: '0.85rem' }}>
                   {showPassword ? '非表示' : '表示'}
                 </button>
               </div>
@@ -495,12 +496,12 @@ export default function Login() {
 
               {isLoginMode && (
                 <div style={{ display: 'flex', alignItems: 'center', marginBottom: '15px', fontSize: '0.85rem', color: '#1e1e24', fontWeight: 'bold' }}>
-                  <input type="checkbox" id="keepLoggedIn" style={{ marginRight: '8px', width: '16px', height: '16px', accentColor: '#1a73e8' }} defaultChecked />
+                  <input type="checkbox" id="keepLoggedIn" style={{ marginRight: '8px', width: '16px', height: '16px', accentColor: 'var(--primary)' }} defaultChecked />
                   <label htmlFor="keepLoggedIn">ログイン状態を保持</label>
                 </div>
               )}
               
-              <button type="submit" className="btn btn-block" style={{ marginTop: '5px', padding: '14px', background: '#1a73e8', color: '#fff', borderRadius: '8px', fontWeight: 'bold', border: 'none', boxShadow: '0 4px 10px rgba(26,115,232,0.3)', fontSize: '1rem' }} disabled={loading}>
+              <button type="submit" className="btn btn-block" style={{ marginTop: '5px', padding: '14px', background: 'var(--primary)', color: '#fff', borderRadius: '8px', fontWeight: 'bold', border: 'none', boxShadow: '0 4px 10px rgba(26,115,232,0.3)', fontSize: '1rem' }} disabled={loading}>
                 {loading ? <i className="fa-solid fa-spinner fa-spin"></i> : (isLoginMode ? 'ログイン' : '新規登録')}
               </button>
             </form>
@@ -547,8 +548,8 @@ export default function Login() {
                       maxWidth: '220px', 
                       height: 'min(350px, 40vh)', 
                       borderRadius: '20px', 
-                      background: isSelected ? 'rgba(26, 115, 232, 0.05)' : '#fff', 
-                      border: `2px solid ${isSelected ? '#1a73e8' : '#e9ecef'}`, 
+                      background: isSelected ? 'rgba(245, 158, 11, 0.05)' : '#fff', 
+                      border: `2px solid ${isSelected ? 'var(--primary)' : '#e9ecef'}`, 
                       cursor: 'pointer',
                       display: 'flex',
                       flexDirection: 'column',
@@ -562,10 +563,10 @@ export default function Login() {
                     </div>
                     
                     <div style={{ padding: '20px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px' }}>
-                      <span style={{ fontSize: '1.2rem', fontWeight: 'bold', color: isSelected ? '#1a73e8' : '#495057' }}>
+                      <span style={{ fontSize: '1.2rem', fontWeight: 'bold', color: isSelected ? 'var(--primary)' : '#495057' }}>
                         {g === 'male' ? '男性' : '女性'}
                       </span>
-                      {isSelected && <i className="fa-solid fa-circle-check" style={{ color: '#1a73e8', fontSize: '1.2rem' }}></i>}
+                      {isSelected && <i className="fa-solid fa-circle-check" style={{ color: 'var(--primary)', fontSize: '1.2rem' }}></i>}
                     </div>
                   </div>
                 );
@@ -576,14 +577,14 @@ export default function Login() {
               <button 
                 type="button" 
                 onClick={() => setGender('other')}
-                style={{ background: gender === 'other' ? '#1a73e8' : '#f8f9fa', border: 'none', padding: '12px 30px', borderRadius: '24px', color: gender === 'other' ? '#fff' : '#495057', fontSize: '0.95rem', cursor: 'pointer', transition: 'all 0.2s' }}>
+                style={{ background: gender === 'other' ? 'var(--primary)' : '#f8f9fa', border: 'none', padding: '12px 30px', borderRadius: '24px', color: gender === 'other' ? '#fff' : '#495057', fontSize: '0.95rem', cursor: 'pointer', transition: 'all 0.2s' }}>
                 その他 / 言いたくない
               </button>
             </div>
           </div>
 
           <div style={{ padding: '10px 0' }}>
-            <button onClick={handleNext} disabled={!gender} style={{ width: '100%', padding: '14px', background: gender ? '#1a73e8' : '#dee2e6', color: gender ? '#fff' : '#adb5bd', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer' }}>
+            <button onClick={handleNext} disabled={!gender} style={{ width: '100%', padding: '14px', background: gender ? 'var(--primary)' : '#dee2e6', color: gender ? '#fff' : '#adb5bd', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer' }}>
               次へ
             </button>
           </div>
@@ -606,7 +607,7 @@ export default function Login() {
           </div>
 
           <div style={{ padding: '10px 0' }}>
-            <button onClick={handleNext} disabled={!goal} style={{ width: '100%', padding: '14px', background: goal ? '#1a73e8' : '#dee2e6', color: goal ? '#fff' : '#adb5bd', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer' }}>
+            <button onClick={handleNext} disabled={!goal} style={{ width: '100%', padding: '14px', background: goal ? 'var(--primary)' : '#dee2e6', color: goal ? '#fff' : '#adb5bd', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer' }}>
               次へ
             </button>
           </div>
@@ -632,7 +633,7 @@ export default function Login() {
           </div>
 
           <div style={{ padding: '10px 0', marginTop: '10px' }}>
-            <button onClick={handleNext} disabled={targetAreas.length === 0} style={{ width: '100%', padding: '14px', background: targetAreas.length > 0 ? '#1a73e8' : '#dee2e6', color: targetAreas.length > 0 ? '#fff' : '#adb5bd', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer' }}>
+            <button onClick={handleNext} disabled={targetAreas.length === 0} style={{ width: '100%', padding: '14px', background: targetAreas.length > 0 ? 'var(--primary)' : '#dee2e6', color: targetAreas.length > 0 ? '#fff' : '#adb5bd', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer' }}>
               次へ
             </button>
           </div>
@@ -647,7 +648,7 @@ export default function Login() {
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
             <h2 style={{ textAlign: 'center', fontSize: '1.8rem', fontWeight: 'bold', marginBottom: '20px' }}>生まれた年は？</h2>
             <div style={{ background: '#f4f6fb', padding: '15px 20px', borderRadius: '12px', display: 'flex', alignItems: 'center', gap: '15px', marginBottom: '20px', width: '100%', maxWidth: '400px' }}>
-              <i className="fa-solid fa-clipboard-list" style={{ fontSize: '1.5rem', color: '#1a73e8' }}></i>
+              <i className="fa-solid fa-clipboard-list" style={{ fontSize: '1.5rem', color: 'var(--primary)' }}></i>
               <p style={{ margin: 0, color: '#495057', fontSize: '0.95rem', lineHeight: 1.5 }}>あなたの年齢グループに最も適したワークアウトに調整しやすくなります。</p>
             </div>
             
@@ -661,7 +662,7 @@ export default function Login() {
                     setDob(`${y}-01-01`);
                   }
                 }} 
-                style={{ fontSize: '3.5rem', fontWeight: 'bold', color: '#1e1e24', background: 'transparent', border: 'none', borderBottom: '2px solid #1a73e8', width: '140px', textAlign: 'center', outline: 'none' }} 
+                style={{ fontSize: '3.5rem', fontWeight: 'bold', color: '#1e1e24', background: 'transparent', border: 'none', borderBottom: '2px solid var(--primary)', width: '140px', textAlign: 'center', outline: 'none' }} 
               />
               <span style={{ fontSize: '1.5rem', color: '#495057', marginLeft: '5px' }}>年</span>
             </div>
@@ -672,7 +673,7 @@ export default function Login() {
           </div>
 
           <div style={{ padding: '10px 0' }}>
-            <button onClick={handleNext} disabled={!dob} style={{ width: '100%', padding: '14px', background: dob ? '#1a73e8' : '#dee2e6', color: dob ? '#fff' : '#adb5bd', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer' }}>
+            <button onClick={handleNext} disabled={!dob} style={{ width: '100%', padding: '14px', background: dob ? 'var(--primary)' : '#dee2e6', color: dob ? '#fff' : '#adb5bd', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer' }}>
               次へ
             </button>
           </div>
@@ -692,7 +693,7 @@ export default function Login() {
                 type="number" 
                 value={height} 
                 onChange={(e) => { setHeight(e.target.value); setHeightUnit('cm'); }} 
-                style={{ fontSize: '4rem', fontWeight: 'bold', color: '#1e1e24', background: 'transparent', border: 'none', borderBottom: '2px solid #1a73e8', width: '180px', textAlign: 'center', outline: 'none' }} 
+                style={{ fontSize: '4rem', fontWeight: 'bold', color: '#1e1e24', background: 'transparent', border: 'none', borderBottom: '2px solid var(--primary)', width: '180px', textAlign: 'center', outline: 'none' }} 
               />
               <span style={{ fontSize: '1.5rem', color: '#495057', marginLeft: '5px' }}>cm</span>
             </div>
@@ -710,7 +711,7 @@ export default function Login() {
           </div>
 
           <div style={{ padding: '10px 0' }}>
-            <button onClick={handleNext} disabled={!height} style={{ width: '100%', padding: '14px', background: height ? '#1a73e8' : '#dee2e6', color: height ? '#fff' : '#adb5bd', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer' }}>
+            <button onClick={handleNext} disabled={!height} style={{ width: '100%', padding: '14px', background: height ? 'var(--primary)' : '#dee2e6', color: height ? '#fff' : '#adb5bd', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer' }}>
               次へ
             </button>
           </div>
@@ -725,15 +726,15 @@ export default function Login() {
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
             <h2 style={{ textAlign: 'center', fontSize: '1.6rem', fontWeight: 'bold', marginBottom: '10px' }}>現在の体重を入力してください。</h2>
             
-            <div style={{ display: 'flex', border: '1px solid #1a73e8', borderRadius: '30px', overflow: 'hidden', marginBottom: '10px' }}>
+            <div style={{ display: 'flex', border: '1px solid var(--primary)', borderRadius: '30px', overflow: 'hidden', marginBottom: '10px' }}>
               <div 
                 onClick={() => setWeightUnit('kg')}
-                style={{ padding: '8px 24px', fontWeight: 'bold', cursor: 'pointer', background: weightUnit === 'kg' ? '#1a73e8' : '#fff', color: weightUnit === 'kg' ? '#fff' : '#1e1e24' }}>
+                style={{ padding: '8px 24px', fontWeight: 'bold', cursor: 'pointer', background: weightUnit === 'kg' ? 'var(--primary)' : '#fff', color: weightUnit === 'kg' ? '#fff' : '#1e1e24' }}>
                 kg
               </div>
               <div 
                 onClick={() => setWeightUnit('lbs')}
-                style={{ padding: '8px 24px', fontWeight: 'bold', cursor: 'pointer', background: weightUnit === 'lbs' ? '#1a73e8' : '#fff', color: weightUnit === 'lbs' ? '#fff' : '#1e1e24' }}>
+                style={{ padding: '8px 24px', fontWeight: 'bold', cursor: 'pointer', background: weightUnit === 'lbs' ? 'var(--primary)' : '#fff', color: weightUnit === 'lbs' ? '#fff' : '#1e1e24' }}>
                 lbs
               </div>
             </div>
@@ -743,7 +744,7 @@ export default function Login() {
                 type="number" 
                 value={weight} 
                 onChange={(e) => setWeight(e.target.value)} 
-                style={{ fontSize: '4rem', fontWeight: 'bold', color: '#1e1e24', background: 'transparent', border: 'none', borderBottom: '2px solid #1a73e8', width: '180px', textAlign: 'center', outline: 'none' }} 
+                style={{ fontSize: '4rem', fontWeight: 'bold', color: '#1e1e24', background: 'transparent', border: 'none', borderBottom: '2px solid var(--primary)', width: '180px', textAlign: 'center', outline: 'none' }} 
               />
               <span style={{ fontSize: '1.5rem', color: '#495057', marginLeft: '5px' }}>{weightUnit}</span>
             </div>
@@ -791,7 +792,7 @@ export default function Login() {
           </div>
 
           <div style={{ padding: '10px 0' }}>
-            <button onClick={handleNext} style={{ width: '100%', padding: '14px', background: '#1a73e8', color: '#fff', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer' }}>
+            <button onClick={handleNext} style={{ width: '100%', padding: '14px', background: 'var(--primary)', color: '#fff', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer' }}>
               次へ
             </button>
           </div>
@@ -806,15 +807,15 @@ export default function Login() {
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
             <h2 style={{ textAlign: 'center', fontSize: '1.6rem', fontWeight: 'bold', marginBottom: '20px' }}>目標体重を入力してください。</h2>
             
-            <div style={{ display: 'flex', border: '1px solid #1a73e8', borderRadius: '30px', overflow: 'hidden', marginBottom: '10px' }}>
+            <div style={{ display: 'flex', border: '1px solid var(--primary)', borderRadius: '30px', overflow: 'hidden', marginBottom: '10px' }}>
               <div 
                 onClick={() => setWeightUnit('kg')}
-                style={{ padding: '8px 24px', fontWeight: 'bold', cursor: 'pointer', background: weightUnit === 'kg' ? '#1a73e8' : '#fff', color: weightUnit === 'kg' ? '#fff' : '#1e1e24' }}>
+                style={{ padding: '8px 24px', fontWeight: 'bold', cursor: 'pointer', background: weightUnit === 'kg' ? 'var(--primary)' : '#fff', color: weightUnit === 'kg' ? '#fff' : '#1e1e24' }}>
                 kg
               </div>
               <div 
                 onClick={() => setWeightUnit('lbs')}
-                style={{ padding: '8px 24px', fontWeight: 'bold', cursor: 'pointer', background: weightUnit === 'lbs' ? '#1a73e8' : '#fff', color: weightUnit === 'lbs' ? '#fff' : '#1e1e24' }}>
+                style={{ padding: '8px 24px', fontWeight: 'bold', cursor: 'pointer', background: weightUnit === 'lbs' ? 'var(--primary)' : '#fff', color: weightUnit === 'lbs' ? '#fff' : '#1e1e24' }}>
                 lbs
               </div>
             </div>
@@ -824,7 +825,7 @@ export default function Login() {
                 type="number" 
                 value={targetWeight} 
                 onChange={(e) => setTargetWeight(e.target.value)} 
-                style={{ fontSize: '4rem', fontWeight: 'bold', color: '#1e1e24', background: 'transparent', border: 'none', borderBottom: '2px solid #1a73e8', width: '180px', textAlign: 'center', outline: 'none' }} 
+                style={{ fontSize: '4rem', fontWeight: 'bold', color: '#1e1e24', background: 'transparent', border: 'none', borderBottom: '2px solid var(--primary)', width: '180px', textAlign: 'center', outline: 'none' }} 
               />
               <span style={{ fontSize: '1.5rem', color: '#495057', marginLeft: '5px' }}>{weightUnit}</span>
             </div>
@@ -872,7 +873,7 @@ export default function Login() {
           </div>
 
           <div style={{ padding: '10px 0' }}>
-            <button onClick={handleNext} style={{ width: '100%', padding: '14px', background: '#1a73e8', color: '#fff', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer' }}>
+            <button onClick={handleNext} style={{ width: '100%', padding: '14px', background: 'var(--primary)', color: '#fff', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer' }}>
               次へ
             </button>
           </div>
@@ -895,7 +896,7 @@ export default function Login() {
           </div>
 
           <div style={{ padding: '10px 0' }}>
-            <button onClick={handleNext} disabled={!environment} style={{ width: '100%', padding: '14px', background: environment ? '#1a73e8' : '#dee2e6', color: environment ? '#fff' : '#adb5bd', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer' }}>
+            <button onClick={handleNext} disabled={!environment} style={{ width: '100%', padding: '14px', background: environment ? 'var(--primary)' : '#dee2e6', color: environment ? '#fff' : '#adb5bd', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer' }}>
               次へ
             </button>
           </div>
@@ -919,7 +920,7 @@ export default function Login() {
           </div>
 
           <div style={{ padding: '10px 0' }}>
-            <button onClick={handleNext} disabled={exerciseTypes.length === 0} style={{ width: '100%', padding: '14px', background: exerciseTypes.length > 0 ? '#1a73e8' : '#dee2e6', color: exerciseTypes.length > 0 ? '#fff' : '#adb5bd', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer' }}>
+            <button onClick={handleNext} disabled={exerciseTypes.length === 0} style={{ width: '100%', padding: '14px', background: exerciseTypes.length > 0 ? 'var(--primary)' : '#dee2e6', color: exerciseTypes.length > 0 ? '#fff' : '#adb5bd', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer' }}>
               次へ
             </button>
           </div>
@@ -942,7 +943,7 @@ export default function Login() {
           </div>
 
           <div style={{ padding: '10px 0' }}>
-            <button onClick={handleNext} disabled={!workoutLevel} style={{ width: '100%', padding: '14px', background: workoutLevel ? '#1a73e8' : '#dee2e6', color: workoutLevel ? '#fff' : '#adb5bd', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer' }}>
+            <button onClick={handleNext} disabled={!workoutLevel} style={{ width: '100%', padding: '14px', background: workoutLevel ? 'var(--primary)' : '#dee2e6', color: workoutLevel ? '#fff' : '#adb5bd', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer' }}>
               次へ
             </button>
           </div>
@@ -957,7 +958,7 @@ export default function Login() {
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
             <h2 style={{ textAlign: 'center', fontSize: '1.6rem', fontWeight: 'bold', marginBottom: '30px' }}>体に不快感や懸念はありますか？</h2>
             <div style={{ background: '#f4f6fb', padding: '15px 20px', borderRadius: '12px', display: 'flex', alignItems: 'center', gap: '15px', marginBottom: '10px', width: '100%' }}>
-              <i className="fa-solid fa-briefcase-medical" style={{ fontSize: '1.5rem', color: '#1a73e8' }}></i>
+              <i className="fa-solid fa-briefcase-medical" style={{ fontSize: '1.5rem', color: 'var(--primary)' }}></i>
               <p style={{ margin: 0, color: '#495057', fontSize: '0.95rem', lineHeight: 1.5 }}>これにより、特別な注意が必要な部位に焦点を当て、あなたのフィットネスの旅をカスタマイズします。</p>
             </div>
             
@@ -973,11 +974,11 @@ export default function Login() {
                     display: 'flex',
                     alignItems: 'center',
                     padding: '20px 25px',
-                    background: physicalIssues.includes(issue) ? (issue === 'なし' ? '#1a73e8' : 'rgba(224, 68, 32, 0.05)') : '#ffffff',
-                    border: `2px solid ${physicalIssues.includes(issue) ? (issue === 'なし' ? '#1a73e8' : '#e04420') : '#f4f6fb'}`,
+                    background: physicalIssues.includes(issue) ? (issue === 'なし' ? 'var(--primary)' : 'rgba(224, 68, 32, 0.05)') : '#ffffff',
+                    border: `2px solid ${physicalIssues.includes(issue) ? (issue === 'なし' ? 'var(--primary)' : '#e04420') : '#f4f6fb'}`,
                     borderRadius: '16px',
                     cursor: 'pointer',
-                    boxShadow: physicalIssues.includes(issue) ? (issue === 'なし' ? '0 4px 12px rgba(26, 115, 232, 0.2)' : '0 4px 12px rgba(224, 68, 32, 0.1)') : '0 4px 12px rgba(0,0,0,0.03)',
+                    boxShadow: physicalIssues.includes(issue) ? (issue === 'なし' ? '0 4px 12px rgba(245, 158, 11, 0.2)' : '0 4px 12px rgba(224, 68, 32, 0.1)') : '0 4px 12px rgba(0,0,0,0.03)',
                     transition: 'all 0.2s ease'
                   }}
                 >
@@ -987,7 +988,7 @@ export default function Login() {
                   </div>
                   {physicalIssues.includes(issue) && issue === 'なし' && (
                      <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#fff', borderRadius: '50%', width: '24px', height: '24px' }}>
-                       <i className="fa-solid fa-check" style={{ color: '#1a73e8', fontSize: '1rem' }}></i>
+                       <i className="fa-solid fa-check" style={{ color: 'var(--primary)', fontSize: '1rem' }}></i>
                      </div>
                   )}
                 </div>
@@ -996,7 +997,7 @@ export default function Login() {
           </div>
 
           <div style={{ padding: '10px 0' }}>
-            <button onClick={handleNext} disabled={physicalIssues.length === 0} style={{ width: '100%', padding: '14px', background: physicalIssues.length > 0 ? '#1a73e8' : '#dee2e6', color: physicalIssues.length > 0 ? '#fff' : '#adb5bd', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer' }}>
+            <button onClick={handleNext} disabled={physicalIssues.length === 0} style={{ width: '100%', padding: '14px', background: physicalIssues.length > 0 ? 'var(--primary)' : '#dee2e6', color: physicalIssues.length > 0 ? '#fff' : '#adb5bd', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer' }}>
               次へ
             </button>
           </div>
@@ -1017,7 +1018,7 @@ export default function Login() {
           </div>
 
           <div style={{ padding: '10px 0' }}>
-            <button onClick={handleNext} disabled={!activityLevel} style={{ width: '100%', padding: '14px', background: activityLevel ? '#1a73e8' : '#dee2e6', color: activityLevel ? '#fff' : '#adb5bd', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer' }}>
+            <button onClick={handleNext} disabled={!activityLevel} style={{ width: '100%', padding: '14px', background: activityLevel ? 'var(--primary)' : '#dee2e6', color: activityLevel ? '#fff' : '#adb5bd', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer' }}>
               次へ
             </button>
           </div>
@@ -1041,7 +1042,7 @@ export default function Login() {
           </div>
 
           <div style={{ padding: '10px 0' }}>
-            <button type="button" onClick={handleCalculateAI} disabled={!frequency || loading} style={{ width: '100%', padding: '14px', background: frequency ? '#1a73e8' : '#dee2e6', color: frequency ? '#fff' : '#adb5bd', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px' }}>
+            <button type="button" onClick={handleCalculateAI} disabled={!frequency || loading} style={{ width: '100%', padding: '14px', background: frequency ? 'var(--primary)' : '#dee2e6', color: frequency ? '#fff' : '#adb5bd', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px' }}>
               {loading ? <i className="fa-solid fa-spinner fa-spin"></i> : <i className="fa-solid fa-robot"></i>}
               {loading ? 'AIで目標を計算中...' : 'AIで目標を計算して完了'}
             </button>
@@ -1053,14 +1054,14 @@ export default function Login() {
       {step === 15 && (
         <div style={{ flex: '1 0 auto', maxWidth: '600px', margin: '0 auto', padding: '20px', width: '100%', display: 'flex', flexDirection: 'column', minHeight: '100%', justifyContent: 'center' }}>
           <div className="animate-fade-in" style={{ textAlign: 'center' }}>
-            <div style={{ fontSize: '3rem', color: '#1a73e8', marginBottom: '5px' }}>
+            <div style={{ fontSize: '3rem', color: 'var(--primary)', marginBottom: '5px' }}>
               <i className="fa-solid fa-bullseye"></i>
             </div>
             <h2 style={{ marginBottom: '5px', fontSize: '1.3rem', fontWeight: 'bold' }}>AI分析完了！</h2>
             
             <div style={{ background: '#f8f9fa', padding: '10px 15px', borderRadius: '20px', border: '1px solid #e9ecef', marginBottom: '10px' }}>
               <p style={{ color: '#495057', marginBottom: '0', fontSize: '0.9rem' }}>目標（{targetWeight}{weightUnit}）到達までの予測日数</p>
-              <div style={{ fontSize: '2.5rem', fontWeight: 'bold', color: '#1a73e8', marginBottom: '10px' }}>
+              <div style={{ fontSize: '2.5rem', fontWeight: 'bold', color: 'var(--primary)', marginBottom: '10px' }}>
                 約 {estimatedResult?.estimatedDays || '?'} 日
               </div>
               
@@ -1085,7 +1086,7 @@ export default function Login() {
               if (levelStr.includes('簡単') || levelStr.includes('初級') || levelStr.includes('簡単に始められる')) {
                 levelVal = '初級';
                 timeVal = '約6分';
-                bgVal = 'linear-gradient(135deg, #1a73e8 0%, #0052cc 100%)';
+                bgVal = 'linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%)';
               } else if (levelStr.includes('やりごたえ') || levelStr.includes('上級') || levelStr.includes('少しやりごたえがある')) {
                 levelVal = '上級';
                 timeVal = '約12分';
@@ -1094,7 +1095,7 @@ export default function Login() {
               
               return (
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', alignItems: 'center', marginBottom: '15px', width: '100%', textAlign: 'left' }}>
-                  <h3 style={{ fontSize: '1.1rem', fontWeight: 'bold', color: '#1a73e8', alignSelf: 'flex-start' }}>
+                  <h3 style={{ fontSize: '1.1rem', fontWeight: 'bold', color: 'var(--primary)', alignSelf: 'flex-start' }}>
                     <i className="fa-solid fa-bolt"></i> おすすめプラン
                   </h3>
                   <div className="challenge-card animate-fade-in" style={{ background: bgVal, width: '100%', margin: 0, padding: '16px', borderRadius: '24px', color: '#fff', boxShadow: '0 4px 15px rgba(0,0,0,0.1)' }}>
@@ -1139,7 +1140,7 @@ export default function Login() {
                       <button type="button" className="challenge-btn" onClick={(e) => { e.preventDefault(); e.stopPropagation(); handleComplete('dashboard'); }} style={{ flex: 1, padding: '12px', background: 'rgba(255,255,255,0.2)', color: '#fff', border: '1px solid rgba(255,255,255,0.3)', borderRadius: '30px', fontSize: '1rem', fontWeight: 'bold', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
                         <i className="fa-solid fa-home" style={{ pointerEvents: 'none' }}></i> ホームへ
                       </button>
-                      <button type="button" className="challenge-btn" onClick={(e) => { e.preventDefault(); e.stopPropagation(); handleComplete('workout'); }} style={{ flex: 1, padding: '12px', background: '#fff', color: '#1a73e8', border: 'none', borderRadius: '30px', fontSize: '1rem', fontWeight: 'bold', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', boxShadow: '0 4px 15px rgba(0,0,0,0.08)' }}>
+                      <button type="button" className="challenge-btn" onClick={(e) => { e.preventDefault(); e.stopPropagation(); handleComplete('workout'); }} style={{ flex: 1, padding: '12px', background: '#fff', color: 'var(--primary)', border: 'none', borderRadius: '30px', fontSize: '1rem', fontWeight: 'bold', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', boxShadow: '0 4px 15px rgba(0,0,0,0.08)' }}>
                         <i className="fa-solid fa-arrow-right" style={{ pointerEvents: 'none' }}></i> 開始する
                       </button>
                     </div>

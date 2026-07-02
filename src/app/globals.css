@@ -3,14 +3,24 @@
    ========================================================================== */
 
 /* ---- Google Fonts (loaded in HTML) ---- */
-
+:root {
+  --primary: #F59E0B;
+  --primary-dark: #D97706;
+  --secondary: #FBBF24;
+  --accent: #FBBF24;
+  --success: #10B981;
+  --danger: #EF4444;
+  --sidebar-bg: #111827;
+  --main-bg: #FFF9F2;
+  --card-bg: #FFFFFF;
+}
 .light-theme {
-    --bg-primary: #ffffff;
-    --bg-secondary: #f8f9fa;
+    --bg-primary: var(--main-bg);
+    --bg-secondary: #fef4e8;
     --bg-tertiary: #ffffff;
-    --bg-card: #ffffff;
-    --bg-card-hover: #f1f3f5;
-    --bg-card-solid: #ffffff;
+    --bg-card: var(--card-bg);
+    --bg-card-hover: #fff3e0;
+    --bg-card-solid: var(--card-bg);
     --text-primary: #212529;
     --text-secondary: #495057;
     --text-muted: #adb5bd;
@@ -56,14 +66,14 @@ input[type=number] {
 }
 
 .light-theme .btn-outline.selected {
-    border-color: #1a73e8;
-    background: rgba(26, 115, 232, 0.05);
-    color: #1a73e8;
+    border-color: var(--primary);
+    background: rgba(245, 158, 11, 0.05);
+    color: var(--primary);
 }
 
 .option-card:focus {
-    box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.5) !important;
-    border-color: #1a73e8 !important;
+    box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.5) !important;
+    border-color: var(--primary) !important;
     outline: none;
 }
 
@@ -76,19 +86,19 @@ input[type=number] {
     --bg-card-hover: #f8f9fa;
     --bg-card-solid: #ffffff;
 
-    --primary: #1a73e8;
+    --primary: var(--primary);
     --primary-light: #4285f4;
     --primary-dark: #004ba0;
-    --primary-glow: rgba(26, 115, 232, 0.2);
-    --primary-grad: linear-gradient(135deg, #1a73e8 0%, #4285f4 100%);
+    --primary-glow: rgba(245, 158, 11, 0.2);
+    --primary-grad: linear-gradient(135deg, var(--primary) 0%, #4285f4 100%);
     --primary-grad-subtle: linear-gradient(135deg, rgba(26,115,232,0.1) 0%, rgba(66,133,244,0.05) 100%);
 
     --secondary: #ffc107;
     --secondary-glow: rgba(255, 193, 7, 0.2);
 
-    --workout-blue: #1a73e8;
-    --workout-blue-glow: rgba(26, 115, 232, 0.15);
-    --workout-grad: linear-gradient(135deg, #1a73e8 0%, #4285f4 100%);
+    --workout-blue: var(--primary);
+    --workout-blue-glow: rgba(245, 158, 11, 0.15);
+    --workout-grad: linear-gradient(135deg, var(--primary) 0%, #4285f4 100%);
 
     --meal-green: #34a853;
     --meal-green-light: #81c995;
@@ -102,7 +112,7 @@ input[type=number] {
 
     --border-color: rgba(0, 0, 0, 0.08);
     --border-hover: rgba(0, 0, 0, 0.12);
-    --border-active: rgba(26, 115, 232, 0.3);
+    --border-active: rgba(245, 158, 11, 0.3);
     --glass-blur: blur(20px);
 
     /* ── Layout & Spacing ── */
@@ -207,7 +217,7 @@ body::before {
 
 /* ── Selection ── */
 ::selection {
-    background: rgba(26, 115, 232, 0.25);
+    background: rgba(245, 158, 11, 0.25);
     color: #000;
 }
 
@@ -254,7 +264,7 @@ body::before {
 .estimated-days-text {
     margin: 0;
     font-size: 1.8rem;
-    color: #1a73e8;
+    color: var(--primary);
     font-weight: bold;
     white-space: nowrap;
 }
@@ -2463,20 +2473,20 @@ body::before {
     appearance: none;
     width: 4px;
     height: 50px;
-    background: #1a73e8;
+    background: var(--primary);
     cursor: pointer;
     border-radius: 2px;
-    box-shadow: 0 0 10px rgba(26, 115, 232, 0.5);
+    box-shadow: 0 0 10px rgba(245, 158, 11, 0.5);
 }
 
 .ruler-slider::-moz-range-thumb {
     width: 4px;
     height: 50px;
-    background: #1a73e8;
+    background: var(--primary);
     cursor: pointer;
     border-radius: 2px;
     border: none;
-    box-shadow: 0 0 10px rgba(26, 115, 232, 0.5);
+    box-shadow: 0 0 10px rgba(245, 158, 11, 0.5);
 }
 
 /* Vertical Ruler Styles */
@@ -2527,20 +2537,20 @@ body::before {
     appearance: none;
     width: 4px;
     height: 50px;
-    background: #1a73e8;
+    background: var(--primary);
     cursor: pointer;
     border-radius: 2px;
-    box-shadow: 0 0 10px rgba(26, 115, 232, 0.5);
+    box-shadow: 0 0 10px rgba(245, 158, 11, 0.5);
 }
 
 .ruler-slider-vertical::-moz-range-thumb {
     width: 4px;
     height: 50px;
-    background: #1a73e8;
+    background: var(--primary);
     cursor: pointer;
     border-radius: 2px;
     border: none;
-    box-shadow: 0 0 10px rgba(26, 115, 232, 0.5);
+    box-shadow: 0 0 10px rgba(245, 158, 11, 0.5);
 }
 
 /* ==========================================================================
@@ -2700,7 +2710,7 @@ body::before {
 }
 
 .challenge-card-banner {
-    background: linear-gradient(135deg, #0066ff 0%, #0044ff 100%);
+    background: linear-gradient(135deg, var(--primary) 0%, #0044ff 100%);
     border-radius: 20px;
     padding: 24px;
     color: white;
@@ -2772,7 +2782,7 @@ body::before {
 .challenge-btn {
     width: 100%;
     background: white;
-    color: #0066ff;
+    color: var(--primary);
     border: none;
     padding: 16px;
     border-radius: 30px;
@@ -2793,7 +2803,7 @@ body::before {
 }
 
 .challenge-btn i {
-    background: #0066ff;
+    background: var(--primary);
     color: white;
     width: 24px;
     height: 24px;
@@ -3031,7 +3041,7 @@ body::before {
 }
 
 .cal-day-num.selected {
-    background: #1a73e8;
+    background: var(--primary);
     color: white;
     font-weight: bold;
 }
@@ -3212,8 +3222,8 @@ input:focus,
 select:focus,
 textarea:focus {
     outline: none;
-    box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.18) !important;
-    border-color: rgba(26, 115, 232, 0.5) !important;
+    box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.18) !important;
+    border-color: rgba(245, 158, 11, 0.5) !important;
     transition: box-shadow 0.2s ease, border-color 0.2s ease !important;
 }
 
@@ -3322,4 +3332,42 @@ body.workout-player-active .content-body {
     .options-grid-3 {
         grid-template-columns: 1fr !important;
     }
+}
+
+/* --- Tiger Theme Accents --- */
+.card {
+    position: relative;
+    overflow: hidden;
+}
+
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background: repeating-linear-gradient(
+      45deg,
+      #111827,
+      #111827 10px,
+      var(--primary) 10px,
+      var(--primary) 20px
+    );
+    z-index: 10;
+}
+
+.card::after {
+    content: '///';
+    position: absolute;
+    top: 0px;
+    right: 15px;
+    font-size: 3rem;
+    font-weight: 900;
+    color: var(--secondary);
+    opacity: 0.2;
+    transform: rotate(20deg);
+    pointer-events: none;
+    letter-spacing: -5px;
+    font-family: monospace;
 }

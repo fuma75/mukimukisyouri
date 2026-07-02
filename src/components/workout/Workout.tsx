@@ -397,7 +397,7 @@ export default function Workout() {
     }
 
     const challenges = [
-        { level: 1, title: '全身脂肪燃焼 (初級)', time: '約6分', levelText: '初級', bg: 'linear-gradient(135deg, #1a73e8 0%, #0052cc 100%)' },
+        { level: 1, title: '全身脂肪燃焼 (初級)', time: '約6分', levelText: '初級', bg: 'linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%)' },
         { level: 2, title: '全身脂肪燃焼 (中級)', time: '約8分', levelText: '中級', bg: 'linear-gradient(135deg, #8d6e63 0%, #5d4037 100%)' },
         { level: 3, title: '全身脂肪燃焼 (上級)', time: '約12分', levelText: '上級', bg: 'linear-gradient(135deg, #9c27b0 0%, #6a1b9a 100%)' }
     ];
@@ -433,7 +433,7 @@ export default function Workout() {
                         {calendarDays.map((d, idx) => (
                             <div key={idx} className="calendar-day-col">
                                 <span className="calendar-day-name">{d.dayName}</span>
-                                <span className={`calendar-day-num ${d.isToday ? 'active' : ''}`} style={d.isChecked && !d.isToday ? { color: '#1a73e8', background: '#e8f0fe', width: '32px', height: '32px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' } : {}}>
+                                <span className={`calendar-day-num ${d.isToday ? 'active' : ''}`} style={d.isChecked && !d.isToday ? { color: 'var(--primary)', background: '#e8f0fe', width: '32px', height: '32px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' } : {}}>
                                     {d.isChecked ? <i className="fa-solid fa-check"></i> : d.dayStr}
                                 </span>
                             </div>
@@ -479,7 +479,7 @@ export default function Workout() {
                             </div>
                         </div>
                         <button className="challenge-btn" onClick={() => handleChallengeClick(c.level, c.title)}>
-                            トレーニングを開始する <i className="fa-solid fa-arrow-right"></i>
+                            狩りを開始する <i className="fa-solid fa-arrow-right"></i>
                         </button>
                     </div>
                 ))}

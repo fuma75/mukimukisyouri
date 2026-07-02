@@ -72,7 +72,7 @@ export default function Map() {
                                         top: '10px',
                                         left: '10px',
                                         background: 'white',
-                                        color: '#1a73e8',
+                                        color: 'var(--primary)',
                                         padding: '8px 12px',
                                         borderRadius: '4px',
                                         textDecoration: 'none',

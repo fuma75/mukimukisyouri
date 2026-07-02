@@ -16,7 +16,7 @@ export default function Header() {
       case 'muscle-map': return '筋肉マップ';
       case 'map': return '周辺のジム探し';
       case 'profile': return 'プロフィール設定';
-      default: return '筋虎';
+      default: return '🐯 筋虎';
     }
   };
 
@@ -38,7 +38,7 @@ export default function Header() {
     if (lang !== appLang) {
       localStorage.setItem('app_language', lang);
       setAppLang(lang);
-      alert(`言語設定を「${lang}」に変更しました。\n※AIトレーナーの返答言語に反映されます（画面UIの翻訳は現在準備中です）。`);
+      alert(`言語設定を「${lang}」に変更しました。\n※🐯 虎コーチの返答言語に反映されます（画面UIの翻訳は現在準備中です）。`);
     }
     setDropdownOpen(false);
   };

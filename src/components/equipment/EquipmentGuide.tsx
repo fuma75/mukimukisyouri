@@ -87,13 +87,13 @@ export default function EquipmentGuide() {
       <div style={{ display: 'flex', gap: '10px', marginBottom: '20px' }}>
         <button 
           onClick={() => setActiveTab('equipment')}
-          style={{ flex: 1, padding: '12px', background: activeTab === 'equipment' ? '#1a73e8' : '#fff', color: activeTab === 'equipment' ? '#fff' : '#495057', border: '1px solid #ced4da', borderRadius: '8px', fontWeight: 'bold', cursor: 'pointer', transition: '0.2s' }}
+          style={{ flex: 1, padding: '12px', background: activeTab === 'equipment' ? 'var(--primary)' : '#fff', color: activeTab === 'equipment' ? '#fff' : '#495057', border: '1px solid #ced4da', borderRadius: '8px', fontWeight: 'bold', cursor: 'pointer', transition: '0.2s' }}
         >
           <i className="fa-solid fa-dumbbell" style={{ marginRight: '8px' }}></i>器具の使い方
         </button>
         <button 
           onClick={() => setActiveTab('plan')}
-          style={{ flex: 1, padding: '12px', background: activeTab === 'plan' ? '#1a73e8' : '#fff', color: activeTab === 'plan' ? '#fff' : '#495057', border: '1px solid #ced4da', borderRadius: '8px', fontWeight: 'bold', cursor: 'pointer', transition: '0.2s' }}
+          style={{ flex: 1, padding: '12px', background: activeTab === 'plan' ? 'var(--primary)' : '#fff', color: activeTab === 'plan' ? '#fff' : '#495057', border: '1px solid #ced4da', borderRadius: '8px', fontWeight: 'bold', cursor: 'pointer', transition: '0.2s' }}
         >
           <i className="fa-solid fa-clipboard-list" style={{ marginRight: '8px' }}></i>おすすめプラン
         </button>
@@ -104,7 +104,7 @@ export default function EquipmentGuide() {
           {equipmentData.map(item => (
             <div key={item.id} style={{ background: '#fff', borderRadius: '12px', padding: '20px', boxShadow: '0 4px 6px rgba(0,0,0,0.05)', border: '1px solid #f1f3f5' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '15px', marginBottom: '15px' }}>
-                <div style={{ width: '50px', height: '50px', borderRadius: '50%', background: 'rgba(26,115,232,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#1a73e8', fontSize: '1.5rem' }}>
+                <div style={{ width: '50px', height: '50px', borderRadius: '50%', background: 'rgba(26,115,232,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--primary)', fontSize: '1.5rem' }}>
                   <i className={`fa-solid ${item.icon}`}></i>
                 </div>
                 <h3 style={{ margin: '0', fontSize: '1.2rem', color: '#212529' }}>{item.title}</h3>
@@ -122,8 +122,8 @@ export default function EquipmentGuide() {
                 <h4 style={{ margin: '0 0 10px 0', fontSize: '1rem', color: '#212529' }}>代表的な種目</h4>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
                   {item.exercises.map((ex, idx) => (
-                    <div key={idx} style={{ borderLeft: '3px solid #1a73e8', paddingLeft: '10px' }}>
-                      <div style={{ fontWeight: 'bold', color: '#212529', fontSize: '0.95rem' }}>{ex.name} <span style={{ fontSize: '0.8rem', color: '#1a73e8', fontWeight: 'normal', background: 'rgba(26,115,232,0.1)', padding: '2px 6px', borderRadius: '4px', marginLeft: '5px' }}>{ex.target}</span></div>
+                    <div key={idx} style={{ borderLeft: '3px solid var(--primary)', paddingLeft: '10px' }}>
+                      <div style={{ fontWeight: 'bold', color: '#212529', fontSize: '0.95rem' }}>{ex.name} <span style={{ fontSize: '0.8rem', color: 'var(--primary)', fontWeight: 'normal', background: 'rgba(26,115,232,0.1)', padding: '2px 6px', borderRadius: '4px', marginLeft: '5px' }}>{ex.target}</span></div>
                       <div style={{ color: '#6c757d', fontSize: '0.85rem', marginTop: '3px' }}>{ex.tips}</div>
                     </div>
                   ))}
@@ -154,7 +154,7 @@ export default function EquipmentGuide() {
                 <ul style={{ margin: '0', padding: '0', listStyleType: 'none', display: 'flex', flexDirection: 'column', gap: '8px' }}>
                   {plan.routine.map((step, sIdx) => (
                     <li key={sIdx} style={{ color: '#495057', fontSize: '0.9rem', display: 'flex', alignItems: 'flex-start', gap: '8px' }}>
-                      <i className="fa-solid fa-check" style={{ color: '#1a73e8', marginTop: '3px', fontSize: '0.8rem' }}></i>
+                      <i className="fa-solid fa-check" style={{ color: 'var(--primary)', marginTop: '3px', fontSize: '0.8rem' }}></i>
                       <span>{step}</span>
                     </li>
                   ))}

@@ -70,7 +70,7 @@ export default function Dashboard() {
     labels: hasData ? ['P (タンパク質)', 'F (脂質)', 'C (炭水化物)'] : ['データなし'],
     datasets: [{
       data: hasData ? [totalP * 4, totalF * 9, totalC * 4] : [1],
-      backgroundColor: hasData ? ['#ff5224', '#ffac1c', '#00e676'] : ['#f1f3f5'],
+      backgroundColor: hasData ? ['#F59E0B', '#FBBF24', '#EF4444'] : ['#f1f3f5'],
       borderWidth: 1,
       borderColor: '#ffffff'
     }]
@@ -182,11 +182,11 @@ export default function Dashboard() {
       {
         label: '体重 (kg)',
         data: weightData,
-        borderColor: '#1a73e8',
-        backgroundColor: 'rgba(26, 115, 232, 0.2)',
+        borderColor: 'var(--primary)',
+        backgroundColor: 'rgba(245, 158, 11, 0.2)',
         fill: true,
         tension: 0.1,
-        pointBackgroundColor: '#1a73e8',
+        pointBackgroundColor: 'var(--primary)',
         pointBorderColor: '#ffffff',
         pointBorderWidth: 2,
         pointRadius: 5,
@@ -381,7 +381,7 @@ export default function Dashboard() {
             <div style={{ display: 'flex', flexDirection: 'column' }}>
               <h3 style={{ margin: 0 }}><i className="fa-solid fa-weight-scale icon-blue"></i> 体重</h3>
             </div>
-            <button onClick={handleRecordWeight} style={{ background: '#1a73e8', color: '#fff', border: 'none', borderRadius: '20px', padding: '8px 16px', fontSize: '0.9rem', fontWeight: 'bold', cursor: 'pointer', boxShadow: '0 4px 10px rgba(26,115,232,0.2)' }}>記録する</button>
+            <button onClick={handleRecordWeight} style={{ background: 'var(--primary)', color: '#fff', border: 'none', borderRadius: '20px', padding: '8px 16px', fontSize: '0.9rem', fontWeight: 'bold', cursor: 'pointer', boxShadow: '0 4px 10px rgba(26,115,232,0.2)' }}>記録する</button>
           </div>
           
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', margin: '10px 0 20px 0', padding: '0 10px' }}>
@@ -438,7 +438,7 @@ export default function Dashboard() {
                 <h3><i className="fa-solid fa-person icon-blue"></i> BMI</h3>
                 <button
                   onClick={() => { setEditHeight(profile.height); setEditWeight(currentWeight); setShowBmiEdit(true); }}
-                  style={{ background: '#1a73e8', color: '#fff', border: 'none', borderRadius: '20px', padding: '8px 16px', fontSize: '0.9rem', fontWeight: 'bold', cursor: 'pointer', boxShadow: '0 4px 10px rgba(26,115,232,0.2)' }}
+                  style={{ background: 'var(--primary)', color: '#fff', border: 'none', borderRadius: '20px', padding: '8px 16px', fontSize: '0.9rem', fontWeight: 'bold', cursor: 'pointer', boxShadow: '0 4px 10px rgba(26,115,232,0.2)' }}
                 >編集</button>
               </div>
               {/* 身長・体重編集モーダル */}
@@ -452,7 +452,7 @@ export default function Dashboard() {
                       {/* 体重 */}
                       <p style={{ margin: '0 0 12px', fontSize: '1rem', fontWeight: 700, color: '#212529' }}>体重</p>
                       <div style={{ textAlign: 'center', marginBottom: '8px' }}>
-                        <span style={{ fontSize: '3rem', fontWeight: 800, color: '#1a73e8', lineHeight: 1 }}>{editWeight}</span>
+                        <span style={{ fontSize: '3rem', fontWeight: 800, color: 'var(--primary)', lineHeight: 1 }}>{editWeight}</span>
                         <span style={{ fontSize: '1.1rem', color: '#6c757d', marginLeft: '6px' }}>kg</span>
                       </div>
                     </div>
@@ -465,7 +465,7 @@ export default function Dashboard() {
                       {/* 身長 */}
                       <p style={{ margin: '0 0 12px', fontSize: '1rem', fontWeight: 700, color: '#212529' }}>身長</p>
                       <div style={{ textAlign: 'center', marginBottom: '8px' }}>
-                        <span style={{ fontSize: '3rem', fontWeight: 800, color: '#1a73e8', lineHeight: 1 }}>{editHeight}</span>
+                        <span style={{ fontSize: '3rem', fontWeight: 800, color: 'var(--primary)', lineHeight: 1 }}>{editHeight}</span>
                         <span style={{ fontSize: '1.1rem', color: '#6c757d', marginLeft: '6px' }}>cm</span>
                       </div>
                     </div>
@@ -483,7 +483,7 @@ export default function Dashboard() {
                           setProfile(updated);
                           setShowBmiEdit(false);
                         }}
-                        style={{ flex: 2, padding: '16px', borderRadius: '50px', border: 'none', background: '#1a73e8', color: '#fff', fontSize: '1rem', fontWeight: 700, cursor: 'pointer' }}
+                        style={{ flex: 2, padding: '16px', borderRadius: '50px', border: 'none', background: 'var(--primary)', color: '#fff', fontSize: '1rem', fontWeight: 700, cursor: 'pointer' }}
                       >保存</button>
                     </div>
                   </div>

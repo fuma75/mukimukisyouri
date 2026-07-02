@@ -29,7 +29,7 @@ export default function TrainerChat() {
 
   useEffect(() => {
     if (messages.length === 0) {
-      setMessages([{ role: 'model', text: `おう！よく来たな！俺は「${trainerName}」、お前専属の熱血AIトレーナーだ！💪\n\nトレーニングのこと、食事のこと、モチベーションのこと、何でも聞いてくれ。全力で答えるぞ！` }]);
+      setMessages([{ role: 'model', text: `おう！よく来たな！俺は「${trainerName}」、お前専属の熱血🐯 虎コーチだ！💪\n\nトレーニングのこと、食事のこと、モチベーションのこと、何でも聞いてくれ。全力で答えるぞ！` }]);
     }
   }, [trainerName, messages.length]);
 
