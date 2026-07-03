@@ -536,7 +536,7 @@ export default function Login() {
           {renderWizardHeader("01 目標とターゲット部位", 2)}
           
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', paddingBottom: '10px' }}>
-            <h2 style={{ textAlign: 'center', fontSize: 'clamp(1.3rem, 5vw, 1.6rem)', fontWeight: 'bold', marginBottom: '5px' }}>あなたの性別は？</h2>
+            <h2 className="logo-text-premium" style={{ textAlign: \'center\', fontSize: \'clamp(1.3rem, 5vw, 1.6rem)\', marginBottom: \'15px\' }}>あなたの性別は？</h2>
             <p style={{ textAlign: 'center', color: '#111827', marginBottom: '10px' }}>あなたについて教えてください</p>
             
             <div style={{ display: 'flex', gap: '20px', justifyContent: 'center' }}>
@@ -602,7 +602,7 @@ export default function Login() {
           {renderWizardHeader("01 目標とターゲット部位", 3)}
           
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column', paddingBottom: '10px', justifyContent: 'center' }}>
-            <h2 style={{ textAlign: 'center', fontSize: 'clamp(1.3rem, 5vw, 1.6rem)', fontWeight: 'bold', marginBottom: '10px' }}>主な目標は何ですか？</h2>
+            <h2 className="logo-text-premium" style={{ textAlign: \'center\', fontSize: \'clamp(1.3rem, 5vw, 1.6rem)\', marginBottom: \'15px\' }}>主な目標は何ですか？</h2>
             
             <div className="options-grid options-grid-3" style={{ flex: 1, justifyContent: 'flex-start', paddingTop: '10px', paddingBottom: '10px' }}>
               {renderOptionCard('体重を減らす', 'fa-solid fa-weight-scale', goal === '減量', () => setGoal('減量'))}
@@ -625,7 +625,7 @@ export default function Login() {
           {renderWizardHeader("01 目標とターゲット部位", 4)}
           
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column', paddingBottom: '10px', justifyContent: 'center' }}>
-            <h2 style={{ textAlign: 'center', fontSize: 'clamp(1.3rem, 5vw, 1.6rem)', fontWeight: 'bold', marginBottom: '10px' }}>ターゲットの部位はどこですか？</h2>
+            <h2 className="logo-text-premium" style={{ textAlign: \'center\', fontSize: \'clamp(1.3rem, 5vw, 1.6rem)\', marginBottom: \'15px\' }}>ターゲットの部位はどこですか？</h2>
             
             <div className="options-grid" style={{ flex: 1, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', paddingTop: '10px', paddingBottom: '10px' }}>
               {renderOptionCard('全身', 'fa-solid fa-child', targetAreas.includes('全身'), () => handleAreaToggle('全身'))}
@@ -651,7 +651,7 @@ export default function Login() {
           {renderWizardHeader("02 身体情報の設定", 5)}
           
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-            <h2 style={{ textAlign: 'center', fontSize: 'clamp(1.3rem, 5vw, 1.6rem)', fontWeight: 'bold', marginBottom: '20px' }}>生まれた年は？</h2>
+            <h2 className="logo-text-premium" style={{ textAlign: \'center\', fontSize: \'clamp(1.3rem, 5vw, 1.6rem)\', marginBottom: \'15px\' }}>生まれた年は？</h2>
             <div style={{ background: '#f4f6fb', padding: '15px 20px', borderRadius: '12px', display: 'flex', alignItems: 'center', gap: '15px', marginBottom: '20px', width: '100%', maxWidth: '400px' }}>
               <i className="fa-solid fa-clipboard-list" style={{ fontSize: '1.5rem', color: 'var(--primary)' }}></i>
               <p style={{ margin: 0, color: '#111827', fontSize: '0.9rem', lineHeight: 1.5 }}>あなたの年齢グループに最も適したワークアウトに調整しやすくなります。</p>
@@ -691,7 +691,7 @@ export default function Login() {
           {renderWizardHeader("02 身体情報の設定", 6)}
           
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-            <h2 style={{ textAlign: 'center', fontSize: 'clamp(1.2rem, 5vw, 1.5rem)', fontWeight: 'bold', marginBottom: '10px' }}>身長を入力してください。</h2>
+            <h2 className="logo-text-premium" style={{ textAlign: \'center\', fontSize: \'clamp(1.3rem, 5vw, 1.6rem)\', marginBottom: \'15px\' }}>身長を入力してください。</h2>
 
             <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'center', marginBottom: '10px' }}>
               <input 
@@ -729,7 +729,7 @@ export default function Login() {
           {renderWizardHeader("02 身体情報の設定", 7)}
           
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-            <h2 style={{ textAlign: 'center', fontSize: 'clamp(1.2rem, 5vw, 1.5rem)', fontWeight: 'bold', marginBottom: '10px' }}>現在の体重を入力してください。</h2>
+            <h2 className="logo-text-premium" style={{ textAlign: \'center\', fontSize: \'clamp(1.3rem, 5vw, 1.6rem)\', marginBottom: \'15px\' }}>現在の体重を入力してください。</h2>
             
             <div style={{ display: 'flex', border: '1px solid var(--primary)', borderRadius: '30px', overflow: 'hidden', marginBottom: '10px' }}>
               <div 
@@ -810,7 +810,7 @@ export default function Login() {
           {renderWizardHeader("02 身体情報の設定", 8)}
           
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-            <h2 style={{ textAlign: 'center', fontSize: 'clamp(1.2rem, 5vw, 1.5rem)', fontWeight: 'bold', marginBottom: '20px' }}>目標体重を入力してください。</h2>
+            <h2 className="logo-text-premium" style={{ textAlign: \'center\', fontSize: \'clamp(1.3rem, 5vw, 1.6rem)\', marginBottom: \'15px\' }}>目標体重を入力してください。</h2>
             
             <div style={{ display: 'flex', border: '1px solid var(--primary)', borderRadius: '30px', overflow: 'hidden', marginBottom: '10px' }}>
               <div 
@@ -891,7 +891,7 @@ export default function Login() {
           {renderWizardHeader("03 トレーニング環境", 9)}
           
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column', paddingBottom: '10px', justifyContent: 'center' }}>
-            <h2 style={{ textAlign: 'center', fontSize: 'clamp(1.2rem, 5vw, 1.5rem)', fontWeight: 'bold', marginBottom: '10px' }}>どこでトレーニングしますか？</h2>
+            <h2 className="logo-text-premium" style={{ textAlign: \'center\', fontSize: \'clamp(1.3rem, 5vw, 1.6rem)\', marginBottom: \'15px\' }}>どこでトレーニングしますか？</h2>
             
             <div className="options-grid options-grid-3" style={{ flex: 1, justifyContent: 'flex-start', paddingTop: '10px', paddingBottom: '10px' }}>
               {renderOptionCard('家', 'fa-solid fa-house', environment === '家', () => setEnvironment('家'))}
@@ -914,7 +914,7 @@ export default function Login() {
           {renderWizardHeader("03 トレーニング環境", 10)}
           
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column', paddingBottom: '10px', justifyContent: 'center' }}>
-            <h2 style={{ textAlign: 'center', fontSize: 'clamp(1.2rem, 5vw, 1.5rem)', fontWeight: 'bold', marginBottom: '10px' }}>運動の種類の制限はありますか？</h2>
+            <h2 className="logo-text-premium" style={{ textAlign: \'center\', fontSize: \'clamp(1.3rem, 5vw, 1.6rem)\', marginBottom: \'15px\' }}>運動の種類の制限はありますか？</h2>
             
             <div className="options-grid" style={{ flex: 1, justifyContent: 'flex-start', paddingTop: '10px', paddingBottom: '10px' }}>
               {renderOptionCard('なし（何でもできる）', 'fa-solid fa-check-double', exerciseTypes.includes('なし'), () => handleExerciseTypeToggle('なし'))}
@@ -938,7 +938,7 @@ export default function Login() {
           {renderWizardHeader("03 フィットネスレベル評価", 11)}
           
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column', paddingBottom: '10px', justifyContent: 'center' }}>
-            <h2 style={{ textAlign: 'center', fontSize: 'clamp(1.2rem, 5vw, 1.5rem)', fontWeight: 'bold', marginBottom: '10px' }}>ご希望のワークアウトレベルを選択してください</h2>
+            <h2 className="logo-text-premium" style={{ textAlign: \'center\', fontSize: \'clamp(1.3rem, 5vw, 1.6rem)\', marginBottom: \'15px\' }}>ご希望のワークアウトレベルを選択してください</h2>
             
             <div className="options-grid options-grid-3" style={{ flex: 1, justifyContent: 'flex-start', paddingTop: '10px', paddingBottom: '10px' }}>
               {renderOptionCard('簡単に始められる', 'fa-solid fa-hand-peace', workoutLevel === '簡単に始められる', () => setWorkoutLevel('簡単に始められる'))}
@@ -961,7 +961,7 @@ export default function Login() {
           {renderWizardHeader("04 ライフスタイル", 12)}
           
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column', paddingBottom: '10px', justifyContent: 'center' }}>
-            <h2 style={{ textAlign: 'center', fontSize: 'clamp(1.2rem, 5vw, 1.5rem)', fontWeight: 'bold', marginBottom: '10px' }}>体に不快感や懸念はありますか？</h2>
+            <h2 className="logo-text-premium" style={{ textAlign: \'center\', fontSize: \'clamp(1.3rem, 5vw, 1.6rem)\', marginBottom: \'15px\' }}>体に不快感や懸念はありますか？</h2>
             <div style={{ background: '#f4f6fb', padding: '15px 20px', borderRadius: '12px', display: 'flex', alignItems: 'center', gap: '15px', marginBottom: '10px', width: '100%' }}>
               <i className="fa-solid fa-briefcase-medical" style={{ fontSize: '1.5rem', color: 'var(--primary)' }}></i>
               <p style={{ margin: 0, color: '#111827', fontSize: '0.9rem', lineHeight: 1.5 }}>これにより、特別な注意が必要な部位に焦点を当て、あなたのフィットネスの旅をカスタマイズします。</p>
@@ -1015,7 +1015,7 @@ export default function Login() {
           {renderWizardHeader("04 ライフスタイル", 13)}
           
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', paddingBottom: '10px' }}>
-            <h2 style={{ textAlign: 'center', fontSize: 'clamp(1.2rem, 5vw, 1.5rem)', fontWeight: 'bold', marginBottom: '0px' }}>あなたの身体活動レベルは？</h2>
+            <h2 className="logo-text-premium" style={{ textAlign: \'center\', fontSize: \'clamp(1.3rem, 5vw, 1.6rem)\', marginBottom: \'15px\' }}>あなたの身体活動レベルは？</h2>
             
             <div style={{ display: 'flex', flexDirection: 'column' }}>
               <ActivityLevelSlider value={activityLevel} onChange={setActivityLevel} />
@@ -1036,7 +1036,7 @@ export default function Login() {
           {renderWizardHeader("04 ライフスタイル", 14)}
           
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column', paddingBottom: '10px', justifyContent: 'center' }}>
-            <h2 style={{ textAlign: 'center', fontSize: 'clamp(1.2rem, 5vw, 1.5rem)', fontWeight: 'bold', marginBottom: '10px' }}>目標とする運動頻度（1週間）</h2>
+            <h2 className="logo-text-premium" style={{ textAlign: \'center\', fontSize: \'clamp(1.3rem, 5vw, 1.6rem)\', marginBottom: \'15px\' }}>目標とする運動頻度（1週間）</h2>
             
             <div className="options-grid" style={{ flex: 1, justifyContent: 'flex-start', paddingTop: '10px', paddingBottom: '10px' }}>
               {renderOptionCard('週1回 (無理なく)', 'fa-solid fa-calendar-day', frequency === '週1回', () => setFrequency('週1回'))}
