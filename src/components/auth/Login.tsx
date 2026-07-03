@@ -409,12 +409,12 @@ export default function Login() {
           <i className="fa-solid fa-arrow-left"></i>
         </button>
         <div style={{ flex: 1, textAlign: 'center' }}>
-          <div style={{ fontSize: '0.85rem', color: 'var(--primary)', fontWeight: 'bold', marginBottom: '8px' }}>
+          <div className="logo-text-premium" style={{ fontSize: '0.85rem', marginBottom: '8px' }}>
             {title}
           </div>
           <div style={{ display: 'flex', gap: '4px', justifyContent: 'center', width: '200px', margin: '0 auto' }}>
             {[...Array(TOTAL_WIZARD_STEPS)].map((_, i) => (
-              <div key={i} style={{ flex: 1, height: '3px', background: i < normalizedStep ? 'var(--primary)' : '#e9ecef', borderRadius: '3px' }}></div>
+              <div key={i} style={{ flex: 1, height: '3px', background: i < normalizedStep ? 'var(--primary)' : 'rgba(220, 160, 56, 0.2)', borderRadius: '3px' }}></div>
             ))}
           </div>
         </div>
