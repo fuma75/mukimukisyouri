@@ -9,8 +9,12 @@ export default function Sidebar() {
     { id: 'dashboard', icon: 'fa-chart-simple', label: 'ダッシュボード' },
     { id: 'workout', icon: 'fa-calendar-check', label: '筋トレ記録' },
     { id: 'meal', icon: 'fa-utensils', label: '食事管理' },
-    { id: 'equipment', icon: 'fa-dumbbell', label: '器具ガイド＆プラン' },
+    { id: 'pfc', icon: 'fa-dumbbell', label: 'カロリー・PFC管理' },
+    { id: 'progress', icon: 'fa-chart-line', label: '進捗分析' },
+    { id: 'body', icon: 'fa-scale-balanced', label: '体組成・測定記録' },
     { id: 'map', icon: 'fa-map-location-dot', label: 'ジム探し' },
+    { id: 'ai', icon: 'fa-robot', label: 'AI虎コーチ' },
+    { id: 'settings', icon: 'fa-gear', label: '設定' },
   ];
 
   return (

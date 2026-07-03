@@ -410,7 +410,7 @@ body::before {
     background: transparent;
     border: none;
     outline: none;
-    color: #a0aec0;
+    color: var(--text-primary);
     padding: 13px 18px;
     border-radius: var(--radius-md);
     cursor: pointer;
