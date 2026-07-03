@@ -231,323 +231,410 @@ export default function Dashboard() {
   };
 
 
+
   // Scale chart fonts based on textSize
+  ChartJS.defaults.color = 'rgba(255, 255, 255, 0.6)';
   ChartJS.defaults.font.size = textSize === 'large' ? 14 : 12;
   
+  const todayStrHeader = new Date().toLocaleDateString('ja-JP', { year: 'numeric', month: 'long', day: 'numeric', weekday: 'short' });
+
   return (
-    <section id="dashboard" className="content-section active">
-      <div className="dashboard-grid">
-        {/* Goal Summary Banner */}
-        <div className="summary-card glass-panel" style={{ gridColumn: '1 / -1', display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center', padding: '24px 30px', gap: '20px', borderLeft: '4px solid var(--accent-color)' }}>
-          <div style={{ flex: '0 0 auto', minWidth: '150px', textAlign: 'left' }}>
-            <h3 style={{ margin: 0, fontSize: '1rem', color: 'var(--text-muted)' }}>現在の目標</h3>
-            <h2 style={{ margin: '5px 0 0 0', fontSize: '1.5rem', color: 'var(--text-main)', display: 'flex', alignItems: 'center', gap: '10px' }}>
-              {profile.goal === 'lose-fat' || profile.goal === 'ダイエット・減量' || profile.goal === '減量' ? '🔥 ダイエット・減量' : 
-               profile.goal === 'gain-muscle' || profile.goal === '筋肥大・バルクアップ' || profile.goal === '増量' ? '💪 筋肥大・バルクアップ' : 
-               profile.goal === 'maintain' || profile.goal === '健康維持・体力アップ' || profile.goal === '維持' ? '🏃‍♂️ 健康維持・体力アップ' : 
-               `🎯 ${profile.goal || '目標未設定'}`}
-            </h2>
+    <section id="dashboard" className="content-section active" style={{ paddingBottom: '100px' }}>
+      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '20px 16px' }}>
+        
+        {/* Header matching image */}
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '30px' }}>
+          <div>
+            <h1 className="logo-text-premium" style={{ fontSize: '32px', margin: 0, textShadow: '0 2px 10px rgba(220,160,56,0.2)', color: '#fff' }}>ダッシュボード</h1>
+            <div style={{ color: 'rgba(255,255,255,0.6)', fontSize: '13px', marginTop: '6px', fontWeight: 'bold' }}>
+              {todayStrHeader}
+            </div>
           </div>
+          <div style={{ display: 'flex', gap: '10px', alignItems: 'center', marginTop: '5px' }}>
+            <div style={{ background: 'rgba(0,0,0,0.5)', border: '1px solid #ef4444', padding: '6px 12px', borderRadius: '20px', color: '#ef4444', fontSize: '12px', fontWeight: 'bold' }}>
+              <i className="fa-solid fa-fire"></i> {profile.streak || 0}日連続
+            </div>
+            <div style={{ background: 'rgba(20,20,20,0.8)', border: '1px solid rgba(220,160,56,0.2)', padding: '6px 16px 6px 6px', borderRadius: '30px', display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer' }}>
+              <div style={{ width: '30px', height: '30px', borderRadius: '50%', background: 'linear-gradient(180deg, #FDF0A6, #DCA038)', color: '#000', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '14px' }}>
+                <i className="fa-solid fa-user"></i>
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column' }}>
+                <span style={{ color: '#fff', fontSize: '12px', fontWeight: 'bold', lineHeight: 1.2 }}>{profile.name || 'がお'}</span>
+                <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: '10px', lineHeight: 1.2 }}>目標: {profile.goal?.includes('減量') ? '減量' : profile.goal?.includes('肥大') ? '増量' : '維持'}</span>
+              </div>
+              <i className="fa-solid fa-chevron-down" style={{ color: '#DCA038', fontSize: '10px', marginLeft: '5px' }}></i>
+            </div>
+          </div>
+        </div>
+
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '20px' }}>
           
-          <div className="dashboard-stat-middle">
-            {(() => {
-              const estDays = profile.estimatedDays || (() => {
-                const w = Number(profile.weight);
-                const tw = Number(profile.targetWeight);
-                if (!w || !tw) return null;
-                const diff = Math.abs(w - tw);
-                if (diff === 0) return 0;
-                const dailyDiff = 400; // 1日あたりの目標摂取カロリーと消費の差分目安
-                return Math.round((diff * 7700) / dailyDiff);
-              })();
+          {/* Goal Summary Banner */}
+          <div style={{ gridColumn: '1 / -1', background: 'rgba(20,20,25,0.8)', border: '1px solid rgba(255,255,255,0.05)', borderRadius: '16px', padding: '30px 40px', display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center', gap: '20px', boxShadow: '0 4px 20px rgba(0,0,0,0.4)' }}>
+            <div style={{ flex: '1', minWidth: '200px' }}>
+              <p style={{ margin: 0, fontSize: '0.85rem', color: 'rgba(255,255,255,0.5)', fontWeight: 'bold', letterSpacing: '0.05em' }}>現在の目標</p>
+              <h2 style={{ margin: '8px 0 0 0', fontSize: '1.6rem', color: '#fff', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                {profile.goal === 'lose-fat' || profile.goal === 'ダイエット・減量' || profile.goal === '減量' ? '🔥 ダイエット・減量' : 
+                 profile.goal === 'gain-muscle' || profile.goal === '筋肥大・バルクアップ' || profile.goal === '増量' ? '💪 筋肥大・バルクアップ' : 
+                 profile.goal === 'maintain' || profile.goal === '健康維持・体力アップ' || profile.goal === '維持' ? '🏃‍♂️ 健康維持・体力アップ' : 
+                 `🎯 ${profile.goal || '目標未設定'}`}
+              </h2>
+            </div>
+            
+            <div style={{ flex: '1', textAlign: 'center', borderLeft: '1px solid rgba(255,255,255,0.05)', borderRight: '1px solid rgba(255,255,255,0.05)', padding: '0 20px', minWidth: '200px' }}>
+              {(() => {
+                const estDays = profile.estimatedDays || (() => {
+                  const w = Number(profile.weight);
+                  const tw = Number(profile.targetWeight);
+                  if (!w || !tw) return null;
+                  const diff = Math.abs(w - tw);
+                  if (diff === 0) return 0;
+                  const dailyDiff = 400; 
+                  return Math.round((diff * 7700) / dailyDiff);
+                })();
+                
+                if (estDays !== null && estDays !== undefined) {
+                  return (
+                    <h2 style={{ margin: 0, color: '#DCA038', fontSize: '1.8rem', textShadow: '0 0 10px rgba(220,160,56,0.3)', fontWeight: 'bold' }}>
+                      目標達成まで約 {estDays} 日
+                    </h2>
+                  );
+                }
+                return <p style={{ margin: '0', fontSize: '1.2rem', color: 'var(--text-muted)' }}>目標までの日数を計算中...</p>;
+              })()}
+            </div>
+
+            <div style={{ flex: '1', textAlign: 'right', minWidth: '200px' }}>
+              <p style={{ margin: 0, fontSize: '0.8rem', color: 'rgba(255,255,255,0.5)', fontWeight: 'bold' }}>目標カロリー</p>
+              <div style={{ margin: '5px 0 10px 0', fontSize: '2rem', fontWeight: 'bold', color: '#fff', textShadow: '0 0 10px rgba(255,255,255,0.2)' }}>
+                {profile.targetCalories ? profile.targetCalories.toLocaleString() : '-'} <span style={{ fontSize: '1rem', color: 'rgba(255,255,255,0.5)', fontWeight: 'normal' }}>kcal</span>
+              </div>
+              <div style={{ display: 'flex', gap: '15px', justifyContent: 'flex-end', fontSize: '0.85rem' }}>
+                <div><span style={{ color: '#ff5224', fontWeight: 'bold' }}>P</span> <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: '0.7rem' }}>(タンパク質)</span> <strong style={{ color: '#fff' }}>{profile.targetProtein || '-'}</strong> <span style={{ color: 'rgba(255,255,255,0.5)' }}>g</span></div>
+                <div><span style={{ color: '#ffac1c', fontWeight: 'bold' }}>F</span> <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: '0.7rem' }}>(脂質)</span> <strong style={{ color: '#fff' }}>{profile.targetFat || '-'}</strong> <span style={{ color: 'rgba(255,255,255,0.5)' }}>g</span></div>
+                <div><span style={{ color: '#00e676', fontWeight: 'bold' }}>C</span> <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: '0.7rem' }}>(炭水化物)</span> <strong style={{ color: '#fff' }}>{profile.targetCarb || '-'}</strong> <span style={{ color: 'rgba(255,255,255,0.5)' }}>g</span></div>
+              </div>
+            </div>
+          </div>
+
+          {/* Calorie Balance */}
+          <div style={{ background: 'rgba(20,20,25,0.8)', border: '1px solid rgba(255,255,255,0.05)', borderRadius: '16px', padding: '25px', display: 'flex', flexDirection: 'column', boxShadow: '0 4px 20px rgba(0,0,0,0.4)' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '30px' }}>
+              <h3 style={{ margin: 0, fontSize: '1.1rem', color: '#fff', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                🔥 カロリーバランス
+              </h3>
+              <span style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.4)', fontWeight: 'bold', letterSpacing: '0.05em' }}>摂取 VS 消費</span>
+            </div>
+            
+            <div style={{ display: 'flex', alignItems: 'center', gap: '30px', flex: 1 }}>
+              <div style={{ position: 'relative', width: '140px', height: '140px', flexShrink: 0 }}>
+                {/* Circular Progress mimicking Doughnut */}
+                <svg width="140" height="140" viewBox="0 0 140 140" style={{ transform: 'rotate(-90deg)' }}>
+                  <circle cx="70" cy="70" r="60" fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="15" />
+                  <circle cx="70" cy="70" r="60" fill="none" stroke="#DCA038" strokeWidth="15" strokeDasharray={`${Math.PI * 120}`} strokeDashoffset={`${Math.PI * 120 * (1 - (progressPercent / 100))}`} strokeLinecap="round" style={{ transition: 'stroke-dashoffset 1s ease-out' }} />
+                </svg>
+                <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+                  <span style={{ fontSize: '1.8rem', fontWeight: 'bold', color: '#fff', lineHeight: 1.1 }}>{consumedCalories.toLocaleString()}</span>
+                  <span style={{ fontSize: '0.7rem', color: 'rgba(255,255,255,0.5)' }}>/ {profile.targetCalories?.toLocaleString()} kcal</span>
+                  <span style={{ fontSize: '0.8rem', color: '#DCA038', fontWeight: 'bold', marginTop: '4px' }}>摂取</span>
+                </div>
+              </div>
               
-              if (estDays !== null && estDays !== undefined) {
-                return (
-                  <p className="estimated-days-text">
-                    目標達成まで約 {estDays} 日
-                  </p>
-                );
-              }
-              return <p style={{ margin: '0', fontSize: '1.2rem', color: 'var(--text-muted)' }}>目標までの日数を計算中...</p>;
-            })()}
-          </div>
-
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', flex: '1 1 auto', alignItems: 'center' }}>
-            <div style={{ textAlign: 'center' }}>
-               <p style={{ margin: 0, fontSize: '0.8rem', color: 'var(--text-muted)' }}>目標カロリー</p>
-               <p style={{ margin: '2px 0 0 0', fontSize: '1.4rem', fontWeight: 'bold', color: 'var(--text-main)' }}>{profile.targetCalories ? profile.targetCalories.toLocaleString() : '-'} <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)', fontWeight: 'normal' }}>kcal</span></p>
-            </div>
-            <div style={{ display: 'flex', gap: '20px', flexWrap: 'nowrap', justifyContent: 'center' }}>
-              <div style={{ textAlign: 'center', flexShrink: 0 }}>
-                 <p style={{ margin: 0, fontSize: '0.8rem', color: '#ff5224', whiteSpace: 'nowrap' }}>P (タンパク質)</p>
-                 <p style={{ margin: '2px 0 0 0', fontSize: '1.3rem', fontWeight: 'bold', color: 'var(--text-main)', whiteSpace: 'nowrap' }}>{profile.targetProtein || '-'} <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 'normal' }}>g</span></p>
-              </div>
-              <div style={{ textAlign: 'center', flexShrink: 0 }}>
-                 <p style={{ margin: 0, fontSize: '0.8rem', color: '#ffac1c', whiteSpace: 'nowrap' }}>F (脂質)</p>
-                 <p style={{ margin: '2px 0 0 0', fontSize: '1.3rem', fontWeight: 'bold', color: 'var(--text-main)', whiteSpace: 'nowrap' }}>{profile.targetFat || '-'} <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 'normal' }}>g</span></p>
-              </div>
-              <div style={{ textAlign: 'center', flexShrink: 0 }}>
-                 <p style={{ margin: 0, fontSize: '0.8rem', color: '#00e676', whiteSpace: 'nowrap' }}>C (炭水化物)</p>
-                 <p style={{ margin: '2px 0 0 0', fontSize: '1.3rem', fontWeight: 'bold', color: 'var(--text-main)', whiteSpace: 'nowrap' }}>{profile.targetCarb || '-'} <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 'normal' }}>g</span></p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="summary-card glass-panel calories-card">
-          <div className="card-header">
-            <h3><i className="fa-solid fa-fire-flame-curved icon-orange"></i> カロリーバランス</h3>
-            <span className="card-subtitle">摂取 vs 消費</span>
-          </div>
-          <div className="calorie-progress-container">
-            <div className="calorie-circle-wrapper">
-              <div className="calorie-val-box">
-                <span className="num-large">{consumedCalories.toLocaleString()}</span>
-                <span className="num-unit">/ <span>{profile.targetCalories?.toLocaleString()}</span> kcal</span>
-                <span className="num-label">摂取</span>
-              </div>
-              <div className="circular-progress" style={{ '--cal-progress': `${progressPercent}%` } as React.CSSProperties}></div>
-            </div>
-            <div className="calorie-details">
-              <div className="cal-detail-item">
-                <span className="detail-label">目標摂取</span>
-                <span className="detail-val">{profile.targetCalories?.toLocaleString()} kcal</span>
-              </div>
-              <div className="cal-detail-item">
-                <span className="detail-label">現在摂取</span>
-                <span className="detail-val text-primary">{consumedCalories.toLocaleString()} kcal</span>
-              </div>
-              <div className="cal-detail-item">
-                <span className="detail-label">消費（運動）</span>
-                <span className="detail-val text-accent">{burnedCalories.toLocaleString()} kcal</span>
-              </div>
-              <div style={{ borderTop: '1px solid var(--border-color)', marginTop: '10px', paddingTop: '10px' }}>
-                <p style={{ margin: '0 0 8px 0', fontSize: '0.78rem', color: 'var(--text-muted)', fontWeight: 'bold', letterSpacing: '0.05em' }}>本日のPFC摂取</p>
-                <div className="cal-detail-item">
-                  <span className="detail-label" style={{ color: '#F59E0B' }}>P (タンパク質)</span>
-                  <span className="detail-val" style={{ color: '#F59E0B' }}>{Math.round(totalP)} g</span>
+              <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '15px' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.85rem' }}>
+                  <span style={{ color: 'rgba(255,255,255,0.6)' }}>目標摂取</span>
+                  <span style={{ color: '#fff', fontWeight: 'bold' }}>{profile.targetCalories?.toLocaleString()} kcal</span>
                 </div>
-                <div className="cal-detail-item">
-                  <span className="detail-label" style={{ color: '#FBBF24' }}>F (脂質)</span>
-                  <span className="detail-val" style={{ color: '#FBBF24' }}>{Math.round(totalF)} g</span>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.85rem' }}>
+                  <span style={{ color: 'rgba(255,255,255,0.6)' }}>現在摂取</span>
+                  <span style={{ color: '#DCA038', fontWeight: 'bold' }}>{consumedCalories.toLocaleString()} kcal</span>
                 </div>
-                <div className="cal-detail-item">
-                  <span className="detail-label" style={{ color: '#EF4444' }}>C (炭水化物)</span>
-                  <span className="detail-val" style={{ color: '#EF4444' }}>{Math.round(totalC)} g</span>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.85rem' }}>
+                  <span style={{ color: 'rgba(255,255,255,0.6)' }}>消費（運動）</span>
+                  <span style={{ color: '#DCA038', fontWeight: 'bold' }}>{burnedCalories.toLocaleString()} kcal</span>
+                </div>
+                
+                <div style={{ borderTop: '1px solid rgba(255,255,255,0.1)', margin: '5px 0' }}></div>
+                
+                <div style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.4)', fontWeight: 'bold', marginBottom: '5px' }}>本日のPFC摂取</div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.85rem' }}>
+                  <span style={{ color: '#ff5224', fontWeight: 'bold' }}>P (タンパク質)</span>
+                  <span style={{ color: '#ff5224', fontWeight: 'bold' }}>{Math.round(totalP)} g</span>
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.85rem' }}>
+                  <span style={{ color: '#ffac1c', fontWeight: 'bold' }}>F (脂質)</span>
+                  <span style={{ color: '#ffac1c', fontWeight: 'bold' }}>{Math.round(totalF)} g</span>
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.85rem' }}>
+                  <span style={{ color: '#00e676', fontWeight: 'bold' }}>C (炭水化物)</span>
+                  <span style={{ color: '#00e676', fontWeight: 'bold' }}>{Math.round(totalC)} g</span>
                 </div>
               </div>
             </div>
           </div>
-        </div>
 
-        <div className="summary-card glass-panel pfc-card">
-          <div className="card-header">
-            <h3><i className="fa-solid fa-pie-chart icon-green"></i> PFCバランス</h3>
-            <span className="card-subtitle">三大栄養素比率</span>
-          </div>
-          <div className="pfc-chart-container">
-            <div className="chart-wrapper">
-              <Doughnut data={pfcData} options={pfcOptions} />
+          {/* PFC Balance */}
+          <div style={{ background: 'rgba(20,20,25,0.8)', border: '1px solid rgba(255,255,255,0.05)', borderRadius: '16px', padding: '25px', display: 'flex', flexDirection: 'column', boxShadow: '0 4px 20px rgba(0,0,0,0.4)' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '30px' }}>
+              <h3 style={{ margin: 0, fontSize: '1.1rem', color: '#fff', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                🟢 PFCバランス
+              </h3>
+              <span style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.4)', fontWeight: 'bold', letterSpacing: '0.05em' }}>三大栄養素比率</span>
             </div>
-            <div className="pfc-legend">
-              <div className="pfc-legend-item protein">
-                <span className="dot"></span>
-                <span className="label">P: タンパク質</span>
-                <span className="val">{totalP.toFixed(1)}g / {profile.targetProtein}g</span>
+            
+            <div style={{ display: 'flex', alignItems: 'center', gap: '30px', flex: 1 }}>
+              <div style={{ width: '140px', height: '140px', flexShrink: 0, position: 'relative' }}>
+                <Doughnut data={pfcData} options={{...pfcOptions, cutout: '80%'}} />
+                {/* Fallback empty ring if no data */}
+                {!hasData && (
+                   <svg width="140" height="140" viewBox="0 0 140 140" style={{ position: 'absolute', top: 0, left: 0 }}>
+                     <circle cx="70" cy="70" r="60" fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="15" />
+                   </svg>
+                )}
               </div>
-              <div className="pfc-legend-item fat">
-                <span className="dot"></span>
-                <span className="label">F: 脂質</span>
-                <span className="val">{totalF.toFixed(1)}g / {profile.targetFat}g</span>
-              </div>
-              <div className="pfc-legend-item carb">
-                <span className="dot"></span>
-                <span className="label">C: 炭水化物</span>
-                <span className="val">{totalC.toFixed(1)}g / {profile.targetCarb}g</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-
-        <div className="summary-card glass-panel chart-card" style={{ gridColumn: '1 / -1' }}>
-          <div className="card-header">
-            <h3><i className="fa-solid fa-chart-column icon-accent"></i> 過去1週間のカロリー推移</h3>
-            <span className="card-subtitle">摂取 vs 消費</span>
-          </div>
-          <div className="weekly-chart-container" style={{ position: 'relative', height: '300px', width: '100%' }}>
-            <Bar data={weeklyData} options={weeklyOptions} />
-          </div>
-        </div>
-
-        <div className="summary-card glass-panel chart-card" style={{ gridColumn: '1 / -1' }}>
-          <div className="card-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
-            <div style={{ display: 'flex', flexDirection: 'column' }}>
-              <h3 style={{ margin: 0 }}><i className="fa-solid fa-weight-scale icon-blue"></i> 体重</h3>
-            </div>
-            <button onClick={handleRecordWeight} style={{ background: 'var(--primary)', color: '#fff', border: 'none', borderRadius: '20px', padding: '8px 16px', fontSize: '0.9rem', fontWeight: 'bold', cursor: 'pointer', boxShadow: '0 4px 10px rgba(26,115,232,0.2)' }}>記録する</button>
-          </div>
-          
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', margin: '10px 0 20px 0', padding: '0 10px' }}>
-            <div style={{ textAlign: 'left' }}>
-              <span style={{ fontSize: '0.9rem', color: 'var(--text-muted)' }}>現在</span>
-              <div style={{ fontSize: '2.5rem', fontWeight: 'bold', color: 'var(--text-main)', marginTop: '5px', lineHeight: 1 }}>
-                {currentWeight} <span style={{ fontSize: '1.2rem', color: 'var(--text-muted)', fontWeight: 'normal' }}>kg</span>
-              </div>
-            </div>
-            <div style={{ textAlign: 'right', fontSize: '0.9rem' }}>
-              <div style={{ marginBottom: '8px' }}>
-                <span style={{ color: 'var(--text-muted)', marginRight: '15px' }}>最も重い</span>
-                <span style={{ fontWeight: 'bold', color: 'var(--text-main)', fontSize: '1.1rem' }}>{maxWeight}</span>
-              </div>
-              <div>
-                <span style={{ color: 'var(--text-muted)', marginRight: '15px' }}>最も軽い</span>
-                <span style={{ fontWeight: 'bold', color: 'var(--text-main)', fontSize: '1.1rem' }}>{minWeight}</span>
+              
+              <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                <div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '5px' }}>
+                    <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#ff5224' }}></div>
+                    <span style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.7)' }}>P: タンパク質</span>
+                  </div>
+                  <div style={{ fontSize: '1rem', fontWeight: 'bold', color: '#fff', paddingLeft: '16px' }}>
+                    {totalP.toFixed(1)}g <span style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.4)', fontWeight: 'normal' }}>/ {profile.targetProtein}g</span>
+                  </div>
+                </div>
+                <div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '5px' }}>
+                    <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#ffac1c' }}></div>
+                    <span style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.7)' }}>F: 脂質</span>
+                  </div>
+                  <div style={{ fontSize: '1rem', fontWeight: 'bold', color: '#fff', paddingLeft: '16px' }}>
+                    {totalF.toFixed(1)}g <span style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.4)', fontWeight: 'normal' }}>/ {profile.targetFat}g</span>
+                  </div>
+                </div>
+                <div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '5px' }}>
+                    <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#00e676' }}></div>
+                    <span style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.7)' }}>C: 炭水化物</span>
+                  </div>
+                  <div style={{ fontSize: '1rem', fontWeight: 'bold', color: '#fff', paddingLeft: '16px' }}>
+                    {totalC.toFixed(1)}g <span style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.4)', fontWeight: 'normal' }}>/ {profile.targetCarb}g</span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
 
-          <div className="weight-chart-container" style={{ position: 'relative', height: '220px', width: '100%' }}>
-            <Line data={weightChartData} options={weightChartOptions as any} />
+          {/* Weekly Chart */}
+          <div style={{ gridColumn: '1 / -1', background: 'rgba(20,20,25,0.8)', border: '1px solid rgba(255,255,255,0.05)', borderRadius: '16px', padding: '25px', display: 'flex', flexDirection: 'column', boxShadow: '0 4px 20px rgba(0,0,0,0.4)' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+              <h3 style={{ margin: 0, fontSize: '1.1rem', color: '#fff', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                📊 過去1週間のカロリー推移
+              </h3>
+              <span style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.4)', fontWeight: 'bold', letterSpacing: '0.05em' }}>摂取 vs 消費</span>
+            </div>
+            <div style={{ height: '300px', width: '100%' }}>
+              <Bar data={{
+                ...weeklyData,
+                datasets: [
+                  { ...weeklyData.datasets[0], backgroundColor: 'rgba(76, 175, 80, 0.8)', borderColor: 'rgba(76, 175, 80, 1)' },
+                  { ...weeklyData.datasets[1], backgroundColor: 'rgba(239, 68, 68, 0.8)', borderColor: 'rgba(239, 68, 68, 1)' }
+                ]
+              }} options={{
+                ...weeklyOptions,
+                plugins: {
+                  legend: {
+                    position: 'bottom',
+                    labels: { color: 'rgba(255,255,255,0.6)', usePointStyle: true, boxWidth: 10 }
+                  }
+                },
+                scales: {
+                  y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: 'rgba(255,255,255,0.5)' } },
+                  x: { grid: { display: false }, ticks: { color: 'rgba(255,255,255,0.5)' } }
+                }
+              }} />
+            </div>
           </div>
-        </div>
 
-        {/* BMI カード */}
-        {(() => {
-          const h = profile.height / 100;
-          const bmi = h > 0 ? currentWeight / (h * h) : null;
-          if (!bmi) return null;
-          const bmiVal = Math.round(bmi * 10) / 10;
-          let bmiLabel = '標準';
-          let bmiColor = '#4ade80';
-          if (bmi < 18.5) { bmiLabel = '低体重'; bmiColor = '#60a5fa'; }
-          else if (bmi < 25) { bmiLabel = '標準'; bmiColor = '#4ade80'; }
-          else if (bmi < 30) { bmiLabel = '過体重'; bmiColor = '#fb923c'; }
-          else { bmiLabel = '肥満'; bmiColor = '#f87171'; }
-          const MIN = 15, MAX = 40;
-          const pointerPct = Math.min(98, Math.max(2, ((bmi - MIN) / (MAX - MIN)) * 100));
-          const totalRange = MAX - MIN;
-          const segments = [
-            { from: 15,   to: 18.5, color: '#60a5fa' },
-            { from: 18.5, to: 22,   color: '#34d399' },
-            { from: 22,   to: 25,   color: '#a3e635' },
-            { from: 25,   to: 30,   color: '#fbbf24' },
-            { from: 30,   to: 35,   color: '#fb923c' },
-            { from: 35,   to: 40,   color: '#f87171' },
-          ];
-          const labels = [15, 18.5, 25, 30, 35, 40];
-          return (
-            <div className="summary-card glass-panel chart-card" style={{ gridColumn: '1 / -1' }}>
-              <div className="card-header">
-                <h3><i className="fa-solid fa-person icon-blue"></i> BMI</h3>
-                <button
-                  onClick={() => { setEditHeight(profile.height); setEditWeight(currentWeight); setShowBmiEdit(true); }}
-                  style={{ background: 'var(--primary)', color: '#fff', border: 'none', borderRadius: '20px', padding: '8px 16px', fontSize: '0.9rem', fontWeight: 'bold', cursor: 'pointer', boxShadow: '0 4px 10px rgba(26,115,232,0.2)' }}
-                >編集</button>
-              </div>
-              {/* 身長・体重編集モーダル */}
-              {showBmiEdit && (
-                <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.5)', zIndex: 9999, display: 'flex', alignItems: 'flex-end', justifyContent: 'center' }} onClick={() => setShowBmiEdit(false)}>
-                  <div style={{ background: '#fff', borderRadius: '24px 24px 0 0', padding: '16px 0 40px', width: '100%', maxWidth: '480px', boxShadow: '0 -8px 40px rgba(0,0,0,0.2)', maxHeight: '92vh', overflowY: 'auto' }} onClick={e => e.stopPropagation()}>
-                    <div style={{ width: '36px', height: '4px', background: '#dee2e6', borderRadius: '2px', margin: '0 auto 16px' }} />
-                    <div style={{ padding: '0 24px' }}>
-                      <h3 style={{ margin: '0 0 24px', fontSize: '1.1rem', fontWeight: 700 }}>BMI</h3>
+          {/* BMI Chart (Kept but matched style) */}
+          {(() => {
+            const h = profile.height / 100;
+            const bmi = h > 0 ? currentWeight / (h * h) : null;
+            if (!bmi) return null;
+            const bmiVal = Math.round(bmi * 10) / 10;
+            let bmiLabel = '標準';
+            let bmiColor = '#4ade80';
+            if (bmi < 18.5) { bmiLabel = '低体重'; bmiColor = '#60a5fa'; }
+            else if (bmi < 25) { bmiLabel = '標準'; bmiColor = '#4ade80'; }
+            else if (bmi < 30) { bmiLabel = '過体重'; bmiColor = '#fb923c'; }
+            else { bmiLabel = '肥満'; bmiColor = '#f87171'; }
+            const MIN = 15, MAX = 40;
+            const pointerPct = Math.min(98, Math.max(2, ((bmi - MIN) / (MAX - MIN)) * 100));
+            const totalRange = MAX - MIN;
+            const segments = [
+              { from: 15,   to: 18.5, color: '#60a5fa' },
+              { from: 18.5, to: 22,   color: '#34d399' },
+              { from: 22,   to: 25,   color: '#a3e635' },
+              { from: 25,   to: 30,   color: '#fbbf24' },
+              { from: 30,   to: 35,   color: '#fb923c' },
+              { from: 35,   to: 40,   color: '#f87171' },
+            ];
+            const labels = [15, 18.5, 25, 30, 35, 40];
+            return (
+              <div style={{ gridColumn: '1 / -1', background: 'rgba(20,20,25,0.8)', border: '1px solid rgba(255,255,255,0.05)', borderRadius: '16px', padding: '25px', display: 'flex', flexDirection: 'column', boxShadow: '0 4px 20px rgba(0,0,0,0.4)' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+                  <h3 style={{ margin: 0, fontSize: '1.1rem', color: '#fff', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    📉 体重推移 & BMI
+                  </h3>
+                  <button
+                    onClick={() => { setEditHeight(profile.height); setEditWeight(currentWeight); setShowBmiEdit(true); }}
+                    style={{ background: 'linear-gradient(180deg, #FDF0A6, #DCA038)', color: '#000', border: 'none', borderRadius: '20px', padding: '6px 16px', fontSize: '0.85rem', fontWeight: 'bold', cursor: 'pointer', boxShadow: '0 4px 10px rgba(220,160,56,0.3)' }}
+                  >編集</button>
+                </div>
 
-                      {/* 体重 */}
-                      <p style={{ margin: '0 0 12px', fontSize: '1rem', fontWeight: 700, color: '#212529' }}>体重</p>
-                      <div style={{ textAlign: 'center', marginBottom: '8px' }}>
-                        <span style={{ fontSize: '3rem', fontWeight: 800, color: 'var(--primary)', lineHeight: 1 }}>{editWeight}</span>
-                        <span style={{ fontSize: '1.1rem', color: '#6c757d', marginLeft: '6px' }}>kg</span>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '40px' }}>
+                  {/* Left: BMI Data */}
+                  <div style={{ flex: '1', minWidth: '300px' }}>
+                    <div style={{ padding: '10px 10px 16px' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
+                        <div>
+                          <span style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.5)', display: 'block', marginBottom: '4px' }}>あなたのBMI</span>
+                          <span style={{ fontSize: '2.8rem', fontWeight: 'bold', color: '#fff', lineHeight: 1, textShadow: '0 0 10px rgba(255,255,255,0.2)' }}>{bmiVal}</span>
+                        </div>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '6px', background: 'rgba(255,255,255,0.05)', padding: '6px 12px', borderRadius: '20px', border: `1px solid ${bmiColor}` }}>
+                          <span style={{ width: '10px', height: '10px', borderRadius: '50%', background: bmiColor, display: 'inline-block', flexShrink: 0, boxShadow: `0 0 8px ${bmiColor}` }} />
+                          <span style={{ fontSize: '0.95rem', fontWeight: 'bold', color: bmiColor }}>{bmiLabel}</span>
+                        </div>
+                      </div>
+                      
+                      <div style={{ position: 'relative', paddingBottom: '24px', marginTop: '20px' }}>
+                        <div style={{ position: 'relative', marginBottom: '4px' }}>
+                          <div style={{ display: 'flex', height: '12px', borderRadius: '6px', overflow: 'hidden', gap: '2px' }}>
+                            {segments.map((seg, i) => (
+                              <div key={i} style={{
+                                flex: (seg.to - seg.from) / totalRange,
+                                background: seg.color,
+                                borderRadius: i === 0 ? '6px 0 0 6px' : i === segments.length - 1 ? '0 6px 6px 0' : '0',
+                              }} />
+                            ))}
+                          </div>
+                          <div style={{
+                            position: 'absolute',
+                            top: '12px',
+                            left: `${pointerPct}%`,
+                            transform: 'translateX(-50%)',
+                            width: 0, height: 0,
+                            borderLeft: '6px solid transparent',
+                            borderRight: '6px solid transparent',
+                            borderTop: '8px solid #fff',
+                            filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.5))'
+                          }} />
+                        </div>
+                        <div style={{ position: 'relative', height: '16px', marginTop: '8px' }}>
+                          {labels.map(v => {
+                            const pct = ((v - MIN) / (MAX - MIN)) * 100;
+                            return (
+                              <span key={v} style={{
+                                position: 'absolute',
+                                left: `${pct}%`,
+                                transform: 'translateX(-50%)',
+                                fontSize: '0.7rem',
+                                color: 'rgba(255,255,255,0.4)',
+                                whiteSpace: 'nowrap',
+                              }}>{v}</span>
+                            );
+                          })}
+                        </div>
+                      </div>
+                      
+                      <div style={{ marginTop: '10px', display: 'flex', justifyContent: 'space-between', padding: '15px', background: 'rgba(0,0,0,0.3)', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.05)' }}>
+                        <div style={{ textAlign: 'center' }}>
+                          <span style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.5)', display: 'block' }}>現在の体重</span>
+                          <span style={{ fontSize: '1.2rem', fontWeight: 'bold', color: '#fff' }}>{currentWeight} <span style={{ fontSize: '0.8rem', fontWeight: 'normal' }}>kg</span></span>
+                        </div>
+                        <div style={{ width: '1px', background: 'rgba(255,255,255,0.1)' }}></div>
+                        <div style={{ textAlign: 'center' }}>
+                          <span style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.5)', display: 'block' }}>身長</span>
+                          <span style={{ fontSize: '1.2rem', fontWeight: 'bold', color: '#fff' }}>{profile.height} <span style={{ fontSize: '0.8rem', fontWeight: 'normal' }}>cm</span></span>
+                        </div>
                       </div>
                     </div>
-                    {/* 体重ルーラー */}
-                    <div style={{ position: 'relative', width: '100%', marginBottom: '28px' }}>
-                      <RulerPicker min={20} max={200} step={0.5} value={editWeight} onChange={setEditWeight} orientation="horizontal" tickColor="#ced4da" labelColor="#6c757d" />
-                    </div>
+                  </div>
 
-                    <div style={{ padding: '0 24px' }}>
-                      {/* 身長 */}
-                      <p style={{ margin: '0 0 12px', fontSize: '1rem', fontWeight: 700, color: '#212529' }}>身長</p>
+                  {/* Right: Weight Chart */}
+                  <div style={{ flex: '2', minWidth: '300px', display: 'flex', flexDirection: 'column' }}>
+                    <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '20px', marginBottom: '10px', fontSize: '0.85rem' }}>
+                      <div><span style={{ color: 'rgba(255,255,255,0.5)', marginRight: '8px' }}>最も重い</span><span style={{ color: '#fff', fontWeight: 'bold' }}>{maxWeight} kg</span></div>
+                      <div><span style={{ color: 'rgba(255,255,255,0.5)', marginRight: '8px' }}>最も軽い</span><span style={{ color: '#fff', fontWeight: 'bold' }}>{minWeight} kg</span></div>
+                    </div>
+                    <div style={{ flex: 1, position: 'relative', minHeight: '200px' }}>
+                      <Line data={{
+                        ...weightChartData,
+                        datasets: [{
+                          ...weightChartData.datasets[0],
+                          borderColor: '#DCA038',
+                          backgroundColor: 'rgba(220, 160, 56, 0.1)',
+                          pointBackgroundColor: '#DCA038'
+                        }]
+                      }} options={{
+                        ...weightChartOptions as any,
+                        scales: {
+                          y: { ...(weightChartOptions as any).scales.y, grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: 'rgba(255,255,255,0.5)' } },
+                          x: { grid: { display: false }, ticks: { color: 'rgba(255,255,255,0.5)' } }
+                        }
+                      }} />
+                    </div>
+                  </div>
+                </div>
+
+                {/* BMI Edit Modal */}
+                {showBmiEdit && (
+                  <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.8)', zIndex: 9999, display: 'flex', alignItems: 'center', justifyContent: 'center' }} onClick={() => setShowBmiEdit(false)}>
+                    <div style={{ background: '#1e1e24', borderRadius: '24px', padding: '30px', width: '100%', maxWidth: '480px', boxShadow: '0 10px 40px rgba(0,0,0,0.5)', border: '1px solid rgba(255,255,255,0.1)' }} onClick={e => e.stopPropagation()}>
+                      <h3 style={{ margin: '0 0 24px', fontSize: '1.2rem', fontWeight: 'bold', color: '#fff', textAlign: 'center' }}>身体情報の編集</h3>
+
+                      <p style={{ margin: '0 0 12px', fontSize: '1rem', fontWeight: 'bold', color: 'rgba(255,255,255,0.7)' }}>体重</p>
                       <div style={{ textAlign: 'center', marginBottom: '8px' }}>
-                        <span style={{ fontSize: '3rem', fontWeight: 800, color: 'var(--primary)', lineHeight: 1 }}>{editHeight}</span>
-                        <span style={{ fontSize: '1.1rem', color: '#6c757d', marginLeft: '6px' }}>cm</span>
+                        <span style={{ fontSize: '3rem', fontWeight: 'bold', color: '#DCA038', lineHeight: 1, textShadow: '0 0 10px rgba(220,160,56,0.3)' }}>{editWeight}</span>
+                        <span style={{ fontSize: '1.1rem', color: 'rgba(255,255,255,0.5)', marginLeft: '6px' }}>kg</span>
+                      </div>
+                      <div style={{ position: 'relative', width: '100%', marginBottom: '28px' }}>
+                        <RulerPicker min={20} max={200} step={0.5} value={editWeight} onChange={setEditWeight} orientation="horizontal" tickColor="rgba(255,255,255,0.2)" labelColor="rgba(255,255,255,0.5)" />
+                      </div>
+
+                      <p style={{ margin: '0 0 12px', fontSize: '1rem', fontWeight: 'bold', color: 'rgba(255,255,255,0.7)' }}>身長</p>
+                      <div style={{ textAlign: 'center', marginBottom: '8px' }}>
+                        <span style={{ fontSize: '3rem', fontWeight: 'bold', color: '#DCA038', lineHeight: 1, textShadow: '0 0 10px rgba(220,160,56,0.3)' }}>{editHeight}</span>
+                        <span style={{ fontSize: '1.1rem', color: 'rgba(255,255,255,0.5)', marginLeft: '6px' }}>cm</span>
+                      </div>
+                      <div style={{ position: 'relative', width: '100%', marginBottom: '32px' }}>
+                        <RulerPicker min={100} max={250} step={1} value={editHeight} onChange={setEditHeight} orientation="horizontal" tickColor="rgba(255,255,255,0.2)" labelColor="rgba(255,255,255,0.5)" />
+                      </div>
+
+                      <div style={{ display: 'flex', gap: '12px' }}>
+                        <button onClick={() => setShowBmiEdit(false)} style={{ flex: 1, padding: '16px', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.1)', background: 'transparent', fontSize: '1rem', fontWeight: 'bold', cursor: 'pointer', color: '#fff' }}>キャンセル</button>
+                        <button
+                          onClick={() => {
+                            if (editHeight < 100 || editWeight < 20) return;
+                            const updated = saveProfile({ ...profile, height: editHeight, weight: editWeight });
+                            setProfile(updated);
+                            saveWeightLog({ date: new Date().toLocaleDateString('ja-JP', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\//g, '-'), weight: editWeight });
+                            setShowBmiEdit(false);
+                            window.location.reload();
+                          }}
+                          style={{ flex: 2, padding: '16px', borderRadius: '12px', border: 'none', background: 'linear-gradient(180deg, #FDF0A6, #DCA038)', color: '#000', fontSize: '1rem', fontWeight: 'bold', cursor: 'pointer', boxShadow: '0 4px 15px rgba(220,160,56,0.3)' }}
+                        >保存する</button>
                       </div>
                     </div>
-                    {/* 身長ルーラー */}
-                    <div style={{ position: 'relative', width: '100%', marginBottom: '32px' }}>
-                      <RulerPicker min={100} max={250} step={1} value={editHeight} onChange={setEditHeight} orientation="horizontal" tickColor="#ced4da" labelColor="#6c757d" />
-                    </div>
-
-                    <div style={{ display: 'flex', gap: '12px', padding: '0 24px' }}>
-                      <button onClick={() => setShowBmiEdit(false)} style={{ flex: 1, padding: '16px', borderRadius: '50px', border: '1.5px solid #dee2e6', background: '#fff', fontSize: '1rem', fontWeight: 600, cursor: 'pointer', color: '#495057' }}>キャンセル</button>
-                      <button
-                        onClick={() => {
-                          if (editHeight < 100 || editWeight < 20) return;
-                          const updated = saveProfile({ ...profile, height: editHeight, weight: editWeight });
-                          setProfile(updated);
-                          setShowBmiEdit(false);
-                        }}
-                        style={{ flex: 2, padding: '16px', borderRadius: '50px', border: 'none', background: 'var(--primary)', color: '#fff', fontSize: '1rem', fontWeight: 700, cursor: 'pointer' }}
-                      >保存</button>
-                    </div>
                   </div>
-                </div>
-              )}
-              <div style={{ padding: '4px 10px 16px' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
-                  <span style={{ fontSize: '2.4rem', fontWeight: 'bold', color: 'var(--text-main)', lineHeight: 1 }}>{bmiVal}</span>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                    <span style={{ width: '10px', height: '10px', borderRadius: '50%', background: bmiColor, display: 'inline-block', flexShrink: 0 }} />
-                    <span style={{ fontSize: '0.95rem', fontWeight: 600, color: 'var(--text-main)' }}>{bmiLabel}</span>
-                  </div>
-                </div>
-                <div style={{ position: 'relative', paddingBottom: '24px' }}>
-                  <div style={{ position: 'relative', marginBottom: '4px' }}>
-                    <div style={{ display: 'flex', height: '10px', borderRadius: '6px', overflow: 'hidden', gap: '2px' }}>
-                      {segments.map((seg, i) => (
-                        <div key={i} style={{
-                          flex: (seg.to - seg.from) / totalRange,
-                          background: seg.color,
-                          borderRadius: i === 0 ? '6px 0 0 6px' : i === segments.length - 1 ? '0 6px 6px 0' : '0',
-                        }} />
-                      ))}
-                    </div>
-                    <div style={{
-                      position: 'absolute',
-                      top: '10px',
-                      left: `${pointerPct}%`,
-                      transform: 'translateX(-50%)',
-                      width: 0, height: 0,
-                      borderLeft: '5px solid transparent',
-                      borderRight: '5px solid transparent',
-                      borderTop: '7px solid var(--text-main, #333)',
-                    }} />
-                  </div>
-                  <div style={{ position: 'relative', height: '16px', marginTop: '6px' }}>
-                    {labels.map(v => {
-                      const pct = ((v - MIN) / (MAX - MIN)) * 100;
-                      return (
-                        <span key={v} style={{
-                          position: 'absolute',
-                          left: `${pct}%`,
-                          transform: 'translateX(-50%)',
-                          fontSize: '0.68rem',
-                          color: 'var(--text-muted)',
-                          whiteSpace: 'nowrap',
-                        }}>{v}</span>
-                      );
-                    })}
-                  </div>
-                </div>
-                <div style={{ marginTop: '8px', padding: '10px 12px', background: 'var(--bg-secondary, rgba(0,0,0,0.03))', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: '0.82rem', color: 'var(--text-muted)' }}>
-                  <span>身長</span>
-                  <span style={{ fontWeight: 600, color: 'var(--text-main)' }}>{profile.height} cm</span>
-                </div>
+                )}
               </div>
-            </div>
-          );
-        })()}
+            );
+          })()}
+
+        </div>
       </div>
     </section>
   );
+
 }
