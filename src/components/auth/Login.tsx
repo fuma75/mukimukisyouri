@@ -563,7 +563,7 @@ export default function Login() {
                       transform: isSelected ? 'scale(1.02)' : 'scale(1)'
                     }}>
                     
-                    <div style={{ flex: 1, background: '#f8f9fa', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#DCA038' }}>
+                    <div style={{ flex: 1, background: 'rgba(20, 20, 20, 0.5)', border: '1px solid rgba(220, 160, 56, 0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#DCA038' }}>
                       <i className={`fa-solid ${g === 'male' ? 'fa-person' : 'fa-person-dress'}`} style={{ fontSize: '3rem' }}></i>
                     </div>
                     
@@ -669,7 +669,7 @@ export default function Login() {
                 }} 
                 style={{ fontSize: '3.5rem', fontWeight: 'bold', color: '#DCA038', letterSpacing: '0.05em', background: 'transparent', border: 'none', borderBottom: '2px solid var(--primary)', width: '140px', textAlign: 'center', outline: 'none' }} 
               />
-              <span style={{ fontSize: '1.5rem', color: '#111827', marginLeft: '5px' }}>年</span>
+              <span style={{ fontSize: '1.5rem', color: 'rgba(220, 160, 56, 0.5)', marginLeft: '10px', fontWeight: 'bold' }}>年</span>
             </div>
 
             <div style={{ width: '100%', maxWidth: '400px' }}>
@@ -698,9 +698,9 @@ export default function Login() {
                 type="number" 
                 value={height} 
                 onChange={(e) => { setHeight(e.target.value); setHeightUnit('cm'); }} 
-                style={{ fontSize: '3rem', fontWeight: 'bold', color: '#DCA038', letterSpacing: '0.05em', background: 'transparent', border: 'none', borderBottom: '2px solid var(--primary)', width: '180px', textAlign: 'center', outline: 'none' }} 
+                className="logo-text-premium" style={{ fontSize: '4rem', background: 'transparent', border: 'none', borderBottom: '2px solid rgba(220, 160, 56, 0.5)', width: '180px', textAlign: 'center', outline: 'none', padding: 0, margin: 0 }} 
               />
-              <span style={{ fontSize: '1.5rem', color: '#111827', marginLeft: '5px' }}>cm</span>
+              <span style={{ fontSize: '1.5rem', color: 'rgba(220, 160, 56, 0.5)', marginLeft: '10px', fontWeight: 'bold' }}>cm</span>
             </div>
             
             <div style={{ width: '100%', marginTop: '0' }}>
@@ -734,12 +734,12 @@ export default function Login() {
             <div style={{ display: 'flex', border: '1px solid var(--primary)', borderRadius: '30px', overflow: 'hidden', marginBottom: '10px' }}>
               <div 
                 onClick={() => setWeightUnit('kg')}
-                style={{ padding: '8px 24px', fontWeight: 'bold', cursor: 'pointer', background: weightUnit === 'kg' ? 'var(--primary)' : '#fff', color: weightUnit === 'kg' ? '#fff' : '#1e1e24' }}>
+                style={{ padding: '8px 24px', fontWeight: 'bold', cursor: 'pointer', background: weightUnit === 'kg' ? 'linear-gradient(180deg, #FDF0A6 0%, #DCA038 45%, #9C6615 55%, #E8C162 100%)' : 'rgba(20, 20, 20, 0.5)', color: weightUnit === 'kg' ? '#000' : 'rgba(220, 160, 56, 0.5)' }}>
                 kg
               </div>
               <div 
                 onClick={() => setWeightUnit('lbs')}
-                style={{ padding: '8px 24px', fontWeight: 'bold', cursor: 'pointer', background: weightUnit === 'lbs' ? 'var(--primary)' : '#fff', color: weightUnit === 'lbs' ? '#fff' : '#1e1e24' }}>
+                style={{ padding: '8px 24px', fontWeight: 'bold', cursor: 'pointer', background: weightUnit === 'lbs' ? 'linear-gradient(180deg, #FDF0A6 0%, #DCA038 45%, #9C6615 55%, #E8C162 100%)' : 'rgba(20, 20, 20, 0.5)', color: weightUnit === 'lbs' ? '#000' : 'rgba(220, 160, 56, 0.5)' }}>
                 lbs
               </div>
             </div>
@@ -749,9 +749,9 @@ export default function Login() {
                 type="number" 
                 value={weight} 
                 onChange={(e) => setWeight(e.target.value)} 
-                style={{ fontSize: '3rem', fontWeight: 'bold', color: '#DCA038', letterSpacing: '0.05em', background: 'transparent', border: 'none', borderBottom: '2px solid var(--primary)', width: '180px', textAlign: 'center', outline: 'none' }} 
+                className="logo-text-premium" style={{ fontSize: '4rem', background: 'transparent', border: 'none', borderBottom: '2px solid rgba(220, 160, 56, 0.5)', width: '180px', textAlign: 'center', outline: 'none', padding: 0, margin: 0 }} 
               />
-              <span style={{ fontSize: '1.5rem', color: '#111827', marginLeft: '5px' }}>{weightUnit}</span>
+              <span style={{ fontSize: '1.5rem', color: 'rgba(220, 160, 56, 0.5)', marginLeft: '10px', fontWeight: 'bold' }}>{weightUnit}</span>
             </div>
             
             <div style={{ width: '100%', marginTop: '0' }}>
@@ -775,16 +775,16 @@ export default function Login() {
               const bmiColor = bmi < 18.5 ? '#3b82f6' : bmi < 25 ? '#22c55e' : bmi < 30 ? '#f59e0b' : '#ef4444';
               const bmiPercent = Math.min(Math.max(((bmi - 10) / (40 - 10)) * 100, 0), 100);
               return (
-                <div style={{ width: '100%', marginTop: '16px', padding: '12px 16px', background: '#f8f9fa', borderRadius: '16px', border: '1px solid #e9ecef' }}>
+                <div style={{ width: '100%', marginTop: '16px', padding: '12px 16px', background: 'rgba(20, 20, 20, 0.5)', border: '1px solid rgba(220, 160, 56, 0.3)', borderRadius: '16px' }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
-                    <span style={{ fontSize: '0.9rem', fontWeight: 'bold', color: '#8b8d9a' }}>あなたのBMI</span>
+                    <span style={{ fontSize: '0.9rem', fontWeight: 'bold', color: '#DCA038' }}>あなたのBMI</span>
                     <div style={{ display: 'flex', alignItems: 'baseline', gap: '6px' }}>
                       <span style={{ fontSize: 'clamp(1.3rem, 5vw, 1.6rem)', fontWeight: 'bold', color: bmiColor }}>{bmiFixed}</span>
-                      <span style={{ fontSize: '1rem', fontWeight: 'bold', color: bmiColor, background: bmiColor + '20', padding: '2px 10px', borderRadius: '20px' }}>{bmiLabel}</span>
+                      <span style={{ fontSize: '1rem', fontWeight: 'bold', color: bmiColor, background: 'rgba(20,20,20,0.8)', padding: '4px 12px', borderRadius: '20px', border: `1px solid ${bmiColor}` }}>{bmiLabel}</span>
                     </div>
                   </div>
-                  <div style={{ width: '100%', height: '8px', borderRadius: '4px', background: 'linear-gradient(to right, #3b82f6 0%, #22c55e 40%, #f59e0b 65%, #ef4444 100%)', position: 'relative' }}>
-                    <div style={{ position: 'absolute', top: '-4px', left: `calc(${bmiPercent}% - 8px)`, width: '16px', height: '16px', borderRadius: '50%', background: '#fff', border: `3px solid ${bmiColor}`, boxShadow: '0 2px 6px rgba(0,0,0,0.2)', transition: 'left 0.3s' }} />
+                  <div style={{ width: '100%', height: '8px', borderRadius: '4px', background: 'linear-gradient(to right, #3b82f6 0%, #22c55e 40%, #f59e0b 65%, #ef4444 100%)', boxShadow: '0 2px 10px rgba(0,0,0,0.5)', position: 'relative' }}>
+                    <div style={{ position: 'absolute', top: '-4px', left: `calc(${bmiPercent}% - 8px)`, width: '16px', height: '16px', borderRadius: '50%', background: '#111', border: `3px solid ${bmiColor}`, boxShadow: `0 0 10px ${bmiColor}, 0 2px 6px rgba(0,0,0,0.2)`, transition: 'left 0.3s' }} />
                   </div>
                   <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '6px', fontSize: '0.75rem', color: '#DCA038' }}>
                     <span>低体重 〜18.5</span>
@@ -815,12 +815,12 @@ export default function Login() {
             <div style={{ display: 'flex', border: '1px solid var(--primary)', borderRadius: '30px', overflow: 'hidden', marginBottom: '10px' }}>
               <div 
                 onClick={() => setWeightUnit('kg')}
-                style={{ padding: '8px 24px', fontWeight: 'bold', cursor: 'pointer', background: weightUnit === 'kg' ? 'var(--primary)' : '#fff', color: weightUnit === 'kg' ? '#fff' : '#1e1e24' }}>
+                style={{ padding: '8px 24px', fontWeight: 'bold', cursor: 'pointer', background: weightUnit === 'kg' ? 'linear-gradient(180deg, #FDF0A6 0%, #DCA038 45%, #9C6615 55%, #E8C162 100%)' : 'rgba(20, 20, 20, 0.5)', color: weightUnit === 'kg' ? '#000' : 'rgba(220, 160, 56, 0.5)' }}>
                 kg
               </div>
               <div 
                 onClick={() => setWeightUnit('lbs')}
-                style={{ padding: '8px 24px', fontWeight: 'bold', cursor: 'pointer', background: weightUnit === 'lbs' ? 'var(--primary)' : '#fff', color: weightUnit === 'lbs' ? '#fff' : '#1e1e24' }}>
+                style={{ padding: '8px 24px', fontWeight: 'bold', cursor: 'pointer', background: weightUnit === 'lbs' ? 'linear-gradient(180deg, #FDF0A6 0%, #DCA038 45%, #9C6615 55%, #E8C162 100%)' : 'rgba(20, 20, 20, 0.5)', color: weightUnit === 'lbs' ? '#000' : 'rgba(220, 160, 56, 0.5)' }}>
                 lbs
               </div>
             </div>
@@ -830,9 +830,9 @@ export default function Login() {
                 type="number" 
                 value={targetWeight} 
                 onChange={(e) => setTargetWeight(e.target.value)} 
-                style={{ fontSize: '3rem', fontWeight: 'bold', color: '#DCA038', letterSpacing: '0.05em', background: 'transparent', border: 'none', borderBottom: '2px solid var(--primary)', width: '180px', textAlign: 'center', outline: 'none' }} 
+                className="logo-text-premium" style={{ fontSize: '4rem', background: 'transparent', border: 'none', borderBottom: '2px solid rgba(220, 160, 56, 0.5)', width: '180px', textAlign: 'center', outline: 'none', padding: 0, margin: 0 }} 
               />
-              <span style={{ fontSize: '1.5rem', color: '#111827', marginLeft: '5px' }}>{weightUnit}</span>
+              <span style={{ fontSize: '1.5rem', color: 'rgba(220, 160, 56, 0.5)', marginLeft: '10px', fontWeight: 'bold' }}>{weightUnit}</span>
             </div>
             
             <div style={{ width: '100%', marginTop: '0' }}>
@@ -856,16 +856,16 @@ export default function Login() {
               const bmiColor = bmi < 18.5 ? '#3b82f6' : bmi < 25 ? '#22c55e' : bmi < 30 ? '#f59e0b' : '#ef4444';
               const bmiPercent = Math.min(Math.max(((bmi - 10) / (40 - 10)) * 100, 0), 100);
               return (
-                <div style={{ width: '100%', marginTop: '16px', padding: '12px 16px', background: '#f8f9fa', borderRadius: '16px', border: '1px solid #e9ecef' }}>
+                <div style={{ width: '100%', marginTop: '16px', padding: '12px 16px', background: 'rgba(20, 20, 20, 0.5)', border: '1px solid rgba(220, 160, 56, 0.3)', borderRadius: '16px' }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
-                    <span style={{ fontSize: '0.9rem', fontWeight: 'bold', color: '#8b8d9a' }}>目標のBMI</span>
+                    <span style={{ fontSize: '0.9rem', fontWeight: 'bold', color: '#DCA038' }}>目標のBMI</span>
                     <div style={{ display: 'flex', alignItems: 'baseline', gap: '6px' }}>
                       <span style={{ fontSize: 'clamp(1.3rem, 5vw, 1.6rem)', fontWeight: 'bold', color: bmiColor }}>{bmiFixed}</span>
-                      <span style={{ fontSize: '1rem', fontWeight: 'bold', color: bmiColor, background: bmiColor + '20', padding: '2px 10px', borderRadius: '20px' }}>{bmiLabel}</span>
+                      <span style={{ fontSize: '1rem', fontWeight: 'bold', color: bmiColor, background: 'rgba(20,20,20,0.8)', padding: '4px 12px', borderRadius: '20px', border: `1px solid ${bmiColor}` }}>{bmiLabel}</span>
                     </div>
                   </div>
-                  <div style={{ width: '100%', height: '8px', borderRadius: '4px', background: 'linear-gradient(to right, #3b82f6 0%, #22c55e 40%, #f59e0b 65%, #ef4444 100%)', position: 'relative' }}>
-                    <div style={{ position: 'absolute', top: '-4px', left: `calc(${bmiPercent}% - 8px)`, width: '16px', height: '16px', borderRadius: '50%', background: '#fff', border: `3px solid ${bmiColor}`, boxShadow: '0 2px 6px rgba(0,0,0,0.2)', transition: 'left 0.3s' }} />
+                  <div style={{ width: '100%', height: '8px', borderRadius: '4px', background: 'linear-gradient(to right, #3b82f6 0%, #22c55e 40%, #f59e0b 65%, #ef4444 100%)', boxShadow: '0 2px 10px rgba(0,0,0,0.5)', position: 'relative' }}>
+                    <div style={{ position: 'absolute', top: '-4px', left: `calc(${bmiPercent}% - 8px)`, width: '16px', height: '16px', borderRadius: '50%', background: '#111', border: `3px solid ${bmiColor}`, boxShadow: `0 0 10px ${bmiColor}, 0 2px 6px rgba(0,0,0,0.2)`, transition: 'left 0.3s' }} />
                   </div>
                   <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '6px', fontSize: '0.75rem', color: '#DCA038' }}>
                     <span>低体重 〜18.5</span>
@@ -1064,19 +1064,19 @@ export default function Login() {
             </div>
             <h2 style={{ marginBottom: '5px', fontSize: '1.3rem', fontWeight: 'bold' }}>AI分析完了！</h2>
             
-            <div style={{ background: '#f8f9fa', padding: '10px 15px', borderRadius: '20px', border: '1px solid #e9ecef', marginBottom: '10px' }}>
+            <div style={{ background: 'rgba(20, 20, 20, 0.5)', border: '1px solid rgba(220, 160, 56, 0.3)', padding: '10px 15px', borderRadius: '20px', marginBottom: '10px' }}>
               <p style={{ color: '#111827', marginBottom: '0', fontSize: '0.9rem' }}>目標（{targetWeight}{weightUnit}）到達までの予測日数</p>
               <div style={{ fontSize: '2.5rem', fontWeight: 'bold', color: 'var(--primary)', marginBottom: '10px' }}>
                 約 {estimatedResult?.estimatedDays || '?'} 日
               </div>
               
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', justifyContent: 'center' }}>
-                <div style={{ background: '#fff', padding: '10px', borderRadius: '16px', minWidth: '110px', border: '1px solid #e9ecef', boxShadow: '0 4px 10px rgba(0,0,0,0.02)' }}>
-                  <div style={{ fontSize: '0.8rem', color: '#8b8d9a', marginBottom: '2px' }}>目標カロリー</div>
+                <div style={{ background: 'rgba(20,20,20,0.5)', border: '1px solid rgba(220, 160, 56, 0.3)', padding: '10px', borderRadius: '16px', minWidth: '110px', boxShadow: '0 4px 10px rgba(0,0,0,0.02)' }}>
+                  <div style={{ fontSize: '0.8rem', color: '#DCA038', marginBottom: '2px' }}>目標カロリー</div>
                   <div style={{ fontWeight: 'bold', color: '#DCA038', letterSpacing: '0.05em', fontSize: '1.1rem' }}>{estimatedResult?.calories || '?'} kcal</div>
                 </div>
-                <div style={{ background: '#fff', padding: '10px', borderRadius: '16px', minWidth: '110px', border: '1px solid #e9ecef', boxShadow: '0 4px 10px rgba(0,0,0,0.02)' }}>
-                  <div style={{ fontSize: '0.8rem', color: '#8b8d9a', marginBottom: '2px' }}>タンパク質</div>
+                <div style={{ background: 'rgba(20,20,20,0.5)', border: '1px solid rgba(220, 160, 56, 0.3)', padding: '10px', borderRadius: '16px', minWidth: '110px', boxShadow: '0 4px 10px rgba(0,0,0,0.02)' }}>
+                  <div style={{ fontSize: '0.8rem', color: '#DCA038', marginBottom: '2px' }}>タンパク質</div>
                   <div style={{ fontWeight: 'bold', color: '#DCA038', letterSpacing: '0.05em', fontSize: '1.1rem' }}>{estimatedResult?.protein || '?'} g</div>
                 </div>
               </div>
