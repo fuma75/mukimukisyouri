@@ -15,10 +15,13 @@ export default function Sidebar() {
 
   return (
     <aside className="sidebar" id="app-sidebar">
-      <div className="sidebar-logo">
-        <img src="/images/logo.png" alt="logo" style={{ width: '36px', height: '36px', borderRadius: '50%', objectFit: 'cover' }} />
-        <span className="logo-text">筋虎</span>
+      
+      <div className="sidebar-logo-container" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', margin: '20px 0 30px' }}>
+        <img src="/images/logo.png" alt="logo" style={{ width: '48px', height: '48px', borderRadius: '50%', objectFit: 'cover', marginBottom: '10px' }} />
+        <span className="logo-text-premium">筋虎</span>
+        <span className="logo-subtext">K I N T O R A</span>
       </div>
+
       <nav className="sidebar-nav">
         {navItems.map((item) => (
           <button
