@@ -16,8 +16,9 @@ export default function Sidebar() {
   return (
     <aside className="sidebar" id="app-sidebar">
       
-      <div className="sidebar-logo-container" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', margin: '15px 0 20px' }}>
-        <span style={{ fontSize: '0.8rem', color: '#DCA038', letterSpacing: '0.2em', fontWeight: 'bold' }}>- K I N T O R A -</span>
+      <div className="sidebar-logo-container" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', margin: '20px 0 30px' }}>
+        <span className="logo-text-premium" style={{ fontSize: '2.5rem', marginBottom: '5px', lineHeight: '1.2' }}>筋虎</span>
+        <span style={{ fontSize: '0.75rem', color: '#DCA038', letterSpacing: '0.25em', fontWeight: 'bold' }}>- K I N T O R A -</span>
       </div>
 
       <nav className="sidebar-nav">
