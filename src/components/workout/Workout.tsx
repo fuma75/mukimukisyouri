@@ -489,21 +489,7 @@ export default function Workout() {
                       {new Date(date).toLocaleDateString('ja-JP', { year: 'numeric', month: 'long', day: 'numeric', weekday: 'short' })}
                     </div>
                   </div>
-                  <div style={{ display: 'flex', gap: '10px', alignItems: 'center', marginTop: '5px' }}>
-                    <div style={{ background: 'rgba(0,0,0,0.5)', border: '1px solid #ef4444', padding: '6px 12px', borderRadius: '20px', color: '#ef4444', fontSize: '12px', fontWeight: 'bold' }}>
-                      <i className="fa-solid fa-fire"></i> {streak}日連続
-                    </div>
-                    <div style={{ background: 'rgba(20,20,20,0.8)', border: '1px solid rgba(220,160,56,0.2)', padding: '6px 16px 6px 6px', borderRadius: '30px', display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer' }}>
-                      <div style={{ width: '30px', height: '30px', borderRadius: '50%', background: 'linear-gradient(180deg, #FDF0A6, #DCA038)', color: '#000', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '14px' }}>
-                        <i className="fa-solid fa-user"></i>
-                      </div>
-                      <div style={{ display: 'flex', flexDirection: 'column' }}>
-                        <span style={{ color: '#fff', fontSize: '12px', fontWeight: 'bold', lineHeight: 1.2 }}>{getProfile()?.name || 'がお'}</span>
-                        <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: '10px', lineHeight: 1.2 }}>目標: {aiGoal.includes('減量') ? '減量' : aiGoal.includes('肥大') ? '増量' : '維持'}</span>
-                      </div>
-                      <i className="fa-solid fa-chevron-down" style={{ color: '#DCA038', fontSize: '10px', marginLeft: '5px' }}></i>
-                    </div>
-                  </div>
+
                 </div>
 
                 {/* 一週間の目標 */}

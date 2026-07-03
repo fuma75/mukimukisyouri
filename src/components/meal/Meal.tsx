@@ -141,14 +141,27 @@ export default function Meal() {
     <section id="meal" className="content-section active" style={{ paddingBottom: '100px' }}>
       <div style={{ maxWidth: '560px', margin: '0 auto', padding: '0 16px' }}>
 
+        {/* Header */}
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '30px', marginTop: '20px' }}>
+          <div>
+            <h1 className="logo-text-premium" style={{ fontSize: '32px', margin: 0, textShadow: '0 2px 10px rgba(220,160,56,0.2)' }}>食事記録</h1>
+            <div style={{ color: 'rgba(255,255,255,0.6)', fontSize: '13px', marginTop: '6px', fontWeight: 'bold' }}>
+              {new Date(date).toLocaleDateString('ja-JP', { year: 'numeric', month: 'long', day: 'numeric', weekday: 'short' })}
+            </div>
+          </div>
+        </div>
+
         {/* ── 食事記録 カレンダー ── */}
         <div style={{ background: 'rgba(20,20,20,0.6)', border: '1px solid rgba(220,160,56,0.5)', borderRadius: '16px', padding: '20px', marginBottom: '24px', boxShadow: '0 4px 20px rgba(0,0,0,0.3)' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '25px' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-              <span style={{ color: '#fff', fontSize: '15px', fontWeight: 'bold', letterSpacing: '0.05em' }}>食事記録</span>
+              <div style={{ width: '20px', height: '20px', borderRadius: '50%', border: '2px solid #DCA038', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#DCA038' }}></div>
+              </div>
+              <span style={{ color: '#fff', fontSize: '15px', fontWeight: 'bold', letterSpacing: '0.05em' }}>一週間の目標</span>
             </div>
             <div style={{ color: '#DCA038', fontSize: '14px', fontWeight: 'bold', display: 'flex', alignItems: 'center', gap: '8px' }}>
-              {checkedCount}/7 <i className="fa-solid fa-fire" style={{ fontSize: '12px' }}></i>
+              {checkedCount}/7 <i className="fa-solid fa-pen" style={{ fontSize: '12px' }}></i>
             </div>
           </div>
           <div style={{ display: 'flex', justifyContent: 'space-between', padding: '0 10px' }}>
