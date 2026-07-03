@@ -414,7 +414,7 @@ export default function Login() {
           </div>
           <div style={{ display: 'flex', gap: '4px', justifyContent: 'center', width: '200px', margin: '0 auto' }}>
             {[...Array(TOTAL_WIZARD_STEPS)].map((_, i) => (
-              <div key={i} style={{ flex: 1, height: '3px', background: i < normalizedStep ? 'var(--primary)' : 'rgba(220, 160, 56, 0.2)', borderRadius: '3px' }}></div>
+              <div key={i} style={{ flex: 1, height: '3px', background: i < normalizedStep ? '#DCA038' : 'rgba(220, 160, 56, 0.2)', borderRadius: '3px' }}></div>
             ))}
           </div>
         </div>
@@ -569,7 +569,7 @@ export default function Login() {
 
               {isLoginMode && (
                 <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px', fontSize: '0.85rem', color: '#DCA038', letterSpacing: '0.05em', fontWeight: 'bold' }}>
-                  <input type="checkbox" id="keepLoggedIn" style={{ marginRight: '8px', width: '16px', height: '16px', accentColor: 'var(--primary)' }} defaultChecked />
+                  <input type="checkbox" id="keepLoggedIn" style={{ marginRight: '8px', width: '16px', height: '16px', accentColor: '#DCA038' }} defaultChecked />
                   <label htmlFor="keepLoggedIn">ログイン状態を保持</label>
                 </div>
               )}
@@ -605,7 +605,7 @@ export default function Login() {
           
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', paddingBottom: '10px' }}>
             <h2 className="logo-text-premium" style={{ textAlign: 'center', fontSize: 'clamp(1.3rem, 5vw, 1.6rem)', marginBottom: '15px' }}>あなたの性別は？</h2>
-            <p style={{ textAlign: 'center', color: '#111827', marginBottom: '10px' }}>あなたについて教えてください</p>
+            <p style={{ textAlign: 'center', color: 'rgba(255, 255, 255, 0.7)', marginBottom: '10px' }}>あなたについて教えてください</p>
             
             <div style={{ display: 'flex', gap: '20px', justifyContent: 'center' }}>
               {['male', 'female'].map((g) => {
@@ -621,8 +621,8 @@ export default function Login() {
                       maxWidth: '220px', 
                       height: 'min(240px, 35vh)', 
                       borderRadius: '20px', 
-                      background: '#fff', 
-                      border: `2px solid ${isSelected ? 'var(--primary)' : '#e9ecef'}`, 
+                      background: isSelected ? 'rgba(220, 160, 56, 0.1)' : 'rgba(20, 20, 20, 0.5)', 
+                      border: `2px solid ${isSelected ? '#DCA038' : 'rgba(255,255,255,0.1)'}`, 
                       cursor: 'pointer',
                       display: 'flex',
                       flexDirection: 'column',
@@ -636,7 +636,7 @@ export default function Login() {
                     </div>
                     
                     <div style={{ padding: '20px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px' }}>
-                      <span style={{ fontSize: '1.1rem', fontWeight: 'bold', color: isSelected ? '#111827' : '#6c757d' }}>
+                      <span style={{ fontSize: '1.1rem', fontWeight: 'bold', color: isSelected ? '#DCA038' : 'rgba(255,255,255,0.5)' }}>
                         {g === 'male' ? '男性' : '女性'}
                       </span>
                       {isSelected && <i className="fa-solid fa-circle-check" style={{ color: '#F59E0B', fontSize: '1.2rem' }}></i>}
@@ -706,7 +706,7 @@ export default function Login() {
           </div>
 
           <div style={{ padding: '10px 0', marginTop: '10px' }}>
-            <button onClick={handleNext} disabled={targetAreas.length === 0} style={{ width: '100%', padding: '12px', background: targetAreas.length > 0 ? 'linear-gradient(180deg, #FDF0A6 0%, #DCA038 45%, #9C6615 55%, #E8C162 100%)' : 'rgba(255, 255, 255, 0.1)', boxShadow: targetAreas.length > 0 ? '0 4px 15px rgba(217, 119, 6, 0.3)' : 'none', color: targetAreas.length > 0 ? '#fff' : '#adb5bd', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer' }}>
+            <button onClick={handleNext} disabled={targetAreas.length === 0} style={{ width: '100%', padding: '12px', background: targetAreas.length > 0 ? 'linear-gradient(180deg, #FDF0A6 0%, #DCA038 45%, #9C6615 55%, #E8C162 100%)' : 'rgba(255, 255, 255, 0.1)', boxShadow: targetAreas.length > 0 ? '0 4px 15px rgba(0,0,0,0.5)' : 'none', color: targetAreas.length > 0 ? '#000' : 'rgba(255, 255, 255, 0.3)', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer' }}>
               次へ
             </button>
           </div>
@@ -722,7 +722,7 @@ export default function Login() {
             <h2 className="logo-text-premium" style={{ textAlign: 'center', fontSize: 'clamp(1.3rem, 5vw, 1.6rem)', marginBottom: '15px' }}>生まれた年は？</h2>
             <div style={{ background: 'rgba(20,20,20,0.5)', border: '1px solid rgba(220, 160, 56, 0.3)', padding: '15px 20px', borderRadius: '12px', display: 'flex', alignItems: 'center', gap: '15px', marginBottom: '20px', width: '100%', maxWidth: '400px' }}>
               <i className="fa-solid fa-clipboard-list" style={{ fontSize: '1.5rem', color: '#DCA038' }}></i>
-              <p style={{ margin: 0, color: '#111827', fontSize: '0.9rem', lineHeight: 1.5 }}>あなたの年齢グループに最も適したワークアウトに調整しやすくなります。</p>
+              <p style={{ margin: 0, color: 'rgba(255, 255, 255, 0.7)', fontSize: '0.9rem', lineHeight: 1.5 }}>あなたの年齢グループに最も適したワークアウトに調整しやすくなります。</p>
             </div>
             
             <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'center', marginBottom: '10px' }}>
@@ -799,7 +799,7 @@ export default function Login() {
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
             <h2 className="logo-text-premium" style={{ textAlign: 'center', fontSize: 'clamp(1.3rem, 5vw, 1.6rem)', marginBottom: '15px' }}>現在の体重を入力してください。</h2>
             
-            <div style={{ display: 'flex', border: '1px solid var(--primary)', borderRadius: '30px', overflow: 'hidden', marginBottom: '10px' }}>
+            <div style={{ display: 'flex', border: '1px solid #DCA038', borderRadius: '30px', overflow: 'hidden', marginBottom: '10px' }}>
               <div 
                 onClick={() => setWeightUnit('kg')}
                 style={{ padding: '8px 24px', fontWeight: 'bold', cursor: 'pointer', background: weightUnit === 'kg' ? 'linear-gradient(180deg, #FDF0A6 0%, #DCA038 45%, #9C6615 55%, #E8C162 100%)' : 'rgba(20, 20, 20, 0.5)', color: weightUnit === 'kg' ? '#000' : 'rgba(220, 160, 56, 0.5)' }}>
@@ -880,7 +880,7 @@ export default function Login() {
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
             <h2 className="logo-text-premium" style={{ textAlign: 'center', fontSize: 'clamp(1.3rem, 5vw, 1.6rem)', marginBottom: '15px' }}>目標体重を入力してください。</h2>
             
-            <div style={{ display: 'flex', border: '1px solid var(--primary)', borderRadius: '30px', overflow: 'hidden', marginBottom: '10px' }}>
+            <div style={{ display: 'flex', border: '1px solid #DCA038', borderRadius: '30px', overflow: 'hidden', marginBottom: '10px' }}>
               <div 
                 onClick={() => setWeightUnit('kg')}
                 style={{ padding: '8px 24px', fontWeight: 'bold', cursor: 'pointer', background: weightUnit === 'kg' ? 'linear-gradient(180deg, #FDF0A6 0%, #DCA038 45%, #9C6615 55%, #E8C162 100%)' : 'rgba(20, 20, 20, 0.5)', color: weightUnit === 'kg' ? '#000' : 'rgba(220, 160, 56, 0.5)' }}>
@@ -994,7 +994,7 @@ export default function Login() {
           </div>
 
           <div style={{ padding: '10px 0' }}>
-            <button onClick={handleNext} disabled={exerciseTypes.length === 0} style={{ width: '100%', padding: '14px', background: exerciseTypes.length > 0 ? 'linear-gradient(180deg, #FDF0A6 0%, #DCA038 45%, #9C6615 55%, #E8C162 100%)' : 'rgba(255, 255, 255, 0.1)', boxShadow: exerciseTypes.length > 0 ? '0 4px 15px rgba(217, 119, 6, 0.3)' : 'none', color: exerciseTypes.length > 0 ? '#fff' : '#adb5bd', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer' }}>
+            <button onClick={handleNext} disabled={exerciseTypes.length === 0} style={{ width: '100%', padding: '14px', background: exerciseTypes.length > 0 ? 'linear-gradient(180deg, #FDF0A6 0%, #DCA038 45%, #9C6615 55%, #E8C162 100%)' : 'rgba(255, 255, 255, 0.1)', boxShadow: exerciseTypes.length > 0 ? '0 4px 15px rgba(217, 119, 6, 0.3)' : 'none', color: exerciseTypes.length > 0 ? '#000' : 'rgba(255, 255, 255, 0.3)', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer' }}>
               次へ
             </button>
           </div>
@@ -1033,7 +1033,7 @@ export default function Login() {
             <h2 className="logo-text-premium" style={{ textAlign: 'center', fontSize: 'clamp(1.3rem, 5vw, 1.6rem)', marginBottom: '15px' }}>体に不快感や懸念はありますか？</h2>
             <div style={{ background: 'rgba(20,20,20,0.5)', border: '1px solid rgba(220, 160, 56, 0.3)', padding: '15px 20px', borderRadius: '12px', display: 'flex', alignItems: 'center', gap: '15px', marginBottom: '10px', width: '100%' }}>
               <i className="fa-solid fa-briefcase-medical" style={{ fontSize: '1.5rem', color: '#DCA038' }}></i>
-              <p style={{ margin: 0, color: '#111827', fontSize: '0.9rem', lineHeight: 1.5 }}>これにより、特別な注意が必要な部位に焦点を当て、あなたのフィットネスの旅をカスタマイズします。</p>
+              <p style={{ margin: 0, color: 'rgba(255, 255, 255, 0.7)', fontSize: '0.9rem', lineHeight: 1.5 }}>これにより、特別な注意が必要な部位に焦点を当て、あなたのフィットネスの旅をカスタマイズします。</p>
             </div>
             
             <div className="options-grid" style={{ flex: 1, justifyContent: 'flex-start', paddingTop: '10px', paddingBottom: '10px' }}>
@@ -1048,20 +1048,20 @@ export default function Login() {
                     display: 'flex',
                     alignItems: 'center',
                     padding: '20px 25px',
-                    background: physicalIssues.includes(issue) ? (issue === 'なし' ? 'linear-gradient(180deg, #FDF0A6 0%, #DCA038 45%, #9C6615 55%, #E8C162 100%)' : 'rgba(224, 68, 32, 0.05)') : '#ffffff',
-                    border: `2px solid ${physicalIssues.includes(issue) ? (issue === 'なし' ? '#DCA038' : '#e04420') : '#f4f6fb'}`,
+                    background: physicalIssues.includes(issue) ? (issue === 'なし' ? 'linear-gradient(180deg, #FDF0A6 0%, #DCA038 45%, #9C6615 55%, #E8C162 100%)' : 'rgba(220, 160, 56, 0.1)') : 'rgba(20, 20, 20, 0.5)',
+                    border: `2px solid ${physicalIssues.includes(issue) ? '#DCA038' : 'rgba(255,255,255,0.1)'}`,
                     borderRadius: '16px',
                     cursor: 'pointer',
-                    boxShadow: physicalIssues.includes(issue) ? (issue === 'なし' ? '0 4px 12px rgba(245, 158, 11, 0.2)' : '0 4px 12px rgba(224, 68, 32, 0.1)') : '0 4px 12px rgba(0,0,0,0.03)',
+                    boxShadow: physicalIssues.includes(issue) ? '0 0 15px rgba(220, 160, 56, 0.2)' : 'none',
                     transition: 'all 0.2s ease'
                   }}
                 >
-                  <i className={issue === 'なし' ? 'fa-solid fa-ban' : 'fa-solid fa-notes-medical'} style={{ fontSize: '1.5rem', color: physicalIssues.includes(issue) ? (issue === 'なし' ? '#ffffff' : '#e04420') : '#adb5bd', width: '40px' }}></i>
-                  <div style={{ fontSize: '1.1rem', fontWeight: physicalIssues.includes(issue) ? 'bold' : 'normal', color: physicalIssues.includes(issue) ? (issue === 'なし' ? '#ffffff' : '#e04420') : '#1e1e24' }}>
+                  <i className={issue === 'なし' ? 'fa-solid fa-ban' : 'fa-solid fa-notes-medical'} style={{ fontSize: '1.5rem', color: physicalIssues.includes(issue) ? (issue === 'なし' ? '#000' : '#DCA038') : 'rgba(255,255,255,0.3)', width: '40px' }}></i>
+                  <div style={{ fontSize: '1.1rem', fontWeight: physicalIssues.includes(issue) ? 'bold' : 'normal', color: physicalIssues.includes(issue) ? (issue === 'なし' ? '#000' : '#DCA038') : 'rgba(255,255,255,0.5)' }}>
                     {issue}
                   </div>
                   {physicalIssues.includes(issue) && issue === 'なし' && (
-                     <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#fff', borderRadius: '50%', width: '24px', height: '24px' }}>
+                     <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', justifyContent: 'center', background: physicalIssues.includes(issue) ? 'rgba(220, 160, 56, 0.1)' : 'rgba(20, 20, 20, 0.5)', borderRadius: '50%', width: '24px', height: '24px' }}>
                        <i className="fa-solid fa-check" style={{ color: '#DCA038', fontSize: '1rem' }}></i>
                      </div>
                   )}
@@ -1071,7 +1071,7 @@ export default function Login() {
           </div>
 
           <div style={{ padding: '10px 0' }}>
-            <button onClick={handleNext} disabled={physicalIssues.length === 0} style={{ width: '100%', padding: '14px', background: physicalIssues.length > 0 ? 'var(--primary)' : 'rgba(255, 255, 255, 0.1)', color: physicalIssues.length > 0 ? '#fff' : '#adb5bd', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer' }}>
+            <button onClick={handleNext} disabled={physicalIssues.length === 0} style={{ width: '100%', padding: '14px', background: physicalIssues.length > 0 ? 'linear-gradient(180deg, #FDF0A6 0%, #DCA038 45%, #9C6615 55%, #E8C162 100%)' : 'rgba(255, 255, 255, 0.1)', color: physicalIssues.length > 0 ? '#000' : 'rgba(255, 255, 255, 0.3)', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer' }}>
               次へ
             </button>
           </div>
@@ -1134,7 +1134,7 @@ export default function Login() {
             <h2 style={{ marginBottom: '5px', fontSize: '1.3rem', fontWeight: 'bold' }}>AI分析完了！</h2>
             
             <div style={{ background: 'rgba(20, 20, 20, 0.5)', border: '1px solid rgba(220, 160, 56, 0.3)', padding: '10px 15px', borderRadius: '20px', marginBottom: '10px' }}>
-              <p style={{ color: '#111827', marginBottom: '0', fontSize: '0.9rem' }}>目標（{targetWeight}{weightUnit}）到達までの予測日数</p>
+              <p style={{ color: 'rgba(255, 255, 255, 0.7)', marginBottom: '0', fontSize: '0.9rem' }}>目標（{targetWeight}{weightUnit}）到達までの予測日数</p>
               <div style={{ fontSize: '2.5rem', fontWeight: 'bold', color: '#DCA038', marginBottom: '10px' }}>
                 約 {estimatedResult?.estimatedDays || '?'} 日
               </div>
@@ -1160,7 +1160,7 @@ export default function Login() {
               if (levelStr.includes('簡単') || levelStr.includes('初級') || levelStr.includes('簡単に始められる')) {
                 levelVal = '初級';
                 timeVal = '約6分';
-                bgVal = 'linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%)';
+                bgVal = 'linear-gradient(135deg, #DCA038 0%, var(--primary-dark) 100%)';
               } else if (levelStr.includes('やりごたえ') || levelStr.includes('上級') || levelStr.includes('少しやりごたえがある')) {
                 levelVal = '上級';
                 timeVal = '約12分';
@@ -1214,7 +1214,7 @@ export default function Login() {
                       <button type="button" className="challenge-btn" onClick={(e) => { e.preventDefault(); e.stopPropagation(); handleComplete('dashboard'); }} style={{ flex: 1, padding: '12px', background: 'rgba(255,255,255,0.2)', color: '#fff', border: '1px solid rgba(255,255,255,0.3)', borderRadius: '30px', fontSize: '1rem', fontWeight: 'bold', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
                         <i className="fa-solid fa-home" style={{ pointerEvents: 'none' }}></i> ホームへ
                       </button>
-                      <button type="button" className="challenge-btn" onClick={(e) => { e.preventDefault(); e.stopPropagation(); handleComplete('workout'); }} style={{ flex: 1, padding: '12px', background: '#fff', color: '#DCA038', border: 'none', borderRadius: '30px', fontSize: '1rem', fontWeight: 'bold', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', boxShadow: '0 4px 15px rgba(0,0,0,0.08)' }}>
+                      <button type="button" className="challenge-btn" onClick={(e) => { e.preventDefault(); e.stopPropagation(); handleComplete('workout'); }} style={{ flex: 1, padding: '12px', background: '#DCA038', color: '#000', border: 'none', borderRadius: '30px', fontSize: '1rem', fontWeight: 'bold', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', boxShadow: '0 4px 15px rgba(0,0,0,0.08)' }}>
                         <i className="fa-solid fa-arrow-right" style={{ pointerEvents: 'none' }}></i> 開始する
                       </button>
                     </div>
