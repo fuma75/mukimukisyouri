@@ -423,6 +423,74 @@ export default function Login() {
     );
   };
 
+  
+  const renderEnvironmentCard = (label: string, icon: string, selected: boolean, onClick: () => void, subtitle1: string, subtitle2: string, badge1Icon: string, badge1Text: string, badge2Icon: string, badge2Text: string) => (
+    <div 
+      onClick={onClick}
+      style={{
+        position: 'relative',
+        display: 'flex',
+        alignItems: 'center',
+        padding: '20px',
+        background: 'rgba(20, 20, 20, 0.5)',
+        border: `1px solid ${selected ? '#DCA038' : 'rgba(255,255,255,0.1)'}`,
+        borderRadius: '16px',
+        cursor: 'pointer',
+        boxShadow: selected ? '0 0 15px rgba(220, 160, 56, 0.3)' : 'none',
+        transition: 'all 0.3s ease',
+        marginBottom: '15px',
+        overflow: 'hidden'
+      }}
+    >
+      {/* Tiger background faint */}
+      <div style={{ position: 'absolute', right: '-20px', top: '0', bottom: '0', width: '200px', opacity: selected ? 0.3 : 0.1, backgroundImage: 'url(/images/login-bg-tiger.jpg)', backgroundSize: 'cover', backgroundPosition: 'center', filter: 'grayscale(100%) brightness(1.5)', maskImage: 'linear-gradient(to left, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%)', WebkitMaskImage: 'linear-gradient(to left, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%)' }}></div>
+      
+      {/* Selected Checkmark */}
+      {selected && (
+        <div style={{ position: 'absolute', top: '15px', right: '15px', width: '24px', height: '24px', borderRadius: '50%', background: 'linear-gradient(180deg, #FDF0A6, #DCA038)', display: 'flex', justifyContent: 'center', alignItems: 'center', zIndex: 2 }}>
+          <i className="fa-solid fa-check" style={{ color: '#000', fontSize: '0.8rem' }}></i>
+        </div>
+      )}
+
+      {/* Icon */}
+      <div style={{ 
+        width: '70px', height: '70px', borderRadius: '50%', 
+        border: `1px solid ${selected ? 'rgba(220, 160, 56, 0.5)' : 'rgba(255,255,255,0.2)'}`, 
+        display: 'flex', justifyContent: 'center', alignItems: 'center', 
+        marginRight: '20px', position: 'relative', zIndex: 2, flexShrink: 0
+      }}>
+        <div style={{ 
+          width: '56px', height: '56px', borderRadius: '50%', 
+          border: `1px solid ${selected ? '#DCA038' : 'rgba(255,255,255,0.3)'}`, 
+          display: 'flex', justifyContent: 'center', alignItems: 'center',
+          background: selected ? 'rgba(220, 160, 56, 0.1)' : 'transparent'
+        }}>
+          <i className={icon} style={{ fontSize: '1.8rem', color: selected ? '#DCA038' : 'rgba(255,255,255,0.5)' }}></i>
+        </div>
+      </div>
+
+      {/* Content */}
+      <div style={{ display: 'flex', flexDirection: 'column', zIndex: 2 }}>
+        <h3 style={{ fontSize: '1.3rem', fontWeight: 'bold', color: selected ? '#fff' : 'rgba(255,255,255,0.8)', marginBottom: '8px', letterSpacing: '0.05em' }}>{label}</h3>
+        <p style={{ fontSize: '0.85rem', color: 'rgba(255,255,255,0.6)', margin: '0 0 4px 0', lineHeight: '1.4' }}>{subtitle1}</p>
+        <p style={{ fontSize: '0.85rem', color: 'rgba(255,255,255,0.6)', margin: '0 0 12px 0', lineHeight: '1.4' }}>{subtitle2}</p>
+        
+        {/* Badges */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', padding: '4px 12px', background: 'rgba(0,0,0,0.5)', border: '1px solid rgba(220, 160, 56, 0.3)', borderRadius: '20px' }}>
+            <i className={badge1Icon} style={{ fontSize: '0.75rem', color: '#DCA038', marginRight: '6px' }}></i>
+            <span style={{ fontSize: '0.75rem', color: '#DCA038' }}>{badge1Text}</span>
+          </div>
+          <span style={{ color: 'rgba(255,255,255,0.2)' }}>|</span>
+          <div style={{ display: 'flex', alignItems: 'center', padding: '4px 12px' }}>
+            <i className={badge2Icon} style={{ fontSize: '0.75rem', color: '#DCA038', marginRight: '6px' }}></i>
+            <span style={{ fontSize: '0.75rem', color: '#DCA038' }}>{badge2Text}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
   const renderOptionCard = (label: string, icon: string, selected: boolean, onClick: () => void) => (
     <div 
       className="option-card"
@@ -436,10 +504,10 @@ export default function Login() {
         justifyContent: 'center',
         padding: '20px 10px',
         background: selected ? 'rgba(220, 160, 56, 0.1)' : 'rgba(20, 20, 20, 0.5)',
-        border: `2px solid ${selected ? 'var(--primary)' : '#f4f6fb'}`,
+        border: `2px solid ${selected ? '#DCA038' : 'rgba(255,255,255,0.1)'}`,
         borderRadius: '16px',
         cursor: 'pointer',
-        boxShadow: selected ? '0 4px 12px rgba(245, 158, 11, 0.1)' : '0 4px 12px rgba(0,0,0,0.03)',
+        boxShadow: selected ? '0 0 15px rgba(220, 160, 56, 0.2)' : 'none',
         transition: 'all 0.2s ease',
         boxSizing: 'border-box',
         marginBottom: '10px',
@@ -450,10 +518,10 @@ export default function Login() {
         {icon.startsWith('/') ? (
           <img src={icon} alt={label} style={{ width: '100%', height: '100%', objectFit: 'cover', transform: 'scale(1.5)', filter: selected ? 'sepia(1) hue-rotate(-30deg) saturate(3) brightness(1.1)' : 'grayscale(100%) brightness(0.5)', opacity: selected ? 1 : 0.6 }} />
         ) : (
-          <i className={icon} style={{ fontSize: '2rem', color: selected ? 'var(--primary)' : '#adb5bd' }}></i>
+          <i className={icon} style={{ fontSize: '2rem', color: selected ? '#DCA038' : 'rgba(255,255,255,0.3)' }}></i>
         )}
       </div>
-      <div style={{ fontSize: '1.15rem', fontWeight: selected ? 'bold' : 'bold', color: selected ? 'var(--primary)' : '#1e1e24', textAlign: 'center' }}>
+      <div style={{ fontSize: '1.15rem', fontWeight: selected ? 'bold' : 'bold', color: selected ? '#DCA038' : 'rgba(255,255,255,0.5)', textAlign: 'center' }}>
         {label}
       </div>
     </div>
@@ -487,7 +555,7 @@ export default function Login() {
               <div className="form-group" style={{ position: 'relative', marginBottom: '12px' }}>
                 <label style={{display: 'block', fontSize: '0.85rem', fontWeight: 'bold', color: '#DCA038', letterSpacing: '0.05em', marginBottom: '5px', textAlign: 'left'}}>パスワード</label>
                 <input type={showPassword ? "text" : "password"} name="password" autoComplete="new-password" placeholder="パスワードを入力" value={password} onChange={e => setPassword(e.target.value)} style={{ background: '#0F0F11', border: '1px solid rgba(220, 160, 56, 0.4)', borderRadius: '8px', padding: '14px', width: '100%', color: '#fff', outline: 'none', boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.5)' }} />
-                <button type="button" onClick={() => setShowPassword(!showPassword)} style={{ position: 'absolute', right: '15px', top: '36px', background: 'none', border: 'none', color: 'var(--primary)', fontWeight: 'bold', cursor: 'pointer', fontSize: '0.85rem' }}>
+                <button type="button" onClick={() => setShowPassword(!showPassword)} style={{ position: 'absolute', right: '15px', top: '36px', background: 'none', border: 'none', color: '#DCA038', fontWeight: 'bold', cursor: 'pointer', fontSize: '0.85rem' }}>
                   {showPassword ? '非表示' : '表示'}
                 </button>
               </div>
@@ -653,7 +721,7 @@ export default function Login() {
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
             <h2 className="logo-text-premium" style={{ textAlign: 'center', fontSize: 'clamp(1.3rem, 5vw, 1.6rem)', marginBottom: '15px' }}>生まれた年は？</h2>
             <div style={{ background: '#f4f6fb', padding: '15px 20px', borderRadius: '12px', display: 'flex', alignItems: 'center', gap: '15px', marginBottom: '20px', width: '100%', maxWidth: '400px' }}>
-              <i className="fa-solid fa-clipboard-list" style={{ fontSize: '1.5rem', color: 'var(--primary)' }}></i>
+              <i className="fa-solid fa-clipboard-list" style={{ fontSize: '1.5rem', color: '#DCA038' }}></i>
               <p style={{ margin: 0, color: '#111827', fontSize: '0.9rem', lineHeight: 1.5 }}>あなたの年齢グループに最も適したワークアウトに調整しやすくなります。</p>
             </div>
             
@@ -893,10 +961,11 @@ export default function Login() {
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column', paddingBottom: '10px', justifyContent: 'center' }}>
             <h2 className="logo-text-premium" style={{ textAlign: 'center', fontSize: 'clamp(1.3rem, 5vw, 1.6rem)', marginBottom: '15px' }}>どこでトレーニングしますか？</h2>
             
-            <div className="options-grid options-grid-3" style={{ flex: 1, justifyContent: 'flex-start', paddingTop: '10px', paddingBottom: '10px' }}>
-              {renderOptionCard('家', 'fa-solid fa-house', environment === '家', () => setEnvironment('家'))}
-              {renderOptionCard('ジム', 'fa-solid fa-dumbbell', environment === 'ジム', () => setEnvironment('ジム'))}
-              {renderOptionCard('どの場所でもOK', 'fa-solid fa-earth-americas', environment === 'どの場所でもOK', () => setEnvironment('どの場所でもOK'))}
+            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', paddingTop: '10px', paddingBottom: '10px' }}>
+              <p style={{ textAlign: 'center', color: 'rgba(255,255,255,0.6)', fontSize: '0.9rem', marginBottom: '20px' }}>あなたのライフスタイルに合わせて選択してください</p>
+              {renderEnvironmentCard('自宅でトレーニング', 'fa-solid fa-house', environment === '家', () => setEnvironment('家'), '自宅で気軽にトレーニング', '器具なしでも効果的に鍛えられます', 'fa-solid fa-house', '手軽に開始', 'fa-regular fa-clock', '時間を自由に使える')}
+              {renderEnvironmentCard('ジムでトレーニング', 'fa-solid fa-dumbbell', environment === 'ジム', () => setEnvironment('ジム'), '充実した設備で本格的に鍛える', 'マシンやダンベルを使用できます', 'fa-solid fa-dumbbell', '本格トレーニング', 'fa-solid fa-chart-simple', '高負荷トレーニング')}
+              {renderEnvironmentCard('どの場所でもOK', 'fa-solid fa-globe', environment === 'どの場所でもOK', () => setEnvironment('どの場所でもOK'), '自宅・公園・旅行先など', '場所を選ばずトレーニング可能', 'fa-solid fa-location-dot', '場所を選ばない', 'fa-solid fa-fire', '継続しやすい')}
             </div>
           </div>
 
@@ -963,7 +1032,7 @@ export default function Login() {
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column', paddingBottom: '10px', justifyContent: 'center' }}>
             <h2 className="logo-text-premium" style={{ textAlign: 'center', fontSize: 'clamp(1.3rem, 5vw, 1.6rem)', marginBottom: '15px' }}>体に不快感や懸念はありますか？</h2>
             <div style={{ background: '#f4f6fb', padding: '15px 20px', borderRadius: '12px', display: 'flex', alignItems: 'center', gap: '15px', marginBottom: '10px', width: '100%' }}>
-              <i className="fa-solid fa-briefcase-medical" style={{ fontSize: '1.5rem', color: 'var(--primary)' }}></i>
+              <i className="fa-solid fa-briefcase-medical" style={{ fontSize: '1.5rem', color: '#DCA038' }}></i>
               <p style={{ margin: 0, color: '#111827', fontSize: '0.9rem', lineHeight: 1.5 }}>これにより、特別な注意が必要な部位に焦点を当て、あなたのフィットネスの旅をカスタマイズします。</p>
             </div>
             
@@ -979,8 +1048,8 @@ export default function Login() {
                     display: 'flex',
                     alignItems: 'center',
                     padding: '20px 25px',
-                    background: physicalIssues.includes(issue) ? (issue === 'なし' ? 'var(--primary)' : 'rgba(224, 68, 32, 0.05)') : '#ffffff',
-                    border: `2px solid ${physicalIssues.includes(issue) ? (issue === 'なし' ? 'var(--primary)' : '#e04420') : '#f4f6fb'}`,
+                    background: physicalIssues.includes(issue) ? (issue === 'なし' ? 'linear-gradient(180deg, #FDF0A6 0%, #DCA038 45%, #9C6615 55%, #E8C162 100%)' : 'rgba(224, 68, 32, 0.05)') : '#ffffff',
+                    border: `2px solid ${physicalIssues.includes(issue) ? (issue === 'なし' ? '#DCA038' : '#e04420') : '#f4f6fb'}`,
                     borderRadius: '16px',
                     cursor: 'pointer',
                     boxShadow: physicalIssues.includes(issue) ? (issue === 'なし' ? '0 4px 12px rgba(245, 158, 11, 0.2)' : '0 4px 12px rgba(224, 68, 32, 0.1)') : '0 4px 12px rgba(0,0,0,0.03)',
@@ -993,7 +1062,7 @@ export default function Login() {
                   </div>
                   {physicalIssues.includes(issue) && issue === 'なし' && (
                      <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#fff', borderRadius: '50%', width: '24px', height: '24px' }}>
-                       <i className="fa-solid fa-check" style={{ color: 'var(--primary)', fontSize: '1rem' }}></i>
+                       <i className="fa-solid fa-check" style={{ color: '#DCA038', fontSize: '1rem' }}></i>
                      </div>
                   )}
                 </div>
@@ -1059,14 +1128,14 @@ export default function Login() {
       {step === 15 && (
         <div style={{ flex: '1 0 auto', maxWidth: '600px', margin: '0 auto', padding: '20px', width: '100%', display: 'flex', flexDirection: 'column', minHeight: '100%', justifyContent: 'center' }}>
           <div className="animate-fade-in" style={{ textAlign: 'center' }}>
-            <div style={{ fontSize: '3rem', color: 'var(--primary)', marginBottom: '5px' }}>
+            <div style={{ fontSize: '3rem', color: '#DCA038', marginBottom: '5px' }}>
               <i className="fa-solid fa-bullseye"></i>
             </div>
             <h2 style={{ marginBottom: '5px', fontSize: '1.3rem', fontWeight: 'bold' }}>AI分析完了！</h2>
             
             <div style={{ background: 'rgba(20, 20, 20, 0.5)', border: '1px solid rgba(220, 160, 56, 0.3)', padding: '10px 15px', borderRadius: '20px', marginBottom: '10px' }}>
               <p style={{ color: '#111827', marginBottom: '0', fontSize: '0.9rem' }}>目標（{targetWeight}{weightUnit}）到達までの予測日数</p>
-              <div style={{ fontSize: '2.5rem', fontWeight: 'bold', color: 'var(--primary)', marginBottom: '10px' }}>
+              <div style={{ fontSize: '2.5rem', fontWeight: 'bold', color: '#DCA038', marginBottom: '10px' }}>
                 約 {estimatedResult?.estimatedDays || '?'} 日
               </div>
               
@@ -1100,7 +1169,7 @@ export default function Login() {
               
               return (
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', alignItems: 'center', marginBottom: '10px', width: '100%', textAlign: 'left' }}>
-                  <h3 style={{ fontSize: '1.1rem', fontWeight: 'bold', color: 'var(--primary)', alignSelf: 'flex-start' }}>
+                  <h3 style={{ fontSize: '1.1rem', fontWeight: 'bold', color: '#DCA038', alignSelf: 'flex-start' }}>
                     <i className="fa-solid fa-bolt"></i> おすすめプラン
                   </h3>
                   <div className="challenge-card animate-fade-in" style={{ background: bgVal, width: '100%', margin: 0, padding: '16px', borderRadius: '24px', color: '#fff', boxShadow: '0 4px 15px rgba(0,0,0,0.1)' }}>
@@ -1145,7 +1214,7 @@ export default function Login() {
                       <button type="button" className="challenge-btn" onClick={(e) => { e.preventDefault(); e.stopPropagation(); handleComplete('dashboard'); }} style={{ flex: 1, padding: '12px', background: 'rgba(255,255,255,0.2)', color: '#fff', border: '1px solid rgba(255,255,255,0.3)', borderRadius: '30px', fontSize: '1rem', fontWeight: 'bold', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
                         <i className="fa-solid fa-home" style={{ pointerEvents: 'none' }}></i> ホームへ
                       </button>
-                      <button type="button" className="challenge-btn" onClick={(e) => { e.preventDefault(); e.stopPropagation(); handleComplete('workout'); }} style={{ flex: 1, padding: '12px', background: '#fff', color: 'var(--primary)', border: 'none', borderRadius: '30px', fontSize: '1rem', fontWeight: 'bold', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', boxShadow: '0 4px 15px rgba(0,0,0,0.08)' }}>
+                      <button type="button" className="challenge-btn" onClick={(e) => { e.preventDefault(); e.stopPropagation(); handleComplete('workout'); }} style={{ flex: 1, padding: '12px', background: '#fff', color: '#DCA038', border: 'none', borderRadius: '30px', fontSize: '1rem', fontWeight: 'bold', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', boxShadow: '0 4px 15px rgba(0,0,0,0.08)' }}>
                         <i className="fa-solid fa-arrow-right" style={{ pointerEvents: 'none' }}></i> 開始する
                       </button>
                     </div>
