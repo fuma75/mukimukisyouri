@@ -330,7 +330,7 @@ body::before {
 .sidebar {
     width: var(--sidebar-width);
     background: var(--sidebar-bg);
-    border-right: none;
+    border-right: 1px solid rgba(220, 160, 56, 0.2);
     color: #fff;
     display: flex;
     flex-direction: column;
@@ -384,11 +384,9 @@ body::before {
 }
 
 .dark-theme .nav-item.active {
-    background: linear-gradient(180deg, #8B6220 0%, #4A3311 100%);
-    border: 1px solid #B58434;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.2);
-    color: #ffffff;
-    border-radius: 12px;
+  background: linear-gradient(180deg, rgba(220, 160, 56, 0.05) 0%, rgba(220, 160, 56, 0.15) 100%);
+  color: #DCA038;
+  font-weight: bold;
 }
 
 .logo-text {
@@ -407,38 +405,38 @@ body::before {
 }
 
 .nav-item {
-    background: transparent;
-    border: none;
-    outline: none;
-    color: var(--text-primary);
-    padding: 13px 18px;
-    border-radius: var(--radius-md);
-    cursor: pointer;
-    font-size: 14px;
-    font-weight: 500;
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    transition: all var(--transition-smooth);
-    text-align: left;
-    position: relative;
-    font-family: inherit;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 18px 5px;
+  color: #7b838c;
+  border-radius: 12px;
+  margin-bottom: 15px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: transparent;
+  border: none;
+  width: 100%;
+  position: relative;
+  font-family: inherit;
+  outline: none;
+  gap: 12px;
 }
 
 .nav-item i {
-    font-size: 17px;
-    width: 22px;
-    text-align: center;
-    transition: transform var(--transition-fast);
+  font-size: 1.8rem;
+  transition: all 0.3s ease;
+  color: #DCA038;
+  opacity: 0.6;
 }
 
 .nav-item:hover {
-    color: var(--text-primary);
-    background: rgba(0, 0, 0, 0.04);
+  background: rgba(220, 160, 56, 0.05);
 }
 
 .nav-item:hover i {
-    transform: scale(1.1);
+  opacity: 0.8;
 }
 
 .nav-item.active {
@@ -451,16 +449,26 @@ body::before {
 }
 
 .nav-item.active::before {
-    content: '';
-    position: absolute;
-    left: -14px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 4px;
-    height: 60%;
-    border-radius: 0 4px 4px 0;
-    background: var(--primary);
-    box-shadow: 0 0 12px var(--primary-glow);
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 40px;
+  width: 4px;
+  background: linear-gradient(180deg, #FDF0A6, #DCA038);
+  border-radius: 0 4px 4px 0;
+}
+
+.nav-item.active i {
+  opacity: 1;
+  text-shadow: 0 0 10px rgba(220, 160, 56, 0.5);
+}
+
+.nav-item span {
+  font-size: 0.7rem;
+  letter-spacing: 0.05em;
+  font-weight: bold;
 }
 
 .sidebar-footer {
