@@ -12,7 +12,8 @@ import ActivityLevelSlider from '../ui/ActivityLevelSlider';
 const TOTAL_WIZARD_STEPS = 14;
 
 export default function Login() {
-  const { setUserProfile, setActiveTab } = useAppContext();
+  const { setUserProfile, setActiveTab, theme } = useAppContext();
+  const isDark = theme === 'dark';
   
   const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(false);
@@ -402,19 +403,18 @@ export default function Login() {
 
   const renderWizardHeader = (title: string, currentStep: number) => {
     const normalizedStep = currentStep - 1;
-    
     return (
-      <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px', position: 'relative', paddingTop: '5px' }}>
-        <button onClick={handleBack} style={{ background: 'none', border: 'none', fontSize: '1.4rem', cursor: 'pointer', padding: '10px', color: '#DCA038', letterSpacing: '0.05em' }}>
+      <div style={{ display: 'flex', alignItems: 'center', marginBottom: '20px', position: 'relative', paddingTop: '15px', zIndex: 1 }}>
+        <button onClick={handleBack} style={{ background: 'none', border: 'none', fontSize: '1.4rem', cursor: 'pointer', padding: '10px', color: isDark ? '#DCA038' : '#B58434' }}>
           <i className="fa-solid fa-arrow-left"></i>
         </button>
         <div style={{ flex: 1, textAlign: 'center' }}>
-          <div className="logo-text-premium" style={{ fontSize: '0.85rem', marginBottom: '8px' }}>
+          <div className="logo-text-premium" style={{ fontSize: '1rem', marginBottom: '8px', color: isDark ? '#DCA038' : '#B58434', letterSpacing: '0.05em' }}>
             {title}
           </div>
-          <div style={{ display: 'flex', gap: '4px', justifyContent: 'center', width: '200px', margin: '0 auto' }}>
-            {[...Array(TOTAL_WIZARD_STEPS)].map((_, i) => (
-              <div key={i} style={{ flex: 1, height: '3px', background: i < normalizedStep ? '#DCA038' : 'rgba(220, 160, 56, 0.2)', borderRadius: '3px' }}></div>
+          <div style={{ display: 'flex', gap: '6px', justifyContent: 'center', width: '150px', margin: '0 auto' }}>
+            {[...Array(8)].map((_, i) => (
+              <div key={i} style={{ flex: 1, height: '3px', background: i < normalizedStep ? (isDark ? '#DCA038' : '#B58434') : (isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)'), borderRadius: '3px' }}></div>
             ))}
           </div>
         </div>
@@ -528,7 +528,34 @@ export default function Login() {
   );
 
   return (
-    <div className="login-overlay" style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, zIndex: 9999, overflowY: 'auto', padding: '0', background: '#08080A', color: '#FDF0A6', display: 'flex', flexDirection: 'column' }}>
+    <div className="login-overlay" style={{ 
+      position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, zIndex: 9999, overflowY: 'auto', padding: '0', 
+      background: step > 1 ? (isDark ? '#050505' : '#FCF8F2') : '#08080A', 
+      color: step > 1 ? (isDark ? '#FDF0A6' : '#333') : '#FDF0A6', 
+      display: 'flex', flexDirection: 'column' 
+    }}>
+      {step > 1 && (
+        <>
+          <div style={{
+            position: 'absolute', top: '10%', right: '-10%', width: '120%', height: '40%',
+            background: isDark ? 'radial-gradient(circle, rgba(220,160,56,0.03) 0%, transparent 70%)' : 'radial-gradient(circle, rgba(220,160,56,0.1) 0%, transparent 70%)',
+            opacity: 0.5, pointerEvents: 'none', zIndex: 0
+          }}></div>
+          <div style={{
+            position: 'absolute', top: '15%', right: '0%', fontSize: '200px',
+            opacity: isDark ? 0.02 : 0.04, color: isDark ? '#ffffff' : '#000000', pointerEvents: 'none', zIndex: 0
+          }}>
+            <i className="fa-solid fa-tiger"></i>
+          </div>
+          <div style={{ position: 'absolute', bottom: '10px', left: '10px', width: '80px', height: '80px', opacity: isDark ? 0.3 : 0.4, transform: 'scaleX(-1)', pointerEvents: 'none', zIndex: 0 }}>
+            <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M70 10 Q 50 40 40 90" stroke={isDark ? "#DCA038" : "#B58434"} strokeWidth="3" strokeLinecap="round" style={{filter: "drop-shadow(0px 0px 2px rgba(220,160,56,0.5))"}}/>
+              <path d="M85 20 Q 65 50 55 95" stroke={isDark ? "#DCA038" : "#B58434"} strokeWidth="4" strokeLinecap="round" style={{filter: "drop-shadow(0px 0px 2px rgba(220,160,56,0.5))"}}/>
+              <path d="M100 30 Q 80 60 70 100" stroke={isDark ? "#DCA038" : "#B58434"} strokeWidth="3" strokeLinecap="round" style={{filter: "drop-shadow(0px 0px 2px rgba(220,160,56,0.5))"}}/>
+            </svg>
+          </div>
+        </>
+      )}
       
       {/* STEP 1: Firebase Auth */}
       {step === 1 && (
