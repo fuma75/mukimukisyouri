@@ -589,7 +589,7 @@ export default function Login() {
           </div>
 
           <div style={{ padding: '10px 0' }}>
-            <button onClick={handleNext} disabled={!gender} style={{ width: '100%', padding: '12px', background: gender ? 'linear-gradient(135deg, #F59E0B 0%, #D97706 100%)' : '#e9ecef', boxShadow: gender ? '0 4px 15px rgba(217, 119, 6, 0.3)' : 'none', color: gender ? '#fff' : '#adb5bd', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer' }}>
+            <button onClick={handleNext} disabled={!gender} style={{ width: '100%', padding: '12px', background: gender ? 'linear-gradient(180deg, #FDF0A6 0%, #DCA038 45%, #9C6615 55%, #E8C162 100%)' : '#e9ecef', boxShadow: gender ? '0 4px 15px rgba(0,0,0,0.5)' : 'none', color: gender ? '#000' : '#adb5bd', letterSpacing: gender ? '0.1em' : 'normal', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer' }}>
               次へ
             </button>
           </div>
@@ -612,7 +612,7 @@ export default function Login() {
           </div>
 
           <div style={{ padding: '10px 0' }}>
-            <button onClick={handleNext} disabled={!goal} style={{ width: '100%', padding: '12px', background: goal ? 'linear-gradient(135deg, #F59E0B 0%, #D97706 100%)' : '#e9ecef', boxShadow: goal ? '0 4px 15px rgba(217, 119, 6, 0.3)' : 'none', color: goal ? '#fff' : '#adb5bd', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer' }}>
+            <button onClick={handleNext} disabled={!goal} style={{ width: '100%', padding: '12px', background: goal ? 'linear-gradient(180deg, #FDF0A6 0%, #DCA038 45%, #9C6615 55%, #E8C162 100%)' : '#e9ecef', boxShadow: goal ? '0 4px 15px rgba(0,0,0,0.5)' : 'none', color: goal ? '#000' : '#adb5bd', letterSpacing: goal ? '0.1em' : 'normal', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer' }}>
               次へ
             </button>
           </div>
@@ -678,7 +678,7 @@ export default function Login() {
           </div>
 
           <div style={{ padding: '10px 0' }}>
-            <button onClick={handleNext} disabled={!dob} style={{ width: '100%', padding: '14px', background: dob ? 'linear-gradient(135deg, #F59E0B 0%, #D97706 100%)' : '#e9ecef', boxShadow: dob ? '0 4px 15px rgba(217, 119, 6, 0.3)' : 'none', color: dob ? '#fff' : '#adb5bd', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer' }}>
+            <button onClick={handleNext} disabled={!dob} style={{ width: '100%', padding: '14px', background: dob ? 'linear-gradient(180deg, #FDF0A6 0%, #DCA038 45%, #9C6615 55%, #E8C162 100%)' : '#e9ecef', boxShadow: dob ? '0 4px 15px rgba(0,0,0,0.5)' : 'none', color: dob ? '#000' : '#adb5bd', letterSpacing: dob ? '0.1em' : 'normal', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer' }}>
               次へ
             </button>
           </div>
@@ -716,7 +716,7 @@ export default function Login() {
           </div>
 
           <div style={{ padding: '10px 0' }}>
-            <button onClick={handleNext} disabled={!height} style={{ width: '100%', padding: '14px', background: height ? 'linear-gradient(135deg, #F59E0B 0%, #D97706 100%)' : '#e9ecef', boxShadow: height ? '0 4px 15px rgba(217, 119, 6, 0.3)' : 'none', color: height ? '#fff' : '#adb5bd', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer' }}>
+            <button onClick={handleNext} disabled={!height} style={{ width: '100%', padding: '14px', background: height ? 'linear-gradient(180deg, #FDF0A6 0%, #DCA038 45%, #9C6615 55%, #E8C162 100%)' : '#e9ecef', boxShadow: height ? '0 4px 15px rgba(0,0,0,0.5)' : 'none', color: height ? '#000' : '#adb5bd', letterSpacing: height ? '0.1em' : 'normal', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer' }}>
               次へ
             </button>
           </div>
@@ -901,7 +901,7 @@ export default function Login() {
           </div>
 
           <div style={{ padding: '10px 0' }}>
-            <button onClick={handleNext} disabled={!environment} style={{ width: '100%', padding: '14px', background: environment ? 'linear-gradient(135deg, #F59E0B 0%, #D97706 100%)' : '#e9ecef', boxShadow: environment ? '0 4px 15px rgba(217, 119, 6, 0.3)' : 'none', color: environment ? '#fff' : '#adb5bd', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer' }}>
+            <button onClick={handleNext} disabled={!environment} style={{ width: '100%', padding: '14px', background: environment ? 'linear-gradient(180deg, #FDF0A6 0%, #DCA038 45%, #9C6615 55%, #E8C162 100%)' : '#e9ecef', boxShadow: environment ? '0 4px 15px rgba(0,0,0,0.5)' : 'none', color: environment ? '#000' : '#adb5bd', letterSpacing: environment ? '0.1em' : 'normal', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer' }}>
               次へ
             </button>
           </div>
@@ -948,7 +948,7 @@ export default function Login() {
           </div>
 
           <div style={{ padding: '10px 0' }}>
-            <button onClick={handleNext} disabled={!workoutLevel} style={{ width: '100%', padding: '14px', background: workoutLevel ? 'linear-gradient(135deg, #F59E0B 0%, #D97706 100%)' : '#e9ecef', boxShadow: workoutLevel ? '0 4px 15px rgba(217, 119, 6, 0.3)' : 'none', color: workoutLevel ? '#fff' : '#adb5bd', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer' }}>
+            <button onClick={handleNext} disabled={!workoutLevel} style={{ width: '100%', padding: '14px', background: workoutLevel ? 'linear-gradient(180deg, #FDF0A6 0%, #DCA038 45%, #9C6615 55%, #E8C162 100%)' : '#e9ecef', boxShadow: workoutLevel ? '0 4px 15px rgba(0,0,0,0.5)' : 'none', color: workoutLevel ? '#000' : '#adb5bd', letterSpacing: workoutLevel ? '0.1em' : 'normal', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer' }}>
               次へ
             </button>
           </div>
@@ -1023,7 +1023,7 @@ export default function Login() {
           </div>
 
           <div style={{ padding: '10px 0' }}>
-            <button onClick={handleNext} disabled={!activityLevel} style={{ width: '100%', padding: '14px', background: activityLevel ? 'linear-gradient(135deg, #F59E0B 0%, #D97706 100%)' : '#e9ecef', boxShadow: activityLevel ? '0 4px 15px rgba(217, 119, 6, 0.3)' : 'none', color: activityLevel ? '#fff' : '#adb5bd', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer' }}>
+            <button onClick={handleNext} disabled={!activityLevel} style={{ width: '100%', padding: '14px', background: activityLevel ? 'linear-gradient(180deg, #FDF0A6 0%, #DCA038 45%, #9C6615 55%, #E8C162 100%)' : '#e9ecef', boxShadow: activityLevel ? '0 4px 15px rgba(0,0,0,0.5)' : 'none', color: activityLevel ? '#000' : '#adb5bd', letterSpacing: activityLevel ? '0.1em' : 'normal', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer' }}>
               次へ
             </button>
           </div>
@@ -1047,7 +1047,7 @@ export default function Login() {
           </div>
 
           <div style={{ padding: '10px 0' }}>
-            <button type="button" onClick={handleCalculateAI} disabled={!frequency || loading} style={{ width: '100%', padding: '14px', background: frequency ? 'linear-gradient(135deg, #F59E0B 0%, #D97706 100%)' : '#e9ecef', boxShadow: frequency ? '0 4px 15px rgba(217, 119, 6, 0.3)' : 'none', color: frequency ? '#fff' : '#adb5bd', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px' }}>
+            <button type="button" onClick={handleCalculateAI} disabled={!frequency || loading} style={{ width: '100%', padding: '14px', background: frequency ? 'linear-gradient(180deg, #FDF0A6 0%, #DCA038 45%, #9C6615 55%, #E8C162 100%)' : '#e9ecef', boxShadow: frequency ? '0 4px 15px rgba(0,0,0,0.5)' : 'none', color: frequency ? '#000' : '#adb5bd', letterSpacing: frequency ? '0.1em' : 'normal', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px' }}>
               {loading ? <i className="fa-solid fa-spinner fa-spin"></i> : <i className="fa-solid fa-robot"></i>}
               {loading ? 'AIで目標を計算中...' : 'AIで目標を計算して完了'}
             </button>
