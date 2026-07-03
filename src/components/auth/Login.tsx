@@ -735,7 +735,7 @@ export default function Login() {
                     setDob(`${y}-01-01`);
                   }
                 }} 
-                className="logo-text-premium" style={{ fontSize: '4rem', background: 'transparent', border: 'none', borderBottom: '2px solid rgba(220, 160, 56, 0.5)', width: '140px', textAlign: 'center', outline: 'none', padding: 0, margin: 0 }} 
+                style={{ fontSize: '4rem', color: '#DCA038', textShadow: '0 2px 10px rgba(220, 160, 56, 0.5)', fontWeight: 'bold', background: 'transparent', border: 'none', borderBottom: '2px solid rgba(220, 160, 56, 0.5)', width: '140px', textAlign: 'center', outline: 'none', padding: 0, margin: 0 }} 
               />
               <span style={{ fontSize: '1.5rem', color: 'rgba(220, 160, 56, 0.5)', marginLeft: '10px', fontWeight: 'bold' }}>年</span>
             </div>
@@ -766,7 +766,7 @@ export default function Login() {
                 type="number" 
                 value={height} 
                 onChange={(e) => { setHeight(e.target.value); setHeightUnit('cm'); }} 
-                className="logo-text-premium" style={{ fontSize: '4rem', background: 'transparent', border: 'none', borderBottom: '2px solid rgba(220, 160, 56, 0.5)', width: '180px', textAlign: 'center', outline: 'none', padding: 0, margin: 0 }} 
+                style={{ fontSize: '4rem', color: '#DCA038', textShadow: '0 2px 10px rgba(220, 160, 56, 0.5)', fontWeight: 'bold', background: 'transparent', border: 'none', borderBottom: '2px solid rgba(220, 160, 56, 0.5)', width: '180px', textAlign: 'center', outline: 'none', padding: 0, margin: 0 }} 
               />
               <span style={{ fontSize: '1.5rem', color: 'rgba(220, 160, 56, 0.5)', marginLeft: '10px', fontWeight: 'bold' }}>cm</span>
             </div>
@@ -817,7 +817,7 @@ export default function Login() {
                 type="number" 
                 value={weight} 
                 onChange={(e) => setWeight(e.target.value)} 
-                className="logo-text-premium" style={{ fontSize: '4rem', background: 'transparent', border: 'none', borderBottom: '2px solid rgba(220, 160, 56, 0.5)', width: '180px', textAlign: 'center', outline: 'none', padding: 0, margin: 0 }} 
+                style={{ fontSize: '4rem', color: '#DCA038', textShadow: '0 2px 10px rgba(220, 160, 56, 0.5)', fontWeight: 'bold', background: 'transparent', border: 'none', borderBottom: '2px solid rgba(220, 160, 56, 0.5)', width: '180px', textAlign: 'center', outline: 'none', padding: 0, margin: 0 }} 
               />
               <span style={{ fontSize: '1.5rem', color: 'rgba(220, 160, 56, 0.5)', marginLeft: '10px', fontWeight: 'bold' }}>{weightUnit}</span>
             </div>
@@ -898,7 +898,7 @@ export default function Login() {
                 type="number" 
                 value={targetWeight} 
                 onChange={(e) => setTargetWeight(e.target.value)} 
-                className="logo-text-premium" style={{ fontSize: '4rem', background: 'transparent', border: 'none', borderBottom: '2px solid rgba(220, 160, 56, 0.5)', width: '180px', textAlign: 'center', outline: 'none', padding: 0, margin: 0 }} 
+                style={{ fontSize: '4rem', color: '#DCA038', textShadow: '0 2px 10px rgba(220, 160, 56, 0.5)', fontWeight: 'bold', background: 'transparent', border: 'none', borderBottom: '2px solid rgba(220, 160, 56, 0.5)', width: '180px', textAlign: 'center', outline: 'none', padding: 0, margin: 0 }} 
               />
               <span style={{ fontSize: '1.5rem', color: 'rgba(220, 160, 56, 0.5)', marginLeft: '10px', fontWeight: 'bold' }}>{weightUnit}</span>
             </div>
