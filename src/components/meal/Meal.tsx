@@ -254,31 +254,31 @@ export default function Meal() {
 
               {/* PFC */}
               <div style={{ marginBottom: '18px' }}>
-                <label style={{ fontSize: '0.8rem', fontWeight: 'bold', color: 'var(--text-muted)', display: 'block', marginBottom: '8px' }}>PFC（栄養素）</label>
+                <label style={{ fontSize: '0.85rem', fontWeight: 'bold', color: '#DCA038', display: 'block', marginBottom: '12px', textShadow: '0 0 8px rgba(220,160,56,0.4)' }}>PFC（栄養素）</label>
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
                   <div>
-                    <label style={{ fontSize: '0.75rem', color: 'var(--text-muted)', display: 'block', marginBottom: '4px' }}>カロリー (kcal)</label>
+                    <label style={{ fontSize: '0.8rem', color: '#DCA038', display: 'block', marginBottom: '6px', fontWeight: 'bold', textShadow: '0 0 8px rgba(220,160,56,0.4)' }}>カロリー (kcal)</label>
                     <input type="number" min="0" placeholder="0" value={calories}
                       onChange={e => setCalories(e.target.value)}
-                      style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: '1.5px solid var(--border-color)', background: 'transparent', color: 'var(--text-primary)', fontSize: '0.9rem', boxSizing: 'border-box' }} />
+                      style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: '1.5px solid rgba(220,160,56,0.5)', background: 'transparent', color: 'var(--text-primary)', fontSize: '0.9rem', boxSizing: 'border-box', boxShadow: '0 0 10px rgba(220,160,56,0.1)' }} />
                   </div>
                   <div>
-                    <label style={{ fontSize: '0.75rem', color: '#ff5224', display: 'block', marginBottom: '4px', fontWeight: 'bold' }}>P タンパク質 (g)</label>
+                    <label style={{ fontSize: '0.8rem', color: '#ff5224', display: 'block', marginBottom: '6px', fontWeight: 'bold', textShadow: '0 0 8px rgba(255,82,36,0.5)' }}>P タンパク質 (g)</label>
                     <input type="number" min="0" step="0.1" placeholder="0" value={protein}
                       onChange={e => setProtein(e.target.value)}
-                      style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: '1.5px solid #ff5224', background: 'transparent', color: 'var(--text-primary)', fontSize: '0.9rem', boxSizing: 'border-box' }} />
+                      style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: '1.5px solid #ff5224', background: 'transparent', color: 'var(--text-primary)', fontSize: '0.9rem', boxSizing: 'border-box', boxShadow: '0 0 10px rgba(255,82,36,0.15)' }} />
                   </div>
                   <div>
-                    <label style={{ fontSize: '0.75rem', color: '#ffac1c', display: 'block', marginBottom: '4px', fontWeight: 'bold' }}>F 脂質 (g)</label>
+                    <label style={{ fontSize: '0.8rem', color: '#ffac1c', display: 'block', marginBottom: '6px', fontWeight: 'bold', textShadow: '0 0 8px rgba(255,172,28,0.5)' }}>F 脂質 (g)</label>
                     <input type="number" min="0" step="0.1" placeholder="0" value={fat}
                       onChange={e => setFat(e.target.value)}
-                      style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: '1.5px solid #ffac1c', background: 'transparent', color: 'var(--text-primary)', fontSize: '0.9rem', boxSizing: 'border-box' }} />
+                      style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: '1.5px solid #ffac1c', background: 'transparent', color: 'var(--text-primary)', fontSize: '0.9rem', boxSizing: 'border-box', boxShadow: '0 0 10px rgba(255,172,28,0.15)' }} />
                   </div>
                   <div>
-                    <label style={{ fontSize: '0.75rem', color: '#00c853', display: 'block', marginBottom: '4px', fontWeight: 'bold' }}>C 炭水化物 (g)</label>
+                    <label style={{ fontSize: '0.8rem', color: '#00c853', display: 'block', marginBottom: '6px', fontWeight: 'bold', textShadow: '0 0 8px rgba(0,200,83,0.5)' }}>C 炭水化物 (g)</label>
                     <input type="number" min="0" step="0.1" placeholder="0" value={carb}
                       onChange={e => setCarb(e.target.value)}
-                      style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: '1.5px solid #00c853', background: 'transparent', color: 'var(--text-primary)', fontSize: '0.9rem', boxSizing: 'border-box' }} />
+                      style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: '1.5px solid #00c853', background: 'transparent', color: 'var(--text-primary)', fontSize: '0.9rem', boxSizing: 'border-box', boxShadow: '0 0 10px rgba(0,200,83,0.15)' }} />
                   </div>
                 </div>
               </div>
