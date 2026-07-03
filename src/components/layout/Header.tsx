@@ -72,39 +72,39 @@ export default function Header() {
         </div>
         
         {dropdownOpen && (
-          <div className="profile-dropdown" style={{ position: 'absolute', top: '100%', right: '0', marginTop: '10px', background: 'rgba(30, 30, 42, 0.95)', border: '1px solid rgba(255, 255, 255, 0.1)', borderRadius: '12px', padding: '8px', minWidth: '200px', boxShadow: '0 10px 25px rgba(0,0,0,0.5)', zIndex: 1000, backdropFilter: 'blur(10px)' }}>
+          <div className="profile-dropdown" style={{ position: 'absolute', top: '100%', right: '0', marginTop: '10px', background: 'rgba(15, 15, 17, 0.95)', border: '1px solid rgba(220, 160, 56, 0.3)', borderRadius: '12px', padding: '8px', minWidth: '200px', boxShadow: '0 10px 25px rgba(0,0,0,0.5)', zIndex: 1000, backdropFilter: 'blur(10px)' }}>
             {settingsMenuOpen ? (
               <>
-                <button className="dropdown-item" onClick={() => setSettingsMenuOpen(false)} style={{ color: 'var(--text-muted)' }}>
+                <button className="dropdown-item" onClick={() => setSettingsMenuOpen(false)} style={{ color: '#DCA038', fontWeight: 'bold', letterSpacing: '0.1em' }}>
                   <i className="fa-solid fa-arrow-left"></i> 戻る
                 </button>
-                <div style={{ padding: '12px 16px 4px', fontSize: '0.8rem', color: 'var(--text-muted)' }}>
+                <div style={{ padding: '12px 16px 4px', fontSize: '0.8rem', color: '#DCA038', fontWeight: 'bold', letterSpacing: '0.1em' }}>
                   テーマ
                 </div>
                 <div style={{ display: 'flex', padding: '0 16px 8px', gap: '8px' }}>
                   <button 
                     onClick={() => setTheme('light')}
-                    style={{ flex: 1, padding: '8px', borderRadius: '8px', border: theme === 'light' ? '2px solid var(--primary)' : '1px solid rgba(255,255,255,0.1)', background: theme === 'light' ? 'rgba(255,255,255,0.1)' : 'transparent', color: '#fff', cursor: 'pointer' }}>
+                    style={{ {...(theme === 'light' ? {flex: 1, padding: '10px', borderRadius: '8px', border: '1px solid #B58434', background: 'linear-gradient(180deg, #8B6220 0%, #4A3311 100%)', color: '#FDF0A6', cursor: 'pointer', boxShadow: '0 4px 10px rgba(0,0,0,0.5)', fontWeight: 'bold', textShadow: '0 1px 2px rgba(0,0,0,0.8)'} : {flex: 1, padding: '10px', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.1)', background: 'rgba(255,255,255,0.05)', color: '#a0aec0', cursor: 'pointer'})} }}>
                     <i className="fa-solid fa-sun"></i> ライト
                   </button>
                   <button 
                     onClick={() => setTheme('dark')}
-                    style={{ flex: 1, padding: '8px', borderRadius: '8px', border: theme === 'dark' ? '2px solid var(--primary)' : '1px solid rgba(255,255,255,0.1)', background: theme === 'dark' ? 'rgba(0,0,0,0.2)' : 'transparent', color: '#fff', cursor: 'pointer' }}>
+                    style={{ {...(theme === 'dark' ? {flex: 1, padding: '10px', borderRadius: '8px', border: '1px solid #B58434', background: 'linear-gradient(180deg, #8B6220 0%, #4A3311 100%)', color: '#FDF0A6', cursor: 'pointer', boxShadow: '0 4px 10px rgba(0,0,0,0.5)', fontWeight: 'bold', textShadow: '0 1px 2px rgba(0,0,0,0.8)'} : {flex: 1, padding: '10px', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.1)', background: 'rgba(255,255,255,0.05)', color: '#a0aec0', cursor: 'pointer'})} }}>
                     <i className="fa-solid fa-moon"></i> ダーク
                   </button>
                 </div>
-                <div style={{ padding: '12px 16px 4px', fontSize: '0.8rem', color: 'var(--text-muted)' }}>
+                <div style={{ padding: '12px 16px 4px', fontSize: '0.8rem', color: '#DCA038', fontWeight: 'bold', letterSpacing: '0.1em' }}>
                   文字の大きさ
                 </div>
                 <div style={{ display: 'flex', padding: '0 16px 16px', gap: '8px' }}>
                   <button 
                     onClick={() => setTextSize('normal')}
-                    style={{ flex: 1, padding: '8px', borderRadius: '8px', border: textSize === 'normal' ? '2px solid var(--primary)' : '1px solid rgba(255,255,255,0.1)', background: textSize === 'normal' ? 'rgba(255,255,255,0.1)' : 'transparent', color: '#fff', cursor: 'pointer', fontSize: '1rem' }}>
+                    style={{ {...(textSize === 'normal' ? {flex: 1, padding: '10px', borderRadius: '8px', border: '1px solid #B58434', background: 'linear-gradient(180deg, #8B6220 0%, #4A3311 100%)', color: '#FDF0A6', cursor: 'pointer', boxShadow: '0 4px 10px rgba(0,0,0,0.5)', fontWeight: 'bold', textShadow: '0 1px 2px rgba(0,0,0,0.8)'} : {flex: 1, padding: '10px', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.1)', background: 'rgba(255,255,255,0.05)', color: '#a0aec0', cursor: 'pointer'}), fontSize: '1rem'} }}>
                     標準
                   </button>
                   <button 
                     onClick={() => setTextSize('large')}
-                    style={{ flex: 1, padding: '8px', borderRadius: '8px', border: textSize === 'large' ? '2px solid var(--primary)' : '1px solid rgba(255,255,255,0.1)', background: textSize === 'large' ? 'rgba(255,255,255,0.1)' : 'transparent', color: '#fff', cursor: 'pointer', fontSize: '1.2rem', fontWeight: 'bold' }}>
+                    style={{ {...(textSize === 'large' ? {flex: 1, padding: '10px', borderRadius: '8px', border: '1px solid #B58434', background: 'linear-gradient(180deg, #8B6220 0%, #4A3311 100%)', color: '#FDF0A6', cursor: 'pointer', boxShadow: '0 4px 10px rgba(0,0,0,0.5)', fontWeight: 'bold', textShadow: '0 1px 2px rgba(0,0,0,0.8)'} : {flex: 1, padding: '10px', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.1)', background: 'rgba(255,255,255,0.05)', color: '#a0aec0', cursor: 'pointer'}), fontSize: '1.2rem'} }}>
                     大
                   </button>
                 </div>
