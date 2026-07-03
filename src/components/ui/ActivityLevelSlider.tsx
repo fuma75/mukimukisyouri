@@ -285,7 +285,7 @@ export default function ActivityLevelSlider({ value, onChange }: { value: string
             <div style={{ height: '120px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <act.Component />
             </div>
-            <p style={{ textAlign: 'center', fontSize: '1.1rem', fontWeight: 'bold', color: '#1e1e24', marginTop: '5px', padding: '0 20px', minHeight: '40px' }}>
+            <p style={{ textAlign: 'center', fontSize: '1.1rem', fontWeight: 'bold', color: 'rgba(255, 255, 255, 0.7)', marginTop: '5px', padding: '0 20px', minHeight: '40px' }}>
               {act.label}
             </p>
           </div>
@@ -297,9 +297,9 @@ export default function ActivityLevelSlider({ value, onChange }: { value: string
         <div style={{ position: 'relative', height: '32px', display: 'flex', alignItems: 'center' }}>
           
           {/* Track Background */}
-          <div style={{ position: 'absolute', left: '16px', right: '16px', height: '16px', background: '#f4f6fb', borderRadius: '8px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0 4px' }}>
+          <div style={{ position: 'absolute', left: '16px', right: '16px', height: '16px', background: 'rgba(255, 255, 255, 0.1)', borderRadius: '8px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0 4px' }}>
             {activities.map((_, i) => (
-              <div key={i} style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#dee2e6' }} />
+              <div key={i} style={{ width: '8px', height: '8px', borderRadius: '50%', background: 'rgba(255, 255, 255, 0.2)' }} />
             ))}
           </div>
 
@@ -316,7 +316,7 @@ export default function ActivityLevelSlider({ value, onChange }: { value: string
         </div>
         
         {/* Labels under slider */}
-        <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '10px', fontSize: '0.9rem', color: '#495057', fontWeight: 'bold' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '10px', fontSize: '0.9rem', color: 'rgba(255, 255, 255, 0.5)', fontWeight: 'bold' }}>
           <span>座位がほとんど</span>
           <span>有効</span>
         </div>
