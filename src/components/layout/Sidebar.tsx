@@ -7,9 +7,10 @@ export default function Sidebar() {
 
   const navItems = [
     { id: 'dashboard', icon: 'fa-house', label: 'ダッシュボード' },
-    { id: 'workout', icon: 'fa-dumbbell', label: '筋トレ記録' },
-    { id: 'meal', icon: 'fa-bowl-food', label: '食事管理' },
-    { id: 'settings', icon: 'fa-gear', label: '設定' },
+    { id: 'workout', icon: 'fa-dumbbell', label: '筋トレ' },
+    { id: 'meal', icon: 'fa-bowl-food', label: '食事' },
+    { id: 'equipment', icon: 'fa-book-open', label: '器具の使い方' },
+    { id: 'map', icon: 'fa-map-location-dot', label: 'ジムマップ' },
   ];
 
   return (
