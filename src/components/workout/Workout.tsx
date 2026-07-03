@@ -475,82 +475,145 @@ export default function Workout() {
         setShowHistoryModal(true);
     };
 
+
     if (!showManualForm) {
       return (
         <>
           <section id="workout" className="content-section active" style={{ paddingBottom: '100px', display: aiMenuData ? 'none' : 'block' }}>
-            <div style={{ maxWidth: '560px', margin: '0 auto', padding: '0 16px' }}>
-                <div className="workout-goal-calendar">
-                    <div className="workout-goal-header">
-                    <h3 className="workout-goal-title">一週間の目標</h3>
-                    <div className="workout-goal-progress">{checkedCount}/7 <i className="fa-solid fa-pen" style={{marginLeft: '4px', opacity: 0.5}}></i></div>
-                </div>
-                <div style={{ position: 'relative' }} onClick={handleCalendarClick}>
-                    <div className="calendar-days-row" style={{ cursor: 'pointer' }}>
-                        {calendarDays.map((d, idx) => (
-                            <div key={idx} className="calendar-day-col">
-                                <span className="calendar-day-name">{d.dayName}</span>
-                                <span className={`calendar-day-num ${d.isToday ? 'active' : ''}`} style={d.isChecked && !d.isToday ? { color: 'var(--primary)', background: '#e8f0fe', width: '32px', height: '32px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' } : {}}>
-                                    {d.isChecked ? <i className="fa-solid fa-check"></i> : d.dayStr}
-                                </span>
-                            </div>
-                        ))}
+            <div style={{ maxWidth: '560px', margin: '0 auto', padding: '20px 16px' }}>
+                {/* Header matching image */}
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '30px' }}>
+                  <div>
+                    <h1 className="logo-text-premium" style={{ fontSize: '32px', margin: 0, textShadow: '0 2px 10px rgba(220,160,56,0.2)' }}>筋トレ記録</h1>
+                    <div style={{ color: 'rgba(255,255,255,0.6)', fontSize: '13px', marginTop: '6px', fontWeight: 'bold' }}>
+                      {new Date(date).toLocaleDateString('ja-JP', { year: 'numeric', month: 'long', day: 'numeric', weekday: 'short' })}
                     </div>
+                  </div>
+                  <div style={{ display: 'flex', gap: '10px', alignItems: 'center', marginTop: '5px' }}>
+                    <div style={{ background: 'rgba(0,0,0,0.5)', border: '1px solid #ef4444', padding: '6px 12px', borderRadius: '20px', color: '#ef4444', fontSize: '12px', fontWeight: 'bold' }}>
+                      <i className="fa-solid fa-fire"></i> {streak}日連続
+                    </div>
+                    <div style={{ background: 'rgba(20,20,20,0.8)', border: '1px solid rgba(220,160,56,0.2)', padding: '6px 16px 6px 6px', borderRadius: '30px', display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer' }}>
+                      <div style={{ width: '30px', height: '30px', borderRadius: '50%', background: 'linear-gradient(180deg, #FDF0A6, #DCA038)', color: '#000', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '14px' }}>
+                        <i className="fa-solid fa-user"></i>
+                      </div>
+                      <div style={{ display: 'flex', flexDirection: 'column' }}>
+                        <span style={{ color: '#fff', fontSize: '12px', fontWeight: 'bold', lineHeight: 1.2 }}>{getProfile()?.name || 'がお'}</span>
+                        <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: '10px', lineHeight: 1.2 }}>目標: {aiGoal.includes('減量') ? '減量' : aiGoal.includes('肥大') ? '増量' : '維持'}</span>
+                      </div>
+                      <i className="fa-solid fa-chevron-down" style={{ color: '#DCA038', fontSize: '10px', marginLeft: '5px' }}></i>
+                    </div>
+                  </div>
                 </div>
-            </div>
 
-            <h3 className="challenge-section-title">チャレンジ</h3>
-            <div 
-                ref={challengeScrollRef} 
-                className="challenges-scroll-container" 
-                style={{ display: 'flex', overflowX: 'auto', gap: '15px', padding: '5px 16px 20px', margin: '0 -16px', scrollSnapType: isDragging ? 'none' : 'x mandatory', paddingBottom: '15px', cursor: isDragging ? 'grabbing' : 'grab', outline: 'none' }}
-                tabIndex={0}
-                onMouseDown={handleMouseDown}
-                onMouseLeave={handleMouseLeave}
-                onMouseUp={handleMouseUp}
-                onMouseMove={handleMouseMove}
-                onKeyDown={handleKeyDown}
-            >
-                {challenges.map(c => (
-                    <div key={c.level} className="challenge-card-banner" style={{ minWidth: 'clamp(280px, 85vw, 480px)', scrollSnapAlign: 'center', flexShrink: 0, background: c.bg, position: 'relative' }}>
-                        <div className="challenge-badge" style={{ visibility: recommendedLevel === c.level ? 'visible' : 'hidden' }}>あなたにおすすめ</div>
-                        <h2 className="challenge-title">{c.title}</h2>
-                        <div className="challenge-grid">
-                            <div className="challenge-stat">
-                                <div className="challenge-stat-icon"><i className="fa-regular fa-calendar-days"></i></div>
-                                <div className="challenge-stat-text">
-                                    <span className="challenge-stat-val">{c.time}</span>
-                                    <span className="challenge-stat-label">毎日の時間</span>
-                                </div>
-                            </div>
-                            <div className="challenge-stat">
-                                <div className="challenge-stat-icon"><i className="fa-solid fa-chart-simple"></i></div>
-                                <div className="challenge-stat-text">
-                                    <span className="challenge-stat-val">{c.levelText}</span>
-                                    <span className="challenge-stat-label">難易度</span>
-                                </div>
-                            </div>
-                            <div className="challenge-stat">
-                                <div className="challenge-stat-icon"><i className="fa-solid fa-bullseye"></i></div>
-                                <div className="challenge-stat-text">
-                                    <span className="challenge-stat-val">全身</span>
-                                    <span className="challenge-stat-label">ターゲット部位</span>
-                                </div>
-                            </div>
-                            <div className="challenge-stat">
-                                <div className="challenge-stat-icon"><i className="fa-solid fa-check"></i></div>
-                                <div className="challenge-stat-text">
-                                    <span className="challenge-stat-val">器具なし</span>
-                                    <span className="challenge-stat-label">器具</span>
-                                </div>
-                            </div>
-                        </div>
-                        <button className="challenge-btn" onClick={() => handleChallengeClick(c.level, c.title)}>
-                            トレーニングを開始する <i className="fa-solid fa-arrow-right"></i>
-                        </button>
+                {/* 一週間の目標 */}
+                <div style={{ background: 'rgba(20,20,20,0.6)', border: '1px solid rgba(220,160,56,0.5)', borderRadius: '16px', padding: '20px', marginBottom: '40px', boxShadow: '0 4px 20px rgba(0,0,0,0.3)' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '25px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                      <div style={{ width: '20px', height: '20px', borderRadius: '50%', border: '2px solid #DCA038', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#DCA038' }}></div>
+                      </div>
+                      <span style={{ color: '#fff', fontSize: '15px', fontWeight: 'bold', letterSpacing: '0.05em' }}>一週間の目標</span>
                     </div>
-                ))}
-            </div>
+                    <div style={{ color: '#DCA038', fontSize: '14px', fontWeight: 'bold', display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }} onClick={handleCalendarClick}>
+                      {checkedCount}/7 <i className="fa-solid fa-pen" style={{ fontSize: '12px' }}></i>
+                    </div>
+                  </div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', padding: '0 10px' }}>
+                    {calendarDays.map((d, idx) => (
+                      <div key={idx} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '15px' }}>
+                        <span style={{ color: d.isToday ? '#DCA038' : 'rgba(255,255,255,0.5)', fontSize: '12px', fontWeight: d.isToday ? 'bold' : 'normal' }}>{d.dayName}</span>
+                        {d.isChecked ? (
+                          <div style={{ width: '32px', height: '32px', borderRadius: '50%', border: '1px solid #DCA038', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#DCA038' }}>
+                            <i className="fa-solid fa-check"></i>
+                          </div>
+                        ) : d.isToday ? (
+                          <div style={{ width: '36px', height: '36px', borderRadius: '50%', border: '2px solid #DCA038', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#DCA038', fontSize: '16px', fontWeight: 'bold', boxShadow: '0 0 15px rgba(220,160,56,0.4)', background: 'rgba(220,160,56,0.1)' }}>
+                            {d.dayStr}
+                          </div>
+                        ) : (
+                          <div style={{ width: '32px', height: '32px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'rgba(255,255,255,0.7)', fontSize: '16px', fontWeight: 'bold' }}>
+                            {d.dayStr}
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* チャレンジ */}
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '20px' }}>
+                  <span style={{ color: '#DCA038', fontSize: '18px', fontStyle: 'italic', fontWeight: 'bold', letterSpacing: '-2px' }}>//</span>
+                  <h3 style={{ color: '#DCA038', fontSize: '18px', margin: 0, fontWeight: 'bold', letterSpacing: '0.05em' }}>チャレンジ</h3>
+                  <span style={{ color: 'rgba(220,160,56,0.3)', fontSize: '18px', fontStyle: 'italic', fontWeight: 'bold', letterSpacing: '-2px' }}>//</span>
+                </div>
+                
+                <div 
+                  ref={challengeScrollRef} 
+                  style={{ display: 'flex', overflowX: 'auto', gap: '15px', margin: '0 -16px', padding: '5px 16px 20px', scrollSnapType: isDragging ? 'none' : 'x mandatory', cursor: isDragging ? 'grabbing' : 'grab', outline: 'none' }}
+                  className="no-scrollbar"
+                  tabIndex={0}
+                  onMouseDown={handleMouseDown}
+                  onMouseLeave={handleMouseLeave}
+                  onMouseUp={handleMouseUp}
+                  onMouseMove={handleMouseMove}
+                  onKeyDown={handleKeyDown}
+                >
+                  <style>{`
+                    .no-scrollbar::-webkit-scrollbar { display: none; }
+                  `}</style>
+                  {challenges.map(c => (
+                    <div key={c.level} style={{ minWidth: 'clamp(280px, 85vw, 420px)', scrollSnapAlign: 'center', flexShrink: 0, background: 'linear-gradient(135deg, rgba(30,30,30,0.95) 0%, rgba(10,10,10,1) 100%)', border: '1px solid rgba(220,160,56,0.4)', borderRadius: '16px', padding: '20px', position: 'relative', overflow: 'hidden', boxShadow: '0 10px 30px rgba(0,0,0,0.8), inset 0 0 20px rgba(220,160,56,0.05)' }}>
+                      {/* Tiger watermark */}
+                      <div style={{ position: 'absolute', right: '-20px', top: '0', bottom: '0', width: '220px', background: 'url(/images/tiger-abs.png) center right / cover no-repeat', opacity: 0.3, mixBlendMode: 'screen', pointerEvents: 'none' }}></div>
+                      
+                      <div style={{ position: 'relative', zIndex: 1 }}>
+                        <div style={{ background: 'rgba(220,160,56,0.15)', border: '1px solid rgba(220,160,56,0.3)', color: '#DCA038', fontSize: '10px', padding: '4px 12px', borderRadius: '20px', display: 'inline-block', marginBottom: '15px', visibility: recommendedLevel === c.level ? 'visible' : 'hidden' }}>
+                          あなたにおすすめ
+                        </div>
+                        <h2 className="logo-text-premium" style={{ fontSize: '22px', margin: '0 0 25px 0', textShadow: 'none' }}>{c.title}</h2>
+                        
+                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px', marginBottom: '30px' }}>
+                          <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+                            <div style={{ width: '36px', height: '36px', borderRadius: '50%', background: 'rgba(20,20,20,0.8)', border: '1px solid rgba(220,160,56,0.2)', color: '#DCA038', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '14px', boxShadow: '0 2px 10px rgba(0,0,0,0.5)' }}><i className="fa-regular fa-clock"></i></div>
+                            <div>
+                              <div style={{ color: '#fff', fontSize: '13px', fontWeight: 'bold' }}>{c.time}</div>
+                              <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '10px' }}>毎日の時間</div>
+                            </div>
+                          </div>
+                          
+                          <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+                            <div style={{ width: '36px', height: '36px', borderRadius: '50%', background: 'rgba(20,20,20,0.8)', border: '1px solid rgba(220,160,56,0.2)', color: '#DCA038', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '14px', boxShadow: '0 2px 10px rgba(0,0,0,0.5)' }}><i className="fa-solid fa-chart-simple"></i></div>
+                            <div>
+                              <div style={{ color: '#fff', fontSize: '13px', fontWeight: 'bold' }}>{c.levelText}</div>
+                              <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '10px' }}>難易度</div>
+                            </div>
+                          </div>
+                          
+                          <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+                            <div style={{ width: '36px', height: '36px', borderRadius: '50%', background: 'rgba(20,20,20,0.8)', border: '1px solid rgba(220,160,56,0.2)', color: '#DCA038', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '14px', boxShadow: '0 2px 10px rgba(0,0,0,0.5)' }}><i className="fa-solid fa-bullseye"></i></div>
+                            <div>
+                              <div style={{ color: '#fff', fontSize: '13px', fontWeight: 'bold' }}>全身</div>
+                              <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '10px' }}>ターゲット部位</div>
+                            </div>
+                          </div>
+                          
+                          <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+                            <div style={{ width: '36px', height: '36px', borderRadius: '50%', background: 'rgba(20,20,20,0.8)', border: '1px solid rgba(220,160,56,0.2)', color: '#DCA038', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '14px', boxShadow: '0 2px 10px rgba(0,0,0,0.5)' }}><i className="fa-solid fa-check"></i></div>
+                            <div>
+                              <div style={{ color: '#fff', fontSize: '13px', fontWeight: 'bold' }}>器具なし</div>
+                              <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '10px' }}>器具</div>
+                            </div>
+                          </div>
+                        </div>
+                        
+                        <button onClick={() => handleChallengeClick(c.level, c.title)} style={{ width: '100%', background: 'linear-gradient(180deg, #FDF0A6 0%, #DCA038 45%, #9C6615 55%, #E8C162 100%)', color: '#000', border: 'none', padding: '14px', borderRadius: '30px', fontSize: '15px', fontWeight: 'bold', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '10px', cursor: 'pointer', boxShadow: '0 4px 15px rgba(0,0,0,0.5)' }}>
+                          トレーニングを開始する <i className="fa-solid fa-arrow-right" style={{ background: '#000', color: '#DCA038', padding: '4px', borderRadius: '50%', fontSize: '10px', width: '20px', height: '20px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}></i>
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
 
             <h3 className="challenge-section-title">ターゲット部位</h3>
             <div className="target-area-section">
