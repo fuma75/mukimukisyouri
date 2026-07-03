@@ -141,30 +141,36 @@ export default function Meal() {
     <section id="meal" className="content-section active" style={{ paddingBottom: '100px' }}>
       <div style={{ maxWidth: '560px', margin: '0 auto', padding: '0 16px' }}>
 
-        {/* ── カレンダー（筋トレと同じUI） ── */}
-        <div className="workout-goal-calendar" style={{ marginBottom: '16px' }}>
-          <div className="workout-goal-header">
-            <h3 className="workout-goal-title">食事記録</h3>
-            <div className="workout-goal-progress">{checkedCount}/7 <i className="fa-solid fa-fire" style={{ marginLeft: '4px', opacity: 0.5 }} /></div>
+        {/* ── 食事記録 カレンダー ── */}
+        <div style={{ background: 'rgba(20,20,20,0.6)', border: '1px solid rgba(220,160,56,0.5)', borderRadius: '16px', padding: '20px', marginBottom: '24px', boxShadow: '0 4px 20px rgba(0,0,0,0.3)' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '25px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <span style={{ color: '#fff', fontSize: '15px', fontWeight: 'bold', letterSpacing: '0.05em' }}>食事記録</span>
+            </div>
+            <div style={{ color: '#DCA038', fontSize: '14px', fontWeight: 'bold', display: 'flex', alignItems: 'center', gap: '8px' }}>
+              {checkedCount}/7 <i className="fa-solid fa-fire" style={{ fontSize: '12px' }}></i>
+            </div>
           </div>
-          <div className="calendar-days-row">
+          <div style={{ display: 'flex', justifyContent: 'space-between', padding: '0 10px' }}>
             {calendarDays.map((d, idx) => (
-              <div
-                key={idx}
-                className="calendar-day-col"
-                onClick={() => {
-                  const ds = d.date.toLocaleDateString('ja-JP', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\//g, '-');
-                  setDate(ds);
-                }}
-                style={{ cursor: 'pointer' }}
-              >
-                <span className="calendar-day-name">{d.dayName}</span>
-                <span
-                  className={`calendar-day-num ${d.isSelected ? 'active' : ''}`}
-                  style={d.isChecked && !d.isSelected ? { color: 'var(--primary)', background: '#e8f0fe', width: '32px', height: '32px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' } : {}}
-                >
-                  {d.isChecked ? <i className="fa-solid fa-check" /> : d.dayStr}
-                </span>
+              <div key={idx} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '15px', cursor: 'pointer' }} onClick={() => {
+                const ds = d.date.toLocaleDateString('ja-JP', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\//g, '-');
+                setDate(ds);
+              }}>
+                <span style={{ color: d.isSelected ? '#DCA038' : 'rgba(255,255,255,0.5)', fontSize: '12px', fontWeight: d.isSelected ? 'bold' : 'normal' }}>{d.dayName}</span>
+                {d.isChecked && !d.isSelected ? (
+                  <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#DCA038' }}>
+                    <i className="fa-solid fa-check"></i>
+                  </div>
+                ) : d.isSelected ? (
+                  <div style={{ width: '36px', height: '36px', borderRadius: '50%', border: '2px solid #DCA038', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontSize: '16px', fontWeight: 'bold', boxShadow: '0 0 15px rgba(220,160,56,0.4)', background: '#DCA038' }}>
+                    {d.dayStr}
+                  </div>
+                ) : (
+                  <div style={{ width: '32px', height: '32px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'rgba(255,255,255,0.7)', fontSize: '16px', fontWeight: 'bold' }}>
+                    {d.dayStr}
+                  </div>
+                )}
               </div>
             ))}
           </div>
@@ -177,8 +183,8 @@ export default function Meal() {
           border: '1px solid var(--border-color)'
         }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '18px' }}>
-            <span style={{ fontWeight: 'bold', fontSize: '1rem' }}>
-              <i className="fa-solid fa-pen" style={{ color: 'var(--primary)', marginRight: '6px' }} />手動入力
+            <span style={{ fontWeight: 'bold', fontSize: '1rem', color: 'var(--text-primary)' }}>
+              <i className="fa-solid fa-pen" style={{ color: '#DCA038', marginRight: '6px' }} />手動入力
             </span>
             <button type="button" onClick={resetForm}
               style={{ background: 'none', border: 'none', fontSize: '0.8rem', color: 'var(--text-muted)', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}>
@@ -212,8 +218,8 @@ export default function Meal() {
                   onChange={e => setName(e.target.value)}
                   style={{
                     flex: 1, padding: '11px 14px', borderRadius: '10px',
-                    border: '1.5px solid var(--border-color)', background: 'var(--bg-secondary)',
-                    color: 'var(--text-main)', fontSize: '0.95rem', boxSizing: 'border-box'
+                    border: '1.5px solid var(--border-color)', background: 'transparent',
+                    color: 'var(--text-primary)', fontSize: '0.95rem', boxSizing: 'border-box'
                   }}
                 />
               </div>
@@ -227,8 +233,8 @@ export default function Meal() {
                   onChange={e => setAmount(e.target.value)}
                   style={{
                     width: '100%', padding: '11px 14px', borderRadius: '10px',
-                    border: '1.5px solid var(--border-color)', background: 'var(--bg-secondary)',
-                    color: 'var(--text-main)', fontSize: '0.95rem', boxSizing: 'border-box'
+                    border: '1.5px solid var(--border-color)', background: 'transparent',
+                    color: 'var(--text-primary)', fontSize: '0.95rem', boxSizing: 'border-box'
                   }}
                 />
               </div>
@@ -241,34 +247,34 @@ export default function Meal() {
                     <label style={{ fontSize: '0.75rem', color: 'var(--text-muted)', display: 'block', marginBottom: '4px' }}>カロリー (kcal)</label>
                     <input type="number" min="0" placeholder="0" value={calories}
                       onChange={e => setCalories(e.target.value)}
-                      style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: '1.5px solid var(--border-color)', background: 'var(--bg-secondary)', color: 'var(--text-main)', fontSize: '0.9rem', boxSizing: 'border-box' }} />
+                      style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: '1.5px solid var(--border-color)', background: 'transparent', color: 'var(--text-primary)', fontSize: '0.9rem', boxSizing: 'border-box' }} />
                   </div>
                   <div>
                     <label style={{ fontSize: '0.75rem', color: '#ff5224', display: 'block', marginBottom: '4px', fontWeight: 'bold' }}>P タンパク質 (g)</label>
                     <input type="number" min="0" step="0.1" placeholder="0" value={protein}
                       onChange={e => setProtein(e.target.value)}
-                      style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: '1.5px solid #ff5224', background: 'var(--bg-secondary)', color: 'var(--text-main)', fontSize: '0.9rem', boxSizing: 'border-box' }} />
+                      style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: '1.5px solid #ff5224', background: 'transparent', color: 'var(--text-primary)', fontSize: '0.9rem', boxSizing: 'border-box' }} />
                   </div>
                   <div>
                     <label style={{ fontSize: '0.75rem', color: '#ffac1c', display: 'block', marginBottom: '4px', fontWeight: 'bold' }}>F 脂質 (g)</label>
                     <input type="number" min="0" step="0.1" placeholder="0" value={fat}
                       onChange={e => setFat(e.target.value)}
-                      style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: '1.5px solid #ffac1c', background: 'var(--bg-secondary)', color: 'var(--text-main)', fontSize: '0.9rem', boxSizing: 'border-box' }} />
+                      style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: '1.5px solid #ffac1c', background: 'transparent', color: 'var(--text-primary)', fontSize: '0.9rem', boxSizing: 'border-box' }} />
                   </div>
                   <div>
                     <label style={{ fontSize: '0.75rem', color: '#00c853', display: 'block', marginBottom: '4px', fontWeight: 'bold' }}>C 炭水化物 (g)</label>
                     <input type="number" min="0" step="0.1" placeholder="0" value={carb}
                       onChange={e => setCarb(e.target.value)}
-                      style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: '1.5px solid #00c853', background: 'var(--bg-secondary)', color: 'var(--text-main)', fontSize: '0.9rem', boxSizing: 'border-box' }} />
+                      style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: '1.5px solid #00c853', background: 'transparent', color: 'var(--text-primary)', fontSize: '0.9rem', boxSizing: 'border-box' }} />
                   </div>
                 </div>
               </div>
 
               <button type="submit" disabled={loadingEstimate} style={{
                 width: '100%', padding: '14px', borderRadius: '12px',
-                background: loadingEstimate ? 'var(--bg-secondary)' : 'linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%)',
-                color: loadingEstimate ? 'var(--text-muted)' : '#fff', fontWeight: 'bold', fontSize: '1rem', border: loadingEstimate ? '1px solid var(--border-color)' : 'none',
-                cursor: loadingEstimate ? 'default' : 'pointer', boxShadow: loadingEstimate ? 'none' : '0 4px 12px rgba(26,115,232,0.3)'
+                background: loadingEstimate ? 'var(--bg-secondary)' : 'linear-gradient(180deg, #FDF0A6 0%, #DCA038 45%, #9C6615 55%, #E8C162 100%)',
+                color: loadingEstimate ? 'var(--text-muted)' : '#000', fontWeight: 'bold', fontSize: '1rem', border: loadingEstimate ? '1px solid var(--border-color)' : 'none',
+                cursor: loadingEstimate ? 'default' : 'pointer', boxShadow: loadingEstimate ? 'none' : '0 4px 15px rgba(0,0,0,0.5)'
               }}>
                 {loadingEstimate ? (
                   <><i className="fa-solid fa-spinner fa-spin" style={{ marginRight: '8px' }} />AI推定して追加中...</>
@@ -289,12 +295,13 @@ export default function Meal() {
         {/* ── 合計カロリー ── */}
         {meals.length > 0 && (
           <div style={{
-            background: 'linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%)',
+            background: 'linear-gradient(180deg, #FDF0A6 0%, #DCA038 45%, #9C6615 55%, #E8C162 100%)',
             borderRadius: '14px', padding: '12px 20px', marginBottom: '14px',
-            display: 'flex', justifyContent: 'space-between', alignItems: 'center'
+            display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+            boxShadow: '0 4px 15px rgba(0,0,0,0.3)'
           }}>
-            <span style={{ color: 'rgba(255,255,255,0.8)', fontSize: '0.9rem' }}>合計カロリー</span>
-            <span style={{ color: '#fff', fontWeight: 'bold', fontSize: '1.3rem' }}>
+            <span style={{ color: 'rgba(0,0,0,0.7)', fontSize: '0.9rem', fontWeight: 'bold' }}>合計カロリー</span>
+            <span style={{ color: '#000', fontWeight: 'bold', fontSize: '1.3rem' }}>
               {totalCalories.toLocaleString()} <span style={{ fontSize: '0.8rem', fontWeight: 'normal' }}>kcal</span>
             </span>
           </div>
@@ -325,7 +332,7 @@ export default function Meal() {
                       background: (timingColors[m.timing] || '#8b8d9a') + '22',
                       color: timingColors[m.timing] || '#8b8d9a'
                     }}>{m.timing}</span>
-                    <span style={{ fontWeight: 'bold', fontSize: '0.95rem', color: 'var(--text-main)' }}>
+                    <span style={{ fontWeight: 'bold', fontSize: '0.95rem', color: 'var(--text-primary)' }}>
                       {m.name}{m.amount ? ` (${m.amount}g)` : ''}
                     </span>
                   </div>
