@@ -405,7 +405,7 @@ export default function Login() {
     
     return (
       <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px', position: 'relative', paddingTop: '5px' }}>
-        <button onClick={handleBack} style={{ background: 'none', border: 'none', fontSize: '1.4rem', cursor: 'pointer', padding: '10px', color: '#1e1e24' }}>
+        <button onClick={handleBack} style={{ background: 'none', border: 'none', fontSize: '1.4rem', cursor: 'pointer', padding: '10px', color: '#DCA038', letterSpacing: '0.05em' }}>
           <i className="fa-solid fa-arrow-left"></i>
         </button>
         <div style={{ flex: 1, textAlign: 'center' }}>
@@ -460,27 +460,33 @@ export default function Login() {
   );
 
   return (
-    <div className="login-overlay light-theme" style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, zIndex: 9999, overflowY: 'auto', padding: '0', background: '#FAFAFA', color: '#212529', display: 'flex', flexDirection: 'column' }}>
+    <div className="login-overlay" style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, zIndex: 9999, overflowY: 'auto', padding: '0', background: '#08080A', color: '#FDF0A6', display: 'flex', flexDirection: 'column' }}>
       
       {/* STEP 1: Firebase Auth */}
       {step === 1 && (
         <div className="login-container" style={{ maxWidth: '400px', margin: 'auto', padding: '20px', width: '100%' }}>
-          <div className="login-logo" style={{ marginBottom: '20px', textAlign: 'center' }}>
-            <img src="/images/logo.png" alt="筋虎" style={{ width: '70px', height: '70px', borderRadius: '50%', objectFit: 'cover', marginBottom: '10px', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }} />
-            <h1 style={{ fontSize: 'clamp(1.3rem, 5vw, 1.6rem)', margin: '0', fontWeight: 'bold' }}>筋虎</h1>
-            <p style={{ color: '#111827', fontSize: '0.9rem', marginTop: '5px' }}>あなた専用の虎コーチ</p>
+          <div className="login-logo" style={{ marginBottom: '30px', textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <div style={{ padding: '3px', background: 'linear-gradient(180deg, #FDF0A6, #DCA038)', borderRadius: '50%', marginBottom: '15px' }}>
+              <img src="/images/logo.png" alt="筋虎" style={{ width: '90px', height: '90px', borderRadius: '50%', objectFit: 'cover', border: '3px solid #000' }} />
+            </div>
+            <div className="logo-text-premium" style={{ fontSize: '42px', marginBottom: '10px' }}>筋虎</div>
+            <div style={{ color: '#DCA038', fontSize: '0.9rem', display: 'flex', alignItems: 'center', gap: '10px', letterSpacing: '0.1em' }}>
+              <span style={{ fontStyle: 'italic', color: '#9C6615', fontWeight: 'bold' }}>///</span>
+              あなた専用の虎コーチ
+              <span style={{ fontStyle: 'italic', color: '#9C6615', fontWeight: 'bold' }}>///</span>
+            </div>
           </div>
 
           <div className="animate-fade-in">
             <form autoComplete="off" onSubmit={(e) => { e.preventDefault(); handleNext(); }}>
               <div className="form-group" style={{ marginBottom: '12px' }}>
-                <label style={{display: 'block', fontSize: '0.85rem', fontWeight: 'bold', color: '#1e1e24', marginBottom: '5px', textAlign: 'left'}}>{isLoginMode ? 'メールアドレス' : 'メールアドレス'}</label>
-                <input type="email" name="email" autoComplete="off" placeholder="メールアドレスを入力" value={email} onChange={e => setEmail(e.target.value)} style={{ background: '#f8f9fa', border: '1px solid #ced4da', borderRadius: '8px', padding: '12px', width: '100%', color: '#212529' }} />
+                <label style={{display: 'block', fontSize: '0.85rem', fontWeight: 'bold', color: '#DCA038', letterSpacing: '0.05em', marginBottom: '5px', textAlign: 'left'}}>{isLoginMode ? 'メールアドレス' : 'メールアドレス'}</label>
+                <input type="email" name="email" autoComplete="off" placeholder="メールアドレスを入力" value={email} onChange={e => setEmail(e.target.value)} style={{ background: '#0F0F11', border: '1px solid rgba(220, 160, 56, 0.4)', borderRadius: '8px', padding: '14px', width: '100%', color: '#fff', outline: 'none', boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.5)' }} />
               </div>
               
               <div className="form-group" style={{ position: 'relative', marginBottom: '12px' }}>
-                <label style={{display: 'block', fontSize: '0.85rem', fontWeight: 'bold', color: '#1e1e24', marginBottom: '5px', textAlign: 'left'}}>パスワード</label>
-                <input type={showPassword ? "text" : "password"} name="password" autoComplete="new-password" placeholder="パスワードを入力" value={password} onChange={e => setPassword(e.target.value)} style={{ background: '#f8f9fa', border: '1px solid #ced4da', borderRadius: '8px', padding: '12px', width: '100%', color: '#212529' }} />
+                <label style={{display: 'block', fontSize: '0.85rem', fontWeight: 'bold', color: '#DCA038', letterSpacing: '0.05em', marginBottom: '5px', textAlign: 'left'}}>パスワード</label>
+                <input type={showPassword ? "text" : "password"} name="password" autoComplete="new-password" placeholder="パスワードを入力" value={password} onChange={e => setPassword(e.target.value)} style={{ background: '#0F0F11', border: '1px solid rgba(220, 160, 56, 0.4)', borderRadius: '8px', padding: '14px', width: '100%', color: '#fff', outline: 'none', boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.5)' }} />
                 <button type="button" onClick={() => setShowPassword(!showPassword)} style={{ position: 'absolute', right: '15px', top: '36px', background: 'none', border: 'none', color: 'var(--primary)', fontWeight: 'bold', cursor: 'pointer', fontSize: '0.85rem' }}>
                   {showPassword ? '非表示' : '表示'}
                 </button>
@@ -488,34 +494,34 @@ export default function Login() {
 
               {!isLoginMode && (
                 <div className="form-group" style={{ marginBottom: '12px' }}>
-                  <label style={{display: 'block', fontSize: '0.85rem', fontWeight: 'bold', color: '#1e1e24', marginBottom: '5px', textAlign: 'left'}}>ユーザー名</label>
-                  <input type="text" name="nickname" autoComplete="off" placeholder="ユーザー名を入力" value={name} onChange={e => setName(e.target.value)} style={{ background: '#f8f9fa', border: '1px solid #ced4da', borderRadius: '8px', padding: '12px', width: '100%', color: '#212529' }} />
+                  <label style={{display: 'block', fontSize: '0.85rem', fontWeight: 'bold', color: '#DCA038', letterSpacing: '0.05em', marginBottom: '5px', textAlign: 'left'}}>ユーザー名</label>
+                  <input type="text" name="nickname" autoComplete="off" placeholder="ユーザー名を入力" value={name} onChange={e => setName(e.target.value)} style={{ background: '#0F0F11', border: '1px solid rgba(220, 160, 56, 0.4)', borderRadius: '8px', padding: '14px', width: '100%', color: '#fff', outline: 'none', boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.5)' }} />
                 </div>
               )}
 
               {isLoginMode && (
-                <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px', fontSize: '0.85rem', color: '#1e1e24', fontWeight: 'bold' }}>
+                <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px', fontSize: '0.85rem', color: '#DCA038', letterSpacing: '0.05em', fontWeight: 'bold' }}>
                   <input type="checkbox" id="keepLoggedIn" style={{ marginRight: '8px', width: '16px', height: '16px', accentColor: 'var(--primary)' }} defaultChecked />
                   <label htmlFor="keepLoggedIn">ログイン状態を保持</label>
                 </div>
               )}
               
-              <button type="submit" className="btn btn-block" style={{ marginTop: '5px', padding: '14px', background: 'var(--primary)', color: '#fff', borderRadius: '8px', fontWeight: 'bold', border: 'none', boxShadow: '0 4px 10px rgba(245,158,11,0.3)', fontSize: '1rem' }} disabled={loading}>
+              <button type="submit" className="btn btn-block" style={{ marginTop: '10px', padding: '16px', background: 'linear-gradient(180deg, #FDF0A6 0%, #DCA038 45%, #9C6615 55%, #E8C162 100%)', color: '#000', borderRadius: '8px', fontWeight: 'bold', border: 'none', boxShadow: '0 4px 15px rgba(0,0,0,0.5)', fontSize: '1.1rem', letterSpacing: '0.1em' }} disabled={loading}>
                 {loading ? <i className="fa-solid fa-spinner fa-spin"></i> : (isLoginMode ? 'ログイン' : '新規登録')}
               </button>
             </form>
 
-            <div style={{ display: 'flex', alignItems: 'center', margin: '15px 0', color: '#6c757d', fontSize: '0.85rem' }}>
-              <div style={{ flex: 1, height: '1px', background: '#e9ecef' }}></div>
+            <div style={{ display: 'flex', alignItems: 'center', margin: '15px 0', color: '#DCA038', fontSize: '0.85rem' }}>
+              <div style={{ flex: 1, height: '1px', background: 'rgba(220, 160, 56, 0.3)' }}></div>
               <div style={{ padding: '0 10px' }}>または</div>
-              <div style={{ flex: 1, height: '1px', background: '#e9ecef' }}></div>
+              <div style={{ flex: 1, height: '1px', background: 'rgba(220, 160, 56, 0.3)' }}></div>
             </div>
 
-            <button type="button" className="btn btn-block" style={{ padding: '14px', marginBottom: '12px', background: '#212529', color: '#fff', border: 'none', borderRadius: '8px', fontWeight: 'bold', boxShadow: '0 4px 10px rgba(0,0,0,0.2)', fontSize: '1rem' }} onClick={() => setIsLoginMode(!isLoginMode)}>
+            <button type="button" className="btn btn-block" style={{ padding: '14px', marginBottom: '12px', background: 'transparent', color: '#DCA038', border: '1px solid #DCA038', borderRadius: '8px', fontWeight: 'bold', boxShadow: '0 4px 10px rgba(0,0,0,0.2)', fontSize: '1rem' }} onClick={() => setIsLoginMode(!isLoginMode)}>
               {isLoginMode ? '新規登録' : 'ログイン画面へ戻る'}
             </button>
 
-            <button type="button" className="btn btn-block" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', padding: '12px', background: '#ffffff', color: '#333', border: '1px solid #ddd', borderRadius: '8px', fontWeight: 'bold', fontSize: '0.9rem' }} onClick={handleGoogleLogin} disabled={loading}>
+            <button type="button" className="btn btn-block" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', padding: '12px', background: '#ffffff', color: '#000', border: 'none', boxShadow: '0 4px 10px rgba(0,0,0,0.5)', borderRadius: '8px', fontWeight: 'bold', fontSize: '0.9rem' }} onClick={handleGoogleLogin} disabled={loading}>
               <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" style={{ width: '18px' }} />
               Googleで{isLoginMode ? 'ログイン' : '登録'}
             </button>
@@ -557,7 +563,7 @@ export default function Login() {
                       transform: isSelected ? 'scale(1.02)' : 'scale(1)'
                     }}>
                     
-                    <div style={{ flex: 1, background: '#f8f9fa', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#6c757d' }}>
+                    <div style={{ flex: 1, background: '#f8f9fa', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#DCA038' }}>
                       <i className={`fa-solid ${g === 'male' ? 'fa-person' : 'fa-person-dress'}`} style={{ fontSize: '3rem' }}></i>
                     </div>
                     
@@ -661,7 +667,7 @@ export default function Login() {
                     setDob(`${y}-01-01`);
                   }
                 }} 
-                style={{ fontSize: '3.5rem', fontWeight: 'bold', color: '#1e1e24', background: 'transparent', border: 'none', borderBottom: '2px solid var(--primary)', width: '140px', textAlign: 'center', outline: 'none' }} 
+                style={{ fontSize: '3.5rem', fontWeight: 'bold', color: '#DCA038', letterSpacing: '0.05em', background: 'transparent', border: 'none', borderBottom: '2px solid var(--primary)', width: '140px', textAlign: 'center', outline: 'none' }} 
               />
               <span style={{ fontSize: '1.5rem', color: '#111827', marginLeft: '5px' }}>年</span>
             </div>
@@ -692,7 +698,7 @@ export default function Login() {
                 type="number" 
                 value={height} 
                 onChange={(e) => { setHeight(e.target.value); setHeightUnit('cm'); }} 
-                style={{ fontSize: '3rem', fontWeight: 'bold', color: '#1e1e24', background: 'transparent', border: 'none', borderBottom: '2px solid var(--primary)', width: '180px', textAlign: 'center', outline: 'none' }} 
+                style={{ fontSize: '3rem', fontWeight: 'bold', color: '#DCA038', letterSpacing: '0.05em', background: 'transparent', border: 'none', borderBottom: '2px solid var(--primary)', width: '180px', textAlign: 'center', outline: 'none' }} 
               />
               <span style={{ fontSize: '1.5rem', color: '#111827', marginLeft: '5px' }}>cm</span>
             </div>
@@ -743,7 +749,7 @@ export default function Login() {
                 type="number" 
                 value={weight} 
                 onChange={(e) => setWeight(e.target.value)} 
-                style={{ fontSize: '3rem', fontWeight: 'bold', color: '#1e1e24', background: 'transparent', border: 'none', borderBottom: '2px solid var(--primary)', width: '180px', textAlign: 'center', outline: 'none' }} 
+                style={{ fontSize: '3rem', fontWeight: 'bold', color: '#DCA038', letterSpacing: '0.05em', background: 'transparent', border: 'none', borderBottom: '2px solid var(--primary)', width: '180px', textAlign: 'center', outline: 'none' }} 
               />
               <span style={{ fontSize: '1.5rem', color: '#111827', marginLeft: '5px' }}>{weightUnit}</span>
             </div>
@@ -780,7 +786,7 @@ export default function Login() {
                   <div style={{ width: '100%', height: '8px', borderRadius: '4px', background: 'linear-gradient(to right, #3b82f6 0%, #22c55e 40%, #f59e0b 65%, #ef4444 100%)', position: 'relative' }}>
                     <div style={{ position: 'absolute', top: '-4px', left: `calc(${bmiPercent}% - 8px)`, width: '16px', height: '16px', borderRadius: '50%', background: '#fff', border: `3px solid ${bmiColor}`, boxShadow: '0 2px 6px rgba(0,0,0,0.2)', transition: 'left 0.3s' }} />
                   </div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '6px', fontSize: '0.75rem', color: '#6c757d' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '6px', fontSize: '0.75rem', color: '#DCA038' }}>
                     <span>低体重 〜18.5</span>
                     <span>標準 18.5〜24.9</span>
                     <span>肥満 25〜</span>
@@ -824,7 +830,7 @@ export default function Login() {
                 type="number" 
                 value={targetWeight} 
                 onChange={(e) => setTargetWeight(e.target.value)} 
-                style={{ fontSize: '3rem', fontWeight: 'bold', color: '#1e1e24', background: 'transparent', border: 'none', borderBottom: '2px solid var(--primary)', width: '180px', textAlign: 'center', outline: 'none' }} 
+                style={{ fontSize: '3rem', fontWeight: 'bold', color: '#DCA038', letterSpacing: '0.05em', background: 'transparent', border: 'none', borderBottom: '2px solid var(--primary)', width: '180px', textAlign: 'center', outline: 'none' }} 
               />
               <span style={{ fontSize: '1.5rem', color: '#111827', marginLeft: '5px' }}>{weightUnit}</span>
             </div>
@@ -861,7 +867,7 @@ export default function Login() {
                   <div style={{ width: '100%', height: '8px', borderRadius: '4px', background: 'linear-gradient(to right, #3b82f6 0%, #22c55e 40%, #f59e0b 65%, #ef4444 100%)', position: 'relative' }}>
                     <div style={{ position: 'absolute', top: '-4px', left: `calc(${bmiPercent}% - 8px)`, width: '16px', height: '16px', borderRadius: '50%', background: '#fff', border: `3px solid ${bmiColor}`, boxShadow: '0 2px 6px rgba(0,0,0,0.2)', transition: 'left 0.3s' }} />
                   </div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '6px', fontSize: '0.75rem', color: '#6c757d' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '6px', fontSize: '0.75rem', color: '#DCA038' }}>
                     <span>低体重 〜18.5</span>
                     <span>標準 18.5〜24.9</span>
                     <span>肥満 25〜</span>
@@ -1067,11 +1073,11 @@ export default function Login() {
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', justifyContent: 'center' }}>
                 <div style={{ background: '#fff', padding: '10px', borderRadius: '16px', minWidth: '110px', border: '1px solid #e9ecef', boxShadow: '0 4px 10px rgba(0,0,0,0.02)' }}>
                   <div style={{ fontSize: '0.8rem', color: '#8b8d9a', marginBottom: '2px' }}>目標カロリー</div>
-                  <div style={{ fontWeight: 'bold', color: '#1e1e24', fontSize: '1.1rem' }}>{estimatedResult?.calories || '?'} kcal</div>
+                  <div style={{ fontWeight: 'bold', color: '#DCA038', letterSpacing: '0.05em', fontSize: '1.1rem' }}>{estimatedResult?.calories || '?'} kcal</div>
                 </div>
                 <div style={{ background: '#fff', padding: '10px', borderRadius: '16px', minWidth: '110px', border: '1px solid #e9ecef', boxShadow: '0 4px 10px rgba(0,0,0,0.02)' }}>
                   <div style={{ fontSize: '0.8rem', color: '#8b8d9a', marginBottom: '2px' }}>タンパク質</div>
-                  <div style={{ fontWeight: 'bold', color: '#1e1e24', fontSize: '1.1rem' }}>{estimatedResult?.protein || '?'} g</div>
+                  <div style={{ fontWeight: 'bold', color: '#DCA038', letterSpacing: '0.05em', fontSize: '1.1rem' }}>{estimatedResult?.protein || '?'} g</div>
                 </div>
               </div>
             </div>
