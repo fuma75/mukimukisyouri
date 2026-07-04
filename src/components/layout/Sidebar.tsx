@@ -11,9 +11,7 @@ export default function Sidebar() {
     { id: 'workout', icon: 'fa-dumbbell', label: '筋トレ' },
     { id: 'meal', icon: 'fa-bowl-food', label: '食事' },
     { id: 'equipment', icon: 'fa-book-open', label: '知識＆コラム' },
-    { id: 'muscle-map', icon: 'fa-chart-simple', label: '進捗＆分析' },
-    { id: 'ai-coach', icon: 'fa-user', label: 'AI虎コーチ' },
-    { id: 'profile', icon: 'fa-gear', label: '設定' },
+    { id: 'map', icon: 'fa-map-location-dot', label: 'ジムマップ' },
   ];
 
   return (
