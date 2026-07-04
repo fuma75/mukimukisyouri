@@ -12,7 +12,7 @@ import ActivityLevelSlider from '../ui/ActivityLevelSlider';
 const TOTAL_WIZARD_STEPS = 14;
 
 export default function Login() {
-  const { setUserProfile, setActiveTab, theme } = useAppContext();
+  const { setUserProfile, setActiveTab, theme, setTheme } = useAppContext();
   const isDark = theme === 'dark';
   
   const [step, setStep] = useState(1);
@@ -530,8 +530,8 @@ export default function Login() {
   return (
     <div className="login-overlay" style={{ 
       position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, zIndex: 9999, overflowY: 'auto', padding: '0', 
-      background: step > 1 ? (isDark ? '#050505' : '#FCF8F2') : '#08080A', 
-      color: step > 1 ? (isDark ? '#FDF0A6' : '#333') : '#FDF0A6', 
+      background: isDark ? '#050505' : '#FCF8F2', 
+      color: isDark ? '#FDF0A6' : '#333', 
       display: 'flex', flexDirection: 'column' 
     }}>
       {step > 1 && (
@@ -559,8 +559,31 @@ export default function Login() {
       
       {/* STEP 1: Firebase Auth */}
       {step === 1 && (
-        <div className="login-container" style={{ maxWidth: '400px', margin: 'auto', padding: '20px', width: '100%' }}>
-          <div className="login-logo" style={{ marginBottom: '30px', textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <div className="login-container" style={{ maxWidth: '400px', margin: 'auto', padding: '20px', width: '100%', position: 'relative' }}>
+          {/* Theme Toggle */}
+          <div style={{ position: 'absolute', top: '10px', right: '10px', zIndex: 10 }}>
+            <button 
+              onClick={() => setTheme(isDark ? 'light' : 'dark')}
+              style={{
+                background: isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.05)',
+                border: 'none',
+                padding: '8px 12px',
+                borderRadius: '20px',
+                color: isDark ? '#DCA038' : '#B58434',
+                fontSize: '0.8rem',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '6px',
+                fontWeight: 'bold'
+              }}
+            >
+              <i className={isDark ? "fa-solid fa-sun" : "fa-solid fa-moon"}></i>
+              {isDark ? 'ライトモード' : 'ダークモード'}
+            </button>
+          </div>
+
+          <div className="login-logo" style={{ marginBottom: '30px', textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: '20px' }}>
             <div style={{ padding: '3px', background: 'linear-gradient(180deg, #FDF0A6, #DCA038)', borderRadius: '50%', marginBottom: '15px' }}>
               <img src="/images/logo.png" alt="筋虎" style={{ width: '90px', height: '90px', borderRadius: '50%', objectFit: 'cover', border: '3px solid #000' }} />
             </div>
@@ -574,23 +597,25 @@ export default function Login() {
 
           <div className="animate-fade-in">
             <form autoComplete="off" onSubmit={(e) => { e.preventDefault(); handleNext(); }}>
-              <div className="form-group" style={{ marginBottom: '12px' }}>
-                <label style={{display: 'block', fontSize: '0.85rem', fontWeight: 'bold', color: '#DCA038', letterSpacing: '0.05em', marginBottom: '5px', textAlign: 'left'}}>{isLoginMode ? 'メールアドレス' : 'メールアドレス'}</label>
-                <input type="email" name="email" autoComplete="off" placeholder="メールアドレスを入力" value={email} onChange={e => setEmail(e.target.value)} style={{ background: '#0F0F11', border: '1px solid rgba(220, 160, 56, 0.4)', borderRadius: '8px', padding: '14px', width: '100%', color: '#fff', outline: 'none', boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.5)' }} />
+              <div className="form-group" style={{ marginBottom: '20px' }}>
+                <label style={{display: 'block', fontSize: '0.9rem', fontWeight: 'bold', color: isDark ? '#DCA038' : '#B58434', letterSpacing: '0.05em', marginBottom: '8px', textAlign: 'left'}}>{isLoginMode ? 'メールアドレス' : 'メールアドレス'}</label>
+                <input type="email" name="email" autoComplete="off" placeholder="メールアドレスを入力" value={email} onChange={e => setEmail(e.target.value)} style={{ background: isDark ? '#0F0F11' : '#FFFFFF', border: isDark ? '1px solid rgba(220, 160, 56, 0.4)' : '1px solid #DCA038', borderRadius: '8px', padding: '16px', width: '100%', color: isDark ? '#fff' : '#000', outline: 'none', fontSize: '1rem', boxShadow: isDark ? 'inset 0 2px 4px rgba(0,0,0,0.5)' : 'none' }} />
               </div>
               
-              <div className="form-group" style={{ position: 'relative', marginBottom: '12px' }}>
-                <label style={{display: 'block', fontSize: '0.85rem', fontWeight: 'bold', color: '#DCA038', letterSpacing: '0.05em', marginBottom: '5px', textAlign: 'left'}}>パスワード</label>
-                <input type={showPassword ? "text" : "password"} name="password" autoComplete="new-password" placeholder="パスワードを入力" value={password} onChange={e => setPassword(e.target.value)} style={{ background: '#0F0F11', border: '1px solid rgba(220, 160, 56, 0.4)', borderRadius: '8px', padding: '14px', width: '100%', color: '#fff', outline: 'none', boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.5)' }} />
-                <button type="button" onClick={() => setShowPassword(!showPassword)} style={{ position: 'absolute', right: '15px', top: '36px', background: 'none', border: 'none', color: '#DCA038', fontWeight: 'bold', cursor: 'pointer', fontSize: '0.85rem' }}>
-                  {showPassword ? '非表示' : '表示'}
-                </button>
+              <div className="form-group" style={{ position: 'relative', marginBottom: '20px' }}>
+                <label style={{display: 'block', fontSize: '0.9rem', fontWeight: 'bold', color: isDark ? '#DCA038' : '#B58434', letterSpacing: '0.05em', marginBottom: '8px', textAlign: 'left'}}>パスワード</label>
+                <div style={{ position: 'relative' }}>
+                  <input type={showPassword ? "text" : "password"} name="password" autoComplete="new-password" placeholder="パスワードを入力" value={password} onChange={e => setPassword(e.target.value)} style={{ background: isDark ? '#0F0F11' : '#FFFFFF', border: isDark ? '1px solid rgba(220, 160, 56, 0.4)' : '1px solid #DCA038', borderRadius: '8px', padding: '16px', width: '100%', color: isDark ? '#fff' : '#000', outline: 'none', fontSize: '1rem', boxShadow: isDark ? 'inset 0 2px 4px rgba(0,0,0,0.5)' : 'none', paddingRight: '60px' }} />
+                  <button type="button" onClick={() => setShowPassword(!showPassword)} style={{ position: 'absolute', right: '15px', top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', color: isDark ? '#DCA038' : '#B58434', fontWeight: 'bold', cursor: 'pointer', fontSize: '0.9rem' }}>
+                    {showPassword ? '非表示' : '表示'}
+                  </button>
+                </div>
               </div>
 
               {!isLoginMode && (
-                <div className="form-group" style={{ marginBottom: '12px' }}>
-                  <label style={{display: 'block', fontSize: '0.85rem', fontWeight: 'bold', color: '#DCA038', letterSpacing: '0.05em', marginBottom: '5px', textAlign: 'left'}}>ユーザー名</label>
-                  <input type="text" name="nickname" autoComplete="off" placeholder="ユーザー名を入力" value={name} onChange={e => setName(e.target.value)} style={{ background: '#0F0F11', border: '1px solid rgba(220, 160, 56, 0.4)', borderRadius: '8px', padding: '14px', width: '100%', color: '#fff', outline: 'none', boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.5)' }} />
+                <div className="form-group" style={{ marginBottom: '20px' }}>
+                  <label style={{display: 'block', fontSize: '0.9rem', fontWeight: 'bold', color: isDark ? '#DCA038' : '#B58434', letterSpacing: '0.05em', marginBottom: '8px', textAlign: 'left'}}>ユーザー名</label>
+                  <input type="text" name="nickname" autoComplete="off" placeholder="ユーザー名を入力" value={name} onChange={e => setName(e.target.value)} style={{ background: isDark ? '#0F0F11' : '#FFFFFF', border: isDark ? '1px solid rgba(220, 160, 56, 0.4)' : '1px solid #DCA038', borderRadius: '8px', padding: '16px', width: '100%', color: isDark ? '#fff' : '#000', outline: 'none', fontSize: '1rem', boxShadow: isDark ? 'inset 0 2px 4px rgba(0,0,0,0.5)' : 'none' }} />
                 </div>
               )}
 
