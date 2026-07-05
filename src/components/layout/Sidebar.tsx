@@ -18,9 +18,6 @@ export default function Sidebar() {
     <aside className="sidebar" id="app-sidebar" style={{
       background: isDark ? '#050505' : '#FCF8F2',
       borderRight: isDark ? '1px solid #1f1f1f' : '1px solid #EBE4D6',
-      display: 'flex',
-      flexDirection: 'column',
-      position: 'relative',
       overflow: 'hidden'
     }}>
       {/* Background Tiger Watermark (Light Mode mostly, faint in dark) */}

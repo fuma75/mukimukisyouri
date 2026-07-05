@@ -499,31 +499,32 @@ export default function Login() {
       onKeyDown={(e) => handleCardKeyDown(e, onClick)}
       style={{
         display: 'flex',
-        flexDirection: 'column',
+        flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
-        padding: '20px 10px',
+        gap: '14px',
+        padding: '16px 20px',
         background: selected ? 'rgba(220, 160, 56, 0.1)' : 'rgba(20, 20, 20, 0.5)',
         border: `2px solid ${selected ? '#DCA038' : 'rgba(255,255,255,0.1)'}`,
-        borderRadius: '16px',
+        borderRadius: '14px',
         cursor: 'pointer',
         boxShadow: selected ? '0 0 15px rgba(220, 160, 56, 0.2)' : 'none',
         transition: 'all 0.2s ease',
         boxSizing: 'border-box',
-        marginBottom: '10px',
-        gap: '12px'
+        marginBottom: '0px',
       }}
     >
-      <div style={{ width: '45px', height: '45px', display: 'flex', justifyContent: 'center', alignItems: 'center', overflow: 'hidden' }}>
+      <div style={{ width: '40px', height: '40px', display: 'flex', justifyContent: 'center', alignItems: 'center', flexShrink: 0, overflow: 'hidden' }}>
         {icon.startsWith('/') ? (
-          <img src={icon} alt={label} style={{ width: '100%', height: '100%', objectFit: 'cover', transform: 'scale(1.5)', filter: selected ? 'sepia(1) hue-rotate(-30deg) saturate(3) brightness(1.1)' : 'grayscale(100%) brightness(0.5)', opacity: selected ? 1 : 0.6 }} />
+          <img src={icon} alt={label} style={{ width: '100%', height: '100%', objectFit: 'cover', transform: 'scale(1.2)', filter: selected ? 'sepia(1) hue-rotate(-30deg) saturate(3) brightness(1.1)' : 'grayscale(100%) brightness(0.5)', opacity: selected ? 1 : 0.6 }} />
         ) : (
-          <i className={icon} style={{ fontSize: '2rem', color: selected ? '#DCA038' : 'rgba(255,255,255,0.3)' }}></i>
+          <i className={icon} style={{ fontSize: '1.7rem', color: selected ? '#DCA038' : 'rgba(255,255,255,0.3)' }}></i>
         )}
       </div>
-      <div style={{ fontSize: '1.15rem', fontWeight: selected ? 'bold' : 'bold', color: selected ? '#DCA038' : 'rgba(255,255,255,0.5)', textAlign: 'center' }}>
+      <div style={{ fontSize: '1.1rem', fontWeight: 'bold', color: selected ? '#DCA038' : 'rgba(255,255,255,0.5)', textAlign: 'left', flex: 1 }}>
         {label}
       </div>
+      {selected && <i className="fa-solid fa-circle-check" style={{ color: '#DCA038', fontSize: '1.2rem', flexShrink: 0 }}></i>}
     </div>
   );
 
@@ -652,14 +653,14 @@ export default function Login() {
 
       {/* STEP 2: Gender */}
       {step === 2 && (
-        <div style={{ flex: '1 0 auto', maxWidth: '600px', margin: '0 auto', padding: '10px 15px 15px', width: '100%', display: 'flex', flexDirection: 'column' }}>
+        <div style={{ maxWidth: '500px', margin: '0 auto', padding: '10px 20px 20px', width: '100%', display: 'flex', flexDirection: 'column', minHeight: '100dvh', justifyContent: 'center' }}>
           {renderWizardHeader("01 目標とターゲット部位", 2)}
           
-          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', paddingBottom: '10px' }}>
-            <h2 className="logo-text-premium" style={{ textAlign: 'center', fontSize: 'clamp(1.3rem, 5vw, 1.6rem)', marginBottom: '15px' }}>あなたの性別は？</h2>
-            <p style={{ textAlign: 'center', color: 'rgba(255, 255, 255, 0.7)', marginBottom: '10px' }}>あなたについて教えてください</p>
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '16px', marginTop: '10px', marginBottom: '20px' }}>
+            <h2 className="logo-text-premium" style={{ textAlign: 'center', fontSize: 'clamp(1.3rem, 5vw, 1.6rem)', margin: '0 0 4px' }}>あなたの性別は？</h2>
+            <p style={{ textAlign: 'center', color: isDark ? 'rgba(255, 255, 255, 0.7)' : 'rgba(0,0,0,0.5)', margin: 0 }}>あなたについて教えてください</p>
             
-            <div style={{ display: 'flex', gap: '20px', justifyContent: 'center' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', width: '100%', maxWidth: '360px' }}>
               {['male', 'female'].map((g) => {
                 const isSelected = gender === g;
                 return (
@@ -669,85 +670,84 @@ export default function Login() {
                     onClick={() => setGender(g as 'male'|'female')}
                     onKeyDown={(e) => handleCardKeyDown(e, () => setGender(g as 'male'|'female'))}
                     style={{ 
-                      flex: 1, 
-                      maxWidth: '220px', 
-                      height: 'min(240px, 35vh)', 
-                      borderRadius: '20px', 
-                      background: isSelected ? 'rgba(220, 160, 56, 0.1)' : 'rgba(20, 20, 20, 0.5)', 
-                      border: `2px solid ${isSelected ? '#DCA038' : 'rgba(255,255,255,0.1)'}`, 
+                      aspectRatio: '3/4',
+                      borderRadius: '16px', 
+                      background: isSelected ? (isDark ? 'rgba(220,160,56,0.1)' : 'linear-gradient(180deg,#FFF 0%,#FDF8ED 100%)') : (isDark ? '#111' : '#FFF'), 
+                      border: `2px solid ${isSelected ? '#DCA038' : (isDark ? '#333' : '#E8DFD1')}`, 
                       cursor: 'pointer',
                       display: 'flex',
                       flexDirection: 'column',
                       overflow: 'hidden',
-                      transition: 'all 0.2s',
-                      transform: isSelected ? 'scale(1.02)' : 'scale(1)'
+                      transition: 'all 0.2s ease',
+                      boxShadow: isSelected ? '0 8px 20px rgba(220,160,56,0.15)' : '0 2px 8px rgba(0,0,0,0.05)',
+                      transform: isSelected ? 'translateY(-2px)' : 'none',
                     }}>
                     
-                    <div style={{ flex: 1, background: 'rgba(20, 20, 20, 0.5)', border: '1px solid rgba(220, 160, 56, 0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#DCA038' }}>
-                      <i className={`fa-solid ${g === 'male' ? 'fa-person' : 'fa-person-dress'}`} style={{ fontSize: '3rem' }}></i>
+                    <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', color: isSelected ? (isDark ? '#FDF0A6' : '#B58434') : (isDark ? '#555' : '#4C4239') }}>
+                      <i className={`fa-solid ${g === 'male' ? 'fa-person' : 'fa-person-dress'}`} style={{ fontSize: '3.5rem' }}></i>
                     </div>
                     
-                    <div style={{ padding: '20px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px' }}>
-                      <span style={{ fontSize: '1.1rem', fontWeight: 'bold', color: isSelected ? '#DCA038' : 'rgba(255,255,255,0.5)' }}>
+                    <div style={{ height: '52px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', background: isSelected ? (isDark ? 'rgba(220,160,56,0.12)' : '#EBE1D0') : (isDark ? '#151515' : '#F6F3EC') }}>
+                      <span style={{ fontSize: '1.1rem', fontWeight: 'bold', color: isSelected ? (isDark ? '#FDF0A6' : '#B58434') : (isDark ? '#888' : '#4C4239') }}>
                         {g === 'male' ? '男性' : '女性'}
                       </span>
-                      {isSelected && <i className="fa-solid fa-circle-check" style={{ color: '#F59E0B', fontSize: '1.2rem' }}></i>}
+                      {isSelected && <i className="fa-solid fa-check" style={{ color: isDark ? '#DCA038' : '#B58434', fontSize: '0.9rem' }}></i>}
                     </div>
                   </div>
                 );
               })}
             </div>
 
-            <div style={{ textAlign: 'center', marginTop: '10px' }}>
-              <button 
-                type="button" 
-                onClick={() => setGender('other')}
-                style={{ background: gender === 'other' ? '#111827' : '#fff', border: '1px solid ' + (gender === 'other' ? '#111827' : '#ddd'), padding: '10px 24px', borderRadius: '24px', color: gender === 'other' ? '#fff' : '#111827', fontSize: '0.9rem', cursor: 'pointer', transition: 'all 0.2s' }}>
-                その他 / 言いたくない
-              </button>
-            </div>
+            <button 
+              type="button" 
+              onClick={() => setGender('other')}
+              style={{ background: gender === 'other' ? '#DCA038' : 'transparent', border: `1px solid ${gender === 'other' ? '#DCA038' : (isDark ? 'rgba(255,255,255,0.2)' : '#ccc')}`, padding: '10px 24px', borderRadius: '24px', color: gender === 'other' ? '#000' : (isDark ? 'rgba(255,255,255,0.6)' : '#666'), fontSize: '0.9rem', cursor: 'pointer', transition: 'all 0.2s' }}>
+              その他 / 言いたくない
+            </button>
           </div>
 
-          <div style={{ padding: '10px 0' }}>
-            <button onClick={handleNext} disabled={!gender} style={{ width: '100%', padding: '12px', background: gender ? 'linear-gradient(180deg, #FDF0A6 0%, #DCA038 45%, #9C6615 55%, #E8C162 100%)' : 'rgba(255, 255, 255, 0.1)', boxShadow: gender ? '0 4px 15px rgba(0,0,0,0.5)' : 'none', color: gender ? '#000' : 'rgba(255, 255, 255, 0.3)', letterSpacing: gender ? '0.1em' : 'normal', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer' }}>
-              次へ
+          <div>
+            <button onClick={handleNext} disabled={!gender} style={{ width: '100%', padding: '16px', background: gender ? 'linear-gradient(180deg, #FDF0A6 0%, #DCA038 45%, #9C6615 55%, #E8C162 100%)' : 'rgba(255, 255, 255, 0.1)', boxShadow: gender ? '0 4px 15px rgba(0,0,0,0.5)' : 'none', color: gender ? '#000' : 'rgba(255, 255, 255, 0.3)', letterSpacing: gender ? '0.1em' : 'normal', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer' }}>
+              次へ　→
             </button>
           </div>
         </div>
       )}
 
+
       {/* STEP 3: Goal */}
       {step === 3 && (
-        <div style={{ flex: '1 0 auto', maxWidth: '600px', margin: '0 auto', padding: '10px 15px 15px', width: '100%', display: 'flex', flexDirection: 'column' }}>
+        <div style={{ maxWidth: '500px', margin: '0 auto', padding: '10px 20px 20px', width: '100%', display: 'flex', flexDirection: 'column', minHeight: '100dvh', justifyContent: 'center' }}>
           {renderWizardHeader("01 目標とターゲット部位", 3)}
           
-          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', paddingBottom: '10px', justifyContent: 'center' }}>
-            <h2 className="logo-text-premium" style={{ textAlign: 'center', fontSize: 'clamp(1.3rem, 5vw, 1.6rem)', marginBottom: '15px' }}>主な目標は何ですか？</h2>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginTop: '10px', marginBottom: '20px' }}>
+            <h2 className="logo-text-premium" style={{ textAlign: 'center', fontSize: 'clamp(1.2rem, 5vw, 1.5rem)', marginBottom: '8px' }}>主な目標は何ですか？</h2>
             
-            <div className="options-grid options-grid-3" style={{ flex: 1, justifyContent: 'flex-start', paddingTop: '10px', paddingBottom: '10px' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
               {renderOptionCard('体重を減らす', 'fa-solid fa-weight-scale', goal === '減量', () => setGoal('減量'))}
               {renderOptionCard('筋肉増強', 'fa-solid fa-dumbbell', goal === '増量', () => setGoal('増量'))}
               {renderOptionCard('健康維持', 'fa-solid fa-heart-pulse', goal === '現状維持', () => setGoal('現状維持'))}
             </div>
           </div>
 
-          <div style={{ padding: '10px 0' }}>
-            <button onClick={handleNext} disabled={!goal} style={{ width: '100%', padding: '12px', background: goal ? 'linear-gradient(180deg, #FDF0A6 0%, #DCA038 45%, #9C6615 55%, #E8C162 100%)' : 'rgba(255, 255, 255, 0.1)', boxShadow: goal ? '0 4px 15px rgba(0,0,0,0.5)' : 'none', color: goal ? '#000' : 'rgba(255, 255, 255, 0.3)', letterSpacing: goal ? '0.1em' : 'normal', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer' }}>
-              次へ
+          <div>
+            <button onClick={handleNext} disabled={!goal} style={{ width: '100%', padding: '16px', background: goal ? 'linear-gradient(180deg, #FDF0A6 0%, #DCA038 45%, #9C6615 55%, #E8C162 100%)' : 'rgba(255, 255, 255, 0.1)', boxShadow: goal ? '0 4px 15px rgba(0,0,0,0.5)' : 'none', color: goal ? '#000' : 'rgba(255, 255, 255, 0.3)', letterSpacing: goal ? '0.1em' : 'normal', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer' }}>
+              次へ　→
             </button>
           </div>
         </div>
       )}
 
+
       {/* STEP 4: Target Area */}
       {step === 4 && (
-        <div style={{ flex: '1 0 auto', maxWidth: '600px', margin: '0 auto', padding: '10px 15px 15px', width: '100%', display: 'flex', flexDirection: 'column' }}>
+        <div style={{ maxWidth: '500px', margin: '0 auto', padding: '10px 20px 20px', width: '100%', display: 'flex', flexDirection: 'column', minHeight: '100dvh', justifyContent: 'center' }}>
           {renderWizardHeader("01 目標とターゲット部位", 4)}
           
-          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', paddingBottom: '10px', justifyContent: 'center' }}>
-            <h2 className="logo-text-premium" style={{ textAlign: 'center', fontSize: 'clamp(1.3rem, 5vw, 1.6rem)', marginBottom: '15px' }}>ターゲットの部位はどこですか？</h2>
+          <div style={{ marginTop: '10px', marginBottom: '16px' }}>
+            <h2 className="logo-text-premium" style={{ textAlign: 'center', fontSize: 'clamp(1.2rem, 5vw, 1.5rem)', marginBottom: '12px' }}>ターゲットの部位はどこですか？</h2>
             
-            <div className="options-grid" style={{ flex: 1, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', paddingTop: '10px', paddingBottom: '10px' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
               {renderOptionCard('全身', 'fa-solid fa-child', targetAreas.includes('全身'), () => handleAreaToggle('全身'))}
               {renderOptionCard('腕', 'fa-solid fa-hand-fist', targetAreas.includes('腕'), () => handleAreaToggle('腕'))}
               {renderOptionCard('胸部', 'fa-solid fa-child-reaching', targetAreas.includes('胸部'), () => handleAreaToggle('胸部'))}
@@ -757,13 +757,14 @@ export default function Login() {
             </div>
           </div>
 
-          <div style={{ padding: '10px 0', marginTop: '10px' }}>
-            <button onClick={handleNext} disabled={targetAreas.length === 0} style={{ width: '100%', padding: '12px', background: targetAreas.length > 0 ? 'linear-gradient(180deg, #FDF0A6 0%, #DCA038 45%, #9C6615 55%, #E8C162 100%)' : 'rgba(255, 255, 255, 0.1)', boxShadow: targetAreas.length > 0 ? '0 4px 15px rgba(0,0,0,0.5)' : 'none', color: targetAreas.length > 0 ? '#000' : 'rgba(255, 255, 255, 0.3)', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer' }}>
-              次へ
+          <div>
+            <button onClick={handleNext} disabled={targetAreas.length === 0} style={{ width: '100%', padding: '16px', background: targetAreas.length > 0 ? 'linear-gradient(180deg, #FDF0A6 0%, #DCA038 45%, #9C6615 55%, #E8C162 100%)' : 'rgba(255, 255, 255, 0.1)', boxShadow: targetAreas.length > 0 ? '0 4px 15px rgba(0,0,0,0.5)' : 'none', color: targetAreas.length > 0 ? '#000' : 'rgba(255, 255, 255, 0.3)', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer' }}>
+              次へ　→
             </button>
           </div>
         </div>
       )}
+
 
       {/* STEP 5: Date of Birth */}
       {step === 5 && (
