@@ -1091,7 +1091,7 @@ export default function Login() {
                   style={{
                     display: 'flex',
                     alignItems: 'center',
-                    padding: '20px 25px',
+                    padding: '16px 20px',
                     background: physicalIssues.includes(issue) ? (issue === 'なし' ? 'linear-gradient(180deg, #FDF0A6 0%, #DCA038 45%, #9C6615 55%, #E8C162 100%)' : 'rgba(220, 160, 56, 0.1)') : 'rgba(20, 20, 20, 0.5)',
                     border: `2px solid ${physicalIssues.includes(issue) ? '#DCA038' : 'rgba(255,255,255,0.1)'}`,
                     borderRadius: '16px',
