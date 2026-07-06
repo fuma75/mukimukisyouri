@@ -252,21 +252,21 @@ export default function Dashboard() {
       <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '20px 16px' }}>
         
         {/* Header matching image */}
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px', gap: '8px', flexWrap: 'nowrap' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px', gap: '8px', flexWrap: 'wrap' }}>
           <div style={{ minWidth: 0, flex: '0 1 auto' }}>
             <h1 className="logo-text-premium" style={{ fontSize: 'clamp(20px, 5.5vw, 32px)', margin: 0, whiteSpace: 'nowrap', textShadow: '0 2px 10px rgba(220,160,56,0.2)', color: '#fff' }}>ダッシュボード</h1>
             <div style={{ color: 'rgba(255,255,255,0.6)', fontSize: 'clamp(10px, 2.5vw, 13px)', marginTop: '4px', fontWeight: 'bold', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
               {todayStrHeader}
             </div>
           </div>
-          <div style={{ display: 'flex', gap: '8px', alignItems: 'center', flexShrink: 0, position: 'relative' }}>
+          <div style={{ display: 'flex', gap: '8px', alignItems: 'center', flexShrink: 0, position: 'relative', marginLeft: 'auto' }}>
             <div style={{ background: 'rgba(0,0,0,0.5)', border: '1px solid #ef4444', padding: '5px 10px', borderRadius: '20px', color: '#ef4444', fontSize: 'clamp(10px, 2.5vw, 12px)', fontWeight: 'bold', whiteSpace: 'nowrap' }}>
               <i className="fa-solid fa-fire"></i> {streak || profile.streak || 0}日連続
             </div>
             <div 
               onClick={() => { setDropdownOpen(!dropdownOpen); setSettingsMenuOpen(false); }}
               style={{ background: 'rgba(20,20,20,0.8)', border: '1px solid rgba(220,160,56,0.2)', padding: '5px 10px 5px 5px', borderRadius: '30px', display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer', flexShrink: 0 }}>
-              <div style={{ width: '28px', height: '28px', borderRadius: '50%', background: 'linear-gradient(180deg, #FDF0A6, #DCA038)', color: '#000', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '13px', flexShrink: 0 }}>
+              <div style={{ width: '28px', height: '28px', borderRadius: '50%', background: '#DCA038', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '13px', flexShrink: 0 }}>
                 <i className="fa-solid fa-user"></i>
               </div>
               <div style={{ display: 'flex', flexDirection: 'column' }}>
