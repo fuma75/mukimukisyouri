@@ -383,7 +383,7 @@ export default function Dashboard() {
             </div>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '20px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 340px), 1fr))', gap: '20px' }}>
           {/* Calorie Balance */}
           <div style={{ background: 'rgba(20,20,25,0.8)', border: '1px solid rgba(255,255,255,0.05)', borderRadius: '16px', padding: '25px', display: 'flex', flexDirection: 'column', boxShadow: '0 4px 20px rgba(0,0,0,0.4)' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '30px' }}>
@@ -393,7 +393,7 @@ export default function Dashboard() {
               <span style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.4)', fontWeight: 'bold', letterSpacing: '0.05em' }}>摂取 VS 消費</span>
             </div>
             
-            <div style={{ display: 'flex', alignItems: 'center', gap: '30px', flex: 1 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '20px', flexWrap: 'wrap', justifyContent: 'center', flex: 1 }}>
               <div style={{ position: 'relative', width: '140px', height: '140px', flexShrink: 0 }}>
                 {/* Circular Progress mimicking Doughnut */}
                 <svg width="140" height="140" viewBox="0 0 140 140" style={{ transform: 'rotate(-90deg)' }}>
@@ -407,7 +407,7 @@ export default function Dashboard() {
                 </div>
               </div>
               
-              <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '15px' }}>
+              <div style={{ flex: '1 1 200px', display: 'flex', flexDirection: 'column', gap: '15px' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.85rem' }}>
                   <span style={{ color: 'rgba(255,255,255,0.6)' }}>目標摂取</span>
                   <span style={{ color: '#fff', fontWeight: 'bold' }}>{profile.targetCalories?.toLocaleString()} kcal</span>
@@ -449,7 +449,7 @@ export default function Dashboard() {
               <span style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.4)', fontWeight: 'bold', letterSpacing: '0.05em' }}>三大栄養素比率</span>
             </div>
             
-            <div style={{ display: 'flex', alignItems: 'center', gap: '30px', flex: 1 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '20px', flexWrap: 'wrap', justifyContent: 'center', flex: 1 }}>
               <div style={{ width: '140px', height: '140px', flexShrink: 0, position: 'relative' }}>
                 <Doughnut data={pfcData} options={{...pfcOptions, cutout: '80%'}} />
                 {/* Fallback empty ring if no data */}
@@ -460,7 +460,7 @@ export default function Dashboard() {
                 )}
               </div>
               
-              <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '20px' }}>
+              <div style={{ flex: '1 1 200px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
                 <div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '5px' }}>
                     <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#ff5224' }}></div>
