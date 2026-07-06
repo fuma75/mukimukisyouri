@@ -20,6 +20,7 @@ export default function Login() {
   const [estimatedResult, setEstimatedResult] = useState<any>(null);
 
   // Form State
+  const [showForm, setShowForm] = useState(false);
   const [isLoginMode, setIsLoginMode] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -597,55 +598,69 @@ export default function Login() {
           </div>
 
           <div className="animate-fade-in">
-            <form autoComplete="off" onSubmit={(e) => { e.preventDefault(); handleNext(); }}>
-              <div className="form-group" style={{ marginBottom: '20px' }}>
-                <label style={{display: 'block', fontSize: '0.9rem', fontWeight: 'bold', color: isDark ? '#DCA038' : '#B58434', letterSpacing: '0.05em', marginBottom: '8px', textAlign: 'left'}}>{isLoginMode ? 'メールアドレス' : 'メールアドレス'}</label>
-                <input type="email" name="email" autoComplete="off" placeholder="メールアドレスを入力" value={email} onChange={e => setEmail(e.target.value)} style={{ background: isDark ? '#0F0F11' : '#FFFFFF', border: isDark ? '1px solid rgba(220, 160, 56, 0.4)' : '1px solid #DCA038', borderRadius: '8px', padding: '16px', width: '100%', color: isDark ? '#fff' : '#000', outline: 'none', fontSize: '1rem', boxShadow: isDark ? 'inset 0 2px 4px rgba(0,0,0,0.5)' : 'none' }} />
+            {!showForm ? (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+                <button type="button" className="btn btn-block" style={{ padding: '16px', background: 'linear-gradient(180deg, #FDF0A6 0%, #DCA038 45%, #9C6615 55%, #E8C162 100%)', color: '#000', borderRadius: '8px', fontWeight: 'bold', border: 'none', boxShadow: '0 4px 15px rgba(0,0,0,0.5)', fontSize: '1.1rem', letterSpacing: '0.1em' }} onClick={() => { setIsLoginMode(false); setShowForm(true); }}>
+                  新規登録
+                </button>
+
+                <button type="button" className="btn btn-block" style={{ padding: '16px', background: 'transparent', color: '#DCA038', border: '1px solid #DCA038', borderRadius: '8px', fontWeight: 'bold', boxShadow: '0 4px 10px rgba(0,0,0,0.2)', fontSize: '1.1rem', letterSpacing: '0.1em' }} onClick={() => { setIsLoginMode(true); setShowForm(true); }}>
+                  ログイン
+                </button>
+
+                <div style={{ display: 'flex', alignItems: 'center', margin: '10px 0', color: '#DCA038', fontSize: '0.85rem' }}>
+                  <div style={{ flex: 1, height: '1px', background: 'rgba(220, 160, 56, 0.3)' }}></div>
+                  <div style={{ padding: '0 10px' }}>または</div>
+                  <div style={{ flex: 1, height: '1px', background: 'rgba(220, 160, 56, 0.3)' }}></div>
+                </div>
+
+                <button type="button" className="btn btn-block" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', padding: '16px', background: '#ffffff', color: '#000', border: 'none', boxShadow: '0 4px 10px rgba(0,0,0,0.5)', borderRadius: '8px', fontWeight: 'bold', fontSize: '1rem' }} onClick={handleGoogleLogin} disabled={loading}>
+                  <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" style={{ width: '20px' }} />
+                  Googleで続ける
+                </button>
               </div>
-              
-              <div className="form-group" style={{ position: 'relative', marginBottom: '20px' }}>
-                <label style={{display: 'block', fontSize: '0.9rem', fontWeight: 'bold', color: isDark ? '#DCA038' : '#B58434', letterSpacing: '0.05em', marginBottom: '8px', textAlign: 'left'}}>パスワード</label>
-                <div style={{ position: 'relative' }}>
-                  <input type={showPassword ? "text" : "password"} name="password" autoComplete="new-password" placeholder="パスワードを入力" value={password} onChange={e => setPassword(e.target.value)} style={{ background: isDark ? '#0F0F11' : '#FFFFFF', border: isDark ? '1px solid rgba(220, 160, 56, 0.4)' : '1px solid #DCA038', borderRadius: '8px', padding: '16px', width: '100%', color: isDark ? '#fff' : '#000', outline: 'none', fontSize: '1rem', boxShadow: isDark ? 'inset 0 2px 4px rgba(0,0,0,0.5)' : 'none', paddingRight: '60px' }} />
-                  <button type="button" onClick={() => setShowPassword(!showPassword)} style={{ position: 'absolute', right: '15px', top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', color: isDark ? '#DCA038' : '#B58434', fontWeight: 'bold', cursor: 'pointer', fontSize: '0.9rem' }}>
-                    {showPassword ? '非表示' : '表示'}
+            ) : (
+              <>
+                <form autoComplete="off" onSubmit={(e) => { e.preventDefault(); handleNext(); }}>
+                  <div className="form-group" style={{ marginBottom: '20px' }}>
+                    <label style={{display: 'block', fontSize: '0.9rem', fontWeight: 'bold', color: isDark ? '#DCA038' : '#B58434', letterSpacing: '0.05em', marginBottom: '8px', textAlign: 'left'}}>メールアドレス</label>
+                    <input type="email" name="email" autoComplete="off" placeholder="メールアドレスを入力" value={email} onChange={e => setEmail(e.target.value)} style={{ background: isDark ? '#0F0F11' : '#FFFFFF', border: isDark ? '1px solid rgba(220, 160, 56, 0.4)' : '1px solid #DCA038', borderRadius: '8px', padding: '16px', width: '100%', color: isDark ? '#fff' : '#000', outline: 'none', fontSize: '1rem', boxShadow: isDark ? 'inset 0 2px 4px rgba(0,0,0,0.5)' : 'none' }} />
+                  </div>
+                  
+                  <div className="form-group" style={{ position: 'relative', marginBottom: '20px' }}>
+                    <label style={{display: 'block', fontSize: '0.9rem', fontWeight: 'bold', color: isDark ? '#DCA038' : '#B58434', letterSpacing: '0.05em', marginBottom: '8px', textAlign: 'left'}}>パスワード</label>
+                    <div style={{ position: 'relative' }}>
+                      <input type={showPassword ? "text" : "password"} name="password" autoComplete="new-password" placeholder="パスワードを入力" value={password} onChange={e => setPassword(e.target.value)} style={{ background: isDark ? '#0F0F11' : '#FFFFFF', border: isDark ? '1px solid rgba(220, 160, 56, 0.4)' : '1px solid #DCA038', borderRadius: '8px', padding: '16px', width: '100%', color: isDark ? '#fff' : '#000', outline: 'none', fontSize: '1rem', boxShadow: isDark ? 'inset 0 2px 4px rgba(0,0,0,0.5)' : 'none', paddingRight: '60px' }} />
+                      <button type="button" onClick={() => setShowPassword(!showPassword)} style={{ position: 'absolute', right: '15px', top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', color: isDark ? '#DCA038' : '#B58434', fontWeight: 'bold', cursor: 'pointer', fontSize: '0.9rem' }}>
+                        {showPassword ? '非表示' : '表示'}
+                      </button>
+                    </div>
+                  </div>
+
+                  {!isLoginMode && (
+                    <div className="form-group" style={{ marginBottom: '20px' }}>
+                      <label style={{display: 'block', fontSize: '0.9rem', fontWeight: 'bold', color: isDark ? '#DCA038' : '#B58434', letterSpacing: '0.05em', marginBottom: '8px', textAlign: 'left'}}>ユーザー名</label>
+                      <input type="text" name="nickname" autoComplete="off" placeholder="ユーザー名を入力" value={name} onChange={e => setName(e.target.value)} style={{ background: isDark ? '#0F0F11' : '#FFFFFF', border: isDark ? '1px solid rgba(220, 160, 56, 0.4)' : '1px solid #DCA038', borderRadius: '8px', padding: '16px', width: '100%', color: isDark ? '#fff' : '#000', outline: 'none', fontSize: '1rem', boxShadow: isDark ? 'inset 0 2px 4px rgba(0,0,0,0.5)' : 'none' }} />
+                    </div>
+                  )}
+
+                  {isLoginMode && (
+                    <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px', fontSize: '0.85rem', color: '#DCA038', letterSpacing: '0.05em', fontWeight: 'bold' }}>
+                      <input type="checkbox" id="keepLoggedIn" style={{ marginRight: '8px', width: '16px', height: '16px', accentColor: '#DCA038' }} defaultChecked />
+                      <label htmlFor="keepLoggedIn">ログイン状態を保持</label>
+                    </div>
+                  )}
+                  
+                  <button type="submit" className="btn btn-block" style={{ marginTop: '10px', padding: '16px', background: 'linear-gradient(180deg, #FDF0A6 0%, #DCA038 45%, #9C6615 55%, #E8C162 100%)', color: '#000', borderRadius: '8px', fontWeight: 'bold', border: 'none', boxShadow: '0 4px 15px rgba(0,0,0,0.5)', fontSize: '1.1rem', letterSpacing: '0.1em' }} disabled={loading}>
+                    {loading ? <i className="fa-solid fa-spinner fa-spin"></i> : (isLoginMode ? 'ログイン' : '新規登録')}
                   </button>
-                </div>
-              </div>
+                </form>
 
-              {!isLoginMode && (
-                <div className="form-group" style={{ marginBottom: '20px' }}>
-                  <label style={{display: 'block', fontSize: '0.9rem', fontWeight: 'bold', color: isDark ? '#DCA038' : '#B58434', letterSpacing: '0.05em', marginBottom: '8px', textAlign: 'left'}}>ユーザー名</label>
-                  <input type="text" name="nickname" autoComplete="off" placeholder="ユーザー名を入力" value={name} onChange={e => setName(e.target.value)} style={{ background: isDark ? '#0F0F11' : '#FFFFFF', border: isDark ? '1px solid rgba(220, 160, 56, 0.4)' : '1px solid #DCA038', borderRadius: '8px', padding: '16px', width: '100%', color: isDark ? '#fff' : '#000', outline: 'none', fontSize: '1rem', boxShadow: isDark ? 'inset 0 2px 4px rgba(0,0,0,0.5)' : 'none' }} />
-                </div>
-              )}
-
-              {isLoginMode && (
-                <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px', fontSize: '0.85rem', color: '#DCA038', letterSpacing: '0.05em', fontWeight: 'bold' }}>
-                  <input type="checkbox" id="keepLoggedIn" style={{ marginRight: '8px', width: '16px', height: '16px', accentColor: '#DCA038' }} defaultChecked />
-                  <label htmlFor="keepLoggedIn">ログイン状態を保持</label>
-                </div>
-              )}
-              
-              <button type="submit" className="btn btn-block" style={{ marginTop: '10px', padding: '16px', background: 'linear-gradient(180deg, #FDF0A6 0%, #DCA038 45%, #9C6615 55%, #E8C162 100%)', color: '#000', borderRadius: '8px', fontWeight: 'bold', border: 'none', boxShadow: '0 4px 15px rgba(0,0,0,0.5)', fontSize: '1.1rem', letterSpacing: '0.1em' }} disabled={loading}>
-                {loading ? <i className="fa-solid fa-spinner fa-spin"></i> : (isLoginMode ? 'ログイン' : '新規登録')}
-              </button>
-            </form>
-
-            <div style={{ display: 'flex', alignItems: 'center', margin: '15px 0', color: '#DCA038', fontSize: '0.85rem' }}>
-              <div style={{ flex: 1, height: '1px', background: 'rgba(220, 160, 56, 0.3)' }}></div>
-              <div style={{ padding: '0 10px' }}>または</div>
-              <div style={{ flex: 1, height: '1px', background: 'rgba(220, 160, 56, 0.3)' }}></div>
-            </div>
-
-            <button type="button" className="btn btn-block" style={{ padding: '14px', marginBottom: '12px', background: 'transparent', color: '#DCA038', border: '1px solid #DCA038', borderRadius: '8px', fontWeight: 'bold', boxShadow: '0 4px 10px rgba(0,0,0,0.2)', fontSize: '1rem' }} onClick={() => setIsLoginMode(!isLoginMode)}>
-              {isLoginMode ? '新規登録' : 'ログイン画面へ戻る'}
-            </button>
-
-            <button type="button" className="btn btn-block" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', padding: '12px', background: '#ffffff', color: '#000', border: 'none', boxShadow: '0 4px 10px rgba(0,0,0,0.5)', borderRadius: '8px', fontWeight: 'bold', fontSize: '0.9rem' }} onClick={handleGoogleLogin} disabled={loading}>
-              <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" style={{ width: '18px' }} />
-              Googleで{isLoginMode ? 'ログイン' : '登録'}
-            </button>
+                <button type="button" className="btn btn-block" style={{ marginTop: '15px', padding: '14px', background: 'transparent', color: 'rgba(255,255,255,0.5)', border: 'none', fontWeight: 'bold', fontSize: '0.9rem' }} onClick={() => setShowForm(false)}>
+                  キャンセル
+                </button>
+              </>
+            )}
             
           </div>
         </div>
