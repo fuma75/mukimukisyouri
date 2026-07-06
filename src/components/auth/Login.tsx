@@ -138,6 +138,26 @@ export default function Login() {
     setStep(2);
   };
 
+  
+  const isNextDisabled = () => {
+    switch(step) {
+      case 2: return !gender;
+      case 3: return !goal;
+      case 4: return targetAreas.length === 0;
+      case 5: return !dob;
+      case 6: return !height;
+      case 7: return !weight;
+      case 8: return !targetWeight;
+      case 9: return !environment;
+      case 10: return exerciseTypes.length === 0;
+      case 11: return !workoutLevel;
+      case 12: return physicalIssues.length === 0;
+      case 13: return !activityLevel;
+      case 14: return !frequency || loading;
+      default: return false;
+    }
+  };
+
   const handleNext = async () => {
     if (step === 1) {
       if (!email || !password) return alert("メールアドレスとパスワードを入力してください");
@@ -668,7 +688,7 @@ export default function Login() {
 
       {/* STEP 2: Gender */}
       {step === 2 && (
-        <div style={{ maxWidth: '500px', margin: '0 auto', padding: '10px 20px 20px', width: '100%', display: 'flex', flexDirection: 'column', minHeight: '100dvh', justifyContent: 'center' }}>
+        <div style={{ maxWidth: '500px', margin: '0 auto', padding: '10px 20px 100px', width: '100%', display: 'flex', flexDirection: 'column', minHeight: '100dvh', justifyContent: 'center' }}>
           {renderWizardHeader("01 目標とターゲット部位", 2)}
           
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '16px', marginTop: '10px', marginBottom: '20px' }}>
@@ -721,18 +741,14 @@ export default function Login() {
             </button>
           </div>
 
-          <div>
-            <button onClick={handleNext} disabled={!gender} style={{ width: '100%', padding: '16px', background: gender ? 'linear-gradient(180deg, #FDF0A6 0%, #DCA038 45%, #9C6615 55%, #E8C162 100%)' : 'rgba(255, 255, 255, 0.1)', boxShadow: gender ? '0 4px 15px rgba(0,0,0,0.5)' : 'none', color: gender ? '#000' : 'rgba(255, 255, 255, 0.3)', letterSpacing: gender ? '0.1em' : 'normal', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer' }}>
-              次へ　→
-            </button>
-          </div>
+          
         </div>
       )}
 
 
       {/* STEP 3: Goal */}
       {step === 3 && (
-        <div style={{ maxWidth: '500px', margin: '0 auto', padding: '10px 20px 20px', width: '100%', display: 'flex', flexDirection: 'column', minHeight: '100dvh', justifyContent: 'center' }}>
+        <div style={{ maxWidth: '500px', margin: '0 auto', padding: '10px 20px 100px', width: '100%', display: 'flex', flexDirection: 'column', minHeight: '100dvh', justifyContent: 'center' }}>
           {renderWizardHeader("01 目標とターゲット部位", 3)}
           
           <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginTop: '10px', marginBottom: '20px' }}>
@@ -745,18 +761,14 @@ export default function Login() {
             </div>
           </div>
 
-          <div>
-            <button onClick={handleNext} disabled={!goal} style={{ width: '100%', padding: '16px', background: goal ? 'linear-gradient(180deg, #FDF0A6 0%, #DCA038 45%, #9C6615 55%, #E8C162 100%)' : 'rgba(255, 255, 255, 0.1)', boxShadow: goal ? '0 4px 15px rgba(0,0,0,0.5)' : 'none', color: goal ? '#000' : 'rgba(255, 255, 255, 0.3)', letterSpacing: goal ? '0.1em' : 'normal', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer' }}>
-              次へ　→
-            </button>
-          </div>
+          
         </div>
       )}
 
 
       {/* STEP 4: Target Area */}
       {step === 4 && (
-        <div style={{ maxWidth: '500px', margin: '0 auto', padding: '10px 20px 20px', width: '100%', display: 'flex', flexDirection: 'column', minHeight: '100dvh', justifyContent: 'center' }}>
+        <div style={{ maxWidth: '500px', margin: '0 auto', padding: '10px 20px 100px', width: '100%', display: 'flex', flexDirection: 'column', minHeight: '100dvh', justifyContent: 'center' }}>
           {renderWizardHeader("01 目標とターゲット部位", 4)}
           
           <div style={{ marginTop: '10px', marginBottom: '16px' }}>
@@ -772,18 +784,14 @@ export default function Login() {
             </div>
           </div>
 
-          <div>
-            <button onClick={handleNext} disabled={targetAreas.length === 0} style={{ width: '100%', padding: '16px', background: targetAreas.length > 0 ? 'linear-gradient(180deg, #FDF0A6 0%, #DCA038 45%, #9C6615 55%, #E8C162 100%)' : 'rgba(255, 255, 255, 0.1)', boxShadow: targetAreas.length > 0 ? '0 4px 15px rgba(0,0,0,0.5)' : 'none', color: targetAreas.length > 0 ? '#000' : 'rgba(255, 255, 255, 0.3)', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer' }}>
-              次へ　→
-            </button>
-          </div>
+          
         </div>
       )}
 
 
       {/* STEP 5: Date of Birth */}
       {step === 5 && (
-        <div style={{ maxWidth: '500px', margin: '0 auto', padding: '10px 20px 20px', width: '100%', display: 'flex', flexDirection: 'column', minHeight: '100dvh', justifyContent: 'center' }}>
+        <div style={{ maxWidth: '500px', margin: '0 auto', padding: '10px 20px 100px', width: '100%', display: 'flex', flexDirection: 'column', minHeight: '100dvh', justifyContent: 'center' }}>
           {renderWizardHeader("02 身体情報の設定", 5)}
           
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px', marginBottom: '16px' }}>
@@ -799,7 +807,7 @@ export default function Login() {
                     setDob(`${y}-01-01`);
                   }
                 }} 
-                style={{ fontSize: '4rem', color: '#DCA038', textShadow: '0 2px 10px rgba(220, 160, 56, 0.5)', fontWeight: 'bold', background: 'transparent', border: 'none', borderBottom: '2px solid rgba(220, 160, 56, 0.5)', width: '140px', textAlign: 'center', outline: 'none', padding: 0, margin: 0 }} 
+                style={{ fontSize: '4rem', color: '#DCA038', textShadow: '0 2px 10px rgba(220, 160, 56, 0.5)', fontWeight: 'bold', background: 'transparent', border: 'none', borderBottom: '2px solid rgba(220, 160, 56, 0.5)', width: '140px', textAlign: 'center', outline: 'none', padding: 0, margin: 0, lineHeight: '1.2', paddingBottom: '4px' }} 
               />
               <span style={{ fontSize: '1.5rem', color: 'rgba(220, 160, 56, 0.5)', marginLeft: '10px', fontWeight: 'bold' }}>年</span>
             </div>
@@ -809,17 +817,13 @@ export default function Login() {
             </div>
           </div>
 
-          <div>
-            <button onClick={handleNext} disabled={!dob} style={{ width: '100%', padding: '14px', background: dob ? 'linear-gradient(180deg, #FDF0A6 0%, #DCA038 45%, #9C6615 55%, #E8C162 100%)' : 'rgba(255, 255, 255, 0.1)', boxShadow: dob ? '0 4px 15px rgba(0,0,0,0.5)' : 'none', color: dob ? '#000' : 'rgba(255, 255, 255, 0.3)', letterSpacing: dob ? '0.1em' : 'normal', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer' }}>
-              次へ
-            </button>
-          </div>
+          
         </div>
       )}
 
       {/* STEP 6: Height */}
       {step === 6 && (
-        <div style={{ maxWidth: '500px', margin: '0 auto', padding: '10px 20px 20px', width: '100%', display: 'flex', flexDirection: 'column', minHeight: '100dvh', justifyContent: 'center' }}>
+        <div style={{ maxWidth: '500px', margin: '0 auto', padding: '10px 20px 100px', width: '100%', display: 'flex', flexDirection: 'column', minHeight: '100dvh', justifyContent: 'center' }}>
           {renderWizardHeader("02 身体情報の設定", 6)}
           
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px', marginBottom: '16px' }}>
@@ -830,7 +834,7 @@ export default function Login() {
                 type="number" 
                 value={height} 
                 onChange={(e) => { setHeight(e.target.value); setHeightUnit('cm'); }} 
-                style={{ fontSize: '4rem', color: '#DCA038', textShadow: '0 2px 10px rgba(220, 160, 56, 0.5)', fontWeight: 'bold', background: 'transparent', border: 'none', borderBottom: '2px solid rgba(220, 160, 56, 0.5)', width: '180px', textAlign: 'center', outline: 'none', padding: 0, margin: 0 }} 
+                style={{ fontSize: '4rem', color: '#DCA038', textShadow: '0 2px 10px rgba(220, 160, 56, 0.5)', fontWeight: 'bold', background: 'transparent', border: 'none', borderBottom: '2px solid rgba(220, 160, 56, 0.5)', width: '180px', textAlign: 'center', outline: 'none', padding: 0, margin: 0, lineHeight: '1.2', paddingBottom: '4px' }} 
               />
               <span style={{ fontSize: '1.5rem', color: 'rgba(220, 160, 56, 0.5)', marginLeft: '10px', fontWeight: 'bold' }}>cm</span>
             </div>
@@ -847,17 +851,13 @@ export default function Login() {
             </div>
           </div>
 
-          <div>
-            <button onClick={handleNext} disabled={!height} style={{ width: '100%', padding: '14px', background: height ? 'linear-gradient(180deg, #FDF0A6 0%, #DCA038 45%, #9C6615 55%, #E8C162 100%)' : 'rgba(255, 255, 255, 0.1)', boxShadow: height ? '0 4px 15px rgba(0,0,0,0.5)' : 'none', color: height ? '#000' : 'rgba(255, 255, 255, 0.3)', letterSpacing: height ? '0.1em' : 'normal', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer' }}>
-              次へ
-            </button>
-          </div>
+          
         </div>
       )}
 
       {/* STEP 7: Current Weight */}
       {step === 7 && (
-        <div style={{ maxWidth: '500px', margin: '0 auto', padding: '10px 20px 20px', width: '100%', display: 'flex', flexDirection: 'column', minHeight: '100dvh', justifyContent: 'center' }}>
+        <div style={{ maxWidth: '500px', margin: '0 auto', padding: '10px 20px 100px', width: '100%', display: 'flex', flexDirection: 'column', minHeight: '100dvh', justifyContent: 'center' }}>
           {renderWizardHeader("02 身体情報の設定", 7)}
           
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px', marginBottom: '16px' }}>
@@ -881,7 +881,7 @@ export default function Login() {
                 type="number" 
                 value={weight} 
                 onChange={(e) => setWeight(e.target.value)} 
-                style={{ fontSize: '4rem', color: '#DCA038', textShadow: '0 2px 10px rgba(220, 160, 56, 0.5)', fontWeight: 'bold', background: 'transparent', border: 'none', borderBottom: '2px solid rgba(220, 160, 56, 0.5)', width: '180px', textAlign: 'center', outline: 'none', padding: 0, margin: 0 }} 
+                style={{ fontSize: '4rem', color: '#DCA038', textShadow: '0 2px 10px rgba(220, 160, 56, 0.5)', fontWeight: 'bold', background: 'transparent', border: 'none', borderBottom: '2px solid rgba(220, 160, 56, 0.5)', width: '180px', textAlign: 'center', outline: 'none', padding: 0, margin: 0, lineHeight: '1.2', paddingBottom: '4px' }} 
               />
               <span style={{ fontSize: '1.5rem', color: 'rgba(220, 160, 56, 0.5)', marginLeft: '10px', fontWeight: 'bold' }}>{weightUnit}</span>
             </div>
@@ -928,17 +928,13 @@ export default function Login() {
             })()}
           </div>
 
-          <div>
-            <button onClick={handleNext} style={{ width: '100%', padding: '14px', background: 'linear-gradient(180deg, #FDF0A6 0%, #DCA038 45%, #9C6615 55%, #E8C162 100%)', color: '#fff', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer' }}>
-              次へ
-            </button>
-          </div>
+          
         </div>
       )}
 
       {/* STEP 8: Target Weight */}
       {step === 8 && (
-        <div style={{ maxWidth: '500px', margin: '0 auto', padding: '10px 20px 20px', width: '100%', display: 'flex', flexDirection: 'column', minHeight: '100dvh', justifyContent: 'center' }}>
+        <div style={{ maxWidth: '500px', margin: '0 auto', padding: '10px 20px 100px', width: '100%', display: 'flex', flexDirection: 'column', minHeight: '100dvh', justifyContent: 'center' }}>
           {renderWizardHeader("02 身体情報の設定", 8)}
           
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px', marginBottom: '16px' }}>
@@ -962,7 +958,7 @@ export default function Login() {
                 type="number" 
                 value={targetWeight} 
                 onChange={(e) => setTargetWeight(e.target.value)} 
-                style={{ fontSize: '4rem', color: '#DCA038', textShadow: '0 2px 10px rgba(220, 160, 56, 0.5)', fontWeight: 'bold', background: 'transparent', border: 'none', borderBottom: '2px solid rgba(220, 160, 56, 0.5)', width: '180px', textAlign: 'center', outline: 'none', padding: 0, margin: 0 }} 
+                style={{ fontSize: '4rem', color: '#DCA038', textShadow: '0 2px 10px rgba(220, 160, 56, 0.5)', fontWeight: 'bold', background: 'transparent', border: 'none', borderBottom: '2px solid rgba(220, 160, 56, 0.5)', width: '180px', textAlign: 'center', outline: 'none', padding: 0, margin: 0, lineHeight: '1.2', paddingBottom: '4px' }} 
               />
               <span style={{ fontSize: '1.5rem', color: 'rgba(220, 160, 56, 0.5)', marginLeft: '10px', fontWeight: 'bold' }}>{weightUnit}</span>
             </div>
@@ -1009,17 +1005,13 @@ export default function Login() {
             })()}
           </div>
 
-          <div>
-            <button onClick={handleNext} style={{ width: '100%', padding: '14px', background: 'linear-gradient(180deg, #FDF0A6 0%, #DCA038 45%, #9C6615 55%, #E8C162 100%)', color: '#fff', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer' }}>
-              次へ
-            </button>
-          </div>
+          
         </div>
       )}
 
       {/* STEP 9: Environment */}
       {step === 9 && (
-        <div style={{ maxWidth: '500px', margin: '0 auto', padding: '10px 20px 20px', width: '100%', display: 'flex', flexDirection: 'column', minHeight: '100dvh', justifyContent: 'center' }}>
+        <div style={{ maxWidth: '500px', margin: '0 auto', padding: '10px 20px 100px', width: '100%', display: 'flex', flexDirection: 'column', minHeight: '100dvh', justifyContent: 'center' }}>
           {renderWizardHeader("03 トレーニング環境", 9)}
           
           <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '16px' }}>
@@ -1033,17 +1025,13 @@ export default function Login() {
             </div>
           </div>
 
-          <div>
-            <button onClick={handleNext} disabled={!environment} style={{ width: '100%', padding: '14px', background: environment ? 'linear-gradient(180deg, #FDF0A6 0%, #DCA038 45%, #9C6615 55%, #E8C162 100%)' : 'rgba(255, 255, 255, 0.1)', boxShadow: environment ? '0 4px 15px rgba(0,0,0,0.5)' : 'none', color: environment ? '#000' : 'rgba(255, 255, 255, 0.3)', letterSpacing: environment ? '0.1em' : 'normal', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer' }}>
-              次へ
-            </button>
-          </div>
+          
         </div>
       )}
 
       {/* STEP 10: Exercise Limitations */}
       {step === 10 && (
-        <div style={{ maxWidth: '500px', margin: '0 auto', padding: '10px 20px 20px', width: '100%', display: 'flex', flexDirection: 'column', minHeight: '100dvh', justifyContent: 'center' }}>
+        <div style={{ maxWidth: '500px', margin: '0 auto', padding: '10px 20px 100px', width: '100%', display: 'flex', flexDirection: 'column', minHeight: '100dvh', justifyContent: 'center' }}>
           {renderWizardHeader("03 トレーニング環境", 10)}
           
           <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '16px' }}>
@@ -1057,17 +1045,13 @@ export default function Login() {
             </div>
           </div>
 
-          <div>
-            <button onClick={handleNext} disabled={exerciseTypes.length === 0} style={{ width: '100%', padding: '14px', background: exerciseTypes.length > 0 ? 'linear-gradient(180deg, #FDF0A6 0%, #DCA038 45%, #9C6615 55%, #E8C162 100%)' : 'rgba(255, 255, 255, 0.1)', boxShadow: exerciseTypes.length > 0 ? '0 4px 15px rgba(217, 119, 6, 0.3)' : 'none', color: exerciseTypes.length > 0 ? '#000' : 'rgba(255, 255, 255, 0.3)', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer' }}>
-              次へ
-            </button>
-          </div>
+          
         </div>
       )}
 
       {/* STEP 11: Workout Level */}
       {step === 11 && (
-        <div style={{ maxWidth: '500px', margin: '0 auto', padding: '10px 20px 20px', width: '100%', display: 'flex', flexDirection: 'column', minHeight: '100dvh', justifyContent: 'center' }}>
+        <div style={{ maxWidth: '500px', margin: '0 auto', padding: '10px 20px 100px', width: '100%', display: 'flex', flexDirection: 'column', minHeight: '100dvh', justifyContent: 'center' }}>
           {renderWizardHeader("03 フィットネスレベル評価", 11)}
           
           <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '16px' }}>
@@ -1080,17 +1064,13 @@ export default function Login() {
             </div>
           </div>
 
-          <div>
-            <button onClick={handleNext} disabled={!workoutLevel} style={{ width: '100%', padding: '14px', background: workoutLevel ? 'linear-gradient(180deg, #FDF0A6 0%, #DCA038 45%, #9C6615 55%, #E8C162 100%)' : 'rgba(255, 255, 255, 0.1)', boxShadow: workoutLevel ? '0 4px 15px rgba(0,0,0,0.5)' : 'none', color: workoutLevel ? '#000' : 'rgba(255, 255, 255, 0.3)', letterSpacing: workoutLevel ? '0.1em' : 'normal', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer' }}>
-              次へ
-            </button>
-          </div>
+          
         </div>
       )}
 
       {/* STEP 12: Physical Issues */}
       {step === 12 && (
-        <div style={{ maxWidth: '500px', margin: '0 auto', padding: '10px 20px 20px', width: '100%', display: 'flex', flexDirection: 'column', minHeight: '100dvh', justifyContent: 'center' }}>
+        <div style={{ maxWidth: '500px', margin: '0 auto', padding: '10px 20px 100px', width: '100%', display: 'flex', flexDirection: 'column', minHeight: '100dvh', justifyContent: 'center' }}>
           {renderWizardHeader("04 ライフスタイル", 12)}
           
           <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '16px' }}>
@@ -1134,17 +1114,13 @@ export default function Login() {
             </div>
           </div>
 
-          <div>
-            <button onClick={handleNext} disabled={physicalIssues.length === 0} style={{ width: '100%', padding: '14px', background: physicalIssues.length > 0 ? 'linear-gradient(180deg, #FDF0A6 0%, #DCA038 45%, #9C6615 55%, #E8C162 100%)' : 'rgba(255, 255, 255, 0.1)', color: physicalIssues.length > 0 ? '#000' : 'rgba(255, 255, 255, 0.3)', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer' }}>
-              次へ
-            </button>
-          </div>
+          
         </div>
       )}
 
       {/* STEP 13: Activity Level */}
       {step === 13 && (
-        <div style={{ maxWidth: '500px', margin: '0 auto', padding: '10px 20px 20px', width: '100%', display: 'flex', flexDirection: 'column', minHeight: '100dvh', justifyContent: 'center' }}>
+        <div style={{ maxWidth: '500px', margin: '0 auto', padding: '10px 20px 100px', width: '100%', display: 'flex', flexDirection: 'column', minHeight: '100dvh', justifyContent: 'center' }}>
           {renderWizardHeader("04 ライフスタイル", 13)}
           
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', paddingBottom: '10px' }}>
@@ -1155,17 +1131,13 @@ export default function Login() {
             </div>
           </div>
 
-          <div>
-            <button onClick={handleNext} disabled={!activityLevel} style={{ width: '100%', padding: '14px', background: activityLevel ? 'linear-gradient(180deg, #FDF0A6 0%, #DCA038 45%, #9C6615 55%, #E8C162 100%)' : 'rgba(255, 255, 255, 0.1)', boxShadow: activityLevel ? '0 4px 15px rgba(0,0,0,0.5)' : 'none', color: activityLevel ? '#000' : 'rgba(255, 255, 255, 0.3)', letterSpacing: activityLevel ? '0.1em' : 'normal', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer' }}>
-              次へ
-            </button>
-          </div>
+          
         </div>
       )}
 
       {/* STEP 14: Frequency */}
       {step === 14 && (
-        <div style={{ maxWidth: '500px', margin: '0 auto', padding: '10px 20px 20px', width: '100%', display: 'flex', flexDirection: 'column', minHeight: '100dvh', justifyContent: 'center' }}>
+        <div style={{ maxWidth: '500px', margin: '0 auto', padding: '10px 20px 100px', width: '100%', display: 'flex', flexDirection: 'column', minHeight: '100dvh', justifyContent: 'center' }}>
           {renderWizardHeader("04 ライフスタイル", 14)}
           
           <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '16px' }}>
@@ -1179,12 +1151,7 @@ export default function Login() {
             </div>
           </div>
 
-          <div>
-            <button type="button" onClick={handleCalculateAI} disabled={!frequency || loading} style={{ width: '100%', padding: '14px', background: frequency ? 'linear-gradient(180deg, #FDF0A6 0%, #DCA038 45%, #9C6615 55%, #E8C162 100%)' : 'rgba(255, 255, 255, 0.1)', boxShadow: frequency ? '0 4px 15px rgba(0,0,0,0.5)' : 'none', color: frequency ? '#000' : 'rgba(255, 255, 255, 0.3)', letterSpacing: frequency ? '0.1em' : 'normal', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px' }}>
-              {loading ? <i className="fa-solid fa-spinner fa-spin"></i> : <i className="fa-solid fa-robot"></i>}
-              {loading ? 'AIで目標を計算中...' : 'AIで目標を計算して完了'}
-            </button>
-          </div>
+          
         </div>
       )}
 
@@ -1295,6 +1262,23 @@ export default function Login() {
         </div>
       )}
 
+
+      {/* Sticky Wizard Footer */}
+      {step >= 2 && step <= 14 && (
+        <div style={{ position: 'fixed', bottom: 0, left: 0, right: 0, padding: '15px 20px', background: isDark ? 'rgba(15,15,17,0.95)' : 'rgba(255,255,255,0.95)', borderTop: `1px solid ${isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)'}`, zIndex: 100, display: 'flex', gap: '10px', backdropFilter: 'blur(10px)', paddingBottom: 'calc(15px + env(safe-area-inset-bottom))' }}>
+          <button type="button" onClick={() => setStep(step - 1)} style={{ padding: '14px', width: '100px', background: 'transparent', border: '1px solid #DCA038', color: '#DCA038', borderRadius: '30px', fontSize: '1rem', fontWeight: 'bold', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            戻る
+          </button>
+          <button type="button" onClick={step === 14 ? handleCalculateAI : handleNext} disabled={isNextDisabled()} style={{ flex: 1, padding: '14px', background: !isNextDisabled() ? 'linear-gradient(180deg, #FDF0A6 0%, #DCA038 45%, #9C6615 55%, #E8C162 100%)' : 'rgba(255, 255, 255, 0.1)', boxShadow: !isNextDisabled() ? '0 4px 15px rgba(0,0,0,0.5)' : 'none', color: !isNextDisabled() ? '#000' : 'rgba(255, 255, 255, 0.3)', letterSpacing: !isNextDisabled() ? '0.1em' : 'normal', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px' }}>
+            {step === 14 ? (
+              <>
+                {loading ? <i className="fa-solid fa-spinner fa-spin"></i> : <i className="fa-solid fa-robot"></i>}
+                <span style={{ marginLeft: '8px' }}>{loading ? 'AIで目標を計算中...' : 'AIで目標を計算して完了'}</span>
+              </>
+            ) : '次へ'}
+          </button>
+        </div>
+      )}
     </div>
   );
 }
