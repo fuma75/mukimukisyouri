@@ -12,7 +12,7 @@ export default function Header() {
 
   const getPageTitle = () => {
     switch (activeTab) {
-      case 'dashboard': return 'ダッシュボード';
+      case 'dashboard': return 'ホーム';
       case 'workout': return '筋トレ記録';
       case 'meal': return '食事管理';
       case 'equipment': return '器具ガイド＆プラン';

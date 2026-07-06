@@ -252,14 +252,14 @@ export default function Dashboard() {
       <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '20px 16px' }}>
         
         {/* Header matching image */}
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px', gap: '8px', flexWrap: 'wrap' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px', gap: '8px', flexWrap: 'nowrap' }}>
           <div style={{ minWidth: 0, flex: '0 1 auto' }}>
-            <h1 className="logo-text-premium" style={{ fontSize: 'clamp(20px, 5.5vw, 32px)', margin: 0, whiteSpace: 'nowrap', textShadow: '0 2px 10px rgba(220,160,56,0.2)', color: '#fff' }}>ダッシュボード</h1>
+            <h1 className="logo-text-premium" style={{ fontSize: 'clamp(20px, 5.5vw, 32px)', margin: 0, whiteSpace: 'nowrap', textShadow: '0 2px 10px rgba(220,160,56,0.2)', color: '#fff' }}>ホーム</h1>
             <div style={{ color: 'rgba(255,255,255,0.6)', fontSize: 'clamp(10px, 2.5vw, 13px)', marginTop: '4px', fontWeight: 'bold', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
               {todayStrHeader}
             </div>
           </div>
-          <div style={{ display: 'flex', gap: '8px', alignItems: 'center', flexShrink: 0, position: 'relative', marginLeft: 'auto' }}>
+          <div style={{ display: 'flex', gap: '8px', alignItems: 'center', flexShrink: 0, position: 'relative' }}>
             <div style={{ background: 'rgba(0,0,0,0.5)', border: '1px solid #ef4444', padding: '5px 10px', borderRadius: '20px', color: '#ef4444', fontSize: 'clamp(10px, 2.5vw, 12px)', fontWeight: 'bold', whiteSpace: 'nowrap' }}>
               <i className="fa-solid fa-fire"></i> {streak || profile.streak || 0}日連続
             </div>
