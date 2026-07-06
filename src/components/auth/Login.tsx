@@ -768,15 +768,11 @@ export default function Login() {
 
       {/* STEP 5: Date of Birth */}
       {step === 5 && (
-        <div style={{ flex: '1 0 auto', maxWidth: '600px', margin: '0 auto', padding: '10px 15px 15px', width: '100%', display: 'flex', flexDirection: 'column' }}>
+        <div style={{ maxWidth: '500px', margin: '0 auto', padding: '10px 20px 20px', width: '100%', display: 'flex', flexDirection: 'column', minHeight: '100dvh', justifyContent: 'center' }}>
           {renderWizardHeader("02 身体情報の設定", 5)}
           
-          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px', marginBottom: '16px' }}>
             <h2 className="logo-text-premium" style={{ textAlign: 'center', fontSize: 'clamp(1.3rem, 5vw, 1.6rem)', marginBottom: '15px' }}>生まれた年は？</h2>
-            <div style={{ background: 'rgba(20,20,20,0.5)', border: '1px solid rgba(220, 160, 56, 0.3)', padding: '15px 20px', borderRadius: '12px', display: 'flex', alignItems: 'center', gap: '15px', marginBottom: '20px', width: '100%', maxWidth: '400px' }}>
-              <i className="fa-solid fa-clipboard-list" style={{ fontSize: '1.5rem', color: '#DCA038' }}></i>
-              <p style={{ margin: 0, color: 'rgba(255, 255, 255, 0.7)', fontSize: '0.9rem', lineHeight: 1.5 }}>あなたの年齢グループに最も適したワークアウトに調整しやすくなります。</p>
-            </div>
             
             <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'center', marginBottom: '10px' }}>
               <input 
@@ -798,7 +794,7 @@ export default function Login() {
             </div>
           </div>
 
-          <div style={{ padding: '10px 0' }}>
+          <div>
             <button onClick={handleNext} disabled={!dob} style={{ width: '100%', padding: '14px', background: dob ? 'linear-gradient(180deg, #FDF0A6 0%, #DCA038 45%, #9C6615 55%, #E8C162 100%)' : 'rgba(255, 255, 255, 0.1)', boxShadow: dob ? '0 4px 15px rgba(0,0,0,0.5)' : 'none', color: dob ? '#000' : 'rgba(255, 255, 255, 0.3)', letterSpacing: dob ? '0.1em' : 'normal', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer' }}>
               次へ
             </button>
@@ -808,10 +804,10 @@ export default function Login() {
 
       {/* STEP 6: Height */}
       {step === 6 && (
-        <div style={{ flex: '1 0 auto', maxWidth: '600px', margin: '0 auto', padding: '10px 15px 15px', width: '100%', display: 'flex', flexDirection: 'column' }}>
+        <div style={{ maxWidth: '500px', margin: '0 auto', padding: '10px 20px 20px', width: '100%', display: 'flex', flexDirection: 'column', minHeight: '100dvh', justifyContent: 'center' }}>
           {renderWizardHeader("02 身体情報の設定", 6)}
           
-          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px', marginBottom: '16px' }}>
             <h2 className="logo-text-premium" style={{ textAlign: 'center', fontSize: 'clamp(1.3rem, 5vw, 1.6rem)', marginBottom: '15px' }}>身長を入力してください。</h2>
 
             <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'center', marginBottom: '10px' }}>
@@ -836,7 +832,7 @@ export default function Login() {
             </div>
           </div>
 
-          <div style={{ padding: '10px 0' }}>
+          <div>
             <button onClick={handleNext} disabled={!height} style={{ width: '100%', padding: '14px', background: height ? 'linear-gradient(180deg, #FDF0A6 0%, #DCA038 45%, #9C6615 55%, #E8C162 100%)' : 'rgba(255, 255, 255, 0.1)', boxShadow: height ? '0 4px 15px rgba(0,0,0,0.5)' : 'none', color: height ? '#000' : 'rgba(255, 255, 255, 0.3)', letterSpacing: height ? '0.1em' : 'normal', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer' }}>
               次へ
             </button>
@@ -846,10 +842,10 @@ export default function Login() {
 
       {/* STEP 7: Current Weight */}
       {step === 7 && (
-        <div style={{ flex: '1 0 auto', maxWidth: '600px', margin: '0 auto', padding: '10px 15px 15px', width: '100%', display: 'flex', flexDirection: 'column' }}>
+        <div style={{ maxWidth: '500px', margin: '0 auto', padding: '10px 20px 20px', width: '100%', display: 'flex', flexDirection: 'column', minHeight: '100dvh', justifyContent: 'center' }}>
           {renderWizardHeader("02 身体情報の設定", 7)}
           
-          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px', marginBottom: '16px' }}>
             <h2 className="logo-text-premium" style={{ textAlign: 'center', fontSize: 'clamp(1.3rem, 5vw, 1.6rem)', marginBottom: '15px' }}>現在の体重を入力してください。</h2>
             
             <div style={{ display: 'flex', border: '1px solid #DCA038', borderRadius: '30px', overflow: 'hidden', marginBottom: '10px' }}>
@@ -917,7 +913,7 @@ export default function Login() {
             })()}
           </div>
 
-          <div style={{ padding: '10px 0' }}>
+          <div>
             <button onClick={handleNext} style={{ width: '100%', padding: '14px', background: 'linear-gradient(180deg, #FDF0A6 0%, #DCA038 45%, #9C6615 55%, #E8C162 100%)', color: '#fff', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer' }}>
               次へ
             </button>
@@ -927,10 +923,10 @@ export default function Login() {
 
       {/* STEP 8: Target Weight */}
       {step === 8 && (
-        <div style={{ flex: '1 0 auto', maxWidth: '600px', margin: '0 auto', padding: '10px 15px 15px', width: '100%', display: 'flex', flexDirection: 'column' }}>
+        <div style={{ maxWidth: '500px', margin: '0 auto', padding: '10px 20px 20px', width: '100%', display: 'flex', flexDirection: 'column', minHeight: '100dvh', justifyContent: 'center' }}>
           {renderWizardHeader("02 身体情報の設定", 8)}
           
-          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px', marginBottom: '16px' }}>
             <h2 className="logo-text-premium" style={{ textAlign: 'center', fontSize: 'clamp(1.3rem, 5vw, 1.6rem)', marginBottom: '15px' }}>目標体重を入力してください。</h2>
             
             <div style={{ display: 'flex', border: '1px solid #DCA038', borderRadius: '30px', overflow: 'hidden', marginBottom: '10px' }}>
@@ -998,7 +994,7 @@ export default function Login() {
             })()}
           </div>
 
-          <div style={{ padding: '10px 0' }}>
+          <div>
             <button onClick={handleNext} style={{ width: '100%', padding: '14px', background: 'linear-gradient(180deg, #FDF0A6 0%, #DCA038 45%, #9C6615 55%, #E8C162 100%)', color: '#fff', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer' }}>
               次へ
             </button>
@@ -1008,10 +1004,10 @@ export default function Login() {
 
       {/* STEP 9: Environment */}
       {step === 9 && (
-        <div style={{ flex: '1 0 auto', maxWidth: '600px', margin: '0 auto', padding: '10px 15px 15px', width: '100%', display: 'flex', flexDirection: 'column' }}>
+        <div style={{ maxWidth: '500px', margin: '0 auto', padding: '10px 20px 20px', width: '100%', display: 'flex', flexDirection: 'column', minHeight: '100dvh', justifyContent: 'center' }}>
           {renderWizardHeader("03 トレーニング環境", 9)}
           
-          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', paddingBottom: '10px', justifyContent: 'center' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '16px' }}>
             <h2 className="logo-text-premium" style={{ textAlign: 'center', fontSize: 'clamp(1.3rem, 5vw, 1.6rem)', marginBottom: '15px' }}>どこでトレーニングしますか？</h2>
             
             <div style={{ flex: 1, display: 'flex', flexDirection: 'column', paddingTop: '10px', paddingBottom: '10px' }}>
@@ -1022,7 +1018,7 @@ export default function Login() {
             </div>
           </div>
 
-          <div style={{ padding: '10px 0' }}>
+          <div>
             <button onClick={handleNext} disabled={!environment} style={{ width: '100%', padding: '14px', background: environment ? 'linear-gradient(180deg, #FDF0A6 0%, #DCA038 45%, #9C6615 55%, #E8C162 100%)' : 'rgba(255, 255, 255, 0.1)', boxShadow: environment ? '0 4px 15px rgba(0,0,0,0.5)' : 'none', color: environment ? '#000' : 'rgba(255, 255, 255, 0.3)', letterSpacing: environment ? '0.1em' : 'normal', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer' }}>
               次へ
             </button>
@@ -1032,13 +1028,13 @@ export default function Login() {
 
       {/* STEP 10: Exercise Limitations */}
       {step === 10 && (
-        <div style={{ flex: '1 0 auto', maxWidth: '600px', margin: '0 auto', padding: '10px 15px 15px', width: '100%', display: 'flex', flexDirection: 'column' }}>
+        <div style={{ maxWidth: '500px', margin: '0 auto', padding: '10px 20px 20px', width: '100%', display: 'flex', flexDirection: 'column', minHeight: '100dvh', justifyContent: 'center' }}>
           {renderWizardHeader("03 トレーニング環境", 10)}
           
-          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', paddingBottom: '10px', justifyContent: 'center' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '16px' }}>
             <h2 className="logo-text-premium" style={{ textAlign: 'center', fontSize: 'clamp(1.3rem, 5vw, 1.6rem)', marginBottom: '15px' }}>運動の種類の制限はありますか？</h2>
             
-            <div className="options-grid" style={{ flex: 1, justifyContent: 'flex-start', paddingTop: '10px', paddingBottom: '10px' }}>
+            <div className="options-grid" style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
               {renderOptionCard('なし（何でもできる）', 'fa-solid fa-check-double', exerciseTypes.includes('なし'), () => handleExerciseTypeToggle('なし'))}
               {renderOptionCard('器具無し（自重のみ）', 'fa-solid fa-hand-fist', exerciseTypes.includes('器具無し'), () => handleExerciseTypeToggle('器具無し'))}
               {renderOptionCard('ジャンプ無し（騒音配慮）', 'fa-solid fa-shoe-prints', exerciseTypes.includes('ジャンプ無し'), () => handleExerciseTypeToggle('ジャンプ無し'))}
@@ -1046,7 +1042,7 @@ export default function Login() {
             </div>
           </div>
 
-          <div style={{ padding: '10px 0' }}>
+          <div>
             <button onClick={handleNext} disabled={exerciseTypes.length === 0} style={{ width: '100%', padding: '14px', background: exerciseTypes.length > 0 ? 'linear-gradient(180deg, #FDF0A6 0%, #DCA038 45%, #9C6615 55%, #E8C162 100%)' : 'rgba(255, 255, 255, 0.1)', boxShadow: exerciseTypes.length > 0 ? '0 4px 15px rgba(217, 119, 6, 0.3)' : 'none', color: exerciseTypes.length > 0 ? '#000' : 'rgba(255, 255, 255, 0.3)', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer' }}>
               次へ
             </button>
@@ -1056,20 +1052,20 @@ export default function Login() {
 
       {/* STEP 11: Workout Level */}
       {step === 11 && (
-        <div style={{ flex: '1 0 auto', maxWidth: '600px', margin: '0 auto', padding: '10px 15px 15px', width: '100%', display: 'flex', flexDirection: 'column' }}>
+        <div style={{ maxWidth: '500px', margin: '0 auto', padding: '10px 20px 20px', width: '100%', display: 'flex', flexDirection: 'column', minHeight: '100dvh', justifyContent: 'center' }}>
           {renderWizardHeader("03 フィットネスレベル評価", 11)}
           
-          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', paddingBottom: '10px', justifyContent: 'center' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '16px' }}>
             <h2 className="logo-text-premium" style={{ textAlign: 'center', fontSize: 'clamp(1.3rem, 5vw, 1.6rem)', marginBottom: '15px' }}>ご希望のワークアウトレベルを選択してください</h2>
             
-            <div className="options-grid options-grid-3" style={{ flex: 1, justifyContent: 'flex-start', paddingTop: '10px', paddingBottom: '10px' }}>
+            <div className="options-grid options-grid-3" style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
               {renderOptionCard('簡単に始められる', 'fa-solid fa-hand-peace', workoutLevel === '簡単に始められる', () => setWorkoutLevel('簡単に始められる'))}
               {renderOptionCard('軽い汗をかく', 'fa-solid fa-droplet', workoutLevel === '軽い汗をかく', () => setWorkoutLevel('軽い汗をかく'))}
               {renderOptionCard('少しやりごたえがある', 'fa-solid fa-fire', workoutLevel === '少しやりごたえがある', () => setWorkoutLevel('少しやりごたえがある'))}
             </div>
           </div>
 
-          <div style={{ padding: '10px 0' }}>
+          <div>
             <button onClick={handleNext} disabled={!workoutLevel} style={{ width: '100%', padding: '14px', background: workoutLevel ? 'linear-gradient(180deg, #FDF0A6 0%, #DCA038 45%, #9C6615 55%, #E8C162 100%)' : 'rgba(255, 255, 255, 0.1)', boxShadow: workoutLevel ? '0 4px 15px rgba(0,0,0,0.5)' : 'none', color: workoutLevel ? '#000' : 'rgba(255, 255, 255, 0.3)', letterSpacing: workoutLevel ? '0.1em' : 'normal', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer' }}>
               次へ
             </button>
@@ -1079,17 +1075,17 @@ export default function Login() {
 
       {/* STEP 12: Physical Issues */}
       {step === 12 && (
-        <div style={{ flex: '1 0 auto', maxWidth: '600px', margin: '0 auto', padding: '10px 15px 15px', width: '100%', display: 'flex', flexDirection: 'column' }}>
+        <div style={{ maxWidth: '500px', margin: '0 auto', padding: '10px 20px 20px', width: '100%', display: 'flex', flexDirection: 'column', minHeight: '100dvh', justifyContent: 'center' }}>
           {renderWizardHeader("04 ライフスタイル", 12)}
           
-          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', paddingBottom: '10px', justifyContent: 'center' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '16px' }}>
             <h2 className="logo-text-premium" style={{ textAlign: 'center', fontSize: 'clamp(1.3rem, 5vw, 1.6rem)', marginBottom: '15px' }}>体に不快感や懸念はありますか？</h2>
             <div style={{ background: 'rgba(20,20,20,0.5)', border: '1px solid rgba(220, 160, 56, 0.3)', padding: '15px 20px', borderRadius: '12px', display: 'flex', alignItems: 'center', gap: '15px', marginBottom: '10px', width: '100%' }}>
               <i className="fa-solid fa-briefcase-medical" style={{ fontSize: '1.5rem', color: '#DCA038' }}></i>
               <p style={{ margin: 0, color: 'rgba(255, 255, 255, 0.7)', fontSize: '0.9rem', lineHeight: 1.5 }}>これにより、特別な注意が必要な部位に焦点を当て、あなたのフィットネスの旅をカスタマイズします。</p>
             </div>
             
-            <div className="options-grid" style={{ flex: 1, justifyContent: 'flex-start', paddingTop: '10px', paddingBottom: '10px' }}>
+            <div className="options-grid" style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
               {['なし', '膝', '腰', '手首', '首', '肩'].map(issue => (
                 <div 
                   key={issue}
@@ -1123,7 +1119,7 @@ export default function Login() {
             </div>
           </div>
 
-          <div style={{ padding: '10px 0' }}>
+          <div>
             <button onClick={handleNext} disabled={physicalIssues.length === 0} style={{ width: '100%', padding: '14px', background: physicalIssues.length > 0 ? 'linear-gradient(180deg, #FDF0A6 0%, #DCA038 45%, #9C6615 55%, #E8C162 100%)' : 'rgba(255, 255, 255, 0.1)', color: physicalIssues.length > 0 ? '#000' : 'rgba(255, 255, 255, 0.3)', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer' }}>
               次へ
             </button>
@@ -1133,7 +1129,7 @@ export default function Login() {
 
       {/* STEP 13: Activity Level */}
       {step === 13 && (
-        <div style={{ flex: '1 0 auto', maxWidth: '600px', margin: '0 auto', padding: '10px 15px 15px', width: '100%', display: 'flex', flexDirection: 'column' }}>
+        <div style={{ maxWidth: '500px', margin: '0 auto', padding: '10px 20px 20px', width: '100%', display: 'flex', flexDirection: 'column', minHeight: '100dvh', justifyContent: 'center' }}>
           {renderWizardHeader("04 ライフスタイル", 13)}
           
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', paddingBottom: '10px' }}>
@@ -1144,7 +1140,7 @@ export default function Login() {
             </div>
           </div>
 
-          <div style={{ padding: '10px 0' }}>
+          <div>
             <button onClick={handleNext} disabled={!activityLevel} style={{ width: '100%', padding: '14px', background: activityLevel ? 'linear-gradient(180deg, #FDF0A6 0%, #DCA038 45%, #9C6615 55%, #E8C162 100%)' : 'rgba(255, 255, 255, 0.1)', boxShadow: activityLevel ? '0 4px 15px rgba(0,0,0,0.5)' : 'none', color: activityLevel ? '#000' : 'rgba(255, 255, 255, 0.3)', letterSpacing: activityLevel ? '0.1em' : 'normal', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer' }}>
               次へ
             </button>
@@ -1154,13 +1150,13 @@ export default function Login() {
 
       {/* STEP 14: Frequency */}
       {step === 14 && (
-        <div style={{ flex: '1 0 auto', maxWidth: '600px', margin: '0 auto', padding: '10px 15px 15px', width: '100%', display: 'flex', flexDirection: 'column' }}>
+        <div style={{ maxWidth: '500px', margin: '0 auto', padding: '10px 20px 20px', width: '100%', display: 'flex', flexDirection: 'column', minHeight: '100dvh', justifyContent: 'center' }}>
           {renderWizardHeader("04 ライフスタイル", 14)}
           
-          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', paddingBottom: '10px', justifyContent: 'center' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '16px' }}>
             <h2 className="logo-text-premium" style={{ textAlign: 'center', fontSize: 'clamp(1.3rem, 5vw, 1.6rem)', marginBottom: '15px' }}>目標とする運動頻度（1週間）</h2>
             
-            <div className="options-grid" style={{ flex: 1, justifyContent: 'flex-start', paddingTop: '10px', paddingBottom: '10px' }}>
+            <div className="options-grid" style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
               {renderOptionCard('週1回 (無理なく)', 'fa-solid fa-calendar-day', frequency === '週1回', () => setFrequency('週1回'))}
               {renderOptionCard('週2〜3回 (おすすめ！)', 'fa-solid fa-calendar-days', frequency === '週3回', () => setFrequency('週3回'))}
               {renderOptionCard('週4〜5回', 'fa-solid fa-calendar-week', frequency === '週5回', () => setFrequency('週5回'))}
@@ -1168,7 +1164,7 @@ export default function Login() {
             </div>
           </div>
 
-          <div style={{ padding: '10px 0' }}>
+          <div>
             <button type="button" onClick={handleCalculateAI} disabled={!frequency || loading} style={{ width: '100%', padding: '14px', background: frequency ? 'linear-gradient(180deg, #FDF0A6 0%, #DCA038 45%, #9C6615 55%, #E8C162 100%)' : 'rgba(255, 255, 255, 0.1)', boxShadow: frequency ? '0 4px 15px rgba(0,0,0,0.5)' : 'none', color: frequency ? '#000' : 'rgba(255, 255, 255, 0.3)', letterSpacing: frequency ? '0.1em' : 'normal', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px' }}>
               {loading ? <i className="fa-solid fa-spinner fa-spin"></i> : <i className="fa-solid fa-robot"></i>}
               {loading ? 'AIで目標を計算中...' : 'AIで目標を計算して完了'}
