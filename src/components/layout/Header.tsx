@@ -5,7 +5,6 @@ import { useAppContext } from '../AppContext';
 export default function Header() {
   const { activeTab, setActiveTab, userProfile, streak, theme, setTheme, textSize, setTextSize } = useAppContext();
 
-  if (activeTab === 'dashboard') return null;
 
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [settingsMenuOpen, setSettingsMenuOpen] = useState(false);

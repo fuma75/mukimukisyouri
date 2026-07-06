@@ -9,7 +9,7 @@ import RulerPicker from '@/components/ui/RulerPicker';
 ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement, Title, PointElement, LineElement, Filler);
 
 export default function Dashboard() {
-  const { activeTab, setActiveTab, textSize, theme, setTheme, setTextSize, streak } = useAppContext();
+  const { activeTab, setActiveTab, textSize, theme, streak } = useAppContext();
   const [profile, setProfile] = useState<Profile | null>(null);
   const [workouts, setWorkouts] = useState<WorkoutItem[]>([]);
   const [meals, setMeals] = useState<MealItem[]>([]);
@@ -18,15 +18,6 @@ export default function Dashboard() {
   const [showBmiEdit, setShowBmiEdit] = useState(false);
   const [editHeight, setEditHeight] = useState(167);
   const [editWeight, setEditWeight] = useState(60);
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [settingsMenuOpen, setSettingsMenuOpen] = useState(false);
-
-  const handleLogout = () => {
-    if (window.confirm("全ての記録データを削除してログアウトします。本当によろしいですか？")) {
-      localStorage.clear();
-      window.location.reload();
-    }
-  };
 
   useEffect(() => {
     if (activeTab === 'dashboard' || !mounted) {
@@ -251,87 +242,7 @@ export default function Dashboard() {
     <section id="dashboard" className="content-section active" style={{ paddingBottom: '100px' }}>
       <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '20px 16px' }}>
         
-        {/* Header matching image */}
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px', gap: '8px', flexWrap: 'nowrap' }}>
-          <div style={{ minWidth: 0, flex: '0 1 auto' }}>
-            <h1 className="logo-text-premium" style={{ fontSize: 'clamp(20px, 5.5vw, 32px)', margin: 0, whiteSpace: 'nowrap', textShadow: '0 2px 10px rgba(220,160,56,0.2)', color: '#fff' }}>ホーム</h1>
-            <div style={{ color: 'rgba(255,255,255,0.6)', fontSize: 'clamp(10px, 2.5vw, 13px)', marginTop: '4px', fontWeight: 'bold', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-              {todayStrHeader}
-            </div>
-          </div>
-          <div style={{ display: 'flex', gap: '8px', alignItems: 'center', flexShrink: 0, position: 'relative' }}>
-            <div style={{ background: 'rgba(0,0,0,0.5)', border: '1px solid #ef4444', padding: '5px 10px', borderRadius: '20px', color: '#ef4444', fontSize: 'clamp(10px, 2.5vw, 12px)', fontWeight: 'bold', whiteSpace: 'nowrap' }}>
-              <i className="fa-solid fa-fire"></i> {streak || profile.streak || 0}日連続
-            </div>
-            <div 
-              onClick={() => { setDropdownOpen(!dropdownOpen); setSettingsMenuOpen(false); }}
-              style={{ background: 'rgba(20,20,20,0.8)', border: '1px solid rgba(220,160,56,0.2)', padding: '5px 10px 5px 5px', borderRadius: '30px', display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer', flexShrink: 0 }}>
-              <div style={{ width: '28px', height: '28px', borderRadius: '50%', background: '#DCA038', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '13px', flexShrink: 0 }}>
-                <i className="fa-solid fa-user"></i>
-              </div>
-              <div style={{ display: 'flex', flexDirection: 'column' }}>
-                <span style={{ color: '#fff', fontSize: 'clamp(10px, 2.5vw, 12px)', fontWeight: 'bold', lineHeight: 1.2, whiteSpace: 'nowrap' }}>{profile.name || 'がお'}</span>
-                <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: 'clamp(9px, 2vw, 10px)', lineHeight: 1.2, whiteSpace: 'nowrap' }}>目標: {profile.goal?.includes('減量') ? '減量' : profile.goal?.includes('肥大') ? '増量' : '維持'}</span>
-              </div>
-              <i className="fa-solid fa-chevron-down" style={{ color: '#DCA038', fontSize: '10px', marginLeft: '2px' }}></i>
-            </div>
-            
-            {dropdownOpen && (
-              <div className="profile-dropdown" style={{ position: 'absolute', top: '100%', right: '0', marginTop: '10px', background: 'rgba(15, 15, 17, 0.95)', border: '1px solid rgba(220, 160, 56, 0.3)', borderRadius: '12px', padding: '8px', minWidth: '200px', boxShadow: '0 10px 25px rgba(0,0,0,0.5)', zIndex: 1000, backdropFilter: 'blur(10px)' }}>
-                {settingsMenuOpen ? (
-                  <>
-                    <button className="dropdown-item" onClick={() => setSettingsMenuOpen(false)} style={{ color: '#DCA038', fontWeight: 'bold', letterSpacing: '0.1em' }}>
-                      <i className="fa-solid fa-arrow-left"></i> 戻る
-                    </button>
-                    <div style={{ padding: '12px 16px 4px', fontSize: '0.8rem', color: '#DCA038', fontWeight: 'bold', letterSpacing: '0.1em' }}>
-                      テーマ
-                    </div>
-                    <div style={{ display: 'flex', padding: '0 16px 8px', gap: '8px' }}>
-                      <button 
-                        onClick={() => setTheme('light')}
-                        style={{ ...(theme === 'light' ? {flex: 1, padding: '10px', borderRadius: '8px', border: '1px solid #B58434', background: 'linear-gradient(180deg, #8B6220 0%, #4A3311 100%)', color: '#FDF0A6', cursor: 'pointer', boxShadow: '0 4px 10px rgba(0,0,0,0.5)', fontWeight: 'bold', textShadow: '0 1px 2px rgba(0,0,0,0.8)'} : {flex: 1, padding: '10px', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.1)', background: 'rgba(255,255,255,0.05)', color: '#a0aec0', cursor: 'pointer'}) }}>
-                        <i className="fa-solid fa-sun"></i> ライト
-                      </button>
-                      <button 
-                        onClick={() => setTheme('dark')}
-                        style={{ ...(theme === 'dark' ? {flex: 1, padding: '10px', borderRadius: '8px', border: '1px solid #B58434', background: 'linear-gradient(180deg, #8B6220 0%, #4A3311 100%)', color: '#FDF0A6', cursor: 'pointer', boxShadow: '0 4px 10px rgba(0,0,0,0.5)', fontWeight: 'bold', textShadow: '0 1px 2px rgba(0,0,0,0.8)'} : {flex: 1, padding: '10px', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.1)', background: 'rgba(255,255,255,0.05)', color: '#a0aec0', cursor: 'pointer'}) }}>
-                        <i className="fa-solid fa-moon"></i> ダーク
-                      </button>
-                    </div>
-                    <div style={{ padding: '12px 16px 4px', fontSize: '0.8rem', color: '#DCA038', fontWeight: 'bold', letterSpacing: '0.1em' }}>
-                      文字の大きさ
-                    </div>
-                    <div style={{ display: 'flex', padding: '0 16px 16px', gap: '8px' }}>
-                      <button 
-                        onClick={() => setTextSize('normal')}
-                        style={{ ...(textSize === 'normal' ? {flex: 1, padding: '10px', borderRadius: '8px', border: '1px solid #B58434', background: 'linear-gradient(180deg, #8B6220 0%, #4A3311 100%)', color: '#FDF0A6', cursor: 'pointer', boxShadow: '0 4px 10px rgba(0,0,0,0.5)', fontWeight: 'bold', textShadow: '0 1px 2px rgba(0,0,0,0.8)'} : {flex: 1, padding: '10px', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.1)', background: 'rgba(255,255,255,0.05)', color: '#a0aec0', cursor: 'pointer'}), fontSize: '1rem' }}>
-                        標準
-                      </button>
-                      <button 
-                        onClick={() => setTextSize('large')}
-                        style={{ ...(textSize === 'large' ? {flex: 1, padding: '10px', borderRadius: '8px', border: '1px solid #B58434', background: 'linear-gradient(180deg, #8B6220 0%, #4A3311 100%)', color: '#FDF0A6', cursor: 'pointer', boxShadow: '0 4px 10px rgba(0,0,0,0.5)', fontWeight: 'bold', textShadow: '0 1px 2px rgba(0,0,0,0.8)'} : {flex: 1, padding: '10px', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.1)', background: 'rgba(255,255,255,0.05)', color: '#a0aec0', cursor: 'pointer'}), fontSize: '1.2rem' }}>
-                        大
-                      </button>
-                    </div>
-                  </>
-                ) : (
-                  <>
-                    <button className="dropdown-item" onClick={() => { setActiveTab('profile'); setDropdownOpen(false); }}>
-                      <i className="fa-solid fa-user"></i> プロフィール
-                    </button>
-                    <button className="dropdown-item" onClick={() => setSettingsMenuOpen(true)}>
-                      <i className="fa-solid fa-gear"></i> 設定
-                    </button>
-                    <div style={{ height: '1px', background: 'rgba(255,255,255,0.1)', margin: '6px 0' }}></div>
-                    <button className="dropdown-item" onClick={handleLogout} style={{ color: '#ff5733' }}>
-                      <i className="fa-solid fa-right-from-bracket"></i> ログアウト
-                    </button>
-                  </>
-                )}
-              </div>
-            )}
-          </div>
-        </div>
+
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
           
