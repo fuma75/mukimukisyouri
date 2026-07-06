@@ -1075,11 +1075,7 @@ export default function Login() {
           
           <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '16px' }}>
             <h2 className="logo-text-premium" style={{ textAlign: 'center', fontSize: 'clamp(1.3rem, 5vw, 1.6rem)', marginBottom: '15px' }}>体に不快感や懸念はありますか？</h2>
-            <div style={{ background: 'rgba(20,20,20,0.5)', border: '1px solid rgba(220, 160, 56, 0.3)', padding: '15px 20px', borderRadius: '12px', display: 'flex', alignItems: 'center', gap: '15px', marginBottom: '10px', width: '100%' }}>
-              <i className="fa-solid fa-briefcase-medical" style={{ fontSize: '1.5rem', color: '#DCA038' }}></i>
-              <p style={{ margin: 0, color: 'rgba(255, 255, 255, 0.7)', fontSize: '0.9rem', lineHeight: 1.5 }}>これにより、特別な注意が必要な部位に焦点を当て、あなたのフィットネスの旅をカスタマイズします。</p>
-            </div>
-            
+
             <div className="options-grid" style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
               {['なし', '膝', '腰', '手首', '首', '肩'].map(issue => (
                 <div 
