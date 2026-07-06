@@ -1017,11 +1017,11 @@ export default function Login() {
           <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '16px' }}>
             <h2 className="logo-text-premium" style={{ textAlign: 'center', fontSize: 'clamp(1.3rem, 5vw, 1.6rem)', marginBottom: '15px' }}>どこでトレーニングしますか？</h2>
             
-            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', paddingTop: '10px', paddingBottom: '10px' }}>
+            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', paddingTop: '10px', paddingBottom: '10px', gap: '10px' }}>
               <p style={{ textAlign: 'center', color: 'rgba(255,255,255,0.6)', fontSize: '0.9rem', marginBottom: '20px' }}>あなたのライフスタイルに合わせて選択してください</p>
-              {renderEnvironmentCard('自宅でトレーニング', 'fa-solid fa-house', environment === '家', () => setEnvironment('家'), '自宅で気軽にトレーニング', '器具なしでも効果的に鍛えられます', 'fa-solid fa-house', '手軽に開始', 'fa-regular fa-clock', '時間を自由に使える')}
-              {renderEnvironmentCard('ジムでトレーニング', 'fa-solid fa-dumbbell', environment === 'ジム', () => setEnvironment('ジム'), '充実した設備で本格的に鍛える', 'マシンやダンベルを使用できます', 'fa-solid fa-dumbbell', '本格トレーニング', 'fa-solid fa-chart-simple', '高負荷トレーニング')}
-              {renderEnvironmentCard('どの場所でもOK', 'fa-solid fa-globe', environment === 'どの場所でもOK', () => setEnvironment('どの場所でもOK'), '自宅・公園・旅行先など', '場所を選ばずトレーニング可能', 'fa-solid fa-location-dot', '場所を選ばない', 'fa-solid fa-fire', '継続しやすい')}
+              {renderOptionCard('自宅でトレーニング', 'fa-solid fa-house', environment === '家', () => setEnvironment('家'))}
+              {renderOptionCard('ジムでトレーニング', 'fa-solid fa-dumbbell', environment === 'ジム', () => setEnvironment('ジム'))}
+              {renderOptionCard('どの場所でもOK', 'fa-solid fa-globe', environment === 'どの場所でもOK', () => setEnvironment('どの場所でもOK'))}
             </div>
           </div>
 
