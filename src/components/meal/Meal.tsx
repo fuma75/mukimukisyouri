@@ -4,7 +4,7 @@ import { getMeals, saveMeal, deleteMeal, MealItem } from '@/lib/storage';
 import { useAppContext } from '../AppContext';
 
 export default function Meal() {
-  const { selectedDate: date, setSelectedDate: setDate } = useAppContext();
+  const { selectedDate: date, setSelectedDate: setDate, theme } = useAppContext();
   const [meals, setMeals] = useState<MealItem[]>([]);
 
   const [timing, setTiming] = useState('朝食');
@@ -164,13 +164,25 @@ export default function Meal() {
               }}>
                 <span style={{ color: d.isSelected ? '#DCA038' : 'rgba(255,255,255,0.5)', fontSize: '12px', fontWeight: d.isSelected ? 'bold' : 'normal' }}>{d.dayName}</span>
                 {d.isChecked && !d.isSelected ? (
-                  <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#DCA038' }}>
-                    <i className="fa-solid fa-check"></i>
-                  </div>
+                  theme === 'light' ? (
+                    <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#DCA038' }}>
+                      <i className="fa-solid fa-check"></i>
+                    </div>
+                  ) : (
+                    <div style={{ width: '32px', height: '32px', borderRadius: '50%', border: '1px solid #DCA038', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#DCA038' }}>
+                      <i className="fa-solid fa-check"></i>
+                    </div>
+                  )
                 ) : d.isSelected ? (
-                  <div style={{ width: '36px', height: '36px', borderRadius: '50%', border: '2px solid #DCA038', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontSize: '16px', fontWeight: 'bold', boxShadow: '0 0 15px rgba(220,160,56,0.4)', background: '#DCA038' }}>
-                    {d.dayStr}
-                  </div>
+                  theme === 'light' ? (
+                    <div style={{ width: '36px', height: '36px', borderRadius: '50%', border: '2px solid #DCA038', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontSize: '16px', fontWeight: 'bold', boxShadow: '0 0 15px rgba(220,160,56,0.4)', background: '#DCA038' }}>
+                      {d.dayStr}
+                    </div>
+                  ) : (
+                    <div style={{ width: '36px', height: '36px', borderRadius: '50%', border: '2px solid #DCA038', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#DCA038', fontSize: '16px', fontWeight: 'bold', boxShadow: '0 0 15px rgba(220,160,56,0.4)', background: 'rgba(220,160,56,0.1)' }}>
+                      {d.dayStr}
+                    </div>
+                  )
                 ) : (
                   <div style={{ width: '32px', height: '32px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'rgba(255,255,255,0.7)', fontSize: '16px', fontWeight: 'bold' }}>
                     {d.dayStr}
