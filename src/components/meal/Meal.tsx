@@ -139,7 +139,7 @@ export default function Meal() {
 
   return (
     <section id="meal" className="content-section active" style={{ paddingBottom: '100px' }}>
-      <div style={{ maxWidth: '560px', margin: '0 auto', padding: '0 16px' }}>
+      <div style={{ maxWidth: '560px', margin: '0 auto', padding: '20px 16px' }}>
 
 
 
