@@ -240,7 +240,7 @@ export default function WorkoutPlayer({ exercises, onComplete, onCancel, initial
               <div style={{ position: 'relative', width: '110px', height: '110px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                 <svg width="110" height="110" viewBox="0 0 160 160" style={{ position: 'absolute', top: 0, left: 0, transform: 'rotate(-90deg)' }}>
                   <circle cx="80" cy="80" r="70" fill="none" stroke="#f1f3f5" strokeWidth="10" />
-                  <circle cx="80" cy="80" r="70" fill="none" stroke="#0d6efd" strokeWidth="10" strokeLinecap="round"
+                  <circle cx="80" cy="80" r="70" fill="none" stroke="#DCA038" strokeWidth="10" strokeLinecap="round"
                     strokeDasharray="439.82"
                     strokeDashoffset={439.82 * (1 - (timeLeft || 0) / 15)}
                     style={{ transition: 'stroke-dashoffset 1s linear' }}
@@ -349,7 +349,7 @@ export default function WorkoutPlayer({ exercises, onComplete, onCancel, initial
             </div>
 
             {/* Bottom: Blue rest panel */}
-            <div style={{ flex: '1 1 auto', background: '#0d6efd', color: '#fff', padding: '24px 24px 30px', borderTopLeftRadius: '24px', borderTopRightRadius: '24px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-between', gap: '15px' }}>
+            <div style={{ flex: '1 1 auto', background: '#DCA038', color: '#fff', padding: '24px 24px 30px', borderTopLeftRadius: '24px', borderTopRightRadius: '24px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-between', gap: '15px' }}>
               {/* Header inside blue area */}
               <div style={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <div>
@@ -391,7 +391,7 @@ export default function WorkoutPlayer({ exercises, onComplete, onCancel, initial
                 </button>
                 <button
                   onClick={handleSkipRest}
-                  style={{ flex: 1, padding: '16px', background: '#fff', color: '#0d6efd', border: 'none', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', cursor: 'pointer', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}
+                  style={{ flex: 1, padding: '16px', background: '#fff', color: '#DCA038', border: 'none', borderRadius: '30px', fontSize: '1.1rem', fontWeight: 'bold', cursor: 'pointer', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}
                 >
                   スキップ
                 </button>
