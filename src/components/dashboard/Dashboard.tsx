@@ -563,7 +563,7 @@ export default function Dashboard() {
 
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '40px' }}>
                   {/* Left: BMI Data */}
-                  <div style={{ flex: '1', minWidth: '300px' }}>
+                  <div style={{ flex: '1 1 300px', minWidth: 0 }}>
                     <div style={{ padding: '10px 10px 16px' }}>
                       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
                         <div>
@@ -631,10 +631,10 @@ export default function Dashboard() {
                   </div>
 
                   {/* Right: Weight Chart */}
-                  <div style={{ flex: '2', minWidth: '300px', display: 'flex', flexDirection: 'column' }}>
-                    <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '20px', marginBottom: '10px', fontSize: '0.85rem' }}>
-                      <div><span style={{ color: 'rgba(255,255,255,0.5)', marginRight: '8px' }}>最も重い</span><span style={{ color: '#fff', fontWeight: 'bold' }}>{maxWeight} kg</span></div>
-                      <div><span style={{ color: 'rgba(255,255,255,0.5)', marginRight: '8px' }}>最も軽い</span><span style={{ color: '#fff', fontWeight: 'bold' }}>{minWeight} kg</span></div>
+                  <div style={{ flex: '2 1 300px', minWidth: 0, display: 'flex', flexDirection: 'column' }}>
+                    <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '15px', marginBottom: '10px', fontSize: '0.85rem', flexWrap: 'wrap' }}>
+                      <div><span style={{ color: 'rgba(255,255,255,0.5)', marginRight: '6px' }}>最も重い</span><span style={{ color: '#fff', fontWeight: 'bold' }}>{maxWeight} kg</span></div>
+                      <div><span style={{ color: 'rgba(255,255,255,0.5)', marginRight: '6px' }}>最も軽い</span><span style={{ color: '#fff', fontWeight: 'bold' }}>{minWeight} kg</span></div>
                     </div>
                     <div style={{ flex: 1, position: 'relative', minHeight: '200px' }}>
                       <Line data={{
