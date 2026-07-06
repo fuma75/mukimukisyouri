@@ -191,7 +191,7 @@ export default function Meal() {
 
         {/* ── 手動入力フォーム（常時表示） ── */}
         <div style={{
-          background: 'var(--card-bg)', borderRadius: '18px', padding: '20px',
+          background: 'var(--bg-card)', borderRadius: '18px', padding: '20px',
           marginBottom: '24px', boxShadow: '0 4px 16px rgba(0,0,0,0.07)',
           border: '1px solid var(--border-color)'
         }}>
@@ -330,7 +330,7 @@ export default function Meal() {
           <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
             {sortedMeals.map(m => (
               <div key={m.id} style={{
-                background: 'var(--card-bg)', borderRadius: '14px', padding: '14px 16px',
+                background: 'var(--bg-card)', borderRadius: '14px', padding: '14px 16px',
                 boxShadow: '0 2px 8px rgba(0,0,0,0.06)', border: '1px solid var(--border-color)',
                 display: 'flex', alignItems: 'center', gap: '12px'
               }}>
