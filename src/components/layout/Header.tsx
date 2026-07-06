@@ -50,28 +50,28 @@ export default function Header() {
 
   return (
     <header className="app-header">
-      <div className="header-title">
-        <h1>{getPageTitle()}</h1>
+      <div className="header-title" style={{ minWidth: 0, flex: '1 1 auto' }}>
+        <h1 style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', fontSize: 'clamp(16px, 4.5vw, 26px)' }}>{getPageTitle()}</h1>
         <p className="header-date">{todayStr}</p>
       </div>
-      <div className="header-profile-container" style={{ position: 'relative' }}>
+      <div className="header-profile-container" style={{ position: 'relative', flexShrink: 0 }}>
         <div 
           className="header-profile" 
           onClick={() => { setDropdownOpen(!dropdownOpen); setSettingsMenuOpen(false); }}
-          style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}
+          style={{ display: 'flex', alignItems: 'center', cursor: 'pointer', gap: '8px', flexWrap: 'nowrap' }}
         >
-          <div className="streak-badge" title="連続記録（ストリーク）" style={{ display: 'flex', alignItems: 'center', background: 'rgba(255, 87, 51, 0.15)', color: '#ff5733', padding: '4px 12px', borderRadius: '20px', marginRight: '12px', fontWeight: 'bold', border: '1px solid rgba(255, 87, 51, 0.3)', fontSize: '0.9rem' }}>
-            <i className="fa-solid fa-fire" style={{ marginRight: '5px', animation: 'pulse-glow 2s infinite' }}></i>
+          <div className="streak-badge" title="連続記録（ストリーク）" style={{ display: 'flex', alignItems: 'center', background: 'rgba(255, 87, 51, 0.15)', color: '#ff5733', padding: '4px 10px', borderRadius: '20px', fontWeight: 'bold', border: '1px solid rgba(255, 87, 51, 0.3)', fontSize: 'clamp(10px, 2.5vw, 14px)', whiteSpace: 'nowrap', flexShrink: 0 }}>
+            <i className="fa-solid fa-fire" style={{ marginRight: '4px', animation: 'pulse-glow 2s infinite' }}></i>
             <span>{streak}</span>日連続
           </div>
-          <div className="avatar-placeholder">
+          <div className="avatar-placeholder" style={{ flexShrink: 0 }}>
             <i className="fa-solid fa-user"></i>
           </div>
           <div className="profile-info">
             <span className="profile-name">{userProfile?.name || 'ゲストユーザー'}</span>
             <span className="profile-goal">目標: {userProfile?.goal || '未設定'}</span>
           </div>
-          <i className="fa-solid fa-chevron-down" style={{ marginLeft: '8px', fontSize: '0.8rem', color: 'var(--text-secondary)' }}></i>
+          <i className="fa-solid fa-chevron-down" style={{ marginLeft: '4px', fontSize: '0.8rem', color: 'var(--text-secondary)', flexShrink: 0 }}></i>
         </div>
         
         {dropdownOpen && (

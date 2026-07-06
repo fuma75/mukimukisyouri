@@ -252,28 +252,28 @@ export default function Dashboard() {
       <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '20px 16px' }}>
         
         {/* Header matching image */}
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '30px' }}>
-          <div>
-            <h1 className="logo-text-premium" style={{ fontSize: '32px', margin: 0, textShadow: '0 2px 10px rgba(220,160,56,0.2)', color: '#fff' }}>ダッシュボード</h1>
-            <div style={{ color: 'rgba(255,255,255,0.6)', fontSize: '13px', marginTop: '6px', fontWeight: 'bold' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px', gap: '8px', flexWrap: 'nowrap' }}>
+          <div style={{ minWidth: 0, flex: '0 1 auto' }}>
+            <h1 className="logo-text-premium" style={{ fontSize: 'clamp(20px, 5.5vw, 32px)', margin: 0, whiteSpace: 'nowrap', textShadow: '0 2px 10px rgba(220,160,56,0.2)', color: '#fff' }}>ダッシュボード</h1>
+            <div style={{ color: 'rgba(255,255,255,0.6)', fontSize: 'clamp(10px, 2.5vw, 13px)', marginTop: '4px', fontWeight: 'bold', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
               {todayStrHeader}
             </div>
           </div>
-          <div style={{ display: 'flex', gap: '10px', alignItems: 'center', marginTop: '5px', position: 'relative' }}>
-            <div style={{ background: 'rgba(0,0,0,0.5)', border: '1px solid #ef4444', padding: '6px 12px', borderRadius: '20px', color: '#ef4444', fontSize: '12px', fontWeight: 'bold' }}>
+          <div style={{ display: 'flex', gap: '8px', alignItems: 'center', flexShrink: 0, position: 'relative' }}>
+            <div style={{ background: 'rgba(0,0,0,0.5)', border: '1px solid #ef4444', padding: '5px 10px', borderRadius: '20px', color: '#ef4444', fontSize: 'clamp(10px, 2.5vw, 12px)', fontWeight: 'bold', whiteSpace: 'nowrap' }}>
               <i className="fa-solid fa-fire"></i> {streak || profile.streak || 0}日連続
             </div>
             <div 
               onClick={() => { setDropdownOpen(!dropdownOpen); setSettingsMenuOpen(false); }}
-              style={{ background: 'rgba(20,20,20,0.8)', border: '1px solid rgba(220,160,56,0.2)', padding: '6px 16px 6px 6px', borderRadius: '30px', display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer' }}>
-              <div style={{ width: '30px', height: '30px', borderRadius: '50%', background: 'linear-gradient(180deg, #FDF0A6, #DCA038)', color: '#000', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '14px' }}>
+              style={{ background: 'rgba(20,20,20,0.8)', border: '1px solid rgba(220,160,56,0.2)', padding: '5px 10px 5px 5px', borderRadius: '30px', display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer', flexShrink: 0 }}>
+              <div style={{ width: '28px', height: '28px', borderRadius: '50%', background: 'linear-gradient(180deg, #FDF0A6, #DCA038)', color: '#000', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '13px', flexShrink: 0 }}>
                 <i className="fa-solid fa-user"></i>
               </div>
               <div style={{ display: 'flex', flexDirection: 'column' }}>
-                <span style={{ color: '#fff', fontSize: '12px', fontWeight: 'bold', lineHeight: 1.2 }}>{profile.name || 'がお'}</span>
-                <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: '10px', lineHeight: 1.2 }}>目標: {profile.goal?.includes('減量') ? '減量' : profile.goal?.includes('肥大') ? '増量' : '維持'}</span>
+                <span style={{ color: '#fff', fontSize: 'clamp(10px, 2.5vw, 12px)', fontWeight: 'bold', lineHeight: 1.2, whiteSpace: 'nowrap' }}>{profile.name || 'がお'}</span>
+                <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: 'clamp(9px, 2vw, 10px)', lineHeight: 1.2, whiteSpace: 'nowrap' }}>目標: {profile.goal?.includes('減量') ? '減量' : profile.goal?.includes('肥大') ? '増量' : '維持'}</span>
               </div>
-              <i className="fa-solid fa-chevron-down" style={{ color: '#DCA038', fontSize: '10px', marginLeft: '5px' }}></i>
+              <i className="fa-solid fa-chevron-down" style={{ color: '#DCA038', fontSize: '10px', marginLeft: '2px' }}></i>
             </div>
             
             {dropdownOpen && (
