@@ -51,7 +51,7 @@ export default function Header() {
   return (
     <header className="app-header">
       <div className="header-title" style={{ minWidth: 0, flex: '1 1 auto' }}>
-        <h1 style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', fontSize: 'clamp(16px, 4.5vw, 26px)' }}>{getPageTitle()}</h1>
+        <h1 className="logo-text-premium" style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', fontSize: 'clamp(20px, 5.5vw, 26px)', margin: 0, textShadow: '0 2px 10px rgba(220,160,56,0.2)' }}>{getPageTitle()}</h1>
         <p className="header-date">{todayStr}</p>
       </div>
       <div className="header-profile-container" style={{ position: 'relative', flexShrink: 0 }}>

@@ -481,16 +481,7 @@ export default function Workout() {
         <>
           <section id="workout" className="content-section active" style={{ paddingBottom: '100px', display: aiMenuData ? 'none' : 'block' }}>
             <div style={{ maxWidth: '560px', margin: '0 auto', padding: '20px 16px' }}>
-                {/* Header matching image */}
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '30px' }}>
-                  <div>
-                    <h1 className="logo-text-premium" style={{ fontSize: '32px', margin: 0, textShadow: '0 2px 10px rgba(220,160,56,0.2)' }}>筋トレ記録</h1>
-                    <div style={{ color: 'rgba(255,255,255,0.6)', fontSize: '13px', marginTop: '6px', fontWeight: 'bold' }}>
-                      {new Date(date).toLocaleDateString('ja-JP', { year: 'numeric', month: 'long', day: 'numeric', weekday: 'short' })}
-                    </div>
-                  </div>
 
-                </div>
 
                 {/* 一週間の目標 */}
                 <div style={{ background: 'rgba(20,20,20,0.6)', border: '1px solid rgba(220,160,56,0.5)', borderRadius: '16px', padding: '20px', marginBottom: '40px', boxShadow: '0 4px 20px rgba(0,0,0,0.3)' }}>
