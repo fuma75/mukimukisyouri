@@ -54,24 +54,21 @@ export default function Header() {
         <h1 className="logo-text-premium" style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', fontSize: 'clamp(20px, 5.5vw, 26px)', margin: 0, textShadow: '0 2px 10px rgba(220,160,56,0.2)' }}>{getPageTitle()}</h1>
         <p className="header-date">{todayStr}</p>
       </div>
-      <div className="header-profile-container" style={{ position: 'relative', flexShrink: 0 }}>
+      <div className="header-profile-container" style={{ display: 'flex', gap: '8px', alignItems: 'center', flexShrink: 0, position: 'relative' }}>
+        <div style={{ background: 'rgba(0,0,0,0.5)', border: '1px solid #ef4444', padding: '5px 10px', borderRadius: '20px', color: '#ef4444', fontSize: 'clamp(10px, 2.5vw, 12px)', fontWeight: 'bold', whiteSpace: 'nowrap' }}>
+          <i className="fa-solid fa-fire"></i> {streak || userProfile?.streak || 0}日連続
+        </div>
         <div 
-          className="header-profile" 
           onClick={() => { setDropdownOpen(!dropdownOpen); setSettingsMenuOpen(false); }}
-          style={{ display: 'flex', alignItems: 'center', cursor: 'pointer', gap: '8px', flexWrap: 'nowrap' }}
-        >
-          <div className="streak-badge" title="連続記録（ストリーク）" style={{ display: 'flex', alignItems: 'center', background: 'rgba(255, 87, 51, 0.15)', color: '#ff5733', padding: '4px 10px', borderRadius: '20px', fontWeight: 'bold', border: '1px solid rgba(255, 87, 51, 0.3)', fontSize: 'clamp(10px, 2.5vw, 14px)', whiteSpace: 'nowrap', flexShrink: 0 }}>
-            <i className="fa-solid fa-fire" style={{ marginRight: '4px', animation: 'pulse-glow 2s infinite' }}></i>
-            <span>{streak}</span>日連続
-          </div>
-          <div className="avatar-placeholder" style={{ flexShrink: 0 }}>
+          style={{ background: 'rgba(20,20,20,0.8)', border: '1px solid rgba(220,160,56,0.2)', padding: '5px 10px 5px 5px', borderRadius: '30px', display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer', flexShrink: 0 }}>
+          <div style={{ width: '28px', height: '28px', borderRadius: '50%', background: '#DCA038', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '13px', flexShrink: 0 }}>
             <i className="fa-solid fa-user"></i>
           </div>
-          <div className="profile-info">
-            <span className="profile-name">{userProfile?.name || 'ゲストユーザー'}</span>
-            <span className="profile-goal">目標: {userProfile?.goal || '未設定'}</span>
+          <div style={{ display: 'flex', flexDirection: 'column', paddingRight: '4px' }}>
+            <span style={{ fontSize: '0.75rem', fontWeight: 'bold', color: '#fff', lineHeight: '1.2' }}>{userProfile?.name || 'ゲスト'}</span>
+            <span style={{ fontSize: '0.6rem', color: 'rgba(255,255,255,0.5)', lineHeight: '1.2' }}>目標: {userProfile?.goal || '未設定'}</span>
           </div>
-          <i className="fa-solid fa-chevron-down" style={{ marginLeft: '4px', fontSize: '0.8rem', color: 'var(--text-secondary)', flexShrink: 0 }}></i>
+          <i className="fa-solid fa-chevron-down" style={{ fontSize: '10px', color: 'rgba(255,255,255,0.4)', marginLeft: '2px' }}></i>
         </div>
         
         {dropdownOpen && (
