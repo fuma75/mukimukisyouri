@@ -8,7 +8,7 @@ import { calculateCalories } from '@/lib/exerciseDictionary';
 import { useAppContext } from '../AppContext';
 
 export default function Workout() {
-  const { selectedDate: date, setSelectedDate: setDate, theme } = useAppContext();
+  const { selectedDate: date, setSelectedDate: setDate, theme, userProfile } = useAppContext();
   const [showManualForm, setShowManualForm] = useState(false);
   const [showHistoryModal, setShowHistoryModal] = useState(false);
   const [activeTargetArea, setActiveTargetArea] = useState('腹筋');
@@ -621,7 +621,7 @@ export default function Workout() {
                 <div className="program-list">
                     {activePrograms.map(prog => {
                         // Custom image based on area
-                        let imgUrl = 'https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80';
+                        let imgUrl = prog.targetArea === '全身' ? (userProfile?.gender === 'female' ? '/images/tiger-female.png' : '/images/tiger-male.png') : 'https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80';
                         if (prog.targetArea === '胸' || prog.targetArea === '胸部') imgUrl = '/images/tiger-chest.png';
                         if (prog.targetArea === '腹筋') imgUrl = '/images/tiger-abs.png';
                         if (prog.targetArea === '腕') imgUrl = '/images/tiger-arm.png';
@@ -638,6 +638,7 @@ export default function Workout() {
                         let bgSize = 'cover';
                         if (imgUrl.includes('tiger')) {
                             bgSize = '150%'; // default
+                            if (prog.targetArea === '全身') bgSize = 'contain';
                             if (prog.targetArea === '腕') bgSize = '120%';
                             if (prog.targetArea === '背筋' || prog.targetArea === '肩') bgSize = '200%';
                         }

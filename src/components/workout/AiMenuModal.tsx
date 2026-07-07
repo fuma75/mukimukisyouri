@@ -3,6 +3,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { getExerciseDetails } from '@/lib/exerciseDictionary';
 import WorkoutPlayer from './WorkoutPlayer';
 import ExerciseDetailModal from './ExerciseDetailModal';
+import { useAppContext } from '../AppContext';
 
 export type AiMenuSection = 'warmup' | 'training' | 'cooldown';
 
@@ -117,10 +118,12 @@ export default function AiMenuModal({ data, onClose, onApply }: AiMenuModalProps
     return Math.max(1, Math.round(totalSeconds / 60));
   };
 
+  const { userProfile } = useAppContext();
   const totalTime = currentData.estimatedMinutes || calculateTotalTime();
   const totalExercises = currentData.exerciseCount || allExercises.length;
 
   let heroImgUrl = '/trainer-hero.png';
+  if (currentData.category === '全身') heroImgUrl = userProfile?.gender === 'female' ? '/images/tiger-female.png' : '/images/tiger-male.png';
   if (currentData.category === '胸' || currentData.category === '胸部') heroImgUrl = '/images/tiger-chest.png';
   if (currentData.category === '腹筋') heroImgUrl = '/images/tiger-abs.png';
   if (currentData.category === '腕') heroImgUrl = '/images/tiger-arm.png';
@@ -206,7 +209,7 @@ export default function AiMenuModal({ data, onClose, onApply }: AiMenuModalProps
         <img 
           src={heroImgUrl} 
           alt="Trainer" 
-          style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center' }}
+          style={{ width: '100%', height: '100%', objectFit: heroImgUrl.includes('tiger') ? 'contain' : 'cover', objectPosition: 'center' }}
         />
         <div style={{ position: 'absolute', top: '20px', left: '20px', width: '40px', height: '40px', borderRadius: '50%', background: 'rgba(0,0,0,0.5)', display: 'flex', justifyContent: 'center', alignItems: 'center', cursor: 'pointer', color: '#fff' }} onClick={onClose}>
           <i className="fa-solid fa-arrow-left"></i>
