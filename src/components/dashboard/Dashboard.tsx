@@ -1,5 +1,6 @@
 'use client';
 import React, { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { useAppContext } from '../AppContext';
 import { getProfile, getWorkouts, getMeals, getWeightLogs, saveWeightLog, saveProfile, Profile, WorkoutItem, MealItem, WeightLog } from '@/lib/storage';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement, Title, PointElement, LineElement, Filler } from 'chart.js';
@@ -568,7 +569,7 @@ export default function Dashboard() {
                 </div>
 
                 {/* BMI Edit Modal */}
-                {showBmiEdit && (
+                {showBmiEdit && typeof document !== 'undefined' && createPortal(
                   <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.8)', zIndex: 9999, display: 'flex', alignItems: 'center', justifyContent: 'center' }} onClick={() => setShowBmiEdit(false)}>
                     <div style={{ background: '#1e1e24', borderRadius: '24px', padding: '30px', width: '100%', maxWidth: '480px', boxShadow: '0 10px 40px rgba(0,0,0,0.5)', border: '1px solid rgba(255,255,255,0.1)' }} onClick={e => e.stopPropagation()}>
                       <h3 style={{ margin: '0 0 24px', fontSize: '1.2rem', fontWeight: 'bold', color: '#fff', textAlign: 'center' }}>身体情報の編集</h3>
@@ -606,7 +607,7 @@ export default function Dashboard() {
                         >保存する</button>
                       </div>
                     </div>
-                  </div>
+                  </div>, document.body
                 )}
               </div>
             );
