@@ -197,19 +197,9 @@ export default function AiMenuModal({ data, onClose, onApply }: AiMenuModalProps
   if (!mounted) return null;
 
   return (
-    <div ref={containerRef} style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, zIndex: 9999, display: 'flex', flexDirection: 'column', alignItems: 'center', background: 'var(--bg-secondary)', overflowY: 'auto', animation: 'section-enter 0.32s cubic-bezier(0.4, 0, 0.2, 1) both' }}>
-      <div style={{ width: '100%', maxWidth: '600px', background: 'var(--bg-primary)', flex: '1 0 auto', minHeight: '100dvh', display: 'flex', flexDirection: 'column', position: 'relative', boxShadow: '0 0 20px rgba(0,0,0,0.05)' }}>
-      {selectedIndex !== null && (
-        <ExerciseDetailModal
-          exercise={allExercises[selectedIndex]}
-          index={selectedIndex}
-          total={allExercises.length}
-          onClose={() => setSelectedIndex(null)}
-          onNext={() => setSelectedIndex(Math.min(allExercises.length - 1, selectedIndex + 1))}
-          onPrev={() => setSelectedIndex(Math.max(0, selectedIndex - 1))}
-          onUpdateDuration={(newDur) => handleUpdateDuration(selectedIndex, newDur)}
-        />
-      )}
+    <React.Fragment>
+      <div ref={containerRef} style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, zIndex: 9999, display: 'flex', flexDirection: 'column', alignItems: 'center', background: 'var(--bg-secondary)', overflowY: 'auto', animation: 'section-enter 0.32s cubic-bezier(0.4, 0, 0.2, 1) both' }}>
+        <div style={{ width: '100%', maxWidth: '600px', background: 'var(--bg-primary)', flex: '1 0 auto', minHeight: '100dvh', display: 'flex', flexDirection: 'column', position: 'relative', boxShadow: '0 0 20px rgba(0,0,0,0.05)' }}>
 
       {/* Header Image */}
       <div style={{ position: 'relative', height: '300px', flexShrink: 0, background: '#e9ecef', overflow: 'hidden' }}>
@@ -295,5 +285,17 @@ export default function AiMenuModal({ data, onClose, onApply }: AiMenuModalProps
       </div>
       </div>
     </div>
+    {selectedIndex !== null && (
+      <ExerciseDetailModal
+        exercise={allExercises[selectedIndex]}
+        index={selectedIndex}
+        total={allExercises.length}
+        onClose={() => setSelectedIndex(null)}
+        onNext={() => setSelectedIndex(Math.min(allExercises.length - 1, selectedIndex + 1))}
+        onPrev={() => setSelectedIndex(Math.max(0, selectedIndex - 1))}
+        onUpdateDuration={(newDur) => handleUpdateDuration(selectedIndex, newDur)}
+      />
+    )}
+    </React.Fragment>
   );
 }

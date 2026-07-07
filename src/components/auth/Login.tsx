@@ -776,8 +776,8 @@ export default function Login() {
             
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
               {renderOptionCard('全身', 'fa-solid fa-child', targetAreas.includes('全身'), () => handleAreaToggle('全身'))}
-              {renderOptionCard('腕', 'fa-solid fa-hand-fist', targetAreas.includes('腕'), () => handleAreaToggle('腕'))}
-              {renderOptionCard('胸部', 'fa-solid fa-child-reaching', targetAreas.includes('胸部'), () => handleAreaToggle('胸部'))}
+              {renderOptionCard('腕', '/images/tiger-arm.png', targetAreas.includes('腕'), () => handleAreaToggle('腕'))}
+              {renderOptionCard('胸部', '/images/tiger-chest.png', targetAreas.includes('胸部'), () => handleAreaToggle('胸部'))}
               {renderOptionCard('背筋', '/images/tiger-back.png', targetAreas.includes('背筋'), () => handleAreaToggle('背筋'))}
               {renderOptionCard('腹筋', '/images/tiger-abs.png', targetAreas.includes('腹筋'), () => handleAreaToggle('腹筋'))}
               {renderOptionCard('脚', '/images/tiger-legs.png', targetAreas.includes('脚'), () => handleAreaToggle('脚'))}
@@ -800,11 +800,15 @@ export default function Login() {
             <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'center', marginBottom: '10px' }}>
               <input 
                 type="number" 
-                value={dob ? new Date(dob).getFullYear() : 2000} 
+                value={dob && !dob.startsWith('0000') ? Number(dob.split('-')[0]) : ''} 
                 onChange={(e) => {
-                  const y = Number(e.target.value);
-                  if (y > 1900 && y <= new Date().getFullYear()) {
-                    setDob(`${y}-01-01`);
+                  const val = e.target.value;
+                  const currentMonthDay = dob ? dob.substring(4) : '-01-01';
+                  if (val === '') {
+                    setDob(`0000${currentMonthDay}`);
+                  } else {
+                    const y = Number(val);
+                    setDob(`${String(y).padStart(4, '0')}${currentMonthDay}`);
                   }
                 }} 
                 style={{ fontSize: '4rem', color: '#DCA038', textShadow: '0 2px 10px rgba(220, 160, 56, 0.5)', fontWeight: 'bold', background: 'transparent', border: 'none', borderBottom: '2px solid rgba(220, 160, 56, 0.5)', width: '140px', textAlign: 'center', outline: 'none', padding: 0, margin: 0, lineHeight: '1.2', paddingBottom: '4px' }} 
