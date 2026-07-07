@@ -537,7 +537,7 @@ export default function Login() {
     >
       <div style={{ width: '40px', height: '40px', display: 'flex', justifyContent: 'center', alignItems: 'center', flexShrink: 0, overflow: 'hidden' }}>
         {icon.startsWith('/') ? (
-          <img src={icon} alt={label} style={{ width: '100%', height: '100%', objectFit: 'contain', filter: selected ? 'sepia(1) hue-rotate(-30deg) saturate(3) brightness(1.1)' : 'grayscale(100%) brightness(0.5)', opacity: selected ? 1 : 0.6 }} />
+          <img src={icon} alt={label} style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'bottom center', transform: 'scale(1.25)', transformOrigin: 'bottom center', filter: selected ? 'sepia(1) hue-rotate(-30deg) saturate(3) brightness(1.1)' : 'grayscale(100%) brightness(0.5)', opacity: selected ? 1 : 0.6 }} />
         ) : (
           <i className={icon} style={{ fontSize: '1.7rem', color: selected ? '#DCA038' : 'rgba(255,255,255,0.3)' }}></i>
         )}
@@ -718,8 +718,8 @@ export default function Login() {
                       transform: isSelected ? 'translateY(-2px)' : 'none',
                     }}>
                     
-                    <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '0px' }}>
-                      <img src={g === 'male' ? '/images/tiger-male.png' : '/images/tiger-female.png'} alt={g === 'male' ? '男性' : '女性'} style={{ width: '100%', height: '100%', objectFit: 'contain', objectPosition: 'center', filter: isSelected ? 'none' : 'grayscale(100%) opacity(0.4)', transition: 'all 0.2s' }} />
+                    <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '0px', overflow: 'hidden' }}>
+                      <img src={g === 'male' ? '/images/tiger-male.png' : '/images/tiger-female.png'} alt={g === 'male' ? '男性' : '女性'} style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'bottom center', filter: isSelected ? 'none' : 'grayscale(100%) opacity(0.4)', transition: 'all 0.2s', transform: 'scale(1.15)', transformOrigin: 'bottom center' }} />
                     </div>
                     
                     <div style={{ height: '52px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', background: isSelected ? (isDark ? 'rgba(220,160,56,0.12)' : '#EBE1D0') : (isDark ? '#151515' : '#F6F3EC') }}>

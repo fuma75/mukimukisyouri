@@ -209,7 +209,7 @@ export default function AiMenuModal({ data, onClose, onApply }: AiMenuModalProps
         <img 
           src={heroImgUrl} 
           alt="Trainer" 
-          style={{ width: '100%', height: '100%', objectFit: heroImgUrl.includes('tiger') ? 'contain' : 'cover', objectPosition: 'center' }}
+          style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: heroImgUrl.includes('tiger') ? 'bottom center' : 'center', transform: heroImgUrl.includes('tiger') ? 'scale(1.15)' : 'none', transformOrigin: 'bottom center' }}
         />
         <div style={{ position: 'absolute', top: '20px', left: '20px', width: '40px', height: '40px', borderRadius: '50%', background: 'rgba(0,0,0,0.5)', display: 'flex', justifyContent: 'center', alignItems: 'center', cursor: 'pointer', color: '#fff' }} onClick={onClose}>
           <i className="fa-solid fa-arrow-left"></i>

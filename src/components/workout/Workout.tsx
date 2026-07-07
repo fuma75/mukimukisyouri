@@ -636,16 +636,18 @@ export default function Workout() {
                         const smileyClass = getSmileyIcon(prog.difficulty);
 
                         let bgSize = 'cover';
+                        let bgPos = 'center';
                         if (imgUrl.includes('tiger')) {
                             bgSize = '150%'; // default
-                            if (prog.targetArea === '全身') bgSize = 'contain';
+                            bgPos = 'bottom center';
+                            if (prog.targetArea === '全身') bgSize = '120%';
                             if (prog.targetArea === '腕') bgSize = '120%';
                             if (prog.targetArea === '背筋' || prog.targetArea === '肩') bgSize = '200%';
                         }
 
                         return (
                             <div key={prog.id} className="program-card" onClick={() => startProgram(prog)}>
-                                <div className="program-thumb" style={{ background: `url('${imgUrl}') center / ${bgSize} no-repeat` }}></div>
+                                <div className="program-thumb" style={{ background: `url('${imgUrl}') ${bgPos} / ${bgSize} no-repeat` }}></div>
                                 <div className="program-info">
                                     <h4 className="program-title">{prog.title}</h4>
                                     <span className="program-meta">{prog.durationMin} 分・{prog.exerciseCount} エクササイズ</span>
