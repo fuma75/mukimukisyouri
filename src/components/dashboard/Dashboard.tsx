@@ -251,10 +251,10 @@ export default function Dashboard() {
             <div style={{ flex: '1', minWidth: '200px' }}>
               <p style={{ margin: 0, fontSize: '0.85rem', color: 'rgba(255,255,255,0.5)', fontWeight: 'bold', letterSpacing: '0.05em' }}>現在の目標</p>
               <h2 style={{ margin: '8px 0 0 0', fontSize: '1.6rem', color: '#fff', display: 'flex', alignItems: 'center', gap: '10px' }}>
-                {profile.goal === 'lose-fat' || profile.goal === 'ダイエット・減量' || profile.goal === '減量' ? '🔥 ダイエット・減量' : 
-                 profile.goal === 'gain-muscle' || profile.goal === '筋肥大・バルクアップ' || profile.goal === '増量' ? '💪 筋肥大・バルクアップ' : 
-                 profile.goal === 'maintain' || profile.goal === '健康維持・体力アップ' || profile.goal === '維持' ? '🏃‍♂️ 健康維持・体力アップ' : 
-                 `🎯 ${profile.goal || '目標未設定'}`}
+                {profile.goal === 'lose-fat' || profile.goal === 'ダイエット・減量' || profile.goal === '減量' ? 'ダイエット・減量' : 
+                 profile.goal === 'gain-muscle' || profile.goal === '筋肥大・バルクアップ' || profile.goal === '増量' ? '筋肥大・バルクアップ' : 
+                 profile.goal === 'maintain' || profile.goal === '健康維持・体力アップ' || profile.goal === '維持' ? '健康維持・体力アップ' : 
+                 `${profile.goal || '目標未設定'}`}
               </h2>
             </div>
             
