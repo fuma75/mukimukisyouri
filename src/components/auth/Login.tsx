@@ -718,8 +718,8 @@ export default function Login() {
                       transform: isSelected ? 'translateY(-2px)' : 'none',
                     }}>
                     
-                    <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', color: isSelected ? (isDark ? '#FDF0A6' : '#B58434') : (isDark ? '#555' : '#4C4239') }}>
-                      <i className={`fa-solid ${g === 'male' ? 'fa-person' : 'fa-person-dress'}`} style={{ fontSize: '3.5rem' }}></i>
+                    <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '10px' }}>
+                      <img src={g === 'male' ? '/images/tiger-male.png' : '/images/tiger-female.png'} alt={g === 'male' ? '男性' : '女性'} style={{ width: '100%', height: '100%', objectFit: 'contain', filter: isSelected ? 'none' : 'grayscale(100%) opacity(0.4)', transition: 'all 0.2s' }} />
                     </div>
                     
                     <div style={{ height: '52px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', background: isSelected ? (isDark ? 'rgba(220,160,56,0.12)' : '#EBE1D0') : (isDark ? '#151515' : '#F6F3EC') }}>

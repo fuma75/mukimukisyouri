@@ -575,8 +575,17 @@ export default function Dashboard() {
                       <h3 style={{ margin: '0 0 24px', fontSize: '1.2rem', fontWeight: 'bold', color: '#fff', textAlign: 'center' }}>身体情報の編集</h3>
 
                       <p style={{ margin: '0 0 12px', fontSize: '1rem', fontWeight: 'bold', color: 'rgba(255,255,255,0.7)' }}>体重</p>
-                      <div style={{ textAlign: 'center', marginBottom: '8px' }}>
-                        <span style={{ fontSize: '3rem', fontWeight: 'bold', color: '#DCA038', lineHeight: 1, textShadow: '0 0 10px rgba(220,160,56,0.3)' }}>{editWeight}</span>
+                      <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'center', marginBottom: '8px' }}>
+                        <input 
+                          type="number" 
+                          value={editWeight || ''} 
+                          onChange={(e) => {
+                            const val = e.target.value;
+                            if (val === '') setEditWeight(0);
+                            else setEditWeight(Number(val));
+                          }} 
+                          style={{ fontSize: '3rem', fontWeight: 'bold', color: '#DCA038', background: 'transparent', border: 'none', borderBottom: '2px solid rgba(220, 160, 56, 0.5)', width: '130px', textAlign: 'center', outline: 'none', padding: 0, margin: 0, lineHeight: 1, textShadow: '0 0 10px rgba(220,160,56,0.3)' }} 
+                        />
                         <span style={{ fontSize: '1.1rem', color: 'rgba(255,255,255,0.5)', marginLeft: '6px' }}>kg</span>
                       </div>
                       <div style={{ position: 'relative', width: '100%', marginBottom: '28px' }}>
@@ -584,8 +593,17 @@ export default function Dashboard() {
                       </div>
 
                       <p style={{ margin: '0 0 12px', fontSize: '1rem', fontWeight: 'bold', color: 'rgba(255,255,255,0.7)' }}>身長</p>
-                      <div style={{ textAlign: 'center', marginBottom: '8px' }}>
-                        <span style={{ fontSize: '3rem', fontWeight: 'bold', color: '#DCA038', lineHeight: 1, textShadow: '0 0 10px rgba(220,160,56,0.3)' }}>{editHeight}</span>
+                      <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'center', marginBottom: '8px' }}>
+                        <input 
+                          type="number" 
+                          value={editHeight || ''} 
+                          onChange={(e) => {
+                            const val = e.target.value;
+                            if (val === '') setEditHeight(0);
+                            else setEditHeight(Number(val));
+                          }} 
+                          style={{ fontSize: '3rem', fontWeight: 'bold', color: '#DCA038', background: 'transparent', border: 'none', borderBottom: '2px solid rgba(220, 160, 56, 0.5)', width: '130px', textAlign: 'center', outline: 'none', padding: 0, margin: 0, lineHeight: 1, textShadow: '0 0 10px rgba(220,160,56,0.3)' }} 
+                        />
                         <span style={{ fontSize: '1.1rem', color: 'rgba(255,255,255,0.5)', marginLeft: '6px' }}>cm</span>
                       </div>
                       <div style={{ position: 'relative', width: '100%', marginBottom: '32px' }}>
