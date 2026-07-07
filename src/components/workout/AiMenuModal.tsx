@@ -121,9 +121,9 @@ export default function AiMenuModal({ data, onClose, onApply }: AiMenuModalProps
   const totalExercises = currentData.exerciseCount || allExercises.length;
 
   let heroImgUrl = '/trainer-hero.png';
-  if (currentData.category === '胸' || currentData.category === '胸部') heroImgUrl = 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80';
+  if (currentData.category === '胸' || currentData.category === '胸部') heroImgUrl = '/images/tiger-chest.png';
   if (currentData.category === '腹筋') heroImgUrl = '/images/tiger-abs.png';
-  if (currentData.category === '腕') heroImgUrl = 'https://images.unsplash.com/photo-1581009137042-c552e485697a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80';
+  if (currentData.category === '腕') heroImgUrl = '/images/tiger-arm.png';
   if (currentData.category === '脚') heroImgUrl = '/images/tiger-legs.png';
   if (currentData.category === '背筋' || currentData.category === '肩') heroImgUrl = '/images/tiger-back.png';
 
