@@ -554,7 +554,7 @@ export default function Workout() {
                   {challenges.map(c => (
                     <div key={c.level} style={{ minWidth: 'clamp(280px, 85vw, 420px)', scrollSnapAlign: 'center', flexShrink: 0, background: 'linear-gradient(135deg, rgba(30,30,30,0.95) 0%, rgba(10,10,10,1) 100%)', border: '1px solid rgba(220,160,56,0.4)', borderRadius: '16px', padding: '20px', position: 'relative', overflow: 'hidden', boxShadow: '0 10px 30px rgba(0,0,0,0.8), inset 0 0 20px rgba(220,160,56,0.05)' }}>
                       {/* Tiger watermark */}
-                      <div style={{ position: 'absolute', right: '-20px', top: '0', bottom: '0', width: '220px', background: 'url(/images/tiger-abs.png) center right / cover no-repeat', opacity: 0.3, mixBlendMode: 'screen', pointerEvents: 'none' }}></div>
+                      <div style={{ position: 'absolute', right: '-20px', top: '0', bottom: '0', width: '220px', background: 'url(/images/tiger-male.png) center right / contain no-repeat', opacity: 0.3, mixBlendMode: 'screen', pointerEvents: 'none' }}></div>
                       
                       <div style={{ position: 'relative', zIndex: 1 }}>
                         <div style={{ background: 'rgba(220,160,56,0.15)', border: '1px solid rgba(220,160,56,0.3)', color: '#DCA038', fontSize: '10px', padding: '4px 12px', borderRadius: '20px', display: 'inline-block', marginBottom: '15px', visibility: recommendedLevel === c.level ? 'visible' : 'hidden' }}>
