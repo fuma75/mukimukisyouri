@@ -639,7 +639,7 @@ export default function Workout() {
                         let bgPos = 'center';
                         if (imgUrl.includes('tiger')) {
                             bgSize = '150%'; // default
-                            bgPos = 'center 75%';
+                            bgPos = 'center 55%';
                             if (prog.targetArea === '全身') bgSize = '120%';
                             if (prog.targetArea === '腕') bgSize = '120%';
                             if (prog.targetArea === '背筋' || prog.targetArea === '肩') bgSize = '200%';
