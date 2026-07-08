@@ -719,7 +719,7 @@ export default function Login() {
                     }}>
                     
                     <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '0px', overflow: 'hidden' }}>
-                      <img src={g === 'male' ? '/images/tiger-male.png' : '/images/tiger-female.png'} alt={g === 'male' ? '男性' : '女性'} style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'bottom center', filter: isSelected ? 'none' : 'grayscale(100%) opacity(0.4)', transition: 'all 0.2s', transform: 'scale(1.15)', transformOrigin: 'bottom center' }} />
+                      <img src={g === 'male' ? '/images/tiger-male.png' : '/images/tiger-female.png'} alt={g === 'male' ? '男性' : '女性'} style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'bottom center', filter: isSelected ? 'none' : 'grayscale(100%) opacity(0.4)', transition: 'all 0.2s', transform: 'scale(1.15) translateY(15px)', transformOrigin: 'bottom center' }} />
                     </div>
                     
                     <div style={{ height: '52px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', background: isSelected ? (isDark ? 'rgba(220,160,56,0.12)' : '#EBE1D0') : (isDark ? '#151515' : '#F6F3EC') }}>
