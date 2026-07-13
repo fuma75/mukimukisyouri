@@ -537,7 +537,7 @@ export default function Login() {
     >
       <div style={{ width: '40px', height: '40px', display: 'flex', justifyContent: 'center', alignItems: 'center', flexShrink: 0, overflow: 'hidden' }}>
         {icon.startsWith('/') ? (
-          <img src={icon} alt={label} style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'bottom center', transform: 'scale(1.25)', transformOrigin: 'bottom center', filter: selected ? 'sepia(1) hue-rotate(-30deg) saturate(3) brightness(1.1)' : 'grayscale(100%) brightness(0.5)', opacity: selected ? 1 : 0.6 }} />
+          <img src={icon} alt={label} style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 55%', transform: 'scale(1.25)', transformOrigin: 'center 55%', filter: selected ? 'sepia(1) hue-rotate(-30deg) saturate(3) brightness(1.1)' : 'grayscale(100%) brightness(0.5)', opacity: selected ? 1 : 0.6 }} />
         ) : (
           <i className={icon} style={{ fontSize: '1.7rem', color: selected ? '#DCA038' : 'rgba(255,255,255,0.3)' }}></i>
         )}
@@ -1184,15 +1184,16 @@ export default function Login() {
 
             {estimatedResult?.samplePlan && (() => {
               const levelStr = (workoutLevel || '').toLowerCase();
+              const freqStr = (frequency || '').toLowerCase();
               let levelVal = '中級';
               let timeVal = '約8分';
               let bgVal = 'linear-gradient(135deg, #8d6e63 0%, #5d4037 100%)';
               
-              if (levelStr.includes('簡単') || levelStr.includes('初級') || levelStr.includes('簡単に始められる')) {
+              if (levelStr.includes('簡単') || levelStr.includes('初級') || levelStr.includes('簡単に始められる') || freqStr.includes('1')) {
                 levelVal = '初級';
                 timeVal = '約6分';
                 bgVal = 'linear-gradient(135deg, #DCA038 0%, var(--primary-dark) 100%)';
-              } else if (levelStr.includes('やりごたえ') || levelStr.includes('上級') || levelStr.includes('少しやりごたえがある')) {
+              } else if (levelStr.includes('やりごたえ') || levelStr.includes('上級') || levelStr.includes('少しやりごたえがある') || freqStr.includes('5') || freqStr.includes('7')) {
                 levelVal = '上級';
                 timeVal = '約12分';
                 bgVal = 'linear-gradient(135deg, #9c27b0 0%, #6a1b9a 100%)';

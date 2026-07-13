@@ -367,7 +367,7 @@ export default function Workout() {
       let recommendedLevel = 2; 
       if (prof.workoutLevel === '初級' || prof.workoutLevel === '簡単に始められる' || prof.frequency?.includes('1') || prof.frequency?.includes('たまに')) {
           recommendedLevel = 1;
-      } else if (prof.workoutLevel === '上級' || prof.workoutLevel === '少しやりごたえがある' || prof.frequency?.includes('毎日') || prof.frequency?.includes('5')) {
+      } else if (prof.workoutLevel === '上級' || prof.workoutLevel === '少しやりごたえがある' || prof.frequency?.includes('毎日') || prof.frequency?.includes('5') || prof.frequency?.includes('7')) {
           recommendedLevel = 3;
       }
 
