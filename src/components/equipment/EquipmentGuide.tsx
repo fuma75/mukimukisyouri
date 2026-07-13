@@ -2,6 +2,16 @@
 import React, { useState } from 'react';
 import { useAppContext } from '../AppContext';
 
+const targetToImage: Record<string, string> = {
+  '大胸筋': '/images/tiger-chest.png',
+  '大胸筋・三角筋': '/images/tiger-chest.png',
+  '上腕二頭筋': '/images/tiger-arm.png',
+  '大腿四頭筋・大臀筋': '/images/tiger-legs.png',
+  '背中全体・ハムストリング': '/images/tiger-back.png',
+  '広背筋': '/images/tiger-back.png',
+  '脚全体': '/images/tiger-legs.png',
+};
+
 const equipmentData = [
   {
     id: 'dumbbell',
@@ -173,13 +183,50 @@ export default function EquipmentGuide() {
 
               <div>
                 <h4 style={{ margin: '0 0 10px 0', fontSize: '1rem', color: textMain }}>代表的な種目</h4>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                  {item.exercises.map((ex, idx) => (
-                    <div key={idx} style={{ borderLeft: `3px solid ${primaryColor}`, paddingLeft: '10px' }}>
-                      <div style={{ fontWeight: 'bold', color: textMain, fontSize: '0.95rem' }}>{ex.name} <span style={{ fontSize: '0.8rem', color: primaryColor, fontWeight: 'normal', background: isDark ? 'rgba(220,160,56,0.1)' : 'rgba(26,115,232,0.1)', padding: '2px 6px', borderRadius: '4px', marginLeft: '5px' }}>{ex.target}</span></div>
-                      <div style={{ color: textMuted, fontSize: '0.85rem', marginTop: '3px' }}>{ex.tips}</div>
-                    </div>
-                  ))}
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                  {item.exercises.map((ex, idx) => {
+                    const imgUrl = targetToImage[ex.target] || '/images/tiger-male.png';
+                    return (
+                      <div key={idx} style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '15px',
+                        background: isDark ? 'var(--bg-card, rgba(15,15,15,0.8))' : '#fff',
+                        borderRadius: '16px',
+                        padding: '10px',
+                        boxShadow: isDark ? '0 2px 8px rgba(0,0,0,0.3)' : '0 2px 8px rgba(0,0,0,0.04)',
+                        border: isDark ? '1px solid rgba(255,255,255,0.05)' : '1px solid #f1f3f5',
+                        cursor: 'pointer',
+                        transition: 'transform 0.2s, box-shadow 0.2s',
+                      }}
+                        onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = isDark ? '0 4px 12px rgba(0,0,0,0.5)' : '0 4px 12px rgba(0,0,0,0.08)'; }}
+                        onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = isDark ? '0 2px 8px rgba(0,0,0,0.3)' : '0 2px 8px rgba(0,0,0,0.04)'; }}
+                      >
+                        <div style={{
+                          width: '80px',
+                          height: '80px',
+                          borderRadius: '12px',
+                          background: `url('${imgUrl}') center 55% / 150% no-repeat`,
+                          backgroundColor: isDark ? '#1a1a1a' : '#e9ecef',
+                          flexShrink: 0,
+                        }}></div>
+                        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                          <h4 style={{ margin: 0, fontSize: '1.05rem', fontWeight: 'bold', color: textMain }}>{ex.name}</h4>
+                          <span style={{ fontSize: '0.8rem', color: textMuted }}>{ex.tips}</span>
+                          <span style={{
+                            display: 'inline-block',
+                            width: 'fit-content',
+                            fontSize: '0.75rem',
+                            color: primaryColor,
+                            background: isDark ? 'rgba(220,160,56,0.1)' : 'rgba(26,115,232,0.1)',
+                            padding: '2px 8px',
+                            borderRadius: '10px',
+                            marginTop: '2px',
+                          }}>{ex.target}</span>
+                        </div>
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
             </div>
