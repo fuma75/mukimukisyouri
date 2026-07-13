@@ -1,5 +1,6 @@
 'use client';
 import React, { useState } from 'react';
+import { useAppContext } from '../AppContext';
 
 const equipmentData = [
   {
@@ -77,24 +78,60 @@ const plansData = [
 export default function EquipmentGuide() {
   const [activeTab, setActiveTab] = useState('equipment');
   const [selectedEquipment, setSelectedEquipment] = useState(equipmentData[0].id);
+  const { theme } = useAppContext();
+  const isDark = theme === 'dark';
+
+  const primaryColor = isDark ? '#DCA038' : 'var(--primary)';
+  const cardBg = isDark ? 'rgba(20,20,20,0.5)' : '#fff';
+  const cardBorder = isDark ? '1px solid rgba(255,255,255,0.05)' : '1px solid #f1f3f5';
+  const textMain = isDark ? '#ffffff' : '#212529';
+  const textSub = isDark ? 'rgba(255,255,255,0.8)' : '#495057';
+  const textMuted = isDark ? 'rgba(255,255,255,0.5)' : '#6c757d';
+  const boxBg = isDark ? 'rgba(0,0,0,0.3)' : '#f8f9fa';
+  
+  const getBtnStyle = (isActive: boolean) => ({
+    padding: '12px', 
+    background: isActive ? (isDark ? 'rgba(220,160,56,0.15)' : 'var(--primary)') : (isDark ? 'rgba(20,20,20,0.5)' : '#fff'), 
+    color: isActive ? (isDark ? '#DCA038' : '#fff') : textSub, 
+    border: isActive ? `1px solid ${primaryColor}` : (isDark ? '1px solid rgba(255,255,255,0.1)' : '1px solid #ced4da'), 
+    borderRadius: '8px', 
+    fontWeight: 'bold', 
+    cursor: 'pointer', 
+    transition: '0.2s',
+    flex: 1
+  });
+
+  const getPillStyle = (isActive: boolean) => ({
+    padding: '8px 20px', 
+    borderRadius: '20px', 
+    border: isActive ? `1px solid ${primaryColor}` : (isDark ? '1px solid rgba(255,255,255,0.1)' : '1px solid #ced4da'), 
+    background: isActive ? (isDark ? 'rgba(220,160,56,0.15)' : 'var(--primary)') : (isDark ? 'rgba(20,20,20,0.5)' : '#fff'), 
+    color: isActive ? (isDark ? '#DCA038' : '#fff') : textSub, 
+    whiteSpace: 'nowrap', 
+    fontSize: '14px', 
+    fontWeight: 'bold',
+    cursor: 'pointer',
+    transition: 'all 0.2s',
+    boxShadow: isActive ? (isDark ? '0 4px 10px rgba(220,160,56,0.2)' : '0 4px 10px rgba(0,0,0,0.1)') : 'none'
+  });
 
   return (
-    <section id="equipment" className="content-section active" style={{ height: '100%', overflowY: 'auto', padding: '20px', background: '#fcfcfd' }}>
+    <section id="equipment" className="content-section active" style={{ height: '100%', overflowY: 'auto', padding: '20px', background: isDark ? 'transparent' : '#fcfcfd' }}>
       <div className="section-header" style={{ marginBottom: '20px' }}>
-        <h2 style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#212529', margin: '0' }}>器具ガイド＆プラン</h2>
-        <p style={{ color: '#6c757d', fontSize: '0.9rem', margin: '5px 0 0 0' }}>ジムでの正しいトレーニング方法を学びましょう</p>
+        <h2 style={{ fontSize: '1.5rem', fontWeight: 'bold', color: isDark ? '#DCA038' : '#212529', margin: '0' }}>器具ガイド＆プラン</h2>
+        <p style={{ color: textMuted, fontSize: '0.9rem', margin: '5px 0 0 0' }}>ジムでの正しいトレーニング方法を学びましょう</p>
       </div>
 
       <div style={{ display: 'flex', gap: '10px', marginBottom: '20px' }}>
         <button 
           onClick={() => setActiveTab('equipment')}
-          style={{ flex: 1, padding: '12px', background: activeTab === 'equipment' ? 'var(--primary)' : '#fff', color: activeTab === 'equipment' ? '#fff' : '#495057', border: '1px solid #ced4da', borderRadius: '8px', fontWeight: 'bold', cursor: 'pointer', transition: '0.2s' }}
+          style={getBtnStyle(activeTab === 'equipment')}
         >
           <i className="fa-solid fa-dumbbell" style={{ marginRight: '8px' }}></i>器具の使い方
         </button>
         <button 
           onClick={() => setActiveTab('plan')}
-          style={{ flex: 1, padding: '12px', background: activeTab === 'plan' ? 'var(--primary)' : '#fff', color: activeTab === 'plan' ? '#fff' : '#495057', border: '1px solid #ced4da', borderRadius: '8px', fontWeight: 'bold', cursor: 'pointer', transition: '0.2s' }}
+          style={getBtnStyle(activeTab === 'plan')}
         >
           <i className="fa-solid fa-clipboard-list" style={{ marginRight: '8px' }}></i>おすすめプラン
         </button>
@@ -110,19 +147,7 @@ export default function EquipmentGuide() {
               <button 
                 key={item.id}
                 onClick={() => setSelectedEquipment(item.id)}
-                style={{ 
-                    padding: '8px 20px', 
-                    borderRadius: '20px', 
-                    border: selectedEquipment === item.id ? '1px solid var(--primary)' : '1px solid #ced4da', 
-                    background: selectedEquipment === item.id ? 'var(--primary)' : '#fff', 
-                    color: selectedEquipment === item.id ? '#fff' : '#495057', 
-                    whiteSpace: 'nowrap', 
-                    fontSize: '14px', 
-                    fontWeight: 'bold',
-                    cursor: 'pointer',
-                    transition: 'all 0.2s',
-                    boxShadow: selectedEquipment === item.id ? '0 4px 10px rgba(0,0,0,0.1)' : 'none'
-                }}
+                style={getPillStyle(selectedEquipment === item.id) as any}
               >
                 {item.title.split(' ')[0]}
               </button>
@@ -130,29 +155,29 @@ export default function EquipmentGuide() {
           </div>
 
           {equipmentData.filter(item => item.id === selectedEquipment).map(item => (
-            <div key={item.id} style={{ background: '#fff', borderRadius: '12px', padding: '20px', boxShadow: '0 4px 6px rgba(0,0,0,0.05)', border: '1px solid #f1f3f5', animation: 'fade-in 0.3s ease' }}>
+            <div key={item.id} style={{ background: cardBg, borderRadius: '12px', padding: '20px', boxShadow: isDark ? '0 4px 15px rgba(0,0,0,0.2)' : '0 4px 6px rgba(0,0,0,0.05)', border: cardBorder, animation: 'fade-in 0.3s ease' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '15px', marginBottom: '15px' }}>
-                <div style={{ width: '50px', height: '50px', borderRadius: '50%', background: 'rgba(26,115,232,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--primary)', fontSize: '1.5rem' }}>
+                <div style={{ width: '50px', height: '50px', borderRadius: '50%', background: isDark ? 'rgba(220,160,56,0.1)' : 'rgba(26,115,232,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: primaryColor, fontSize: '1.5rem' }}>
                   <i className={`fa-solid ${item.icon}`}></i>
                 </div>
-                <h3 style={{ margin: '0', fontSize: '1.2rem', color: '#212529' }}>{item.title}</h3>
+                <h3 style={{ margin: '0', fontSize: '1.2rem', color: textMain }}>{item.title}</h3>
               </div>
-              <p style={{ color: '#495057', fontSize: '0.95rem', lineHeight: '1.5', marginBottom: '15px' }}>{item.description}</p>
+              <p style={{ color: textSub, fontSize: '0.95rem', lineHeight: '1.5', marginBottom: '15px' }}>{item.description}</p>
               
-              <div style={{ background: '#f8f9fa', padding: '15px', borderRadius: '8px', marginBottom: '15px' }}>
-                <h4 style={{ margin: '0 0 10px 0', fontSize: '1rem', color: '#212529', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <i className="fa-solid fa-lightbulb" style={{ color: '#f59f00' }}></i> 使い方のコツ
+              <div style={{ background: boxBg, padding: '15px', borderRadius: '8px', marginBottom: '15px', border: isDark ? '1px solid rgba(255,255,255,0.05)' : 'none' }}>
+                <h4 style={{ margin: '0 0 10px 0', fontSize: '1rem', color: textMain, display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <i className="fa-solid fa-lightbulb" style={{ color: isDark ? '#DCA038' : '#f59f00' }}></i> 使い方のコツ
                 </h4>
-                <p style={{ margin: '0', color: '#495057', fontSize: '0.9rem', lineHeight: '1.5' }}>{item.usage}</p>
+                <p style={{ margin: '0', color: textSub, fontSize: '0.9rem', lineHeight: '1.5' }}>{item.usage}</p>
               </div>
 
               <div>
-                <h4 style={{ margin: '0 0 10px 0', fontSize: '1rem', color: '#212529' }}>代表的な種目</h4>
+                <h4 style={{ margin: '0 0 10px 0', fontSize: '1rem', color: textMain }}>代表的な種目</h4>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
                   {item.exercises.map((ex, idx) => (
-                    <div key={idx} style={{ borderLeft: '3px solid var(--primary)', paddingLeft: '10px' }}>
-                      <div style={{ fontWeight: 'bold', color: '#212529', fontSize: '0.95rem' }}>{ex.name} <span style={{ fontSize: '0.8rem', color: 'var(--primary)', fontWeight: 'normal', background: 'rgba(26,115,232,0.1)', padding: '2px 6px', borderRadius: '4px', marginLeft: '5px' }}>{ex.target}</span></div>
-                      <div style={{ color: '#6c757d', fontSize: '0.85rem', marginTop: '3px' }}>{ex.tips}</div>
+                    <div key={idx} style={{ borderLeft: `3px solid ${primaryColor}`, paddingLeft: '10px' }}>
+                      <div style={{ fontWeight: 'bold', color: textMain, fontSize: '0.95rem' }}>{ex.name} <span style={{ fontSize: '0.8rem', color: primaryColor, fontWeight: 'normal', background: isDark ? 'rgba(220,160,56,0.1)' : 'rgba(26,115,232,0.1)', padding: '2px 6px', borderRadius: '4px', marginLeft: '5px' }}>{ex.target}</span></div>
+                      <div style={{ color: textMuted, fontSize: '0.85rem', marginTop: '3px' }}>{ex.tips}</div>
                     </div>
                   ))}
                 </div>
@@ -165,24 +190,24 @@ export default function EquipmentGuide() {
       {activeTab === 'plan' && (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
           {plansData.map((plan, idx) => (
-            <div key={idx} style={{ background: '#fff', borderRadius: '12px', padding: '20px', boxShadow: '0 4px 6px rgba(0,0,0,0.05)', border: '1px solid #f1f3f5' }}>
+            <div key={idx} style={{ background: cardBg, borderRadius: '12px', padding: '20px', boxShadow: isDark ? '0 4px 15px rgba(0,0,0,0.2)' : '0 4px 6px rgba(0,0,0,0.05)', border: cardBorder }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '10px' }}>
-                <h3 style={{ margin: '0', fontSize: '1.15rem', color: '#212529', fontWeight: 'bold' }}>{plan.title}</h3>
-                <span style={{ background: plan.level === '初心者' ? '#eebfa' : '#ffe8cc', color: plan.level === '初心者' ? '#2b8a3e' : '#d9480f', fontSize: '0.75rem', padding: '4px 8px', borderRadius: '12px', fontWeight: 'bold' }}>
+                <h3 style={{ margin: '0', fontSize: '1.15rem', color: textMain, fontWeight: 'bold' }}>{plan.title}</h3>
+                <span style={{ background: plan.level === '初心者' ? (isDark ? 'rgba(43,138,62,0.2)' : '#eebfa') : (isDark ? 'rgba(217,72,15,0.2)' : '#ffe8cc'), color: plan.level === '初心者' ? (isDark ? '#40c057' : '#2b8a3e') : (isDark ? '#ff922b' : '#d9480f'), fontSize: '0.75rem', padding: '4px 8px', borderRadius: '12px', fontWeight: 'bold' }}>
                   {plan.level}
                 </span>
               </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '15px', color: '#6c757d', fontSize: '0.85rem', marginBottom: '15px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '15px', color: textMuted, fontSize: '0.85rem', marginBottom: '15px' }}>
                 <span><i className="fa-regular fa-clock" style={{ marginRight: '5px' }}></i>目安: {plan.duration}</span>
               </div>
-              <p style={{ color: '#495057', fontSize: '0.9rem', lineHeight: '1.5', marginBottom: '15px' }}>{plan.details}</p>
+              <p style={{ color: textSub, fontSize: '0.9rem', lineHeight: '1.5', marginBottom: '15px' }}>{plan.details}</p>
               
-              <div style={{ background: '#f8f9fa', padding: '15px', borderRadius: '8px' }}>
-                <h4 style={{ margin: '0 0 10px 0', fontSize: '0.95rem', color: '#212529' }}>ルーティン</h4>
+              <div style={{ background: boxBg, padding: '15px', borderRadius: '8px', border: isDark ? '1px solid rgba(255,255,255,0.05)' : 'none' }}>
+                <h4 style={{ margin: '0 0 10px 0', fontSize: '0.95rem', color: textMain }}>ルーティン</h4>
                 <ul style={{ margin: '0', padding: '0', listStyleType: 'none', display: 'flex', flexDirection: 'column', gap: '8px' }}>
                   {plan.routine.map((step, sIdx) => (
-                    <li key={sIdx} style={{ color: '#495057', fontSize: '0.9rem', display: 'flex', alignItems: 'flex-start', gap: '8px' }}>
-                      <i className="fa-solid fa-check" style={{ color: 'var(--primary)', marginTop: '3px', fontSize: '0.8rem' }}></i>
+                    <li key={sIdx} style={{ color: textSub, fontSize: '0.9rem', display: 'flex', alignItems: 'flex-start', gap: '8px' }}>
+                      <i className="fa-solid fa-check" style={{ color: primaryColor, marginTop: '3px', fontSize: '0.8rem' }}></i>
                       <span>{step}</span>
                     </li>
                   ))}
