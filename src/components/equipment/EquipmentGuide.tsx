@@ -76,6 +76,7 @@ const plansData = [
 
 export default function EquipmentGuide() {
   const [activeTab, setActiveTab] = useState('equipment');
+  const [selectedEquipment, setSelectedEquipment] = useState(equipmentData[0].id);
 
   return (
     <section id="equipment" className="content-section active" style={{ height: '100%', overflowY: 'auto', padding: '20px', background: '#fcfcfd' }}>
@@ -101,8 +102,35 @@ export default function EquipmentGuide() {
 
       {activeTab === 'equipment' && (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-          {equipmentData.map(item => (
-            <div key={item.id} style={{ background: '#fff', borderRadius: '12px', padding: '20px', boxShadow: '0 4px 6px rgba(0,0,0,0.05)', border: '1px solid #f1f3f5' }}>
+          <style>{`
+            .no-scrollbar::-webkit-scrollbar { display: none; }
+          `}</style>
+          <div style={{ display: 'flex', gap: '10px', overflowX: 'auto', paddingBottom: '5px' }} className="no-scrollbar">
+            {equipmentData.map(item => (
+              <button 
+                key={item.id}
+                onClick={() => setSelectedEquipment(item.id)}
+                style={{ 
+                    padding: '8px 20px', 
+                    borderRadius: '20px', 
+                    border: selectedEquipment === item.id ? '1px solid var(--primary)' : '1px solid #ced4da', 
+                    background: selectedEquipment === item.id ? 'var(--primary)' : '#fff', 
+                    color: selectedEquipment === item.id ? '#fff' : '#495057', 
+                    whiteSpace: 'nowrap', 
+                    fontSize: '14px', 
+                    fontWeight: 'bold',
+                    cursor: 'pointer',
+                    transition: 'all 0.2s',
+                    boxShadow: selectedEquipment === item.id ? '0 4px 10px rgba(0,0,0,0.1)' : 'none'
+                }}
+              >
+                {item.title.split(' ')[0]}
+              </button>
+            ))}
+          </div>
+
+          {equipmentData.filter(item => item.id === selectedEquipment).map(item => (
+            <div key={item.id} style={{ background: '#fff', borderRadius: '12px', padding: '20px', boxShadow: '0 4px 6px rgba(0,0,0,0.05)', border: '1px solid #f1f3f5', animation: 'fade-in 0.3s ease' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '15px', marginBottom: '15px' }}>
                 <div style={{ width: '50px', height: '50px', borderRadius: '50%', background: 'rgba(26,115,232,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--primary)', fontSize: '1.5rem' }}>
                   <i className={`fa-solid ${item.icon}`}></i>
