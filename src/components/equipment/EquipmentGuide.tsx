@@ -20,9 +20,24 @@ const equipmentData = [
     description: '自由な軌道で動かせるため、筋肉をより広い可動域で鍛えることができます。左右のバランスを整えるのにも最適です。',
     usage: 'まずは軽めの重量（男性なら5〜10kg、女性なら2〜5kg程度）から始め、フォームを固めましょう。反動を使わず、筋肉の収縮を意識しながらゆっくりと動作します。',
     exercises: [
-      { name: 'ダンベルフライ', target: '大胸筋', tips: '胸を張り、肩甲骨を寄せて行います。' },
-      { name: 'ダンベルカール', target: '上腕二頭筋', tips: '肘を固定し、反動を使わずに持ち上げます。' },
-      { name: 'ダンベルプレス', target: '大胸筋・三角筋', tips: '手のひらが前を向くように握り、真上に押し上げます。' }
+      { name: 'ダンベルフライ', target: '大胸筋', tips: '胸を張り、肩甲骨を寄せて行います。',
+        training: [
+          { name: 'ダンベルフライ（フラット）', gif: 'https://raw.githubusercontent.com/omercotkd/exercises-gifs/main/assets/0294.gif', reps: 'x12' },
+          { name: 'インクラインダンベルフライ', gif: 'https://raw.githubusercontent.com/omercotkd/exercises-gifs/main/assets/0313.gif', reps: 'x10' },
+          { name: 'ダンベルプルオーバー', gif: 'https://raw.githubusercontent.com/omercotkd/exercises-gifs/main/assets/0334.gif', reps: 'x12' },
+        ]},
+      { name: 'ダンベルカール', target: '上腕二頭筋', tips: '肘を固定し、反動を使わずに持ち上げます。',
+        training: [
+          { name: 'ダンベルカール（スタンディング）', gif: 'https://raw.githubusercontent.com/omercotkd/exercises-gifs/main/assets/0293.gif', reps: 'x12' },
+          { name: 'ハンマーカール', gif: 'https://raw.githubusercontent.com/omercotkd/exercises-gifs/main/assets/0303.gif', reps: 'x12' },
+          { name: 'コンセントレーションカール', gif: 'https://raw.githubusercontent.com/omercotkd/exercises-gifs/main/assets/0285.gif', reps: 'x10' },
+        ]},
+      { name: 'ダンベルプレス', target: '大胸筋・三角筋', tips: '手のひらが前を向くように握り、真上に押し上げます。',
+        training: [
+          { name: 'ダンベルベンチプレス', gif: 'https://raw.githubusercontent.com/omercotkd/exercises-gifs/main/assets/0289.gif', reps: 'x10' },
+          { name: 'インクラインダンベルプレス', gif: 'https://raw.githubusercontent.com/omercotkd/exercises-gifs/main/assets/0314.gif', reps: 'x10' },
+          { name: 'ダンベルショルダープレス', gif: 'https://raw.githubusercontent.com/omercotkd/exercises-gifs/main/assets/0405.gif', reps: 'x12' },
+        ]},
     ]
   },
   {
@@ -32,9 +47,24 @@ const equipmentData = [
     description: '高重量を扱うことができるため、筋力アップや筋肥大（筋肉を大きくする）に最も効果的な器具です。',
     usage: '正しいフォームの習得が必須です。初心者のうちは重り（プレート）をつけず、シャフト（バーのみ）でフォームの練習を行いましょう。不安な場合はジムのスタッフに補助を頼んでください。',
     exercises: [
-      { name: 'ベンチプレス', target: '大胸筋', tips: '肩甲骨を寄せて胸を張り、バーを胸の下部に下ろします。' },
-      { name: 'スクワット', target: '大腿四頭筋・大臀筋', tips: '背筋を伸ばし、膝がつま先より前に出すぎないようにお尻を下げます。' },
-      { name: 'デッドリフト', target: '背中全体・ハムストリング', tips: '背中が丸まらないように注意し、股関節を支点に持ち上げます。' }
+      { name: 'ベンチプレス', target: '大胸筋', tips: '肩甲骨を寄せて胸を張り、バーを胸の下部に下ろします。',
+        training: [
+          { name: 'バーベルベンチプレス', gif: 'https://raw.githubusercontent.com/omercotkd/exercises-gifs/main/assets/0025.gif', reps: 'x8' },
+          { name: 'インクラインベンチプレス', gif: 'https://raw.githubusercontent.com/omercotkd/exercises-gifs/main/assets/0031.gif', reps: 'x8' },
+          { name: 'クローズグリップベンチプレス', gif: 'https://raw.githubusercontent.com/omercotkd/exercises-gifs/main/assets/0032.gif', reps: 'x10' },
+        ]},
+      { name: 'スクワット', target: '大腿四頭筋・大臀筋', tips: '背筋を伸ばし、膝がつま先より前に出すぎないようにお尻を下げます。',
+        training: [
+          { name: 'バーベルバックスクワット', gif: 'https://raw.githubusercontent.com/omercotkd/exercises-gifs/main/assets/0043.gif', reps: 'x10' },
+          { name: 'フロントスクワット', gif: 'https://raw.githubusercontent.com/omercotkd/exercises-gifs/main/assets/0037.gif', reps: 'x8' },
+          { name: 'バーベルランジ', gif: 'https://raw.githubusercontent.com/omercotkd/exercises-gifs/main/assets/0039.gif', reps: 'x10 (各脚)' },
+        ]},
+      { name: 'デッドリフト', target: '背中全体・ハムストリング', tips: '背中が丸まらないように注意し、股関節を支点に持ち上げます。',
+        training: [
+          { name: 'コンベンショナルデッドリフト', gif: 'https://raw.githubusercontent.com/omercotkd/exercises-gifs/main/assets/0032.gif', reps: 'x6' },
+          { name: 'ルーマニアンデッドリフト', gif: 'https://raw.githubusercontent.com/omercotkd/exercises-gifs/main/assets/0085.gif', reps: 'x10' },
+          { name: 'バーベルベントオーバーロウ', gif: 'https://raw.githubusercontent.com/omercotkd/exercises-gifs/main/assets/0027.gif', reps: 'x10' },
+        ]},
     ]
   },
   {
@@ -44,9 +74,24 @@ const equipmentData = [
     description: '軌道が固定されているため、初心者でも安全かつ簡単に特定の筋肉を鍛えることができます。怪我のリスクが低いです。',
     usage: 'まずは自分の体格に合わせてマシンのシートやパッドの位置を調整します（これが一番重要です）。説明書きや図解がマシンに貼ってあることが多いので参考にしましょう。',
     exercises: [
-      { name: 'チェストプレス', target: '大胸筋', tips: 'ベンチプレスと同じ動きを安全に行えます。' },
-      { name: 'ラットプルダウン', target: '広背筋', tips: '肩甲骨を下げる意識でバーを胸の前に引き寄せます。' },
-      { name: 'レッグプレス', target: '脚全体', tips: '膝を伸ばしきらない（ロックしない）ように注意します。' }
+      { name: 'チェストプレス', target: '大胸筋', tips: 'ベンチプレスと同じ動きを安全に行えます。',
+        training: [
+          { name: 'チェストプレスマシン', gif: 'https://raw.githubusercontent.com/omercotkd/exercises-gifs/main/assets/0586.gif', reps: 'x12' },
+          { name: 'ペックデックフライ', gif: 'https://raw.githubusercontent.com/omercotkd/exercises-gifs/main/assets/0585.gif', reps: 'x12' },
+          { name: 'ケーブルクロスオーバー', gif: 'https://raw.githubusercontent.com/omercotkd/exercises-gifs/main/assets/0160.gif', reps: 'x12' },
+        ]},
+      { name: 'ラットプルダウン', target: '広背筋', tips: '肩甲骨を下げる意識でバーを胸の前に引き寄せます。',
+        training: [
+          { name: 'ワイドグリップラットプルダウン', gif: 'https://raw.githubusercontent.com/omercotkd/exercises-gifs/main/assets/0186.gif', reps: 'x12' },
+          { name: 'クローズグリップラットプルダウン', gif: 'https://raw.githubusercontent.com/omercotkd/exercises-gifs/main/assets/0185.gif', reps: 'x12' },
+          { name: 'シーテッドケーブルロウ', gif: 'https://raw.githubusercontent.com/omercotkd/exercises-gifs/main/assets/0171.gif', reps: 'x12' },
+        ]},
+      { name: 'レッグプレス', target: '脚全体', tips: '膝を伸ばしきらない（ロックしない）ように注意します。',
+        training: [
+          { name: 'レッグプレスマシン', gif: 'https://raw.githubusercontent.com/omercotkd/exercises-gifs/main/assets/0578.gif', reps: 'x12' },
+          { name: 'レッグエクステンション', gif: 'https://raw.githubusercontent.com/omercotkd/exercises-gifs/main/assets/0583.gif', reps: 'x15' },
+          { name: 'レッグカール', gif: 'https://raw.githubusercontent.com/omercotkd/exercises-gifs/main/assets/0576.gif', reps: 'x12' },
+        ]},
     ]
   }
 ];
@@ -88,6 +133,7 @@ const plansData = [
 export default function EquipmentGuide() {
   const [activeTab, setActiveTab] = useState('equipment');
   const [selectedEquipment, setSelectedEquipment] = useState(equipmentData[0].id);
+  const [expandedExercise, setExpandedExercise] = useState<string | null>(null);
   const { theme } = useAppContext();
   const isDark = theme === 'dark';
 
@@ -186,44 +232,90 @@ export default function EquipmentGuide() {
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                   {item.exercises.map((ex, idx) => {
                     const imgUrl = targetToImage[ex.target] || '/images/tiger-male.png';
+                    const exKey = `${item.id}-${idx}`;
+                    const isExpanded = expandedExercise === exKey;
                     return (
-                      <div key={idx} style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '15px',
-                        background: isDark ? 'var(--bg-card, rgba(15,15,15,0.8))' : '#fff',
-                        borderRadius: '16px',
-                        padding: '10px',
-                        boxShadow: isDark ? '0 2px 8px rgba(0,0,0,0.3)' : '0 2px 8px rgba(0,0,0,0.04)',
-                        border: isDark ? '1px solid rgba(255,255,255,0.05)' : '1px solid #f1f3f5',
-                        cursor: 'pointer',
-                        transition: 'transform 0.2s, box-shadow 0.2s',
-                      }}
-                        onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = isDark ? '0 4px 12px rgba(0,0,0,0.5)' : '0 4px 12px rgba(0,0,0,0.08)'; }}
-                        onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = isDark ? '0 2px 8px rgba(0,0,0,0.3)' : '0 2px 8px rgba(0,0,0,0.04)'; }}
-                      >
+                      <div key={idx}>
                         <div style={{
-                          width: '80px',
-                          height: '80px',
-                          borderRadius: '12px',
-                          background: `url('${imgUrl}') center 55% / 150% no-repeat`,
-                          backgroundColor: isDark ? '#1a1a1a' : '#e9ecef',
-                          flexShrink: 0,
-                        }}></div>
-                        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                          <h4 style={{ margin: 0, fontSize: '1.05rem', fontWeight: 'bold', color: textMain }}>{ex.name}</h4>
-                          <span style={{ fontSize: '0.8rem', color: textMuted }}>{ex.tips}</span>
-                          <span style={{
-                            display: 'inline-block',
-                            width: 'fit-content',
-                            fontSize: '0.75rem',
-                            color: primaryColor,
-                            background: isDark ? 'rgba(220,160,56,0.1)' : 'rgba(26,115,232,0.1)',
-                            padding: '2px 8px',
-                            borderRadius: '10px',
-                            marginTop: '2px',
-                          }}>{ex.target}</span>
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '15px',
+                          background: isDark ? 'var(--bg-card, rgba(15,15,15,0.8))' : '#fff',
+                          borderRadius: isExpanded ? '16px 16px 0 0' : '16px',
+                          padding: '10px',
+                          boxShadow: isDark ? '0 2px 8px rgba(0,0,0,0.3)' : '0 2px 8px rgba(0,0,0,0.04)',
+                          border: isExpanded ? `1px solid ${primaryColor}` : (isDark ? '1px solid rgba(255,255,255,0.05)' : '1px solid #f1f3f5'),
+                          borderBottom: isExpanded ? 'none' : undefined,
+                          cursor: 'pointer',
+                          transition: 'all 0.2s',
+                        }}
+                          onClick={() => setExpandedExercise(isExpanded ? null : exKey)}
+                        >
+                          <div style={{
+                            width: '80px',
+                            height: '80px',
+                            borderRadius: '12px',
+                            background: `url('${imgUrl}') center 55% / 150% no-repeat`,
+                            backgroundColor: isDark ? '#1a1a1a' : '#e9ecef',
+                            flexShrink: 0,
+                          }}></div>
+                          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                            <h4 style={{ margin: 0, fontSize: '1.05rem', fontWeight: 'bold', color: textMain }}>{ex.name}</h4>
+                            <span style={{ fontSize: '0.8rem', color: textMuted }}>{ex.tips}</span>
+                            <span style={{
+                              display: 'inline-block',
+                              width: 'fit-content',
+                              fontSize: '0.75rem',
+                              color: primaryColor,
+                              background: isDark ? 'rgba(220,160,56,0.1)' : 'rgba(26,115,232,0.1)',
+                              padding: '2px 8px',
+                              borderRadius: '10px',
+                              marginTop: '2px',
+                            }}>{ex.target}</span>
+                          </div>
+                          <i className={`fa-solid fa-chevron-${isExpanded ? 'up' : 'down'}`} style={{ color: primaryColor, fontSize: '14px', marginRight: '8px' }}></i>
                         </div>
+
+                        {isExpanded && ex.training && (
+                          <div style={{
+                            background: isDark ? 'rgba(10,10,10,0.9)' : '#fafafa',
+                            border: `1px solid ${primaryColor}`,
+                            borderTop: 'none',
+                            borderRadius: '0 0 16px 16px',
+                            padding: '16px',
+                          }}>
+                            <h4 style={{ margin: '0 0 12px 0', fontSize: '0.95rem', color: textMain, display: 'flex', alignItems: 'center', gap: '8px' }}>
+                              <i className="fa-solid fa-dumbbell" style={{ color: primaryColor }}></i> トレーニング
+                            </h4>
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                              {ex.training.map((t, tIdx) => (
+                                <div key={tIdx} style={{
+                                  display: 'flex',
+                                  alignItems: 'center',
+                                  gap: '14px',
+                                  padding: '8px 0',
+                                  borderBottom: tIdx < ex.training.length - 1 ? (isDark ? '1px solid rgba(255,255,255,0.05)' : '1px solid #eee') : 'none',
+                                }}>
+                                  <i className="fa-solid fa-grip-vertical" style={{ color: textMuted, fontSize: '12px' }}></i>
+                                  <div style={{
+                                    width: '60px',
+                                    height: '60px',
+                                    borderRadius: '10px',
+                                    overflow: 'hidden',
+                                    flexShrink: 0,
+                                    background: isDark ? '#1a1a1a' : '#e9ecef',
+                                  }}>
+                                    <img src={t.gif} alt={t.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                  </div>
+                                  <div style={{ flex: 1 }}>
+                                    <div style={{ fontWeight: 'bold', fontSize: '0.95rem', color: textMain }}>{t.name}</div>
+                                    <div style={{ fontSize: '0.85rem', color: primaryColor, marginTop: '2px' }}>{t.reps}</div>
+                                  </div>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        )}
                       </div>
                     );
                   })}
