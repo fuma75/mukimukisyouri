@@ -266,6 +266,11 @@ export default function EquipmentGuide() {
     }));
     const warmup = [{ exercise: 'ジャンピングジャック', duration: '00:30' }];
     const cooldown = [{ exercise: 'ストレッチ', duration: '00:30' }];
+    
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('kinnikun_badge_knowledge_plan', 'true');
+    }
+
     setActiveAiMenu({
       title: `${plan.title} — ${day.label}`,
       goal: plan.title,
@@ -488,7 +493,13 @@ export default function EquipmentGuide() {
                                 }}>
                                   <i className="fa-solid fa-grip-vertical" style={{ color: textMuted, fontSize: '12px' }}></i>
                                  <div
-                                    onClick={(e) => { e.stopPropagation(); setZoomGif(t.gif); }}
+                                    onClick={(e) => { 
+                                      e.stopPropagation(); 
+                                      setZoomGif(t.gif); 
+                                      if (typeof window !== 'undefined') {
+                                        localStorage.setItem('kinnikun_badge_knowledge_gif', 'true');
+                                      }
+                                    }}
                                     style={{
                                       width: '60px',
                                       height: '60px',

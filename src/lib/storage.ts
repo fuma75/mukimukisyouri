@@ -42,6 +42,7 @@ export type WorkoutItem = {
     volume?: number;
     calories?: number;
     duration?: number;
+    hour?: number;
 };
 
 export type MealItem = {
@@ -177,6 +178,9 @@ export function saveWorkout(workoutItem: WorkoutItem): WorkoutItem {
     const list = getWorkouts();
     if (!workoutItem.id) {
         workoutItem.id = 'wo_' + Date.now() + '_' + Math.random().toString(36).substring(2, 7);
+    }
+    if (workoutItem.hour === undefined) {
+        workoutItem.hour = new Date().getHours();
     }
     workoutItem.volume = workoutItem.weight * workoutItem.reps * workoutItem.sets;
     if (workoutItem.calories !== undefined && workoutItem.calories !== null) {

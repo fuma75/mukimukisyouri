@@ -19,6 +19,7 @@ export default function Dashboard() {
   const [showBmiEdit, setShowBmiEdit] = useState(false);
   const [editHeight, setEditHeight] = useState(167);
   const [editWeight, setEditWeight] = useState(60);
+  const [showXpGuide, setShowXpGuide] = useState(false);
 
   useEffect(() => {
     if (activeTab === 'dashboard' || !mounted) {
@@ -33,6 +34,69 @@ export default function Dashboard() {
 
   if (!mounted || !profile) return null;
 
+  // 全期間の記録データをロード（経験値 & バッジレベル計算用）
+  const allWorkouts = getWorkouts(null);
+  const allMeals = getMeals(null);
+  const totalVolumeAll = allWorkouts.reduce((sum, w) => sum + (w.volume || 0), 0);
+
+  // 知識バッジ獲得ステップの算出
+  const readKnowledge = typeof window !== 'undefined' ? localStorage.getItem('kinnikun_badge_knowledge') === 'true' : false;
+  const readGif = typeof window !== 'undefined' ? localStorage.getItem('kinnikun_badge_knowledge_gif') === 'true' : false;
+  const startPlan = typeof window !== 'undefined' ? localStorage.getItem('kinnikun_badge_knowledge_plan') === 'true' : false;
+
+  const workoutCount = allWorkouts.length;
+  const mealCount = allMeals.length;
+  const knowledgeSteps = (readKnowledge ? 1 : 0) + (readGif ? 1 : 0) + (startPlan ? 1 : 0);
+
+  // 解除済みのバッジレベル数をカウント（銅=1, 銀=2, 金=3）
+  let badgeLevelsUnlocked = 0;
+  
+  if (workoutCount >= 50) badgeLevelsUnlocked += 3;
+  else if (workoutCount >= 10) badgeLevelsUnlocked += 2;
+  else if (workoutCount >= 1) badgeLevelsUnlocked += 1;
+  
+  if (mealCount >= 100) badgeLevelsUnlocked += 3;
+  else if (mealCount >= 30) badgeLevelsUnlocked += 2;
+  else if (mealCount >= 10) badgeLevelsUnlocked += 1;
+  
+  badgeLevelsUnlocked += knowledgeSteps;
+  
+  if (totalVolumeAll >= 200000) badgeLevelsUnlocked += 3;
+  else if (totalVolumeAll >= 50000) badgeLevelsUnlocked += 2;
+  else if (totalVolumeAll >= 5000) badgeLevelsUnlocked += 1;
+  
+  if (streak >= 30) badgeLevelsUnlocked += 3;
+  else if (streak >= 10) badgeLevelsUnlocked += 2;
+  else if (streak >= 3) badgeLevelsUnlocked += 1;
+
+  // 目標達成日数のカウント（カロリー目標が設定されている前提、目標の90%〜110%を達成した日）
+  const mealDays: Record<string, number> = {};
+  allMeals.forEach(m => {
+    mealDays[m.date] = (mealDays[m.date] || 0) + m.calories;
+  });
+  const targetCal = profile.targetCalories || 2000;
+  const goalAchievedDays = Object.values(mealDays).filter(cal => cal >= targetCal * 0.9 && cal <= targetCal * 1.1).length;
+
+  // XP合計値の動的算出 (画像指定のレートに完全準拠)
+  const workoutXp = workoutCount * 50;
+  const mealXp = mealCount * 10;
+  const goalAchievedXp = goalAchievedDays * 200;
+  const streakXp = Math.floor(streak / 7) * 300;
+  const badgeXp = badgeLevelsUnlocked * 100;
+
+  const totalXp = workoutXp + mealXp + goalAchievedXp + streakXp + badgeXp;
+
+  // レベル計算
+  let tempXp = totalXp;
+  let currentLevel = 1;
+  let xpForNextLevel = 250;
+  while (tempXp >= xpForNextLevel) {
+    tempXp -= xpForNextLevel;
+    currentLevel++;
+    xpForNextLevel = currentLevel * 250;
+  }
+
+  // 今日の分のカロリーPFC
   let consumedCalories = 0;
   let totalP = 0;
   let totalF = 0;
@@ -231,7 +295,117 @@ export default function Dashboard() {
     }
   };
 
+  // 隠し実績：完璧な一週間の判定 (直近7日間の全日カロリーが目標の90%〜110%内)
+  const isPerfectWeek = intakeData.every(cal => cal >= targetCal * 0.9 && cal <= targetCal * 1.1);
 
+  // 隠し実績：有言実行の判定 (目標体重をクリアしているか)
+  const targetWeight = profile.targetWeight || profile.weight;
+  let isTargetWeightAchieved = false;
+  if (profile.goal === 'lose-fat' || profile.goal === 'ダイエット・減量' || profile.goal === '減量') {
+    isTargetWeightAchieved = currentWeight <= targetWeight;
+  } else if (profile.goal === 'gain-muscle' || profile.goal === '筋肥大・バルクアップ' || profile.goal === '増量') {
+    isTargetWeightAchieved = currentWeight >= targetWeight;
+  } else {
+    isTargetWeightAchieved = Math.abs(currentWeight - targetWeight) <= 0.2;
+  }
+
+  // 隠し実績：深夜・早朝の判定
+  const hasLateNightWorkout = allWorkouts.some(w => w.hour !== undefined && (w.hour >= 0 && w.hour < 5));
+  const hasMorningWorkout = allWorkouts.some(w => w.hour !== undefined && (w.hour >= 5 && w.hour <= 7));
+
+  const secretsList = [
+    {
+      id: 'late_night',
+      name: '深夜の鍛錬',
+      icon: 'fa-moon',
+      hint: '深夜（0時〜5時）にトレーニングを記録する',
+      isUnlocked: hasLateNightWorkout,
+      emoji: '🌙'
+    },
+    {
+      id: 'morning_tiger',
+      name: '朝活の虎',
+      icon: 'fa-sun',
+      hint: '朝早く（5時〜7時）にトレーニングを記録する',
+      isUnlocked: hasMorningWorkout,
+      emoji: '🌅'
+    },
+    {
+      id: 'perfect_week',
+      name: '完璧な一週間',
+      icon: 'fa-calendar-check',
+      hint: '直近7日間すべて目標カロリー(±10%)を達成する',
+      isUnlocked: isPerfectWeek,
+      emoji: '💯'
+    },
+    {
+      id: 'target_weight',
+      name: '有言実行',
+      icon: 'fa-bullseye',
+      hint: '設定した目標体重を達成する',
+      isUnlocked: isTargetWeightAchieved,
+      emoji: '🎯'
+    }
+  ];
+
+  // 全実績数（15個のバッジ段階 + 4つの隠し実績 = 計19）の算出
+  const otherSecretsCount = secretsList.filter(s => s.isUnlocked).length;
+  const totalAchievementsReached = badgeLevelsUnlocked + otherSecretsCount;
+
+  // 真・筋虎の判定 (全実績解除: 19個すべてクリア)
+  const isTrueKinnikun = totalAchievementsReached === 19;
+
+  const allSecrets = [
+    ...secretsList,
+    {
+      id: 'true_kinnikun',
+      name: '真・筋虎',
+      icon: 'fa-crown',
+      hint: '全実績（15段階のバッジと4つの隠し実績）を完全に解除する',
+      isUnlocked: isTrueKinnikun,
+      emoji: '👑'
+    }
+  ];
+
+  // 称号リスト
+  const titleList = [
+    {
+      name: '筋虎の見習い',
+      condition: 'Lv.5に到達する',
+      isUnlocked: currentLevel >= 5,
+      progress: `現在のLv: ${currentLevel} / 5`
+    },
+    {
+      name: '百戦の虎',
+      condition: '累計100回ワークアウトを記録する',
+      isUnlocked: workoutCount >= 100,
+      progress: `現在の回数: ${workoutCount} / 100回`
+    },
+    {
+      name: '鉄を愛する者',
+      condition: '総重量10t (累計ボリューム10,000kg) 突破',
+      isUnlocked: totalVolumeAll >= 10000,
+      progress: `現在の重量: ${totalVolumeAll.toLocaleString()} / 10,000 kg`
+    },
+    {
+      name: '食を制する虎',
+      condition: '累計食事記録200回',
+      isUnlocked: mealCount >= 200,
+      progress: `現在の回数: ${mealCount} / 200回`
+    },
+    {
+      name: '不屈の闘志',
+      condition: '30日継続の証',
+      isUnlocked: streak >= 30,
+      progress: `現在の継続日数: ${streak} / 30日`
+    },
+    {
+      name: '筋虎王',
+      condition: '全実績(バッジ段階+隠し実績)の80%（16個以上）をクリアする',
+      isUnlocked: (totalAchievementsReached + (isTrueKinnikun ? 1 : 0)) >= 16,
+      progress: `現在のクリア実績: ${totalAchievementsReached + (isTrueKinnikun ? 1 : 0)} / 20個`
+    }
+  ];
 
   // Scale chart fonts based on textSize
   ChartJS.defaults.color = 'rgba(255, 255, 255, 0.6)';
@@ -243,8 +417,6 @@ export default function Dashboard() {
     <section id="dashboard" className="content-section active" style={{ paddingBottom: '100px' }}>
       <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '20px 16px' }}>
         
-
-
         <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
           
           {/* Goal Summary Banner */}
@@ -292,6 +464,89 @@ export default function Dashboard() {
                 <div><span style={{ color: '#ffac1c', fontWeight: 'bold' }}>F</span> <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: '0.7rem' }}>(脂質)</span> <strong style={{ color: '#fff' }}>{profile.targetFat || '-'}</strong> <span style={{ color: 'rgba(255,255,255,0.5)' }}>g</span></div>
                 <div><span style={{ color: '#00e676', fontWeight: 'bold' }}>C</span> <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: '0.7rem' }}>(炭水化物)</span> <strong style={{ color: '#fff' }}>{profile.targetCarb || '-'}</strong> <span style={{ color: 'rgba(255,255,255,0.5)' }}>g</span></div>
               </div>
+            </div>
+          </div>
+
+          {/* レベル表示 (LEVEL STATUS) */}
+          <div style={{ background: 'rgba(20,20,25,0.8)', border: '1px solid rgba(255,255,255,0.05)', borderRadius: '16px', padding: '25px', display: 'flex', flexDirection: 'column', boxShadow: '0 4px 20px rgba(0,0,0,0.4)' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '15px' }}>
+              <h3 style={{ margin: 0, fontSize: '1.1rem', color: '#fff', display: 'flex', alignItems: 'center', gap: '8px', fontWeight: 'bold' }}>
+                <span style={{ color: '#DCA038' }}>👑</span> 筋虎ランク
+              </h3>
+              <span style={{ fontSize: '1.4rem', fontWeight: 'bold', color: '#fff' }}>
+                Lv.{currentLevel}
+              </span>
+            </div>
+
+            {/* progress bar */}
+            <div style={{ width: '100%', height: '12px', background: 'rgba(255,255,255,0.05)', borderRadius: '6px', overflow: 'hidden', position: 'relative', marginBottom: '10px' }}>
+              <div style={{
+                width: `${Math.min(100, (tempXp / xpForNextLevel) * 100)}%`,
+                height: '100%',
+                background: 'linear-gradient(90deg, #FDF0A6, #DCA038)',
+                borderRadius: '6px',
+                transition: 'width 0.5s ease-out'
+              }} />
+            </div>
+
+            {/* XP text */}
+            <div style={{ textAlign: 'center', fontSize: '1rem', fontWeight: 'bold', color: '#fff', marginBottom: '20px' }}>
+              {tempXp.toLocaleString()} / {xpForNextLevel.toLocaleString()} XP
+            </div>
+
+            {/* Milestones grid */}
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(6, 1fr)', gap: '5px', borderTop: '1px solid rgba(255,255,255,0.05)', paddingTop: '15px', textAlign: 'center' }}>
+              {[
+                { lv: 1, title: '子虎' },
+                { lv: 10, title: '若虎' },
+                { lv: 20, title: '猛虎' },
+                { lv: 30, title: '虎王' },
+                { lv: 50, title: '覇虎' },
+                { lv: 100, title: '神虎' }
+              ].map((ms) => {
+                const isReached = currentLevel >= ms.lv;
+                return (
+                  <div key={ms.lv} style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                    <span style={{ fontSize: '0.8rem', fontWeight: 'bold', color: isReached ? '#DCA038' : 'rgba(255,255,255,0.3)' }}>
+                      Lv.{ms.lv}
+                    </span>
+                    <span style={{ fontSize: '0.75rem', fontWeight: 'bold', color: isReached ? '#fff' : 'rgba(255,255,255,0.3)' }}>
+                      {ms.title}
+                    </span>
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Show XP Guideline Toggle */}
+            <div style={{ marginTop: '15px', borderTop: '1px solid rgba(255,255,255,0.05)', paddingTop: '10px' }}>
+              <button 
+                onClick={() => setShowXpGuide(!showXpGuide)}
+                style={{ background: 'transparent', border: 'none', color: '#DCA038', fontSize: '0.8rem', fontWeight: 'bold', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px', margin: '0 auto', outline: 'none' }}
+              >
+                {showXpGuide ? '経験値ガイドを閉じる ▴' : '経験値の獲得方法を確認 ▾'}
+              </button>
+              
+              {showXpGuide && (
+                <div style={{ marginTop: '15px', background: 'rgba(0,0,0,0.2)', borderRadius: '12px', padding: '15px', border: '1px solid rgba(255,255,255,0.03)' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid rgba(255,255,255,0.1)', paddingBottom: '6px', fontSize: '0.75rem', color: 'rgba(255,255,255,0.5)', fontWeight: 'bold' }}>
+                    <span>行動</span>
+                    <span>獲得XP</span>
+                  </div>
+                  {[
+                    { action: '筋トレ記録', xp: '+50 XP' },
+                    { action: '食事記録', xp: '+10 XP' },
+                    { action: 'カロリー目標達成 (目標の±10%)', xp: '+200 XP' },
+                    { action: '7日連続記録達成 (7日ごと)', xp: '+300 XP' },
+                    { action: '新実績バッジ解除 (1段階ごと)', xp: '+100 XP' },
+                  ].map((row, idx) => (
+                    <div key={idx} style={{ display: 'flex', justifyContent: 'space-between', padding: '8px 0', fontSize: '0.8rem', color: '#fff', borderBottom: idx < 4 ? '1px solid rgba(255,255,255,0.03)' : 'none' }}>
+                      <span>{row.action}</span>
+                      <span style={{ color: '#DCA038', fontWeight: 'bold' }}>{row.xp}</span>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
 
@@ -633,11 +888,6 @@ export default function Dashboard() {
 
           {/* 獲得称号・バッジ (BADGES) */}
           {(() => {
-            const allWorkouts = getWorkouts(null);
-            const allMeals = getMeals(null);
-            const totalVol = allWorkouts.reduce((sum, w) => sum + (w.volume || 0), 0);
-            const readKnowledge = typeof window !== 'undefined' ? localStorage.getItem('kinnikun_badge_knowledge') === 'true' : false;
-
             const tiers = {
               gold: {
                 name: '金',
@@ -662,53 +912,108 @@ export default function Dashboard() {
               }
             };
 
-            const badgeList = [
+            const badgeDefs = [
               {
-                id: 'beginner',
-                name: '初心者冒険者',
+                id: 'workout',
+                name: '冒険者の証',
                 icon: 'fa-leaf',
-                tier: 'bronze' as const,
-                condition: 'はじめてのトレーニングを記録する',
-                isUnlocked: allWorkouts.length > 0
+                currentVal: allWorkouts.length,
+                unit: '回',
+                levels: [
+                  { tier: 'bronze' as const, req: 1, name: '初心者冒険者', condition: 'はじめて of トレーニングを記録する' },
+                  { tier: 'silver' as const, req: 10, name: '熟練の冒険者', condition: 'トレーニングを10回記録する' },
+                  { tier: 'gold' as const, req: 50, name: '伝説の冒険者', condition: 'トレーニングを50回記録する' },
+                ]
               },
               {
-                id: 'nutrition_manager',
+                id: 'meals',
                 name: '栄養の管理者',
                 icon: 'fa-apple-whole',
-                tier: 'bronze' as const,
-                condition: '食事を10回以上記録する',
-                isUnlocked: allMeals.length >= 10
+                currentVal: allMeals.length,
+                unit: '回',
+                levels: [
+                  { tier: 'bronze' as const, req: 10, name: '見習い料理人', condition: '食事を10回記録する' },
+                  { tier: 'silver' as const, req: 30, name: '栄養の管理者', condition: '食事を30回記録する' },
+                  { tier: 'gold' as const, req: 100, name: '至高のシェフ', condition: '食事を100回記録する' },
+                ]
               },
               {
-                id: 'knowledge_sage',
+                id: 'knowledge',
                 name: '知識の賢者',
                 icon: 'fa-brain',
-                tier: 'silver' as const,
-                condition: '器具ガイドをすべて読む',
-                isUnlocked: readKnowledge
+                currentVal: knowledgeSteps,
+                unit: 'ステップ',
+                levels: [
+                  { tier: 'bronze' as const, req: 1, name: '本読みの卵', condition: 'コラム・器具ガイドを閲覧する' },
+                  { tier: 'silver' as const, req: 2, name: '知識の探求者', condition: 'コラム内のトレーニングGIF動画をタップして拡大する' },
+                  { tier: 'gold' as const, req: 3, name: '知識の賢者', condition: 'おすすめプランからトレーニングを開始する' },
+                ]
               },
               {
-                id: 'iron_man',
+                id: 'volume',
                 name: '鉄人の証',
                 icon: 'fa-weight-hanging',
-                tier: 'silver' as const,
-                condition: '累計トレーニングボリューム50,000kg突破',
-                isUnlocked: totalVol >= 50000
+                currentVal: totalVolumeAll,
+                unit: 'kg',
+                levels: [
+                  { tier: 'bronze' as const, req: 5000, name: '鉄の卵', condition: '累計ボリューム5,000kg突破' },
+                  { tier: 'silver' as const, req: 50000, name: '鉄人の証', condition: '累計ボリューム50,000kg突破' },
+                  { tier: 'gold' as const, req: 200000, name: '鋼鉄 of 巨人', condition: '累計ボリューム200,000kg突破' },
+                ]
               },
               {
-                id: 'streak_master',
+                id: 'streak',
                 name: '継続の達人',
                 icon: 'fa-fire',
-                tier: 'gold' as const,
-                condition: '30日継続の証',
-                isUnlocked: streak >= 30
+                currentVal: streak,
+                unit: '日',
+                levels: [
+                  { tier: 'bronze' as const, req: 3, name: '継続 of 卵', condition: '3日間連続で記録を続ける' },
+                  { tier: 'silver' as const, req: 10, name: '継続の達人', condition: '10日間連続で記録を続ける' },
+                  { tier: 'gold' as const, req: 30, name: '不動の精神', condition: '30日間連続で記録を続ける' },
+                ]
               }
             ];
 
-            const handleBadgeClick = (badge: typeof badgeList[0]) => {
-              const statusText = badge.isUnlocked ? '取得済み！' : '未取得';
-              const tierName = tiers[badge.tier].name;
-              alert(`【${badge.name}】（難易度: ${tierName}）\n${statusText}\n獲得条件: ${badge.condition}`);
+            const getBadgeState = (badge: typeof badgeDefs[0]) => {
+              let highestUnlockedLevel = null;
+              let nextLevel = null;
+              
+              for (let i = 0; i < badge.levels.length; i++) {
+                const level = badge.levels[i];
+                if (badge.currentVal >= level.req) {
+                  highestUnlockedLevel = level;
+                } else {
+                  nextLevel = level;
+                  break;
+                }
+              }
+              
+              return { highestUnlockedLevel, nextLevel };
+            };
+
+            const handleBadgeClick = (badge: typeof badgeDefs[0]) => {
+              const { highestUnlockedLevel, nextLevel } = getBadgeState(badge);
+              
+              let msg = '';
+              if (!highestUnlockedLevel) {
+                const firstLevel = badge.levels[0];
+                const diff = firstLevel.req - badge.currentVal;
+                msg = `【${firstLevel.name}】（難易度: 銅）\n未取得\n獲得条件: ${firstLevel.condition}\n\n現在の状況: ${badge.currentVal.toLocaleString()}/${firstLevel.req.toLocaleString()} ${badge.unit}\n（銅ランク達成まであと ${diff.toLocaleString()} ${badge.unit} 必要です）`;
+              } else {
+                const curTierName = tiers[highestUnlockedLevel.tier].name;
+                msg = `【${highestUnlockedLevel.name}】（難易度: ${curTierName}）\n取得済み！\n獲得条件: ${highestUnlockedLevel.condition}\n現在の値: ${badge.currentVal.toLocaleString()} ${badge.unit}\n\n`;
+                
+                if (nextLevel) {
+                  const nextTierName = tiers[nextLevel.tier].name;
+                  const diff = nextLevel.req - badge.currentVal;
+                  msg += `次のランク ➔ 【${nextLevel.name}】（難易度: ${nextTierName}）\n獲得条件: ${nextLevel.condition}\n（次のランクまであと ${diff.toLocaleString()} ${badge.unit} 必要です）`;
+                } else {
+                  msg += `★ おめでとうございます！最高ランク【金】を達成しました！`;
+                }
+              }
+              
+              alert(msg);
             };
 
             return (
@@ -720,8 +1025,12 @@ export default function Dashboard() {
                 </div>
                 
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '24px', justifyContent: 'flex-start', padding: '10px 5px' }}>
-                  {badgeList.map(badge => {
-                    const tierStyle = tiers[badge.tier];
+                  {badgeDefs.map(badge => {
+                    const { highestUnlockedLevel } = getBadgeState(badge);
+                    const isUnlocked = !!highestUnlockedLevel;
+                    const tierStyle = highestUnlockedLevel ? tiers[highestUnlockedLevel.tier] : null;
+                    const displayName = highestUnlockedLevel ? highestUnlockedLevel.name : badge.levels[0].name;
+
                     return (
                       <div
                         key={badge.id}
@@ -743,25 +1052,25 @@ export default function Dashboard() {
                           width: '60px',
                           height: '60px',
                           borderRadius: '50%',
-                          background: badge.isUnlocked ? tierStyle.bg : 'rgba(255,255,255,0.03)',
-                          border: badge.isUnlocked ? tierStyle.border : '2px solid rgba(255,255,255,0.1)',
+                          background: isUnlocked && tierStyle ? tierStyle.bg : 'rgba(255,255,255,0.03)',
+                          border: isUnlocked && tierStyle ? tierStyle.border : '2px solid rgba(255,255,255,0.1)',
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center',
-                          color: badge.isUnlocked ? tierStyle.color : 'rgba(255,255,255,0.3)',
+                          color: isUnlocked && tierStyle ? tierStyle.color : 'rgba(255,255,255,0.3)',
                           fontSize: '22px',
-                          boxShadow: badge.isUnlocked ? tierStyle.shadow : 'none'
+                          boxShadow: isUnlocked && tierStyle ? tierStyle.shadow : 'none'
                         }}>
-                          <i className={`fa-solid ${badge.isUnlocked ? badge.icon : 'fa-lock'}`} />
+                          <i className={`fa-solid ${isUnlocked ? badge.icon : 'fa-lock'}`} />
                         </div>
                         <span style={{
                           fontSize: '0.75rem',
                           fontWeight: 'bold',
-                          color: badge.isUnlocked ? '#fff' : 'rgba(255,255,255,0.4)',
+                          color: isUnlocked ? '#fff' : 'rgba(255,255,255,0.4)',
                           textAlign: 'center',
                           whiteSpace: 'nowrap'
                         }}>
-                          {badge.name}
+                          {displayName}
                         </span>
                       </div>
                     );
@@ -770,6 +1079,89 @@ export default function Dashboard() {
               </div>
             );
           })()}
+
+          {/* 🏅 称号・隠し実績 (TITLES & SECRETS) */}
+          <div style={{ background: 'rgba(20,20,25,0.8)', border: '1px solid rgba(255,255,255,0.05)', borderRadius: '16px', padding: '25px', display: 'flex', flexDirection: 'column', boxShadow: '0 4px 20px rgba(0,0,0,0.4)', marginTop: '20px' }}>
+            <h3 style={{ margin: '0 0 20px 0', fontSize: '1.1rem', color: '#fff', display: 'flex', alignItems: 'center', gap: '8px' }}>
+              🎖️ 称号＆隠し実績
+            </h3>
+            
+            {/* 称号リスト */}
+            <div style={{ marginBottom: '25px' }}>
+              <div style={{ fontSize: '0.9rem', color: 'rgba(255,255,255,0.6)', fontWeight: 'bold', marginBottom: '12px' }}>🛡️ 獲得称号</div>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '12px' }}>
+                {titleList.map((t, idx) => (
+                  <div 
+                    key={idx}
+                    onClick={() => alert(`【${t.name}】\n獲得条件: ${t.condition}\n\n${t.progress}`)}
+                    style={{
+                      background: t.isUnlocked ? 'rgba(220, 160, 56, 0.1)' : 'rgba(255,255,255,0.02)',
+                      border: t.isUnlocked ? '1px solid #DCA038' : '1px solid rgba(255,255,255,0.05)',
+                      borderRadius: '12px',
+                      padding: '12px 16px',
+                      cursor: 'pointer',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '10px',
+                      transition: 'transform 0.2s'
+                    }}
+                    onMouseOver={(e) => e.currentTarget.style.transform = 'scale(1.02)'}
+                    onMouseOut={(e) => e.currentTarget.style.transform = 'scale(1)'}
+                  >
+                    <i className={`fa-solid fa-ribbon`} style={{ color: t.isUnlocked ? '#DCA038' : 'rgba(255,255,255,0.2)', fontSize: '1.2rem' }}></i>
+                    <div>
+                      <div style={{ fontSize: '0.85rem', fontWeight: 'bold', color: t.isUnlocked ? '#fff' : 'rgba(255,255,255,0.3)' }}>{t.name}</div>
+                      <div style={{ fontSize: '0.7rem', color: t.isUnlocked ? '#DCA038' : 'rgba(255,255,255,0.2)' }}>{t.isUnlocked ? '獲得済み' : 'ロック中'}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* 隠し実績リスト */}
+            <div>
+              <div style={{ fontSize: '0.9rem', color: 'rgba(255,255,255,0.6)', fontWeight: 'bold', marginBottom: '12px' }}>✨ 隠し実績</div>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '12px' }}>
+                {allSecrets.map((s, idx) => (
+                  <div 
+                    key={idx}
+                    onClick={() => {
+                      if (s.isUnlocked) {
+                        alert(`隠し実績解除！\n【${s.name}】\n解除条件: ${s.hint}`);
+                      } else {
+                        alert(`【未解除の隠し実績】\n条件: ？？？\n(ヒント: トレーニング時間やカロリー目標、目標体重の達成などを探求しましょう)`);
+                      }
+                    }}
+                    style={{
+                      background: s.isUnlocked ? 'rgba(76, 175, 80, 0.1)' : 'rgba(255,255,255,0.02)',
+                      border: s.isUnlocked ? '1px solid #4CAF50' : '1px solid rgba(255,255,255,0.05)',
+                      borderRadius: '12px',
+                      padding: '12px 16px',
+                      cursor: 'pointer',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '10px',
+                      transition: 'transform 0.2s'
+                    }}
+                    onMouseOver={(e) => e.currentTarget.style.transform = 'scale(1.02)'}
+                    onMouseOut={(e) => e.currentTarget.style.transform = 'scale(1)'}
+                  >
+                    <span style={{ fontSize: '1.2rem', filter: s.isUnlocked ? 'none' : 'grayscale(100%) opacity(30%)' }}>
+                      {s.isUnlocked ? s.emoji : '🔒'}
+                    </span>
+                    <div>
+                      <div style={{ fontSize: '0.85rem', fontWeight: 'bold', color: s.isUnlocked ? '#fff' : 'rgba(255,255,255,0.3)' }}>
+                        {s.isUnlocked ? s.name : '？？？？'}
+                      </div>
+                      <div style={{ fontSize: '0.7rem', color: s.isUnlocked ? '#4CAF50' : 'rgba(255,255,255,0.2)' }}>
+                        {s.isUnlocked ? '解除済み' : '未解除'}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
 
         </div>
       </div>
