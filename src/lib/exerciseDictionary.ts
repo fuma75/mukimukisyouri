@@ -194,8 +194,189 @@ export const EXERCISE_LIBRARY: Record<string, ExerciseDetail> = {
     targetTags: ['全身', '柔軟性'],
     targetMuscles: ['quadriceps', 'hamstring', 'chest'],
     mets: 2.0
+  },
+  // ===== ダンベル種目 =====
+  'ダンベルカール': {
+    image: '', icon: '/icons/pushup.png', gifUrl: 'https://raw.githubusercontent.com/omercotkd/exercises-gifs/main/assets/0293.gif',
+    instructions: ['肘を体側に固定する', '反動を使わずゆっくり持ち上げる', '上腕二頭筋の収縮を感じる'],
+    description: '上腕二頭筋（力こぶ）を集中的に鍛えるダンベル種目。肘を固定して丁寧に行うのがポイントです。',
+    targetTags: ['上腕二頭筋', '腕'],
+    targetMuscles: ['biceps'],
+    mets: 3.5
+  },
+  'ダンベルフライ': {
+    image: '', icon: '/icons/pushup.png', gifUrl: 'https://raw.githubusercontent.com/omercotkd/exercises-gifs/main/assets/0294.gif',
+    instructions: ['肩甲骨を寄せて胸を張る', '大きな円を描くように腕を広げる', '胸のストレッチを感じながら戻す'],
+    description: '大胸筋を広い可動域でストレッチさせる種目。胸の内側まで効かせることができます。',
+    targetTags: ['大胸筋', '胸'],
+    targetMuscles: ['chest'],
+    mets: 4.0
+  },
+  'ダンベルベンチプレス': {
+    image: '', icon: '/icons/pushup.png', gifUrl: 'https://raw.githubusercontent.com/omercotkd/exercises-gifs/main/assets/0289.gif',
+    instructions: ['肩甲骨を寄せて胸を張る', 'ダンベルを胸の横に下ろす', '大胸筋を意識して押し上げる'],
+    description: '大胸筋・三角筋・上腕三頭筋を鍛えるダンベルプレス。バーベルより可動域が広く筋肉への刺激が強い。',
+    targetTags: ['大胸筋', '肩', '三頭筋'],
+    targetMuscles: ['chest', 'front-deltoids', 'triceps'],
+    mets: 4.5
+  },
+  'インクラインダンベルプレス': {
+    image: '', icon: '/icons/pushup.png', gifUrl: 'https://raw.githubusercontent.com/omercotkd/exercises-gifs/main/assets/0314.gif',
+    instructions: ['ベンチを30〜45度に傾ける', '大胸筋上部を意識する', 'ゆっくり下ろしてしっかり押し上げる'],
+    description: '大胸筋上部をターゲットにしたインクラインプレス。立体的な胸を作るのに効果的です。',
+    targetTags: ['大胸筋上部', '肩'],
+    targetMuscles: ['chest', 'front-deltoids'],
+    mets: 4.5
+  },
+  'ダンベルショルダープレス': {
+    image: '', icon: '/icons/pushup.png', gifUrl: 'https://raw.githubusercontent.com/omercotkd/exercises-gifs/main/assets/0405.gif',
+    instructions: ['ダンベルを耳の横に構える', '真上に向かって押し上げる', '三角筋を意識してゆっくり下ろす'],
+    description: '三角筋（肩）を全体的に鍛えるダンベルショルダープレス。肩幅を広くする効果があります。',
+    targetTags: ['三角筋', '肩'],
+    targetMuscles: ['front-deltoids'],
+    mets: 4.0
+  },
+  'ハンマーカール': {
+    image: '', icon: '/icons/pushup.png', gifUrl: 'https://raw.githubusercontent.com/omercotkd/exercises-gifs/main/assets/0303.gif',
+    instructions: ['親指を上に向けたニュートラルグリップで持つ', '肘を固定して持ち上げる', '上腕筋・腕橈骨筋を意識する'],
+    description: '上腕筋と腕橈骨筋を鍛え、腕の厚みと太さを作るカール種目です。',
+    targetTags: ['上腕二頭筋', '前腕'],
+    targetMuscles: ['biceps'],
+    mets: 3.5
+  },
+  'コンセントレーションカール': {
+    image: '', icon: '/icons/pushup.png', gifUrl: 'https://raw.githubusercontent.com/omercotkd/exercises-gifs/main/assets/0285.gif',
+    instructions: ['座った状態で肘を太ももの内側に固定', '反動なしでゆっくり持ち上げる', '力こぶのピークで1秒キープ'],
+    description: '上腕二頭筋を孤立させて鍛える集中カール。力こぶのピークをしっかり作るのに効果的です。',
+    targetTags: ['上腕二頭筋'],
+    targetMuscles: ['biceps'],
+    mets: 3.5
+  },
+  'ダンベルデッドリフト': {
+    image: '', icon: '/icons/squat.png', gifUrl: 'https://raw.githubusercontent.com/omercotkd/exercises-gifs/main/assets/0085.gif',
+    instructions: ['背中をまっすぐに保つ', '股関節を曲げるイメージで前傾', 'ハムストリングと背中を意識して引き上げる'],
+    description: 'ダンベルを使ったデッドリフト。背中・ハムストリング・臀筋を同時に鍛えます。',
+    targetTags: ['背中', 'ハムストリング', '臀筋'],
+    targetMuscles: ['upper-back', 'lower-back', 'hamstring', 'gluteal'],
+    mets: 5.5
+  },
+  // ===== バーベル種目 =====
+  'バーベルベンチプレス': {
+    image: '', icon: '/icons/pushup.png', gifUrl: 'https://raw.githubusercontent.com/omercotkd/exercises-gifs/main/assets/0025.gif',
+    instructions: ['肩甲骨をベンチに押しつける', 'バーを乳頭線に下ろす', '大胸筋を絞るように押し上げる'],
+    description: '筋トレBIG3の一つ。大胸筋・三角筋前部・上腕三頭筋を同時に鍛える最強の胸トレ種目。',
+    targetTags: ['大胸筋', '三角筋', '三頭筋'],
+    targetMuscles: ['chest', 'front-deltoids', 'triceps'],
+    mets: 5.0
+  },
+  'インクラインベンチプレス': {
+    image: '', icon: '/icons/pushup.png', gifUrl: 'https://raw.githubusercontent.com/omercotkd/exercises-gifs/main/assets/0031.gif',
+    instructions: ['ベンチを30〜45度に傾ける', '肩甲骨を寄せる', '大胸筋上部を意識して押す'],
+    description: '大胸筋上部を重点的に鍛えるインクラインベンチプレス。デクライン・フラットと組み合わせると効果的。',
+    targetTags: ['大胸筋上部', '肩'],
+    targetMuscles: ['chest', 'front-deltoids'],
+    mets: 5.0
+  },
+  'バーベルスクワット': {
+    image: '', icon: '/icons/squat.png', gifUrl: 'https://raw.githubusercontent.com/omercotkd/exercises-gifs/main/assets/0043.gif',
+    instructions: ['バーを僧帽筋上部に乗せる', '足幅は肩幅に、つま先は少し外向き', '膝がつま先と同じ方向を向くようにしゃがむ'],
+    description: '筋トレBIG3の一つ。下半身全体を鍛える最強種目。大腿四頭筋・ハムストリング・大臀筋に効きます。',
+    targetTags: ['四頭筋', '臀筋', 'ハムストリング'],
+    targetMuscles: ['quadriceps', 'gluteal', 'hamstring'],
+    mets: 6.0
+  },
+  'デッドリフト': {
+    image: '', icon: '/icons/squat.png', gifUrl: 'https://raw.githubusercontent.com/omercotkd/exercises-gifs/main/assets/0085.gif',
+    instructions: ['足幅は腰幅、バーはすねに近い位置', '背中をまっすぐ保ち股関節から折る', '全身の筋肉を使って引き上げる'],
+    description: '筋トレBIG3の一つ。背中・ハム・臀筋・脚の全身を一度に鍛える最強コンパウンド種目。',
+    targetTags: ['背中', 'ハムストリング', '臀筋', '脚'],
+    targetMuscles: ['upper-back', 'lower-back', 'hamstring', 'gluteal'],
+    mets: 6.0
+  },
+  'ベントオーバーロウ': {
+    image: '', icon: '/icons/pushup.png', gifUrl: 'https://raw.githubusercontent.com/omercotkd/exercises-gifs/main/assets/0027.gif',
+    instructions: ['上体を45度前傾させる', '肩甲骨を寄せながらバーを引く', '広背筋と僧帽筋を意識する'],
+    description: '広背筋と僧帽筋中部を鍛え、背中の厚みを作るコンパウンド種目。',
+    targetTags: ['広背筋', '僧帽筋', '背中'],
+    targetMuscles: ['upper-back', 'lower-back'],
+    mets: 5.0
+  },
+  // ===== マシン種目 =====
+  'チェストプレス': {
+    image: '', icon: '/icons/pushup.png', gifUrl: 'https://raw.githubusercontent.com/omercotkd/exercises-gifs/main/assets/0586.gif',
+    instructions: ['シートの高さを合わせる', '肩甲骨を寄せて胸を張る', '大胸筋を意識してゆっくり押す'],
+    description: 'マシンを使い安全に大胸筋を鍛えるチェストプレス。初心者でも正しいフォームで行いやすい種目。',
+    targetTags: ['大胸筋', '三角筋'],
+    targetMuscles: ['chest', 'front-deltoids'],
+    mets: 4.0
+  },
+  'ラットプルダウン': {
+    image: '', icon: '/icons/pushup.png', gifUrl: 'https://raw.githubusercontent.com/omercotkd/exercises-gifs/main/assets/0186.gif',
+    instructions: ['肩甲骨を下に引き下げる意識で', 'バーを胸の前に引き寄せる', '広背筋を絞るように収縮させる'],
+    description: '広背筋を中心に背中の広がりを作るマシン種目。懸垂が難しい初心者にも最適。',
+    targetTags: ['広背筋', '背中'],
+    targetMuscles: ['upper-back'],
+    mets: 4.0
+  },
+  'レッグプレス': {
+    image: '', icon: '/icons/squat.png', gifUrl: 'https://raw.githubusercontent.com/omercotkd/exercises-gifs/main/assets/0578.gif',
+    instructions: ['足幅は肩幅程度に置く', '膝を完全に伸ばしきらない', '太ももとお尻の筋肉を意識して押す'],
+    description: 'マシンを使い脚全体を安全に鍛える種目。スクワットより腰への負担が少なく高重量を扱えます。',
+    targetTags: ['四頭筋', '臀筋', '脚全体'],
+    targetMuscles: ['quadriceps', 'gluteal', 'hamstring'],
+    mets: 5.0
+  },
+  'レッグエクステンション': {
+    image: '', icon: '/icons/squat.png', gifUrl: 'https://raw.githubusercontent.com/omercotkd/exercises-gifs/main/assets/0583.gif',
+    instructions: ['膝関節を完全に伸ばす', '大腿四頭筋を収縮させる', 'ゆっくり下ろして伸ばしすぎない'],
+    description: '大腿四頭筋（前もも）をアイソレートして鍛えるマシン種目。太ももの引き締めに効果的。',
+    targetTags: ['四頭筋', '前もも'],
+    targetMuscles: ['quadriceps'],
+    mets: 3.5
+  },
+  'レッグカール': {
+    image: '', icon: '/icons/squat.png', gifUrl: 'https://raw.githubusercontent.com/omercotkd/exercises-gifs/main/assets/0576.gif',
+    instructions: ['うつ伏せでパッドを足首に合わせる', 'ハムストリングを意識して膝を曲げる', 'ゆっくりと戻す'],
+    description: 'ハムストリングスをアイソレートして鍛えるマシン種目。もも裏の引き締めに効果的です。',
+    targetTags: ['ハムストリング', 'もも裏'],
+    targetMuscles: ['hamstring'],
+    mets: 3.5
+  },
+  'ペックデックフライ': {
+    image: '', icon: '/icons/pushup.png', gifUrl: 'https://raw.githubusercontent.com/omercotkd/exercises-gifs/main/assets/0585.gif',
+    instructions: ['肘を少し曲げた状態をキープ', '胸の前で腕を閉じる', '大胸筋の収縮を感じる'],
+    description: '大胸筋を集中的に収縮させるフライマシン。胸の内側を仕上げるのに効果的です。',
+    targetTags: ['大胸筋'],
+    targetMuscles: ['chest'],
+    mets: 3.5
+  },
+  'シーテッドロウ': {
+    image: '', icon: '/icons/pushup.png', gifUrl: 'https://raw.githubusercontent.com/omercotkd/exercises-gifs/main/assets/0171.gif',
+    instructions: ['背筋を伸ばして座る', '肘を引き体の横に近づける', '背中全体の筋肉を意識する'],
+    description: 'シーテッドケーブルロウ。背中全体（広背筋・僧帽筋）を鍛えるコンパウンド種目。',
+    targetTags: ['広背筋', '僧帽筋', '背中'],
+    targetMuscles: ['upper-back', 'lower-back'],
+    mets: 4.0
+  },
+  // ===== 腹筋ローラー種目 =====
+  'ニーロールアウト': {
+    image: '', icon: '/icons/plank.png', gifUrl: 'https://raw.githubusercontent.com/omercotkd/exercises-gifs/main/assets/0276.gif',
+    instructions: ['膝をついて腹筋ローラーを前に押し出す', '腰を反らさずお腹を丸める', '腹筋の力でゆっくり引き戻す'],
+    description: '腹筋ローラーの基本種目。腹直筋・腹斜筋・体幹全体に高強度な刺激を与えます。',
+    targetTags: ['腹筋', '体幹'],
+    targetMuscles: ['abs'],
+    mets: 4.0
+  },
+  'サイドロールアウト': {
+    image: '', icon: '/icons/plank.png', gifUrl: 'https://raw.githubusercontent.com/omercotkd/exercises-gifs/main/assets/0276.gif',
+    instructions: ['斜め方向に転がして脇腹を刺激', '左右均等に行う', 'お腹を意識しながらゆっくり戻す'],
+    description: '腹斜筋・脇腹を重点的に鍛えるサイドロールアウト。くびれ作りに効果的です。',
+    targetTags: ['腹斜筋', '脇腹', 'くびれ'],
+    targetMuscles: ['abs', 'obliques'],
+    mets: 4.0
   }
 };
+
 
 export const getExerciseDetails = (name: string): ExerciseDetail => {
   const match = Object.keys(EXERCISE_LIBRARY).find(k => name.includes(k));

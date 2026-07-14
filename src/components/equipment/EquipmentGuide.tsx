@@ -121,93 +121,128 @@ const equipmentData = [
 
 const plansData = [
   {
-    title: '初心者向け: 全身基礎プラン',
-    level: '初級',
-    frequency: '週2〜3回',
-    duration: '45分',
+    title: 'ダンベル 全身ルーティン',
+    level: '初級〜中級',
+    frequency: '週3回',
+    duration: '50分',
     color: { bg: 'rgba(43,138,62,0.15)', text: '#40c057', border: 'rgba(43,138,62,0.3)' },
-    details: 'マシンを中心に使用し、安全に全身の筋肉を刺激するプランです。各10〜15回 × 3セットを目指しましょう。',
-    days: [
-      {
-        label: '全身トレーニング（週2〜3回）',
-        exercises: [
-          { name: 'ウォーミングアップ', detail: '有酸素運動 5分' },
-          { name: 'チェストプレス', detail: '10〜12回 × 3セット（胸）' },
-          { name: 'ラットプルダウン', detail: '10〜12回 × 3セット（背中）' },
-          { name: 'レッグプレス', detail: '12〜15回 × 3セット（脚）' },
-          { name: 'クランチ', detail: '15回 × 2セット（腹筋）' },
-          { name: 'クールダウン', detail: 'ストレッチ 5分' },
-        ]
-      }
-    ]
-  },
-  {
-    title: '中級者向け: 上下分割プラン',
-    level: '中級',
-    frequency: '週4回',
-    duration: '60分',
-    color: { bg: 'rgba(217,119,6,0.15)', text: '#f59f00', border: 'rgba(217,119,6,0.3)' },
-    details: '上半身と下半身を別日に鍛えるスプリットルーティンです。フリーウェイトを取り入れます。',
+    details: 'ダンベル1セットで全身を効率よく鍛えるルーティン。胸・背中・肩・腕・脚を網羅します。',
     days: [
       {
         label: '上半身の日（月・木）',
         exercises: [
-          { name: 'ベンチプレス / ダンベルプレス', detail: '8〜10回 × 4セット（胸）' },
-          { name: 'ダンベルフライ', detail: '10〜12回 × 3セット（胸）' },
-          { name: 'ラットプルダウン / 懸垂', detail: '8〜10回 × 4セット（背中）' },
-          { name: 'ダンベルカール', detail: '10〜12回 × 3セット（二頭筋）' },
+          { name: 'ダンベルベンチプレス', detail: 'x10 × 3セット（胸）' },
+          { name: 'ダンベルフライ', detail: 'x12 × 3セット（胸・仕上げ）' },
+          { name: 'ダンベルデッドリフト', detail: 'x10 × 3セット（背中・ハム）' },
+          { name: 'ダンベルショルダープレス', detail: 'x10 × 3セット（肩）' },
+          { name: 'ダンベルカール', detail: 'x12 × 3セット（二頭筋）' },
+          { name: 'ハンマーカール', detail: 'x12 × 3セット（前腕）' },
         ]
       },
       {
-        label: '下半身の日（火・金）',
+        label: '下半身＋腹筋の日（火・金）',
         exercises: [
-          { name: 'バーベルスクワット', detail: '8〜10回 × 4セット（脚全体）' },
-          { name: 'レッグエクステンション', detail: '12〜15回 × 3セット（前もも）' },
-          { name: 'レッグカール', detail: '12〜15回 × 3セット（ハム）' },
-          { name: 'クランチ / プランク', detail: '15〜20回 × 3セット（腹筋）' },
+          { name: 'ダンベルスクワット', detail: 'x15 × 4セット（脚全体）' },
+          { name: 'ダンベルランジ', detail: 'x10（各脚） × 3セット' },
+          { name: 'ダンベルデッドリフト', detail: 'x10 × 3セット（ハム・臀筋）' },
+          { name: 'コンセントレーションカール', detail: 'x12 × 3セット（仕上げ）' },
+          { name: 'クランチ', detail: 'x20 × 3セット（腹筋）' },
+          { name: 'プランク', detail: '40秒 × 3セット（体幹）' },
         ]
       }
     ]
   },
   {
-    title: '上級者向け: 3分割プラン',
-    level: '上級',
-    frequency: '週5〜6回',
-    duration: '75〜90分',
-    color: { bg: 'rgba(220,38,38,0.15)', text: '#f87171', border: 'rgba(220,38,38,0.3)' },
-    details: '胸・背中、肩・腕、脚という3分割で各部位を徹底的に追い込む上級プランです。',
+    title: 'バーベル 筋力強化プラン',
+    level: '中級〜上級',
+    frequency: '週4回',
+    duration: '70分',
+    color: { bg: 'rgba(217,119,6,0.15)', text: '#f59f00', border: 'rgba(217,119,6,0.3)' },
+    details: 'BIG3（ベンチプレス・スクワット・デッドリフト）を軸に最大筋力と筋肥大を追求するプランです。',
     days: [
       {
         label: '胸・三頭筋の日（月・木）',
         exercises: [
-          { name: 'バーベルベンチプレス', detail: '5〜8回 × 5セット' },
-          { name: 'インクラインダンベルプレス', detail: '8〜10回 × 4セット' },
-          { name: 'ペックデックフライ', detail: '12〜15回 × 3セット' },
-          { name: 'トライセプスプッシュダウン', detail: '12〜15回 × 3セット' },
+          { name: 'バーベルベンチプレス', detail: 'x5〜8 × 5セット（メイン）' },
+          { name: 'インクラインベンチプレス', detail: 'x8〜10 × 4セット（上部）' },
+          { name: 'ダンベルフライ', detail: 'x12〜15 × 3セット（仕上げ）' },
+          { name: 'ベンチディップス', detail: 'x12 × 3セット（三頭筋）' },
         ]
       },
       {
         label: '背中・二頭筋の日（火・金）',
         exercises: [
-          { name: 'デッドリフト', detail: '5〜6回 × 4セット' },
-          { name: 'ベントオーバーロウ', detail: '8〜10回 × 4セット' },
-          { name: 'ラットプルダウン', detail: '10〜12回 × 3セット' },
-          { name: 'ダンベルカール', detail: '10〜12回 × 3セット' },
+          { name: 'デッドリフト', detail: 'x5〜6 × 4セット（メイン）' },
+          { name: 'ベントオーバーロウ', detail: 'x8〜10 × 4セット（背中）' },
+          { name: 'ダンベルカール', detail: 'x10〜12 × 3セット（二頭筋）' },
+          { name: 'ハンマーカール', detail: 'x12 × 3セット（前腕）' },
         ]
       },
       {
-        label: '脚・肩・腹筋の日（水・土）',
+        label: '脚・肩の日（水・土）',
         exercises: [
-          { name: 'バーベルスクワット', detail: '5〜8回 × 5セット' },
-          { name: 'レッグプレス', detail: '10〜12回 × 4セット' },
-          { name: 'ショルダープレス', detail: '8〜10回 × 4セット' },
-          { name: 'サイドレイズ', detail: '12〜15回 × 3セット' },
-          { name: 'プランク', detail: '60秒 × 3セット' },
+          { name: 'バーベルスクワット', detail: 'x5〜8 × 5セット（メイン）' },
+          { name: 'ダンベルショルダープレス', detail: 'x8〜10 × 4セット（肩）' },
+          { name: 'クランチ', detail: 'x20 × 3セット（腹筋）' },
+          { name: 'プランク', detail: '60秒 × 3セット（体幹）' },
+        ]
+      }
+    ]
+  },
+  {
+    title: 'マシン 安全入門プラン',
+    level: '初級',
+    frequency: '週3回',
+    duration: '45分',
+    color: { bg: 'rgba(59,130,246,0.15)', text: '#60a5fa', border: 'rgba(59,130,246,0.3)' },
+    details: 'マシンのみを使うため怪我リスクが低く、初心者が安全にジムトレーニングを始めるのに最適なプランです。',
+    days: [
+      {
+        label: '全身マシントレーニング（週3回）',
+        exercises: [
+          { name: 'チェストプレス', detail: 'x12〜15 × 3セット（胸）' },
+          { name: 'ペックデックフライ', detail: 'x12〜15 × 3セット（胸・仕上げ）' },
+          { name: 'ラットプルダウン', detail: 'x12〜15 × 3セット（背中）' },
+          { name: 'シーテッドロウ', detail: 'x12〜15 × 3セット（背中・厚み）' },
+          { name: 'レッグプレス', detail: 'x15 × 3セット（脚）' },
+          { name: 'レッグエクステンション', detail: 'x15 × 3セット（前もも）' },
+          { name: 'レッグカール', detail: 'x15 × 3セット（もも裏）' },
+          { name: 'クランチ', detail: 'x15 × 2セット（腹筋）' },
+        ]
+      }
+    ]
+  },
+  {
+    title: '腹筋ローラー 体幹強化プラン',
+    level: '初級〜上級',
+    frequency: '週3〜5回',
+    duration: '20〜30分',
+    color: { bg: 'rgba(220,38,38,0.15)', text: '#f87171', border: 'rgba(220,38,38,0.3)' },
+    details: '腹筋ローラー1本で腹直筋・腹斜筋・体幹全体を集中的に鍛えるプランです。初心者は膝コロから始めましょう。',
+    days: [
+      {
+        label: '基礎（膝コロ）ルーティン',
+        exercises: [
+          { name: 'プランク', detail: '30秒 × 3セット（準備）' },
+          { name: 'ニーロールアウト', detail: 'x10 × 3セット（基本）' },
+          { name: 'サイドロールアウト', detail: 'x8（各側） × 3セット（脇腹）' },
+          { name: 'クランチ', detail: 'x20 × 3セット（仕上げ）' },
+        ]
+      },
+      {
+        label: '上級（立ちコロ目標）ルーティン',
+        exercises: [
+          { name: 'プランク', detail: '60秒 × 3セット（体幹固め）' },
+          { name: 'ニーロールアウト', detail: 'x15 × 3セット（ウォームアップ）' },
+          { name: 'サイドロールアウト', detail: 'x10（各側） × 3セット（腹斜筋）' },
+          { name: 'レッグレイズ', detail: 'x15 × 3セット（下腹部）' },
+          { name: 'クランチ', detail: 'x25 × 3セット（仕上げ）' },
         ]
       }
     ]
   }
 ];
+
 
 export default function EquipmentGuide() {
   const [activeTab, setActiveTab] = useState('equipment');
@@ -507,8 +542,6 @@ export default function EquipmentGuide() {
                     overflow: 'hidden',
                     boxShadow: '0 10px 30px rgba(0,0,0,0.5), inset 0 0 20px rgba(0,0,0,0.2)',
                   }}>
-                    {/* Tiger watermark */}
-                    <div style={{ position: 'absolute', right: '-10px', top: '0', bottom: '0', width: '160px', background: 'url(/images/tiger-male.png) center right / contain no-repeat', opacity: 0.15, pointerEvents: 'none' }} />
 
                     <div style={{ position: 'relative', zIndex: 1 }}>
                       {/* Level badge */}
@@ -516,49 +549,9 @@ export default function EquipmentGuide() {
                         {plan.level}
                       </span>
 
-                      <h4 style={{ color: '#fff', fontSize: '1rem', fontWeight: 'bold', margin: '0 0 16px 0', paddingRight: '100px' }}>
+                      <h4 style={{ color: '#fff', fontSize: '1rem', fontWeight: 'bold', margin: '0 0 16px 0' }}>
                         {day.label}
                       </h4>
-
-                      {/* Info grid */}
-                      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', marginBottom: '20px' }}>
-                        <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-                          <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: 'rgba(20,20,20,0.8)', border: '1px solid rgba(255,255,255,0.1)', color: plan.color.text, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '12px' }}>
-                            <i className="fa-regular fa-clock" />
-                          </div>
-                          <div>
-                            <div style={{ color: '#fff', fontSize: '12px', fontWeight: 'bold' }}>{plan.duration}</div>
-                            <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '10px' }}>目安時間</div>
-                          </div>
-                        </div>
-                        <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-                          <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: 'rgba(20,20,20,0.8)', border: '1px solid rgba(255,255,255,0.1)', color: plan.color.text, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '12px' }}>
-                            <i className="fa-solid fa-calendar-days" />
-                          </div>
-                          <div>
-                            <div style={{ color: '#fff', fontSize: '12px', fontWeight: 'bold' }}>{plan.frequency}</div>
-                            <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '10px' }}>頻度</div>
-                          </div>
-                        </div>
-                        <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-                          <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: 'rgba(20,20,20,0.8)', border: '1px solid rgba(255,255,255,0.1)', color: plan.color.text, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '12px' }}>
-                            <i className="fa-solid fa-list-check" />
-                          </div>
-                          <div>
-                            <div style={{ color: '#fff', fontSize: '12px', fontWeight: 'bold' }}>{day.exercises.length} 種目</div>
-                            <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '10px' }}>エクササイズ数</div>
-                          </div>
-                        </div>
-                        <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-                          <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: 'rgba(20,20,20,0.8)', border: '1px solid rgba(255,255,255,0.1)', color: plan.color.text, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '12px' }}>
-                            <i className="fa-solid fa-dumbbell" />
-                          </div>
-                          <div>
-                            <div style={{ color: '#fff', fontSize: '12px', fontWeight: 'bold' }}>ジム</div>
-                            <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '10px' }}>場所</div>
-                          </div>
-                        </div>
-                      </div>
 
                       {/* Exercise list */}
                       <div style={{ background: 'rgba(255,255,255,0.04)', borderRadius: '10px', padding: '12px', marginBottom: '16px' }}>
