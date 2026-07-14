@@ -16,7 +16,7 @@ export default function Header() {
       case 'meal': return '食事管理';
       case 'equipment': return '器具ガイド＆プラン';
       case 'muscle-map': return '筋肉マップ';
-      case 'map': return '周辺 of ジム探し';
+      case 'map': return '周辺のジム探し';
       case 'profile': return 'プロフィール設定';
       default: return '筋虎';
     }

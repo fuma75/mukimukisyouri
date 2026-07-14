@@ -920,7 +920,7 @@ export default function Dashboard() {
                 currentVal: allWorkouts.length,
                 unit: '回',
                 levels: [
-                  { tier: 'bronze' as const, req: 1, name: '初心者冒険者', condition: 'はじめて of トレーニングを記録する' },
+                  { tier: 'bronze' as const, req: 1, name: '初心者冒険者', condition: 'はじめてのトレーニングを記録する' },
                   { tier: 'silver' as const, req: 10, name: '熟練の冒険者', condition: 'トレーニングを10回記録する' },
                   { tier: 'gold' as const, req: 50, name: '伝説の冒険者', condition: 'トレーニングを50回記録する' },
                 ]
@@ -958,7 +958,7 @@ export default function Dashboard() {
                 levels: [
                   { tier: 'bronze' as const, req: 5000, name: '鉄の卵', condition: '累計ボリューム5,000kg突破' },
                   { tier: 'silver' as const, req: 50000, name: '鉄人の証', condition: '累計ボリューム50,000kg突破' },
-                  { tier: 'gold' as const, req: 200000, name: '鋼鉄 of 巨人', condition: '累計ボリューム200,000kg突破' },
+                  { tier: 'gold' as const, req: 200000, name: '鋼鉄の巨人', condition: '累計ボリューム200,000kg突破' },
                 ]
               },
               {
@@ -968,7 +968,7 @@ export default function Dashboard() {
                 currentVal: streak,
                 unit: '日',
                 levels: [
-                  { tier: 'bronze' as const, req: 3, name: '継続 of 卵', condition: '3日間連続で記録を続ける' },
+                  { tier: 'bronze' as const, req: 3, name: '継続の卵', condition: '3日間連続で記録を続ける' },
                   { tier: 'silver' as const, req: 10, name: '継続の達人', condition: '10日間連続で記録を続ける' },
                   { tier: 'gold' as const, req: 30, name: '不動の精神', condition: '30日間連続で記録を続ける' },
                 ]
