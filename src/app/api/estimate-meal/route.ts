@@ -61,6 +61,7 @@ export async function POST(request: Request) {
         let carb = 0;
         let amountGrams = 0;
         let matchedAny = false;
+        let aiError = false;
 
         // 部分一致でマッチする料理をすべてマージ
         for (const [key, val] of Object.entries(MEAL_DICTIONARY)) {
@@ -76,7 +77,8 @@ export async function POST(request: Request) {
 
         // 何もマッチしなかった場合のフォールバック (GeminiでAI推定)
         if (!matchedAny) {
-            const prompt = `「${description}」という食事の概算の栄養成分を推測し、JSON形式で出力してください。
+            try {
+                const prompt = `「${description}」という食事の概算の栄養成分を推測し、JSON形式で出力してください。
 【重要事項】
 ・必ずJSONオブジェクト1つのみを出力してください。マークダウンの装飾(\`\`\`json)や説明文は一切含めないでください。
 ・キーはすべて小文字で "name", "calories", "protein", "fat", "carb", "amountGrams" とし、値は以下のようにしてください：
@@ -84,17 +86,16 @@ export async function POST(request: Request) {
   - "calories", "protein", "fat", "carb": この食事（1人前相当）の推定される栄養成分（number）。単位はそれぞれkcal, g, g, g。
   - "amountGrams": この食事（1人前相当）の全体量（グラム数）（number）。
 `;
-            const text = await callGemini(prompt);
-            
-            // Clean up potential markdown formatting
-            let cleanText = text.replace(/```json/g, '').replace(/```/g, '').trim();
-            const jsonStart = cleanText.indexOf('{');
-            const jsonEnd = cleanText.lastIndexOf('}');
-            if (jsonStart !== -1 && jsonEnd !== -1) {
-                cleanText = cleanText.substring(jsonStart, jsonEnd + 1);
-            }
-            
-            try {
+                const text = await callGemini(prompt);
+                
+                // Clean up potential markdown formatting
+                let cleanText = text.replace(/```json/g, '').replace(/```/g, '').trim();
+                const jsonStart = cleanText.indexOf('{');
+                const jsonEnd = cleanText.lastIndexOf('}');
+                if (jsonStart !== -1 && jsonEnd !== -1) {
+                    cleanText = cleanText.substring(jsonStart, jsonEnd + 1);
+                }
+                
                 const aiResult = JSON.parse(cleanText);
                 calories = Number(aiResult.calories) || 500;
                 protein = Number(aiResult.protein) || 15;
@@ -102,9 +103,14 @@ export async function POST(request: Request) {
                 carb = Number(aiResult.carb) || 50;
                 amountGrams = Number(aiResult.amountGrams) || 300;
             } catch (e) {
-                console.error("Gemini JSON parse error:", e);
-                // JSONパース失敗時のフォールバック
-                calories = 500; protein = 15; fat = 12; carb = 65; amountGrams = 350;
+                console.error("Gemini call failed or JSON parse error, using default fallback values:", e);
+                aiError = true;
+                // AI高負荷等の場合の標準的な一食分の栄養素フォールバック値
+                calories = 350;
+                protein = 15;
+                fat = 10;
+                carb = 50;
+                amountGrams = 250;
             }
         }
 
@@ -132,10 +138,15 @@ export async function POST(request: Request) {
             amountGrams
         };
 
-        return NextResponse.json({ ok: true, result });
+        return NextResponse.json({ ok: true, result, aiError });
 
     } catch (err) {
-        console.error(err);
-        return NextResponse.json({ error: 'calculation failed', detail: String(err) }, { status: 500 });
+        console.error("estimate-meal main route crash:", err);
+        // 完全クラッシュ時のフォールバック応答 (500を返さず、クライアント側で処理できるデフォルト値を200 OKで返す)
+        return NextResponse.json({ 
+            ok: true, 
+            result: { calories: 350, protein: 15, fat: 10, carb: 50, amountGrams: 250 }, 
+            aiError: true 
+        });
     }
 }

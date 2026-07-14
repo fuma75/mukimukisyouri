@@ -54,33 +54,46 @@ export default function Meal() {
     // もしカロリーなどが未入力（0）の場合は自動でAI推定を行う
     if (finalCalories === 0 && finalProtein === 0 && finalFat === 0 && finalCarb === 0) {
       setLoadingEstimate(true);
+      let apiSuccess = false;
+      let data: any = null;
+
       try {
         const res = await fetch('/api/estimate-meal', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ description: name, amount })
         });
-        const data = await res.json();
         
-        if (data.ok && data.result) {
-          if (data.result.name) finalName = data.result.name;
-          finalCalories = data.result.calories !== undefined ? Math.round(data.result.calories) : 0;
-          finalProtein = data.result.protein !== undefined ? Math.round(data.result.protein * 10) / 10 : 0;
-          finalFat = data.result.fat !== undefined ? Math.round(data.result.fat * 10) / 10 : 0;
-          finalCarb = data.result.carb !== undefined ? Math.round(data.result.carb * 10) / 10 : 0;
-          if (data.result.amountGrams !== undefined && data.result.amountGrams > 0) {
-            finalAmount = Math.round(data.result.amountGrams);
+        if (res.ok) {
+          data = await res.json();
+          if (data && data.ok && data.result) {
+            apiSuccess = true;
           }
-        } else {
-          alert('AI推定失敗: ' + JSON.stringify(data));
-          setLoadingEstimate(false);
-          return;
         }
       } catch (e) {
-        console.error(e);
-        alert('エラーが発生しました');
-        setLoadingEstimate(false);
-        return;
+        console.error("Meal estimation API network error:", e);
+      }
+      
+      if (apiSuccess && data) {
+        if (data.result.name) finalName = data.result.name;
+        finalCalories = data.result.calories !== undefined ? Math.round(data.result.calories) : 0;
+        finalProtein = data.result.protein !== undefined ? Math.round(data.result.protein * 10) / 10 : 0;
+        finalFat = data.result.fat !== undefined ? Math.round(data.result.fat * 10) / 10 : 0;
+        finalCarb = data.result.carb !== undefined ? Math.round(data.result.carb * 10) / 10 : 0;
+        if (data.result.amountGrams !== undefined && data.result.amountGrams > 0) {
+          finalAmount = Math.round(data.result.amountGrams);
+        }
+
+        if (data.aiError) {
+          alert('📢 AI栄養推定サーバーが混雑しています。大まかな想定数値（350kcal）で記録しました。数値は手動で微調整できます。');
+        }
+      } else {
+        // 完全オフラインまたはAPIダウン時のクライアント側最終フォールバック
+        finalCalories = 350;
+        finalProtein = 15;
+        finalFat = 10;
+        finalCarb = 50;
+        alert('📢 AIサーバー一時混雑のため、大まかな想定数値（350kcal）で一時記録しました。必要に応じて手動で数値を修正してください。');
       }
       setLoadingEstimate(false);
     }
