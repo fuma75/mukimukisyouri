@@ -638,25 +638,52 @@ export default function Dashboard() {
             const totalVol = allWorkouts.reduce((sum, w) => sum + (w.volume || 0), 0);
             const readKnowledge = typeof window !== 'undefined' ? localStorage.getItem('kinnikun_badge_knowledge') === 'true' : false;
 
+            const tiers = {
+              gold: {
+                name: '金',
+                bg: 'rgba(220, 160, 56, 0.15)',
+                border: '2px solid #DCA038',
+                color: '#DCA038',
+                shadow: '0 0 15px rgba(220,160,56,0.35)'
+              },
+              silver: {
+                name: '銀',
+                bg: 'rgba(224, 224, 224, 0.1)',
+                border: '2px solid #b0b0b0',
+                color: '#e0e0e0',
+                shadow: '0 0 15px rgba(224,224,224,0.2)'
+              },
+              bronze: {
+                name: '銅',
+                bg: 'rgba(205, 127, 50, 0.1)',
+                border: '2px solid #cd7f32',
+                color: '#d27d2d',
+                shadow: '0 0 15px rgba(205,127,50,0.2)'
+              }
+            };
+
             const badgeList = [
               {
                 id: 'beginner',
                 name: '初心者冒険者',
                 icon: 'fa-leaf',
+                tier: 'bronze' as const,
                 condition: 'はじめてのトレーニングを記録する',
                 isUnlocked: allWorkouts.length > 0
               },
               {
-                id: 'streak_master',
-                name: '継続の達人',
-                icon: 'fa-fire',
-                condition: '30日継続の証',
-                isUnlocked: streak >= 30
+                id: 'nutrition_manager',
+                name: '栄養の管理者',
+                icon: 'fa-apple-whole',
+                tier: 'bronze' as const,
+                condition: '食事を10回以上記録する',
+                isUnlocked: allMeals.length >= 10
               },
               {
                 id: 'knowledge_sage',
                 name: '知識の賢者',
                 icon: 'fa-brain',
+                tier: 'silver' as const,
                 condition: '器具ガイドをすべて読む',
                 isUnlocked: readKnowledge
               },
@@ -664,21 +691,24 @@ export default function Dashboard() {
                 id: 'iron_man',
                 name: '鉄人の証',
                 icon: 'fa-weight-hanging',
-                condition: '累計トレーニングボリューム10,000kg突破',
-                isUnlocked: totalVol >= 10000
+                tier: 'silver' as const,
+                condition: '累計トレーニングボリューム50,000kg突破',
+                isUnlocked: totalVol >= 50000
               },
               {
-                id: 'nutrition_manager',
-                name: '栄養の管理者',
-                icon: 'fa-apple-whole',
-                condition: '食事を5回以上記録する',
-                isUnlocked: allMeals.length >= 5
+                id: 'streak_master',
+                name: '継続の達人',
+                icon: 'fa-fire',
+                tier: 'gold' as const,
+                condition: '30日継続の証',
+                isUnlocked: streak >= 30
               }
             ];
 
             const handleBadgeClick = (badge: typeof badgeList[0]) => {
               const statusText = badge.isUnlocked ? '取得済み！' : '未取得';
-              alert(`【${badge.name}】\n${statusText}\n獲得条件: ${badge.condition}`);
+              const tierName = tiers[badge.tier].name;
+              alert(`【${badge.name}】（難易度: ${tierName}）\n${statusText}\n獲得条件: ${badge.condition}`);
             };
 
             return (
@@ -690,49 +720,52 @@ export default function Dashboard() {
                 </div>
                 
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '24px', justifyContent: 'flex-start', padding: '10px 5px' }}>
-                  {badgeList.map(badge => (
-                    <div
-                      key={badge.id}
-                      onClick={() => handleBadgeClick(badge)}
-                      style={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'center',
-                        gap: '8px',
-                        width: '80px',
-                        cursor: 'pointer',
-                        transition: 'transform 0.2s',
-                      }}
-                      onMouseOver={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
-                      onMouseOut={(e) => e.currentTarget.style.transform = 'scale(1)'}
-                    >
-                      <div style={{
-                        position: 'relative',
-                        width: '60px',
-                        height: '60px',
-                        borderRadius: '50%',
-                        background: badge.isUnlocked ? 'rgba(43,138,62,0.1)' : 'rgba(255,255,255,0.03)',
-                        border: badge.isUnlocked ? '2px solid #2b8a3e' : '2px solid rgba(255,255,255,0.1)',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        color: badge.isUnlocked ? '#40c057' : 'rgba(255,255,255,0.3)',
-                        fontSize: '22px',
-                        boxShadow: badge.isUnlocked ? '0 0 15px rgba(43,138,62,0.2)' : 'none'
-                      }}>
-                        <i className={`fa-solid ${badge.isUnlocked ? badge.icon : 'fa-lock'}`} />
+                  {badgeList.map(badge => {
+                    const tierStyle = tiers[badge.tier];
+                    return (
+                      <div
+                        key={badge.id}
+                        onClick={() => handleBadgeClick(badge)}
+                        style={{
+                          display: 'flex',
+                          flexDirection: 'column',
+                          alignItems: 'center',
+                          gap: '8px',
+                          width: '80px',
+                          cursor: 'pointer',
+                          transition: 'transform 0.2s',
+                        }}
+                        onMouseOver={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
+                        onMouseOut={(e) => e.currentTarget.style.transform = 'scale(1)'}
+                      >
+                        <div style={{
+                          position: 'relative',
+                          width: '60px',
+                          height: '60px',
+                          borderRadius: '50%',
+                          background: badge.isUnlocked ? tierStyle.bg : 'rgba(255,255,255,0.03)',
+                          border: badge.isUnlocked ? tierStyle.border : '2px solid rgba(255,255,255,0.1)',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          color: badge.isUnlocked ? tierStyle.color : 'rgba(255,255,255,0.3)',
+                          fontSize: '22px',
+                          boxShadow: badge.isUnlocked ? tierStyle.shadow : 'none'
+                        }}>
+                          <i className={`fa-solid ${badge.isUnlocked ? badge.icon : 'fa-lock'}`} />
+                        </div>
+                        <span style={{
+                          fontSize: '0.75rem',
+                          fontWeight: 'bold',
+                          color: badge.isUnlocked ? '#fff' : 'rgba(255,255,255,0.4)',
+                          textAlign: 'center',
+                          whiteSpace: 'nowrap'
+                        }}>
+                          {badge.name}
+                        </span>
                       </div>
-                      <span style={{
-                        fontSize: '0.75rem',
-                        fontWeight: 'bold',
-                        color: badge.isUnlocked ? '#fff' : 'rgba(255,255,255,0.4)',
-                        textAlign: 'center',
-                        whiteSpace: 'nowrap'
-                      }}>
-                        {badge.name}
-                      </span>
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
               </div>
             );
