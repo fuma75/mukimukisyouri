@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAppContext } from '../AppContext';
 import AiMenuModal, { AiMenuData } from '../workout/AiMenuModal';
 
@@ -243,7 +243,6 @@ const plansData = [
   }
 ];
 
-
 export default function EquipmentGuide() {
   const [activeTab, setActiveTab] = useState('equipment');
   const [selectedEquipment, setSelectedEquipment] = useState(equipmentData[0].id);
@@ -252,6 +251,12 @@ export default function EquipmentGuide() {
   const [activeAiMenu, setActiveAiMenu] = useState<AiMenuData | null>(null);
   const { theme } = useAppContext();
   const isDark = theme === 'dark';
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('kinnikun_badge_knowledge', 'true');
+    }
+  }, []);
 
   const handleStartPlan = (plan: typeof plansData[0], dayIdx: number) => {
     const day = plan.days[dayIdx];
