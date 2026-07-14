@@ -325,8 +325,8 @@ export default function Dashboard() {
                   <span style={{ color: '#fff', fontWeight: 'bold' }}>{profile.targetCalories?.toLocaleString()} kcal</span>
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.85rem' }}>
-                  <span style={{ color: 'rgba(255,255,255,0.6)' }}>現在摂取</span>
                   <span style={{ color: '#DCA038', fontWeight: 'bold' }}>{consumedCalories.toLocaleString()} kcal</span>
+                  <span style={{ color: 'rgba(255,255,255,0.6)' }}>現在摂取</span>
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.85rem' }}>
                   <span style={{ color: 'rgba(255,255,255,0.6)' }}>消費（運動）</span>
@@ -627,6 +627,113 @@ export default function Dashboard() {
                     </div>
                   </div>, document.body
                 )}
+              </div>
+            );
+          })()}
+
+          {/* 獲得称号・バッジ (BADGES) */}
+          {(() => {
+            const allWorkouts = getWorkouts(null);
+            const allMeals = getMeals(null);
+            const totalVol = allWorkouts.reduce((sum, w) => sum + (w.volume || 0), 0);
+            const readKnowledge = typeof window !== 'undefined' ? localStorage.getItem('kinnikun_badge_knowledge') === 'true' : false;
+
+            const badgeList = [
+              {
+                id: 'beginner',
+                name: '初心者冒険者',
+                icon: 'fa-leaf',
+                condition: 'はじめてのトレーニングを記録する',
+                isUnlocked: allWorkouts.length > 0
+              },
+              {
+                id: 'streak_master',
+                name: '継続の達人',
+                icon: 'fa-fire',
+                condition: '30日継続の証',
+                isUnlocked: streak >= 30
+              },
+              {
+                id: 'knowledge_sage',
+                name: '知識の賢者',
+                icon: 'fa-brain',
+                condition: '器具ガイドをすべて読む',
+                isUnlocked: readKnowledge
+              },
+              {
+                id: 'iron_man',
+                name: '鉄人の証',
+                icon: 'fa-weight-hanging',
+                condition: '累計トレーニングボリューム10,000kg突破',
+                isUnlocked: totalVol >= 10000
+              },
+              {
+                id: 'nutrition_manager',
+                name: '栄養の管理者',
+                icon: 'fa-apple-whole',
+                condition: '食事を5回以上記録する',
+                isUnlocked: allMeals.length >= 5
+              }
+            ];
+
+            const handleBadgeClick = (badge: typeof badgeList[0]) => {
+              const statusText = badge.isUnlocked ? '取得済み！' : '未取得';
+              alert(`【${badge.name}】\n${statusText}\n獲得条件: ${badge.condition}`);
+            };
+
+            return (
+              <div style={{ background: 'rgba(20,20,25,0.8)', border: '1px solid rgba(255,255,255,0.05)', borderRadius: '16px', padding: '25px', display: 'flex', flexDirection: 'column', boxShadow: '0 4px 20px rgba(0,0,0,0.4)', marginTop: '20px' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+                  <h3 style={{ margin: 0, fontSize: '1.1rem', color: '#fff', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    🏆 獲得称号・バッジ (BADGES)
+                  </h3>
+                </div>
+                
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '24px', justifyContent: 'flex-start', padding: '10px 5px' }}>
+                  {badgeList.map(badge => (
+                    <div
+                      key={badge.id}
+                      onClick={() => handleBadgeClick(badge)}
+                      style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        gap: '8px',
+                        width: '80px',
+                        cursor: 'pointer',
+                        transition: 'transform 0.2s',
+                      }}
+                      onMouseOver={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
+                      onMouseOut={(e) => e.currentTarget.style.transform = 'scale(1)'}
+                    >
+                      <div style={{
+                        position: 'relative',
+                        width: '60px',
+                        height: '60px',
+                        borderRadius: '50%',
+                        background: badge.isUnlocked ? 'rgba(43,138,62,0.1)' : 'rgba(255,255,255,0.03)',
+                        border: badge.isUnlocked ? '2px solid #2b8a3e' : '2px solid rgba(255,255,255,0.1)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        color: badge.isUnlocked ? '#40c057' : 'rgba(255,255,255,0.3)',
+                        fontSize: '22px',
+                        boxShadow: badge.isUnlocked ? '0 0 15px rgba(43,138,62,0.2)' : 'none'
+                      }}>
+                        <i className={`fa-solid ${badge.isUnlocked ? badge.icon : 'fa-lock'}`} />
+                      </div>
+                      <span style={{
+                        fontSize: '0.75rem',
+                        fontWeight: 'bold',
+                        color: badge.isUnlocked ? '#fff' : 'rgba(255,255,255,0.4)',
+                        textAlign: 'center',
+                        whiteSpace: 'nowrap'
+                      }}>
+                        {badge.name}
+                      </span>
+                    </div>
+                  ))}
+                </div>
               </div>
             );
           })()}
