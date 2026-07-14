@@ -1,10 +1,10 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import { useAppContext } from '../AppContext';
+import { getWorkouts, getMeals } from '@/lib/storage';
 
 export default function Header() {
   const { activeTab, setActiveTab, userProfile, streak, theme, setTheme, textSize, setTextSize } = useAppContext();
-
 
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [settingsMenuOpen, setSettingsMenuOpen] = useState(false);
@@ -16,7 +16,7 @@ export default function Header() {
       case 'meal': return '食事管理';
       case 'equipment': return '器具ガイド＆プラン';
       case 'muscle-map': return '筋肉マップ';
-      case 'map': return '周辺のジム探し';
+      case 'map': return '周辺 of ジム探し';
       case 'profile': return 'プロフィール設定';
       default: return '筋虎';
     }
@@ -47,6 +47,63 @@ export default function Header() {
 
   const todayStr = new Date().toLocaleDateString('ja-JP', { year: 'numeric', month: 'long', day: 'numeric', weekday: 'short' });
 
+  // 最新のレベル（筋虎ランク）をヘッダー側でも動的計算して表示
+  const allWorkouts = getWorkouts(null);
+  const allMeals = getMeals(null);
+  const totalVolumeAll = allWorkouts.reduce((sum, w) => sum + (w.volume || 0), 0);
+
+  const readKnowledge = typeof window !== 'undefined' ? localStorage.getItem('kinnikun_badge_knowledge') === 'true' : false;
+  const readGif = typeof window !== 'undefined' ? localStorage.getItem('kinnikun_badge_knowledge_gif') === 'true' : false;
+  const startPlan = typeof window !== 'undefined' ? localStorage.getItem('kinnikun_badge_knowledge_plan') === 'true' : false;
+
+  const workoutCount = allWorkouts.length;
+  const mealCount = allMeals.length;
+  const knowledgeSteps = (readKnowledge ? 1 : 0) + (readGif ? 1 : 0) + (startPlan ? 1 : 0);
+
+  let badgeLevelsUnlocked = 0;
+  if (workoutCount >= 50) badgeLevelsUnlocked += 3;
+  else if (workoutCount >= 10) badgeLevelsUnlocked += 2;
+  else if (workoutCount >= 1) badgeLevelsUnlocked += 1;
+  
+  if (mealCount >= 100) badgeLevelsUnlocked += 3;
+  else if (mealCount >= 30) badgeLevelsUnlocked += 2;
+  else if (mealCount >= 10) badgeLevelsUnlocked += 1;
+  
+  badgeLevelsUnlocked += knowledgeSteps;
+  
+  if (totalVolumeAll >= 200000) badgeLevelsUnlocked += 3;
+  else if (totalVolumeAll >= 50000) badgeLevelsUnlocked += 2;
+  else if (totalVolumeAll >= 5000) badgeLevelsUnlocked += 1;
+  
+  const currentStreak = streak || userProfile?.streak || 0;
+  if (currentStreak >= 30) badgeLevelsUnlocked += 3;
+  else if (currentStreak >= 10) badgeLevelsUnlocked += 2;
+  else if (currentStreak >= 3) badgeLevelsUnlocked += 1;
+
+  const mealDays: Record<string, number> = {};
+  allMeals.forEach(m => {
+    mealDays[m.date] = (mealDays[m.date] || 0) + m.calories;
+  });
+  const targetCal = userProfile?.targetCalories || 2000;
+  const goalAchievedDays = Object.values(mealDays).filter(cal => cal >= targetCal * 0.9 && cal <= targetCal * 1.1).length;
+
+  const workoutXp = workoutCount * 50;
+  const mealXp = mealCount * 10;
+  const goalAchievedXp = goalAchievedDays * 200;
+  const streakXp = Math.floor(currentStreak / 7) * 300;
+  const badgeXp = badgeLevelsUnlocked * 100;
+
+  const totalXp = workoutXp + mealXp + goalAchievedXp + streakXp + badgeXp;
+
+  let tempXp = totalXp;
+  let currentLevel = 1;
+  let xpForNextLevel = 250;
+  while (tempXp >= xpForNextLevel) {
+    tempXp -= xpForNextLevel;
+    currentLevel++;
+    xpForNextLevel = currentLevel * 250;
+  }
+
   return (
     <header className="app-header">
       <div className="header-title" style={{ minWidth: 0, flex: '1 1 auto' }}>
@@ -55,8 +112,14 @@ export default function Header() {
       </div>
       <div className="header-profile-container" style={{ display: 'flex', gap: '8px', alignItems: 'center', flexShrink: 0, position: 'relative' }}>
         <div style={{ background: 'rgba(0,0,0,0.5)', border: '1px solid #ef4444', padding: '5px 10px', borderRadius: '20px', color: '#ef4444', fontSize: 'clamp(10px, 2.5vw, 12px)', fontWeight: 'bold', whiteSpace: 'nowrap' }}>
-          <i className="fa-solid fa-fire"></i> {streak || userProfile?.streak || 0}日連続
+          <i className="fa-solid fa-fire"></i> {currentStreak}日連続
         </div>
+
+        {/* ホーム(タイトル) と プロフィール(右ボタン) の間に配置されるレベルバッジ */}
+        <div style={{ background: 'rgba(220,160,56,0.15)', border: '1px solid #DCA038', padding: '5px 10px', borderRadius: '20px', color: '#DCA038', fontSize: 'clamp(10px, 2.5vw, 12px)', fontWeight: 'bold', whiteSpace: 'nowrap', display: 'flex', alignItems: 'center', gap: '4px' }}>
+          👑 Lv.{currentLevel}
+        </div>
+
         <div 
           onClick={() => { setDropdownOpen(!dropdownOpen); setSettingsMenuOpen(false); }}
           style={{ background: 'rgba(20,20,20,0.8)', border: '1px solid rgba(220,160,56,0.2)', padding: '5px 10px 5px 5px', borderRadius: '30px', display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer', flexShrink: 0 }}>
