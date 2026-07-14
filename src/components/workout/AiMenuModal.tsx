@@ -204,20 +204,42 @@ export default function AiMenuModal({ data, onClose, onApply }: AiMenuModalProps
       <div ref={containerRef} style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, zIndex: 9999, display: 'flex', flexDirection: 'column', alignItems: 'center', background: 'var(--bg-secondary)', overflowY: 'auto', animation: 'section-enter 0.32s cubic-bezier(0.4, 0, 0.2, 1) both' }}>
         <div style={{ width: '100%', maxWidth: '600px', background: 'var(--bg-primary)', flex: '1 0 auto', minHeight: '100dvh', display: 'flex', flexDirection: 'column', position: 'relative', boxShadow: '0 0 20px rgba(0,0,0,0.05)' }}>
 
-      {/* Header Image */}
-      <div style={{ position: 'relative', height: '300px', flexShrink: 0, background: '#e9ecef', overflow: 'hidden' }}>
-        <img 
-          src={heroImgUrl} 
-          alt="Trainer" 
-          style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: heroImgUrl.includes('tiger') ? 'center 55%' : 'center', transform: heroImgUrl.includes('tiger') ? 'scale(1.15)' : 'none', transformOrigin: 'center 55%' }}
-        />
-        <div style={{ position: 'absolute', top: '20px', left: '20px', width: '40px', height: '40px', borderRadius: '50%', background: 'rgba(0,0,0,0.5)', display: 'flex', justifyContent: 'center', alignItems: 'center', cursor: 'pointer', color: '#fff' }} onClick={onClose}>
+      {/* Header (No Image) */}
+      <div style={{ 
+        position: 'relative', 
+        height: '60px', 
+        flexShrink: 0, 
+        background: '#fff', 
+        display: 'flex', 
+        alignItems: 'center', 
+        padding: '0 20px',
+        borderBottom: '1px solid #f1f3f5',
+        zIndex: 20
+      }}>
+        <div 
+          style={{ 
+            width: '40px', 
+            height: '40px', 
+            borderRadius: '50%', 
+            background: '#f1f3f5', 
+            display: 'flex', 
+            justifyContent: 'center', 
+            alignItems: 'center', 
+            cursor: 'pointer', 
+            color: '#212529',
+            transition: 'background 0.2s'
+          }} 
+          onClick={onClose}
+          onMouseOver={(e) => e.currentTarget.style.background = '#e9ecef'}
+          onMouseOut={(e) => e.currentTarget.style.background = '#f1f3f5'}
+        >
           <i className="fa-solid fa-arrow-left"></i>
         </div>
+        <span style={{ marginLeft: '15px', fontWeight: 'bold', fontSize: '1.1rem', color: '#212529' }}>プラン詳細</span>
       </div>
 
       {/* Content */}
-      <div style={{ flex: 1, padding: '24px', background: '#fff', borderTopLeftRadius: '24px', borderTopRightRadius: '24px', marginTop: '-24px', position: 'relative', zIndex: 10 }}>
+      <div style={{ flex: 1, padding: '24px', background: '#fff', position: 'relative', zIndex: 10 }}>
         
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
           <h1 style={{ fontSize: '1.8rem', fontWeight: 'bold', margin: 0, color: '#000' }}>{currentData.title || '1日目'}</h1>
