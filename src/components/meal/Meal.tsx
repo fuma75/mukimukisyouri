@@ -4,7 +4,7 @@ import { getMeals, saveMeal, deleteMeal, MealItem } from '@/lib/storage';
 import { useAppContext } from '../AppContext';
 
 export default function Meal() {
-  const { selectedDate: date, setSelectedDate: setDate, theme } = useAppContext();
+  const { selectedDate: date, setSelectedDate: setDate, theme, checkAchievements } = useAppContext();
   const [meals, setMeals] = useState<MealItem[]>([]);
 
   const [timing, setTiming] = useState('朝食');
@@ -111,6 +111,7 @@ export default function Meal() {
     saveMeal(item);
     setMeals(getMeals(date));
     resetForm();
+    checkAchievements();
   };
 
   const handleDelete = (id: string) => {

@@ -10,7 +10,7 @@ import RulerPicker from '@/components/ui/RulerPicker';
 ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement, Title, PointElement, LineElement, Filler);
 
 export default function Dashboard() {
-  const { activeTab, setActiveTab, textSize, theme, streak } = useAppContext();
+  const { activeTab, setActiveTab, textSize, theme, streak, checkAchievements } = useAppContext();
   const [profile, setProfile] = useState<Profile | null>(null);
   const [workouts, setWorkouts] = useState<WorkoutItem[]>([]);
   const [meals, setMeals] = useState<MealItem[]>([]);
@@ -1011,8 +1011,9 @@ export default function Dashboard() {
                             const updated = saveProfile({ ...profile, height: editHeight, weight: editWeight });
                             setProfile(updated);
                             saveWeightLog({ date: new Date().toLocaleDateString('ja-JP', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\//g, '-'), weight: editWeight });
+                            setWeightLogs(getWeightLogs());
                             setShowBmiEdit(false);
-                            window.location.reload();
+                            checkAchievements();
                           }}
                           style={{ flex: 2, padding: '16px', borderRadius: '12px', border: 'none', background: 'linear-gradient(180deg, #FDF0A6, #DCA038)', color: '#000', fontSize: '1rem', fontWeight: 'bold', cursor: 'pointer', boxShadow: '0 4px 15px rgba(220,160,56,0.3)' }}
                         >保存する</button>

@@ -8,7 +8,7 @@ import { calculateCalories } from '@/lib/exerciseDictionary';
 import { useAppContext } from '../AppContext';
 
 export default function Workout() {
-  const { selectedDate: date, setSelectedDate: setDate, theme, userProfile } = useAppContext();
+  const { selectedDate: date, setSelectedDate: setDate, theme, userProfile, checkAchievements } = useAppContext();
   const [showManualForm, setShowManualForm] = useState(false);
   const [showHistoryModal, setShowHistoryModal] = useState(false);
   const [activeTargetArea, setActiveTargetArea] = useState('腹筋');
@@ -141,6 +141,7 @@ export default function Workout() {
     saveWorkout(item);
     setWorkouts(getWorkouts(date));
     setExercise(''); setWeight(''); setReps(''); setSets(''); setTime(''); setCalories('');
+    checkAchievements();
   };
 
   const handleDelete = (id: string) => {
@@ -273,6 +274,7 @@ export default function Workout() {
     }
 
     setWorkouts(getWorkouts(date));
+    checkAchievements();
     if (!isPartial) {
       setAiMenuData(null);
       setShowAiMenuPanel(false);
