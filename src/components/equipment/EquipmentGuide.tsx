@@ -1,6 +1,7 @@
 'use client';
 import React, { useState } from 'react';
 import { useAppContext } from '../AppContext';
+import AiMenuModal, { AiMenuData } from '../workout/AiMenuModal';
 
 const equipmentToImage: Record<string, string> = {
   'dumbbell': '/images/dumbbell.png',
@@ -213,8 +214,41 @@ export default function EquipmentGuide() {
   const [selectedEquipment, setSelectedEquipment] = useState(equipmentData[0].id);
   const [expandedExercise, setExpandedExercise] = useState<string | null>(null);
   const [zoomGif, setZoomGif] = useState<string | null>(null);
+  const [activeAiMenu, setActiveAiMenu] = useState<AiMenuData | null>(null);
   const { theme } = useAppContext();
   const isDark = theme === 'dark';
+
+  const handleStartPlan = (plan: typeof plansData[0], dayIdx: number) => {
+    const day = plan.days[dayIdx];
+    const exercises = day.exercises.map(ex => ({
+      exercise: ex.name,
+      duration: '00:30',
+    }));
+    const warmup = [{ exercise: 'ジャンピングジャック', duration: '00:30' }];
+    const cooldown = [{ exercise: 'ストレッチ', duration: '00:30' }];
+    setActiveAiMenu({
+      title: `${plan.title} — ${day.label}`,
+      goal: plan.title,
+      category: '全身',
+      estimatedMinutes: parseInt(plan.duration) || 45,
+      exerciseCount: exercises.length + warmup.length + cooldown.length,
+      warmup,
+      training: exercises,
+      cooldown,
+      message: `${plan.title}のルーティンを開始します！`,
+    });
+  };
+
+  if (activeAiMenu) {
+    return (
+      <AiMenuModal
+        data={activeAiMenu}
+        onClose={() => setActiveAiMenu(null)}
+        onApply={() => setActiveAiMenu(null)}
+      />
+    );
+  }
+
 
   const primaryColor = isDark ? '#DCA038' : 'var(--primary)';
   const cardBg = isDark ? 'rgba(20,20,20,0.5)' : '#fff';
@@ -451,44 +485,118 @@ export default function EquipmentGuide() {
       )}
 
       {activeTab === 'plan' && (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
           {plansData.map((plan, idx) => (
-            <div key={idx} style={{ background: cardBg, borderRadius: '16px', overflow: 'hidden', boxShadow: isDark ? '0 4px 15px rgba(0,0,0,0.2)' : '0 4px 10px rgba(0,0,0,0.06)', border: cardBorder }}>
-              {/* Plan Header */}
-              <div style={{ padding: '18px 20px 14px', borderBottom: isDark ? '1px solid rgba(255,255,255,0.06)' : '1px solid #f0f0f0' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-                  <h3 style={{ margin: '0', fontSize: '1.1rem', color: textMain, fontWeight: 'bold' }}>{plan.title}</h3>
-                  <span style={{ background: plan.color.bg, color: plan.color.text, border: `1px solid ${plan.color.border}`, fontSize: '0.75rem', padding: '4px 12px', borderRadius: '20px', fontWeight: 'bold', flexShrink: 0 }}>
-                    {plan.level}
-                  </span>
-                </div>
-                <div style={{ display: 'flex', gap: '16px', color: textMuted, fontSize: '0.82rem', marginBottom: '10px' }}>
-                  <span><i className="fa-regular fa-clock" style={{ marginRight: '4px' }} />{plan.duration}</span>
-                  <span><i className="fa-solid fa-calendar-days" style={{ marginRight: '4px' }} />{plan.frequency}</span>
-                </div>
-                <p style={{ margin: '0', color: textSub, fontSize: '0.88rem', lineHeight: '1.55' }}>{plan.details}</p>
+            <div key={idx}>
+              {/* Plan title header */}
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '14px' }}>
+                <span style={{ color: plan.color.text, fontSize: '16px', fontStyle: 'italic', fontWeight: 'bold', letterSpacing: '-2px' }}>//</span>
+                <h3 style={{ color: plan.color.text, fontSize: '16px', margin: 0, fontWeight: 'bold' }}>{plan.title}</h3>
+                <span style={{ color: plan.color.border, fontSize: '16px', fontStyle: 'italic', fontWeight: 'bold', letterSpacing: '-2px' }}>//</span>
               </div>
 
-              {/* Days */}
-              <div style={{ padding: '16px 20px', display: 'flex', flexDirection: 'column', gap: '14px' }}>
+              {/* Day cards */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                 {plan.days.map((day, dIdx) => (
-                  <div key={dIdx}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '10px' }}>
-                      <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: plan.color.text, flexShrink: 0 }} />
-                      <span style={{ fontSize: '0.82rem', fontWeight: 'bold', color: plan.color.text }}>{day.label}</span>
-                    </div>
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', paddingLeft: '14px', borderLeft: `2px solid ${plan.color.border}` }}>
-                      {day.exercises.map((ex, eIdx) => (
-                        <div key={eIdx} style={{ display: 'flex', alignItems: 'flex-start', gap: '10px', padding: '8px 10px', background: isDark ? 'rgba(255,255,255,0.03)' : '#f8f9fa', borderRadius: '8px' }}>
-                          <i className="fa-solid fa-check" style={{ color: plan.color.text, fontSize: '0.75rem', marginTop: '3px', flexShrink: 0 }} />
+                  <div key={dIdx} style={{
+                    background: 'linear-gradient(135deg, rgba(30,30,30,0.98) 0%, rgba(10,10,10,1) 100%)',
+                    border: `1px solid ${plan.color.border}`,
+                    borderRadius: '16px',
+                    padding: '20px',
+                    position: 'relative',
+                    overflow: 'hidden',
+                    boxShadow: '0 10px 30px rgba(0,0,0,0.5), inset 0 0 20px rgba(0,0,0,0.2)',
+                  }}>
+                    {/* Tiger watermark */}
+                    <div style={{ position: 'absolute', right: '-10px', top: '0', bottom: '0', width: '160px', background: 'url(/images/tiger-male.png) center right / contain no-repeat', opacity: 0.15, pointerEvents: 'none' }} />
+
+                    <div style={{ position: 'relative', zIndex: 1 }}>
+                      {/* Level badge */}
+                      <span style={{ background: plan.color.bg, border: `1px solid ${plan.color.border}`, color: plan.color.text, fontSize: '10px', padding: '3px 10px', borderRadius: '20px', display: 'inline-block', marginBottom: '10px', fontWeight: 'bold' }}>
+                        {plan.level}
+                      </span>
+
+                      <h4 style={{ color: '#fff', fontSize: '1rem', fontWeight: 'bold', margin: '0 0 16px 0', paddingRight: '100px' }}>
+                        {day.label}
+                      </h4>
+
+                      {/* Info grid */}
+                      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', marginBottom: '20px' }}>
+                        <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+                          <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: 'rgba(20,20,20,0.8)', border: '1px solid rgba(255,255,255,0.1)', color: plan.color.text, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '12px' }}>
+                            <i className="fa-regular fa-clock" />
+                          </div>
                           <div>
-                            <div style={{ fontSize: '0.9rem', fontWeight: 'bold', color: textMain }}>{ex.name}</div>
-                            <div style={{ fontSize: '0.78rem', color: textMuted, marginTop: '2px' }}>{ex.detail}</div>
+                            <div style={{ color: '#fff', fontSize: '12px', fontWeight: 'bold' }}>{plan.duration}</div>
+                            <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '10px' }}>目安時間</div>
                           </div>
                         </div>
-                      ))}
+                        <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+                          <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: 'rgba(20,20,20,0.8)', border: '1px solid rgba(255,255,255,0.1)', color: plan.color.text, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '12px' }}>
+                            <i className="fa-solid fa-calendar-days" />
+                          </div>
+                          <div>
+                            <div style={{ color: '#fff', fontSize: '12px', fontWeight: 'bold' }}>{plan.frequency}</div>
+                            <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '10px' }}>頻度</div>
+                          </div>
+                        </div>
+                        <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+                          <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: 'rgba(20,20,20,0.8)', border: '1px solid rgba(255,255,255,0.1)', color: plan.color.text, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '12px' }}>
+                            <i className="fa-solid fa-list-check" />
+                          </div>
+                          <div>
+                            <div style={{ color: '#fff', fontSize: '12px', fontWeight: 'bold' }}>{day.exercises.length} 種目</div>
+                            <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '10px' }}>エクササイズ数</div>
+                          </div>
+                        </div>
+                        <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+                          <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: 'rgba(20,20,20,0.8)', border: '1px solid rgba(255,255,255,0.1)', color: plan.color.text, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '12px' }}>
+                            <i className="fa-solid fa-dumbbell" />
+                          </div>
+                          <div>
+                            <div style={{ color: '#fff', fontSize: '12px', fontWeight: 'bold' }}>ジム</div>
+                            <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '10px' }}>場所</div>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Exercise list */}
+                      <div style={{ background: 'rgba(255,255,255,0.04)', borderRadius: '10px', padding: '12px', marginBottom: '16px' }}>
+                        {day.exercises.map((ex, eIdx) => (
+                          <div key={eIdx} style={{ display: 'flex', alignItems: 'flex-start', gap: '10px', padding: '6px 0', borderBottom: eIdx < day.exercises.length - 1 ? '1px solid rgba(255,255,255,0.05)' : 'none' }}>
+                            <i className="fa-solid fa-check" style={{ color: plan.color.text, fontSize: '0.7rem', marginTop: '4px', flexShrink: 0 }} />
+                            <div style={{ flex: 1 }}>
+                              <span style={{ color: '#fff', fontSize: '0.88rem', fontWeight: 'bold' }}>{ex.name}</span>
+                              <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.75rem', marginLeft: '8px' }}>{ex.detail}</span>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+
+                      {/* Start button */}
+                      <button
+                        onClick={() => handleStartPlan(plan, dIdx)}
+                        style={{
+                          width: '100%',
+                          background: 'linear-gradient(180deg, #FDF0A6 0%, #DCA038 45%, #9C6615 55%, #E8C162 100%)',
+                          color: '#000',
+                          border: 'none',
+                          padding: '14px',
+                          borderRadius: '30px',
+                          fontSize: '15px',
+                          fontWeight: 'bold',
+                          display: 'flex',
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                          gap: '10px',
+                          cursor: 'pointer',
+                          boxShadow: '0 4px 15px rgba(0,0,0,0.5)',
+                        }}
+                      >
+                        トレーニングを開始する
+                        <i className="fa-solid fa-arrow-right" style={{ background: '#000', color: '#DCA038', padding: '4px', borderRadius: '50%', fontSize: '10px', width: '20px', height: '20px', display: 'flex', alignItems: 'center', justifyContent: 'center' }} />
+                      </button>
                     </div>
-                    {dIdx < plan.days.length - 1 && <div style={{ height: '1px', background: isDark ? 'rgba(255,255,255,0.05)' : '#f0f0f0', margin: '4px 0 0 0' }} />}
                   </div>
                 ))}
               </div>
@@ -496,6 +604,7 @@ export default function EquipmentGuide() {
           ))}
         </div>
       )}
+
     </section>
   );
 }
