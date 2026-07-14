@@ -2,14 +2,11 @@
 import React, { useState } from 'react';
 import { useAppContext } from '../AppContext';
 
-const targetToImage: Record<string, string> = {
-  '大胸筋': '/images/tiger-chest.png',
-  '大胸筋・三角筋': '/images/tiger-chest.png',
-  '上腕二頭筋': '/images/tiger-arm.png',
-  '大腿四頭筋・大臀筋': '/images/tiger-legs.png',
-  '背中全体・ハムストリング': '/images/tiger-back.png',
-  '広背筋': '/images/tiger-back.png',
-  '脚全体': '/images/tiger-legs.png',
+const equipmentToImage: Record<string, string> = {
+  'dumbbell': '/images/dumbbell.png',
+  'barbell': '/images/barbell.png',
+  'machine': '/images/machine.png',
+  'ab-roller': '/images/ab-roller.png',
 };
 
 const equipmentData = [
@@ -91,6 +88,31 @@ const equipmentData = [
           { name: 'レッグプレスマシン', gif: 'https://raw.githubusercontent.com/omercotkd/exercises-gifs/main/assets/0578.gif', reps: 'x12' },
           { name: 'レッグエクステンション', gif: 'https://raw.githubusercontent.com/omercotkd/exercises-gifs/main/assets/0583.gif', reps: 'x15' },
           { name: 'レッグカール', gif: 'https://raw.githubusercontent.com/omercotkd/exercises-gifs/main/assets/0576.gif', reps: 'x12' },
+        ]},
+    ]
+  },
+  {
+    id: 'ab-roller',
+    title: '腹筋ローラー (Ab Roller)',
+    icon: 'fa-circle-dot',
+    description: '腹筋を中心に、体幹全体（腹直筋・腹斜筋・腰背筋）を強烈に鍛えられるコンパクトな器具です。正しいフォームで行うと驚くほど高強度なトレーニングになります。',
+    usage: '最初は膝をついた状態（膝コロ）から始めましょう。腰を反りすぎず、お腹を凹ませながら前に転がします。帰りは腹筋の力でゆっくりと体を引き戻すことが重要です。',
+    exercises: [
+      { name: '膝コロ（ニーロールアウト）', target: '腹筋全体', tips: '腰を反らさず、お腹を丸めるイメージで行います。',
+        training: [
+          { name: 'ニーロールアウト（基本）', gif: 'https://raw.githubusercontent.com/omercotkd/exercises-gifs/main/assets/0276.gif', reps: 'x10' },
+          { name: 'ニーロールアウト（ワイドスタンス）', gif: 'https://raw.githubusercontent.com/omercotkd/exercises-gifs/main/assets/0276.gif', reps: 'x8' },
+          { name: 'ニーロールアウト（スロー）', gif: 'https://raw.githubusercontent.com/omercotkd/exercises-gifs/main/assets/0276.gif', reps: 'x6' },
+        ]},
+      { name: '立ちコロ（スタンディングロールアウト）', target: '腹筋・体幹', tips: '上級者向け。背中が床と水平になるまで伸ばします。',
+        training: [
+          { name: '半立ちコロ（ハーフ）', gif: 'https://raw.githubusercontent.com/omercotkd/exercises-gifs/main/assets/0276.gif', reps: 'x8' },
+          { name: 'フルスタンディングロールアウト', gif: 'https://raw.githubusercontent.com/omercotkd/exercises-gifs/main/assets/0276.gif', reps: 'x5' },
+        ]},
+      { name: 'V字ロールアウト（サイドコロ）', target: '腹斜筋・脇腹', tips: '斜め方向に転がして脇腹を重点的に鍛えます。',
+        training: [
+          { name: 'サイドロールアウト（左）', gif: 'https://raw.githubusercontent.com/omercotkd/exercises-gifs/main/assets/0276.gif', reps: 'x10 (各側)' },
+          { name: 'サイドロールアウト（右）', gif: 'https://raw.githubusercontent.com/omercotkd/exercises-gifs/main/assets/0276.gif', reps: 'x10 (各側)' },
         ]},
     ]
   }
@@ -231,7 +253,7 @@ export default function EquipmentGuide() {
                 <h4 style={{ margin: '0 0 10px 0', fontSize: '1rem', color: textMain }}>代表的な種目</h4>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                   {item.exercises.map((ex, idx) => {
-                    const imgUrl = targetToImage[ex.target] || '/images/tiger-male.png';
+                    const imgUrl = equipmentToImage[item.id] || '/images/tiger-male.png';
                     const exKey = `${item.id}-${idx}`;
                     const isExpanded = expandedExercise === exKey;
                     return (
@@ -255,10 +277,20 @@ export default function EquipmentGuide() {
                             width: '80px',
                             height: '80px',
                             borderRadius: '12px',
-                            background: `url('${imgUrl}') center 55% / 150% no-repeat`,
-                            backgroundColor: isDark ? '#1a1a1a' : '#e9ecef',
+                            backgroundColor: isDark ? '#1a1a1a' : '#f0f0f0',
                             flexShrink: 0,
-                          }}></div>
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            overflow: 'hidden',
+                            padding: '8px',
+                          }}>
+                            <img
+                              src={imgUrl}
+                              alt={item.title}
+                              style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+                            />
+                          </div>
                           <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '4px' }}>
                             <h4 style={{ margin: 0, fontSize: '1.05rem', fontWeight: 'bold', color: textMain }}>{ex.name}</h4>
                             <span style={{ fontSize: '0.8rem', color: textMuted }}>{ex.tips}</span>
