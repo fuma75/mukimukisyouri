@@ -249,14 +249,10 @@ export default function EquipmentGuide() {
   const [expandedExercise, setExpandedExercise] = useState<string | null>(null);
   const [zoomGif, setZoomGif] = useState<string | null>(null);
   const [activeAiMenu, setActiveAiMenu] = useState<AiMenuData | null>(null);
-  const { theme } = useAppContext();
+  const { theme, checkAchievements } = useAppContext();
   const isDark = theme === 'dark';
 
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('kinnikun_badge_knowledge', 'true');
-    }
-  }, []);
+
 
   const handleStartPlan = (plan: typeof plansData[0], dayIdx: number) => {
     const day = plan.days[dayIdx];
@@ -269,6 +265,7 @@ export default function EquipmentGuide() {
     
     if (typeof window !== 'undefined') {
       localStorage.setItem('kinnikun_badge_knowledge_plan', 'true');
+      checkAchievements();
     }
 
     setActiveAiMenu({
@@ -387,7 +384,13 @@ export default function EquipmentGuide() {
             {equipmentData.map(item => (
               <button 
                 key={item.id}
-                onClick={() => setSelectedEquipment(item.id)}
+                onClick={() => {
+                  setSelectedEquipment(item.id);
+                  if (typeof window !== 'undefined') {
+                    localStorage.setItem('kinnikun_badge_knowledge', 'true');
+                    checkAchievements();
+                  }
+                }}
                 style={getPillStyle(selectedEquipment === item.id) as any}
               >
                 {item.title.split(' ')[0]}
@@ -498,6 +501,7 @@ export default function EquipmentGuide() {
                                       setZoomGif(t.gif); 
                                       if (typeof window !== 'undefined') {
                                         localStorage.setItem('kinnikun_badge_knowledge_gif', 'true');
+                                        checkAchievements();
                                       }
                                     }}
                                     style={{
