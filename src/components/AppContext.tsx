@@ -205,16 +205,16 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     try { weightLogs = JSON.parse(weightRaw); } catch(e){}
     const curStreak = parseInt(streakRaw, 10) || 0;
 
-    // 何も記録がない初期状態ならアンロック判定をバイパス
-    if (workouts.length === 0 && meals.length === 0 && weightLogs.length === 0) return;
+    const readKnowledge = localStorage.getItem('kinnikun_badge_knowledge_view') === 'true';
+    const readGif = localStorage.getItem('kinnikun_badge_knowledge_zoom') === 'true';
+    const startPlan = localStorage.getItem('kinnikun_badge_knowledge_routine') === 'true';
+
+    // 何も記録がなく、かつ知識フラグも全て空（初期状態）ならアンロック判定をバイパス
+    if (workouts.length === 0 && meals.length === 0 && weightLogs.length === 0 && !readKnowledge && !readGif && !startPlan) return;
     
     const workoutCount = workouts.length;
     const mealCount = meals.length;
     const totalVolume = workouts.reduce((sum: number, w: any) => sum + (w.volume || 0), 0);
-    
-    const readKnowledge = localStorage.getItem('kinnikun_badge_knowledge_view') === 'true';
-    const readGif = localStorage.getItem('kinnikun_badge_knowledge_zoom') === 'true';
-    const startPlan = localStorage.getItem('kinnikun_badge_knowledge_routine') === 'true';
     const knowledgeSteps = (readKnowledge ? 1 : 0) + (readGif ? 1 : 0) + (startPlan ? 1 : 0);
 
     // カロリー目標達成日数
