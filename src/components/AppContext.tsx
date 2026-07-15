@@ -185,11 +185,17 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   const checkAchievements = () => {
     if (typeof window === 'undefined') return;
     
+    const profileRaw = localStorage.getItem('kinnikun_profile');
+    if (!profileRaw) return; // プロフィールがLocalStorageにない場合は実行しない
+    
+    let profile: any = {};
+    try { profile = JSON.parse(profileRaw); } catch(e){ return; }
+    if (!profile || !profile.goal) return; // 初期設定が完了していない場合は実行しない
+    
     const workoutsRaw = localStorage.getItem('kinnikun_workouts') || '[]';
     const mealsRaw = localStorage.getItem('kinnikun_meals') || '[]';
     const weightRaw = localStorage.getItem('kinnikun_weights') || '[]';
     const streakRaw = localStorage.getItem('kinnikun_streak') || '0';
-    const profileRaw = localStorage.getItem('kinnikun_profile');
     
     let workouts = [];
     let meals = [];
@@ -198,9 +204,9 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     try { meals = JSON.parse(mealsRaw); } catch(e){}
     try { weightLogs = JSON.parse(weightRaw); } catch(e){}
     const curStreak = parseInt(streakRaw, 10) || 0;
-    
-    let profile: any = {};
-    try { profile = profileRaw ? JSON.parse(profileRaw) : {}; } catch(e){}
+
+    // 何も記録がない初期状態ならアンロック判定をバイパス
+    if (workouts.length === 0 && meals.length === 0 && weightLogs.length === 0) return;
     
     const workoutCount = workouts.length;
     const mealCount = meals.length;
@@ -264,21 +270,27 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       const dMeals = meals.filter((m: any) => m.date === dStr);
       last7DaysIntake.push(dMeals.reduce((sum: number, m: any) => sum + (m.calories || 0), 0));
     }
-    const isPerfectWeek = last7DaysIntake.every(cal => cal >= targetCal * 0.9 && cal <= targetCal * 1.1);
+    // 完璧な一週間: 直近7日間に食事データが1件以上存在し、かつ全日が目標内
+    const hasMealsRecently = meals.length > 0;
+    const isPerfectWeek = hasMealsRecently && last7DaysIntake.every(cal => cal >= targetCal * 0.9 && cal <= targetCal * 1.1);
 
-    // 隠し実績：有言実行
-    let currentWeight = profile.weight || 60;
-    if (weightLogs.length > 0) {
-      currentWeight = weightLogs[weightLogs.length - 1].weight;
-    }
-    const targetWeight = profile.targetWeight || currentWeight;
+    // 隠し実績：有言実行 (目標体重が明示的に設定されており、かつ体重記録ログが1件以上ある場合にのみ判定)
+    const hasTargetWeightSet = profile && profile.targetWeight !== undefined && profile.targetWeight > 0;
+    const hasWeightRecords = weightLogs.length > 0;
     let isTargetWeightAchieved = false;
-    if (profile.goal === '減量' || profile.goal === 'lose-fat') {
-      isTargetWeightAchieved = currentWeight <= targetWeight;
-    } else if (profile.goal === '増量' || profile.goal === 'gain-muscle') {
-      isTargetWeightAchieved = currentWeight >= targetWeight;
-    } else {
-      isTargetWeightAchieved = Math.abs(currentWeight - targetWeight) <= 0.2;
+    
+    if (hasTargetWeightSet && hasWeightRecords) {
+      let currentWeight = profile.weight || 60;
+      currentWeight = weightLogs[weightLogs.length - 1].weight;
+      const targetWeight = profile.targetWeight;
+      
+      if (profile.goal === '減量' || profile.goal === 'lose-fat') {
+        isTargetWeightAchieved = currentWeight <= targetWeight;
+      } else if (profile.goal === '増量' || profile.goal === 'gain-muscle') {
+        isTargetWeightAchieved = currentWeight >= targetWeight;
+      } else {
+        isTargetWeightAchieved = Math.abs(currentWeight - targetWeight) <= 0.2;
+      }
     }
 
     const hasLateNightWorkout = workouts.some((w: any) => w.hour !== undefined && (w.hour >= 0 && w.hour < 5));
