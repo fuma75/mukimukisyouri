@@ -264,7 +264,7 @@ export default function EquipmentGuide() {
     const cooldown = [{ exercise: 'ストレッチ', duration: '00:30' }];
     
     if (typeof window !== 'undefined') {
-      localStorage.setItem('kinnikun_badge_knowledge_plan', 'true');
+      localStorage.setItem('kinnikun_badge_knowledge_routine', 'true');
       checkAchievements();
     }
 
@@ -387,7 +387,7 @@ export default function EquipmentGuide() {
                 onClick={() => {
                   setSelectedEquipment(item.id);
                   if (typeof window !== 'undefined') {
-                    localStorage.setItem('kinnikun_badge_knowledge', 'true');
+                    localStorage.setItem('kinnikun_badge_knowledge_view', 'true');
                     checkAchievements();
                   }
                 }}
@@ -500,7 +500,7 @@ export default function EquipmentGuide() {
                                       e.stopPropagation(); 
                                       setZoomGif(t.gif); 
                                       if (typeof window !== 'undefined') {
-                                        localStorage.setItem('kinnikun_badge_knowledge_gif', 'true');
+                                        localStorage.setItem('kinnikun_badge_knowledge_zoom', 'true');
                                         checkAchievements();
                                       }
                                     }}

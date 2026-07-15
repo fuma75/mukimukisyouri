@@ -52,9 +52,9 @@ export default function Header() {
   const allMeals = getMeals(null);
   const totalVolumeAll = allWorkouts.reduce((sum, w) => sum + (w.volume || 0), 0);
 
-  const readKnowledge = typeof window !== 'undefined' ? localStorage.getItem('kinnikun_badge_knowledge') === 'true' : false;
-  const readGif = typeof window !== 'undefined' ? localStorage.getItem('kinnikun_badge_knowledge_gif') === 'true' : false;
-  const startPlan = typeof window !== 'undefined' ? localStorage.getItem('kinnikun_badge_knowledge_plan') === 'true' : false;
+  const readKnowledge = typeof window !== 'undefined' ? localStorage.getItem('kinnikun_badge_knowledge_view') === 'true' : false;
+  const readGif = typeof window !== 'undefined' ? localStorage.getItem('kinnikun_badge_knowledge_zoom') === 'true' : false;
+  const startPlan = typeof window !== 'undefined' ? localStorage.getItem('kinnikun_badge_knowledge_routine') === 'true' : false;
 
   const workoutCount = allWorkouts.length;
   const mealCount = allMeals.length;

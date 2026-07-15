@@ -212,9 +212,9 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     const mealCount = meals.length;
     const totalVolume = workouts.reduce((sum: number, w: any) => sum + (w.volume || 0), 0);
     
-    const readKnowledge = localStorage.getItem('kinnikun_badge_knowledge') === 'true';
-    const readGif = localStorage.getItem('kinnikun_badge_knowledge_gif') === 'true';
-    const startPlan = localStorage.getItem('kinnikun_badge_knowledge_plan') === 'true';
+    const readKnowledge = localStorage.getItem('kinnikun_badge_knowledge_view') === 'true';
+    const readGif = localStorage.getItem('kinnikun_badge_knowledge_zoom') === 'true';
+    const startPlan = localStorage.getItem('kinnikun_badge_knowledge_routine') === 'true';
     const knowledgeSteps = (readKnowledge ? 1 : 0) + (readGif ? 1 : 0) + (startPlan ? 1 : 0);
 
     // カロリー目標達成日数
